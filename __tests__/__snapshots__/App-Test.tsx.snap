@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#fff",
+      },
+      {
+        "height": "100%",
+      },
+      {
+        "width": "100%",
+      },
+      {
+        "justifyContent": "center",
+      },
+      {
+        "alignItems": "center",
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000",
+        },
+        {
+          "fontWeight": "900",
+        },
+        {
+          "fontSize": 36,
+          "lineHeight": 40,
+        },
+      ]
+    }
+  >
+    UHub
+  </Text>
+</View>
+`;
