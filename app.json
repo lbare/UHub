@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "UHub",
-    "slug": "UHub",
+    "slug": "uhub",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f4c8d9aa-d7ab-4ee1-8230-7686773a00c3"
+      }
+    },
+    "owner": "lbare"
   }
 }
