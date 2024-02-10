@@ -6,9 +6,9 @@ This is the UHub app, built with [Expo](https://expo.dev/). It's a React Native 
 
 Before you begin, ensure you have met the following requirements:
 
-- You have installed [Node.js](https://nodejs.org/en/).
-- You have installed [Yarn](https://yarnpkg.com/). `npm install --global yarn`
-- You have installed [Expo CLI](https://docs.expo.dev/get-started/installation/): `yarn global add expo-cli`
+- You have installed [Node.js 20](https://nodejs.org/en/download)
+- You have installed [Yarn](https://yarnpkg.com/) `npm install --global yarn`
+- You have installed [Expo CLI](https://docs.expo.dev/get-started/installation/) `yarn global add expo-cli`
 
 ## Installing UHub
 
@@ -16,7 +16,8 @@ To clone the project, follow these steps:
 
 ```bash
 git clone https://github.com/lbare/UHub.git
-cd uhub
+cd UHub
+code .
 ```
 
 ## Running Project
