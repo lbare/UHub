@@ -6,7 +6,7 @@ This is the UHub app, built with [Expo](https://expo.dev/). It's a React Native 
 
 Before you begin, ensure you have met the following requirements:
 
-- You have installed [Node.js 20](https://nodejs.org/en/download)
+- You have installed [Node.js 20](https://nodejs.org/en/download) `nvm install 20.11.0`
 - You have installed [Yarn](https://yarnpkg.com/) `npm install --global yarn`
 - You have installed [Expo CLI](https://docs.expo.dev/get-started/installation/) `yarn global add expo-cli`
 
