@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import HomeNavigation from "./navigation/HomeNavigation";
 
 export default function App() {
   return (
-    <View className="bg-white h-full w-full justify-center items-center">
-      <Text className="text-black font-black text-4xl">UHub</Text>
+    <NavigationContainer>
+      <HomeNavigation />
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
   );
 }
