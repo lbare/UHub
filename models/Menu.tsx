@@ -1,7 +1,9 @@
 enum MenuItemTag {
     Vegan = "Vegan",
     Spicy = "Spicy",
-    GlutenFree = "Gluten-Free",
+    GlutenFree = "Gluten Free",
+    GlutenFreeOption = "Gluten Free Option",
+    DairyFree = "Dairy Free",
 }
 
 type MenuItemSize = {
@@ -18,6 +20,7 @@ type MenuItem = {
     name: string;
     price: number;
     tags?: MenuItemTag[];
+    //todo: [image] decide weather the image string is url or base64
     image?: string;
     description?: string;
     sizes?: MenuItemSize[];
@@ -26,6 +29,7 @@ type MenuItem = {
 
 type MenuSection = {
     name: string;
+    description?: string;
     items: MenuItem[];
 };
 
@@ -33,53 +37,77 @@ type Menu = {
     sections: MenuSection[];
 };
 
+//Menu Example from Greens in Cove from Feburary 13th 2024
 const menuExample: Menu = {
     sections: [
         {
-            name: "Appetizers",
+            name: "Plant Based Eats Made to Order",
             items: [
                 {
-                    name: "Chicken Wings",
-                    price: 8.98,
-                    description: "Spicy buffalo wings served with ranch dressing.",
-                    sizes: [
-                        { name: "Small", price: 8.99 },
-                        { name: "Large", price: 12.99 },
-                    ],
-                    sides: [
-                        { name: "Fries", price: 2.99 },
-                        { name: "Onion Rings", price: 3.99 },
-                    ],
+                    name: "Indigenous Salad",
+                    price: 7.50,
+                    description: "Dandelion greens, beets, carrot, wild blueberry dressing & bannock croutons",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan, MenuItemTag.GlutenFreeOption]
                 },
                 {
-                    name: "Caesar Salad",
-                    price: 6.99,
-                    description: "Fresh romaine lettuce with Caesar dressing.",
-                    sizes: [{ name: "Regular", price: 6.99 }],
-                },
-            ],
-        },
-        {
-            name: "Main Course",
-            items: [
-                {
-                    name: "Cheeseburger",
-                    price: 10.99,
-                    description: "Classic cheeseburger with lettuce, tomato, and pickles.",
-                    sizes: [
-                        { name: "Single", price: 10.99 },
-                        { name: "Double", price: 13.99 },
-                    ],
-                    sides: [
-                        { name: "Fries", price: 2.99 },
-                        { name: "Side Salad", price: 3.99 },
-                    ],
+                    name: "Sriracha Chick'n Salad Rolls (2)",
+                    price: 8.50,
+                    description: "Sriracha glazed rice rolls, vermicelli, veggies, plant based chicken & avocado mayo",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan]
                 },
                 {
-                    name: "Margherita Pizza",
-                    price: 12.99,
-                    description: "Traditional Italian pizza with tomato, mozzarella, and basil.",
-                    sizes: [{ name: "Regular", price: 12.99 }],
+                    name: "Roasted Chickpea Burrito",
+                    price: 5.00,
+                    description: "Roasted chickpeas & seasoned mixed beans in a flour tortilla",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan, MenuItemTag.GlutenFreeOption]
+                },
+                {
+                    name: "Teriyaki Waygu Beef Sandwich",
+                    price: 10.95,
+                    description: "Plant based beef with grilled pineapple and sinacha mayo on a Vienna real",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan]
+                },
+                {
+                    name: "Bean & Chick'n Quesadilla",
+                    price: 9.50,
+                    description: "Seasoned mined beans, plant based chicken, cheez & salsa grilled in a floor tortilla",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan, MenuItemTag.GlutenFreeOption]
+                },
+                {
+                    name: "Chipotle Tacos (3)",
+                    price: 8.50,
+                    description: "Chipotle crumble, cheez, lettuce & salsa in soft flour tortillas",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan, MenuItemTag.GlutenFreeOption]
+                },
+                {
+                    name: "Crispy Tofu Noodle Wrap",
+                    price: 8.00,
+                    description: "Crispy tofu, vermicelli & peppers in a sweet chili sauce wrapped in a four tortilla",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan]
+                },
+                {
+                    name: "Tofu Banh Mi",
+                    price: 9.00,
+                    description: "Sriracha clazed tofu & resh veggies served on a ben",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan, MenuItemTag.GlutenFreeOption]
+                },
+                {
+                    name: "Tuna Poké Bowl",
+                    price: 13.00,
+                    description: "Pread based tuna broma rice & veggies with avocado siracha mayo a furdale",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan]
+                },
+                {
+                    name: "Southwest Chick'n Bowl",
+                    price: 13.00,
+                    description: "Mexican rice topped with plant based chicken, mied beans, corn, peppers & salsa",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan]
+                },
+                {
+                    name: "Slammin Lox",
+                    price: 9.95,
+                    description: "Plant based smoked salmon with cream cheese, alfalta, red onion, and capers on a classie bagel",
+                    tags: [MenuItemTag.DairyFree, MenuItemTag.Vegan],
                 },
             ],
         },
