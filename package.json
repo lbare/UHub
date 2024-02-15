@@ -13,7 +13,7 @@
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|firebase)"
     ]
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "react-dom": "^18.2.0",
     "react-native": "0.73.4",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-maps": "1.10.0",
     "react-native-safe-area-context": "4.8.2",
     "react-native-web": "^0.19.10"
   },

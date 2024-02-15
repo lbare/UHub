@@ -1,44 +1,247 @@
-[{
-    "foodVendorExample": {
-      "name": "Greens",
-      "building": "Cove",
-      "description": "Plant Based Eats Made to Order",
-      "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-      "location": {
-        "latitude": 48.4642125,
-        "longitude": -123.3072344
+[
+  {
+    "name": "Greens",
+    "building": "Cove",
+    "description": "Plant Based Eats Made to Order",
+    "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    "location": {
+      "latitude": 48.4642125,
+      "longitude": -123.3072344
+    },
+    "hours": {
+      "Monday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
       },
-      "hours": {
-        "Monday": {
-          "open": "09:00 AM",
-          "close": "06:00 PM"
-        },
-        "Tuesday": {
-          "open": "09:00 AM",
-          "close": "06:00 PM"
-        },
-        "Wednesday": {
-          "open": "09:00 AM",
-          "close": "06:00 PM"
-        },
-        "Thursday": {
-          "open": "09:00 AM",
-          "close": "06:00 PM"
-        },
-        "Friday": {
-          "open": "09:00 AM",
-          "close": "08:00 PM"
-        },
-        "Saturday": {
-          "open": "10:00 AM",
-          "close": "08:00 PM"
-        },
-        "Sunday": {
-          "open": "10:00 AM",
-          "close": "05:00 PM"
-        }
+      "Tuesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Wednesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Thursday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Friday": {
+        "open": "09:00 AM",
+        "close": "08:00 PM"
+      },
+      "Saturday": {
+        "open": "10:00 AM",
+        "close": "08:00 PM"
+      },
+      "Sunday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
       }
     }
-}]
-
-  
+  },
+  {
+    "name": "Booster Juice",
+    "description": "Smoothies and Fresh Juices",
+    "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    "location": {
+      "latitude": 48.4648918,
+      "longitude": -123.3116604,
+      "latitudeDelta": 0.001,
+      "longitudeDelta": 0.001
+    },
+    "hours": {
+      "Monday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Tuesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Wednesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Thursday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Friday": {
+        "open": "09:00 AM",
+        "close": "08:00 PM"
+      },
+      "Saturday": {
+        "open": "10:00 AM",
+        "close": "08:00 PM"
+      },
+      "Sunday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
+      }
+    }
+  },
+  {
+    "name": "Mac's",
+    "description": "Burgers and Fries",
+    "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    "location": {
+      "latitude": 48.4629012,
+      "longitude": -123.3133088,
+      "latitudeDelta": 0.001,
+      "longitudeDelta": 0.001
+    },
+    "hours": {
+      "Monday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Tuesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Wednesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Thursday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Friday": {
+        "open": "09:00 AM",
+        "close": "08:00 PM"
+      },
+      "Saturday": {
+        "open": "10:00 AM",
+        "close": "08:00 PM"
+      },
+      "Sunday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
+      }
+    }
+  },
+  {
+    "name": "Arts Place",
+    "description": "Cafe and Bakery",
+    "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    "location": {
+      "latitude": 48.4621044,
+      "longitude": -123.3166884,
+      "latitudeDelta": 0.001,
+      "longitudeDelta": 0.001
+    },
+    "hours": {
+      "Monday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Tuesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Wednesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Thursday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Friday": {
+        "open": "09:00 AM",
+        "close": "08:00 PM"
+      },
+      "Saturday": {
+        "open": "10:00 AM",
+        "close": "08:00 PM"
+      },
+      "Sunday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
+      }
+    }
+  },
+  {
+    "name": "University Club",
+    "description": "Fine Dining",
+    "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    "location": {
+      "latitude": 48.4640182,
+      "longitude": -123.3175574,
+      "latitudeDelta": 0.001,
+      "longitudeDelta": 0.001
+    },
+    "hours": {
+      "Monday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Tuesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Wednesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Thursday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Friday": {
+        "open": "09:00 AM",
+        "close": "08:00 PM"
+      },
+      "Saturday": {
+        "open": "10:00 AM",
+        "close": "08:00 PM"
+      },
+      "Sunday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
+      }
+    }
+  },
+  {
+    "name": "Starbucks",
+    "description": "Coffee and Pastries",
+    "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    "location": {
+      "latitude": 48.4664369,
+      "longitude": -123.3093606,
+      "latitudeDelta": 0.001,
+      "longitudeDelta": 0.001
+    },
+    "hours": {
+      "Monday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Tuesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Wednesday": {
+        "open": "09:00 AM",
+        "close": "06:00 PM"
+      },
+      "Thursday": {
+        "open": "09:00 AM",
+        "close": "05:00 PM"
+      },
+      "Friday": {
+        "open": "09:00 AM",
+        "close": "05:00 PM"
+      },
+      "Saturday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
+      },
+      "Sunday": {
+        "open": "10:00 AM",
+        "close": "05:00 PM"
+      }
+    }
+  }
+]
