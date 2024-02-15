@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import {getFirestore} from "@firebase/firestore";
+import { getFirestore } from "@firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -14,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "uhub-b1a4d.appspot.com",
   messagingSenderId: "37094280542",
   appId: "1:37094280542:web:d11e9fb832f560cba853cf",
-  measurementId: "G-SCK4ZNCYEF"
+  measurementId: "G-SCK4ZNCYEF",
 };
 
 // Initialize Firebase
