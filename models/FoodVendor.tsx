@@ -1,18 +1,6 @@
 import { Menu, menuExample } from './Menu';
-
-type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
-
-type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
-
-type VendorHours = {
-  [key in DayOfWeek]: {
-    open: string;
-    close: string;
-  };
-};
+import Coordinates from './Coordinates'
+import {VendorHours, vendorHoursExample} from './VendorHours'
 
 type FoodVendor = {
     name: string;
@@ -21,37 +9,6 @@ type FoodVendor = {
     location: Coordinates;
     hours: VendorHours;
     menu: Menu;
-};
-
-const vendorHoursExample: VendorHours = {
-  Monday: {
-    open: "09:00 AM",
-    close: "06:00 PM",
-  },
-  Tuesday: {
-    open: "09:00 AM",
-    close: "06:00 PM",
-  },
-  Wednesday: {
-    open: "09:00 AM",
-    close: "06:00 PM",
-  },
-  Thursday: {
-    open: "09:00 AM",
-    close: "06:00 PM",
-  },
-  Friday: {
-    open: "09:00 AM",
-    close: "08:00 PM",
-  },
-  Saturday: {
-    open: "10:00 AM",
-    close: "08:00 PM",
-  },
-  Sunday: {
-    open: "10:00 AM",
-    close: "05:00 PM",
-  },
 };
 
 const foodVendorExample: FoodVendor = {
