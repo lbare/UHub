@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, View } from "react-native";
+import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
-import { foodVendorExample } from "../models/FoodVendor";
+import { foodVendorExamples } from "../models/FoodVendor";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -13,38 +13,45 @@ const UVicRegion: Coordinates = {
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
-  const [key, setKey] = useState<number>(Math.random());
+  const [markerSelected, setMarkerSelected] = useState<boolean>(false);
 
   return (
     <View className="bg-white h-full w-full justify-center items-center">
       <MapView
         className="flex justify-center items-center w-full h-full"
         initialRegion={UVicRegion}
-        key={key}
         region={region}
         provider="google"
         maxZoomLevel={20}
-        minZoomLevel={14}
+        minZoomLevel={15}
         mapType="standard"
         userInterfaceStyle="light"
         showsUserLocation={true}
-        showsBuildings={false}
-        showsMyLocationButton={true}
+        onPress={() => {
+          console.log("Centering map to UVic");
+          setRegion(UVicRegion);
+          if (markerSelected) setMarkerSelected(false);
+        }}
       >
-        <Marker
-          coordinate={foodVendorExample.location}
-          title={foodVendorExample.name}
-          description={foodVendorExample.description}
-          flat={false}
-        />
-        {/* <Button
-          title="Reset"
-          onPress={() => {
-            console.log("Resetting map");
-            setRegion(UVicRegion);
-            setKey(Math.random());
-          }}
-        /> */}
+        {foodVendorExamples.map((vendor) => (
+          <Marker
+            key={vendor.name}
+            coordinate={vendor.location}
+            title={vendor.name}
+            description={vendor.description}
+            flat={false}
+            stopPropagation={true}
+            onPress={() => {
+              console.log("Centering map to vendor:", vendor.name);
+              setRegion({
+                ...vendor.location,
+                latitudeDelta: UVicRegion.latitudeDelta / 2,
+                longitudeDelta: UVicRegion.longitudeDelta / 2,
+              });
+              setMarkerSelected(true);
+            }}
+          />
+        ))}
       </MapView>
     </View>
   );
