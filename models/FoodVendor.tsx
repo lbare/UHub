@@ -18,6 +18,8 @@ const foodVendorExample: FoodVendor = {
   location: {
     latitude: 48.46421250,
     longitude: -123.30723440,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
   },
   hours: vendorHoursExample,
   menu: menuExample,
