@@ -1,0 +1,44 @@
+[{
+    "foodVendorExample": {
+      "name": "Greens",
+      "building": "Cove",
+      "description": "Plant Based Eats Made to Order",
+      "image": "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+      "location": {
+        "latitude": 48.4642125,
+        "longitude": -123.3072344
+      },
+      "hours": {
+        "Monday": {
+          "open": "09:00 AM",
+          "close": "06:00 PM"
+        },
+        "Tuesday": {
+          "open": "09:00 AM",
+          "close": "06:00 PM"
+        },
+        "Wednesday": {
+          "open": "09:00 AM",
+          "close": "06:00 PM"
+        },
+        "Thursday": {
+          "open": "09:00 AM",
+          "close": "06:00 PM"
+        },
+        "Friday": {
+          "open": "09:00 AM",
+          "close": "08:00 PM"
+        },
+        "Saturday": {
+          "open": "10:00 AM",
+          "close": "08:00 PM"
+        },
+        "Sunday": {
+          "open": "10:00 AM",
+          "close": "05:00 PM"
+        }
+      }
+    }
+}]
+
+  
