@@ -1023,7 +1023,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.22.15"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/preset-env@^7.20.0":
+"@babel/preset-env@^7.20.0", "@babel/preset-env@^7.23.9":
   version "7.23.9"
   resolved "https://registry.npmjs.org/@babel/preset-env/-/preset-env-7.23.9.tgz"
   integrity sha512-3kBGTNBBk9DQiPoXYS0g0BYlwTQYUTifqgKTjxUwEUkduRT2QOa0FPGBJ+NROQhGyYO5BuTJwGvBnqKDykac6A==
@@ -2699,7 +2699,7 @@
 
 "@react-native-firebase/app@^18.8.0":
   version "18.8.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.8.0.tgz#54864f4c54fa0b938ddece67598dc401aecd1e9a"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.8.0.tgz"
   integrity sha512-bVwjop3zLKV1G+ZxyxrdSXVutdSHSM9mngk3qG9W1swmAdeTjvWWIFpyJBf6KlkbKzWbDmLeK7Q+Yc+HLJlg7A==
   dependencies:
     opencollective-postinstall "^2.0.3"
@@ -2707,7 +2707,7 @@
 
 "@react-native-firebase/firestore@^18.8.0":
   version "18.8.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-18.8.0.tgz#77d54794b896ca792c2d97d01fd8e0c0d09bc322"
+  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-18.8.0.tgz"
   integrity sha512-tB8ZhIYuFoTO4kYXdh5Q+LSPIXxJ5WPrVxxIxdc+qeaF7SudIojO6w/g8tTxbFdPEos8+JWhBIFAb+o0L3RbBQ==
 
 "@react-native/assets-registry@0.73.1", "@react-native/assets-registry@~0.73.1":
@@ -2927,12 +2927,12 @@
   resolved "https://registry.npmjs.org/@sideway/pinpoint/-/pinpoint-2.0.0.tgz"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@sigstore/bundle@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@sigstore/bundle/-/bundle-2.1.1.tgz"
-  integrity sha512-v3/iS+1nufZdKQ5iAlQKcCsoh0jffQyABvYIxKsZQFWc4ubuGjwZklFHpDgV6O6T7vvV78SW5NHI91HFKEcxKg==
+"@sigstore/bundle@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@sigstore/bundle/-/bundle-2.2.0.tgz#e3f555a5c503fe176d8d1e0e829b00f842502e46"
+  integrity sha512-5VI58qgNs76RDrwXNhpmyN/jKpq9evV/7f1XrcqcAfvxDl5SeVY/I5Rmfe96ULAV7/FK5dge9RBKGBJPhL1WsQ==
   dependencies:
-    "@sigstore/protobuf-specs" "^0.2.1"
+    "@sigstore/protobuf-specs" "^0.3.0"
 
 "@sigstore/core@^1.0.0":
   version "1.0.0"
@@ -2944,14 +2944,19 @@
   resolved "https://registry.npmjs.org/@sigstore/protobuf-specs/-/protobuf-specs-0.2.1.tgz"
   integrity sha512-XTWVxnWJu+c1oCshMLwnKvz8ZQJJDVOlciMfgpJBQbThVjKTCG8dwyhgLngBD2KN0ap9F/gOV8rFDEx8uh7R2A==
 
-"@sigstore/sign@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@sigstore/sign/-/sign-2.2.2.tgz#a958388fd20a7c367e20dd3604de3b47cc0b2b47"
-  integrity sha512-mAifqvvGOCkb5BJ5d/SRrVP5+kKCGxtcHuti6lgqZalIfNxikxlJMMptOqFp9+xV5LAnJMSaMWtzvcgNZ3PlPA==
+"@sigstore/protobuf-specs@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@sigstore/protobuf-specs/-/protobuf-specs-0.3.0.tgz#bdcc773671f625bb81591bca86ec5314d57297f3"
+  integrity sha512-zxiQ66JFOjVvP9hbhGj/F/qNdsZfkGb/dVXSanNRNuAzMlr4MC95voPUBX8//ZNnmv3uSYzdfR/JSkrgvZTGxA==
+
+"@sigstore/sign@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@sigstore/sign/-/sign-2.2.3.tgz#f07bcd2cfee654fade867db44ae260f1a0142ba4"
+  integrity sha512-LqlA+ffyN02yC7RKszCdMTS6bldZnIodiox+IkT8B2f8oRYXCB3LQ9roXeiEL21m64CVH1wyveYAORfD65WoSw==
   dependencies:
-    "@sigstore/bundle" "^2.1.1"
+    "@sigstore/bundle" "^2.2.0"
     "@sigstore/core" "^1.0.0"
-    "@sigstore/protobuf-specs" "^0.2.1"
+    "@sigstore/protobuf-specs" "^0.3.0"
     make-fetch-happen "^13.0.0"
 
 "@sigstore/tuf@^2.3.0":
@@ -2962,14 +2967,22 @@
     "@sigstore/protobuf-specs" "^0.2.1"
     tuf-js "^2.2.0"
 
-"@sigstore/verify@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@sigstore/verify/-/verify-1.0.0.tgz#0d41688710703fa4252bd25b973234dee5547cdf"
-  integrity sha512-sRU6nblDBQ4pVTWni019Kij+XQj4RP75WXN5z3qHk81dt/L8A7r3v8RgRInTup4/Jf90WNods9CcbnWj7zJ26w==
+"@sigstore/tuf@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@sigstore/tuf/-/tuf-2.3.1.tgz#86ff3c3c907e271696c88de0108d9063a8cbcc45"
+  integrity sha512-9Iv40z652td/QbV0o5n/x25H9w6IYRt2pIGbTX55yFDYlApDQn/6YZomjz6+KBx69rXHLzHcbtTS586mDdFD+Q==
   dependencies:
-    "@sigstore/bundle" "^2.1.1"
+    "@sigstore/protobuf-specs" "^0.3.0"
+    tuf-js "^2.2.0"
+
+"@sigstore/verify@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sigstore/verify/-/verify-1.1.0.tgz#ab617c5dc0bc09ead7f101a848f4870af2d84374"
+  integrity sha512-1fTqnqyTBWvV7cftUUFtDcHPdSox0N3Ub7C0lRyReYx4zZUlNTZjCV+HPy4Lre+r45dV7Qx5JLKvqqsgxuyYfg==
+  dependencies:
+    "@sigstore/bundle" "^2.2.0"
     "@sigstore/core" "^1.0.0"
-    "@sigstore/protobuf-specs" "^0.2.1"
+    "@sigstore/protobuf-specs" "^0.3.0"
 
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
@@ -3043,7 +3056,7 @@
 
 "@types/geojson@^7946.0.13":
   version "7946.0.14"
-  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.14.tgz#319b63ad6df705ee2a65a73ef042c8271e696613"
+  resolved "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.14.tgz"
   integrity sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==
 
 "@types/graceful-fs@^4.1.3":
@@ -3672,6 +3685,13 @@ browserslist@^4.22.2:
     node-releases "^2.0.14"
     update-browserslist-db "^1.0.13"
 
+bs-logger@0.x:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/bs-logger/-/bs-logger-0.2.6.tgz#eb7d365307a72cf974cc6cda76b68354ad336bd8"
+  integrity sha512-pd8DCoxmbgc7hyPKOvxtqNcjYoOsABPQdcCUjGp3d42VR2CX1ORhk2A87oqqu5R1kk+76nsxZupkmyd+MVtCog==
+  dependencies:
+    fast-json-stable-stringify "2.x"
+
 bser@2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/bser/-/bser-2.1.1.tgz"
@@ -3993,7 +4013,7 @@ cliui@^8.0.1:
 
 clone-deep@^2.0.1:
   version "2.0.2"
-  resolved "https://registry.yarnpkg.com/clone-deep/-/clone-deep-2.0.2.tgz#00db3a1e173656730d1188c3d6aced6d7ea97713"
+  resolved "https://registry.npmjs.org/clone-deep/-/clone-deep-2.0.2.tgz"
   integrity sha512-SZegPTKjCgpQH63E+eN6mVEEPdQBOUzjyJm5Pora4lrwWRFS8I0QAxV/KD6vV/i0WuijHZWQC1fMsPEdxfdVCQ==
   dependencies:
     for-own "^1.0.0"
@@ -4820,7 +4840,7 @@ fast-glob@^3.2.12, fast-glob@^3.2.5, fast-glob@^3.2.9:
     merge2 "^1.3.0"
     micromatch "^4.0.4"
 
-fast-json-stable-stringify@^2.1.0:
+fast-json-stable-stringify@2.x, fast-json-stable-stringify@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz"
   integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
@@ -5011,17 +5031,17 @@ fontfaceobserver@^2.1.0:
 
 for-in@^0.1.3:
   version "0.1.8"
-  resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.8.tgz#d8773908e31256109952b1fdb9b3fa867d2775e1"
+  resolved "https://registry.npmjs.org/for-in/-/for-in-0.1.8.tgz"
   integrity sha512-F0to7vbBSHP8E3l6dCjxNOLuSFAACIxFy3UehTUlG7svlXi37HHsDkyVcHo0Pq8QwrE+pXvWSVX3ZT1T9wAZ9g==
 
 for-in@^1.0.1:
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
+  resolved "https://registry.npmjs.org/for-in/-/for-in-1.0.2.tgz"
   integrity sha512-7EwmXrOjyL+ChxMhmG5lnW9MPt1aIeZEwKhQzoBUdTV0N3zuwWDZYVJatDvZ2OyzPUvdIAZDsCetk3coyMfcnQ==
 
 for-own@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/for-own/-/for-own-1.0.0.tgz#c63332f415cedc4b04dbfe70cf836494c53cb44b"
+  resolved "https://registry.npmjs.org/for-own/-/for-own-1.0.0.tgz"
   integrity sha512-0OABksIGrxKK8K4kynWkQ7y1zounQxP+CWnyclVwj81KW3vlLlGUx57DKGcP/LH216GzqnstnPocF16Nxs0Ycg==
   dependencies:
     for-in "^1.0.1"
@@ -5112,7 +5132,7 @@ fs.realpath@^1.0.0:
 
 fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.3"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
+  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 function-bind@^1.1.2:
@@ -5614,7 +5634,7 @@ is-docker@^2.0.0, is-docker@^2.1.1:
 
 is-extendable@^0.1.1:
   version "0.1.1"
-  resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
+  resolved "https://registry.npmjs.org/is-extendable/-/is-extendable-0.1.1.tgz"
   integrity sha512-5BMULNob1vgFX6EjQw5izWDxrecWK9AM72rugNr0TFldMOi0fj6Jk+zeKIt0xGj4cEfQIJth4w3OKWOJ4f+AFw==
 
 is-extglob@^1.0.0:
@@ -5746,7 +5766,7 @@ isexe@^2.0.0:
 
 isexe@^3.1.1:
   version "3.1.1"
-  resolved "https://registry.yarnpkg.com/isexe/-/isexe-3.1.1.tgz#4a407e2bd78ddfb14bea0c27c6f7072dde775f0d"
+  resolved "https://registry.npmjs.org/isexe/-/isexe-3.1.1.tgz"
   integrity sha512-LpB/54B+/2J5hqQ7imZHfdU31OlgQqx7ZicVlkm9kzg9/w8GKLEcFfJl/t7DCEDueOyBAD6zCCwTO6Fzs0NoEQ==
 
 isobject@^3.0.1:
@@ -6148,7 +6168,7 @@ jest-snapshot@^29.7.0:
     pretty-format "^29.7.0"
     semver "^7.5.3"
 
-jest-util@^29.7.0:
+jest-util@^29.0.0, jest-util@^29.7.0:
   version "29.7.0"
   resolved "https://registry.npmjs.org/jest-util/-/jest-util-29.7.0.tgz"
   integrity sha512-z6EbKajIpqGKU56y5KBUgy1dt1ihhQJgWzUlZHArA/+X2ad7Cb5iF+AK1EWVL/Bo7Rz9uurpqw6SiBCefUbCGA==
@@ -6423,7 +6443,7 @@ just-diff@^6.0.0:
 
 kind-of@^5.0.0:
   version "5.1.0"
-  resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-5.1.0.tgz#729c91e2d857b7a419a1f9aa65685c4c33f5845d"
+  resolved "https://registry.npmjs.org/kind-of/-/kind-of-5.1.0.tgz"
   integrity sha512-NGEErnH6F2vUuXDh+OlbcKW7/wOcfdRHaZ7VWtqCztfHri/++YKmP51OdWeGPuqCOba6kk2OTe5d02VmTB80Pw==
 
 kind-of@^6.0.0, kind-of@^6.0.1, kind-of@^6.0.2:
@@ -6564,7 +6584,7 @@ lighthouse-logger@^1.0.0:
 
 lightningcss-darwin-arm64@1.19.0:
   version "1.19.0"
-  resolved "https://registry.yarnpkg.com/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.19.0.tgz#56ab071e932f845dbb7667f44f5b78441175a343"
+  resolved "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.19.0.tgz"
   integrity sha512-wIJmFtYX0rXHsXHSr4+sC5clwblEMji7HHQ4Ub1/CznVRxtCFha6JIt5JZaNf8vQrfdZnBxLLC6R8pC818jXqg==
 
 lightningcss-darwin-x64@1.19.0:
@@ -6599,7 +6619,7 @@ lightningcss-linux-x64-musl@1.19.0:
 
 lightningcss-win32-x64-msvc@1.19.0:
   version "1.19.0"
-  resolved "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.19.0.tgz"
+  resolved "https://registry.yarnpkg.com/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.19.0.tgz#0854dbd153035eca1396e2227c708ad43655a61c"
   integrity sha512-C+VuUTeSUOAaBZZOPT7Etn/agx/MatzJzGRkeV+zEABmPuntv1zihncsi+AyGmjkkzq3wVedEy7h0/4S84mUtg==
 
 lightningcss@~1.19.0:
@@ -6664,6 +6684,11 @@ lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
+lodash.memoize@4.x:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
+  integrity sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -6744,6 +6769,11 @@ make-dir@^4.0.0:
   integrity sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==
   dependencies:
     semver "^7.5.3"
+
+make-error@1.x:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/make-error/-/make-error-1.3.6.tgz#2eb2e37ea9b67c4891f684a1394799af484cf7a2"
+  integrity sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==
 
 make-fetch-happen@^13.0.0:
   version "13.0.0"
@@ -7153,7 +7183,7 @@ minizlib@^2.1.1, minizlib@^2.1.2:
 
 mixin-object@^2.0.1:
   version "2.0.1"
-  resolved "https://registry.yarnpkg.com/mixin-object/-/mixin-object-2.0.1.tgz#4fb949441dab182540f1fe035ba60e1947a5e57e"
+  resolved "https://registry.npmjs.org/mixin-object/-/mixin-object-2.0.1.tgz"
   integrity sha512-ALGF1Jt9ouehcaXaHhn6t1yGWRqGaHkPFndtFVHfZXOvkIZ/yoGaSi0AHVTafb3ZBGg4dr/bDwnaEKqCXzchMA==
   dependencies:
     for-in "^0.1.3"
@@ -7623,7 +7653,7 @@ open@^8.0.4, open@^8.3.0:
 
 opencollective-postinstall@^2.0.3:
   version "2.0.3"
-  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
+  resolved "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz"
   integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
 
 ora@3.4.0, ora@^3.4.0:
@@ -8223,14 +8253,14 @@ react-native-gesture-handler@~2.14.0:
 
 react-native-maps@1.10.0:
   version "1.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.10.0.tgz#1b78270473f4caadc5ff8e8400285b6db9f14e12"
+  resolved "https://registry.npmjs.org/react-native-maps/-/react-native-maps-1.10.0.tgz"
   integrity sha512-Zs6lHZucEijTwkRVFyInMbPVkJ2UudDEI2fJPc8ArdzdnwDFAdL6OagqTjNRZyI1DBPHRihazfIWpy2+X1VwLg==
   dependencies:
     "@types/geojson" "^7946.0.13"
 
 react-native-safe-area-context@4.8.2:
   version "4.8.2"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.8.2.tgz#e6b3d8acf3c6afcb4b5db03a97f9c37df7668f65"
+  resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-4.8.2.tgz"
   integrity sha512-ffUOv8BJQ6RqO3nLml5gxJ6ab3EestPiyWekxdzO/1MQ7NF8fW1Mzh1C5QE9yq573Xefnc7FuzGXjtesZGv7cQ==
 
 react-native-web@^0.19.10:
@@ -8708,7 +8738,7 @@ setprototypeof@1.2.0:
 
 shallow-clone@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/shallow-clone/-/shallow-clone-1.0.0.tgz#4480cd06e882ef68b2ad88a3ea54832e2c48b571"
+  resolved "https://registry.npmjs.org/shallow-clone/-/shallow-clone-1.0.0.tgz"
   integrity sha512-oeXreoKR/SyNJtRJMAKPDSvd28OqEwG4eR/xc856cRGBII7gX9lvAqDxusPm0846z/w/hWYjI1NpKwJ00NHzRA==
   dependencies:
     is-extendable "^0.1.1"
@@ -8762,16 +8792,16 @@ signal-exit@^4.0.1:
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
 sigstore@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/sigstore/-/sigstore-2.2.1.tgz#a0f9f6b7f39aef5d9b3d659cd14b99a502fb44b0"
-  integrity sha512-OBBSKvmjr4DCyUb+IC2p7wooOCsCNwaqvCilTJVNPo0y8lJl+LsCrfz4LtMwnw3Gn+8frt816wi1+DWZTUCpBQ==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/sigstore/-/sigstore-2.2.2.tgz#5e4ff39febeae9e0679bafa22180cb0f445a7e35"
+  integrity sha512-2A3WvXkQurhuMgORgT60r6pOWiCOO5LlEqY2ADxGBDGVYLSo5HN0uLtb68YpVpuL/Vi8mLTe7+0Dx2Fq8lLqEg==
   dependencies:
-    "@sigstore/bundle" "^2.1.1"
+    "@sigstore/bundle" "^2.2.0"
     "@sigstore/core" "^1.0.0"
-    "@sigstore/protobuf-specs" "^0.2.1"
-    "@sigstore/sign" "^2.2.2"
-    "@sigstore/tuf" "^2.3.0"
-    "@sigstore/verify" "^1.0.0"
+    "@sigstore/protobuf-specs" "^0.3.0"
+    "@sigstore/sign" "^2.2.3"
+    "@sigstore/tuf" "^2.3.1"
+    "@sigstore/verify" "^1.1.0"
 
 simple-plist@^1.1.0:
   version "1.3.1"
@@ -9153,7 +9183,7 @@ sudo-prompt@^9.0.0:
 
 superstruct@^0.6.2:
   version "0.6.2"
-  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.6.2.tgz#c5eb034806a17ff98d036674169ef85e4c7f6a1c"
+  resolved "https://registry.npmjs.org/superstruct/-/superstruct-0.6.2.tgz"
   integrity sha512-lvA97MFAJng3rfjcafT/zGTSWm6Tbpk++DP6It4Qg7oNaeM+2tdJMuVgGje21/bIpBEs6iQql1PJH6dKTjl4Ig==
   dependencies:
     clone-deep "^2.0.1"
@@ -9415,6 +9445,20 @@ ts-interface-checker@^0.1.9:
   version "0.1.13"
   resolved "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz"
   integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
+
+ts-jest@^29.1.2:
+  version "29.1.2"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.1.2.tgz#7613d8c81c43c8cb312c6904027257e814c40e09"
+  integrity sha512-br6GJoH/WUX4pu7FbZXuWGKGNDuU7b8Uj77g/Sp7puZV6EXzuByl6JrECvm0MzVzSTkSHWTihsXt+5XYER5b+g==
+  dependencies:
+    bs-logger "0.x"
+    fast-json-stable-stringify "2.x"
+    jest-util "^29.0.0"
+    json5 "^2.2.3"
+    lodash.memoize "4.x"
+    make-error "1.x"
+    semver "^7.5.3"
+    yargs-parser "^21.0.1"
 
 tslib@^2.0.1, tslib@^2.1.0, tslib@^2.4.0:
   version "2.6.2"
@@ -9967,7 +10011,7 @@ yargs-parser@^18.1.2:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^21.1.1:
+yargs-parser@^21.0.1, yargs-parser@^21.1.1:
   version "21.1.1"
   resolved "https://registry.npmjs.org/yargs-parser/-/yargs-parser-21.1.1.tgz"
   integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
