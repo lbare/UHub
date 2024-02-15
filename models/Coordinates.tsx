@@ -1,7 +1,8 @@
 type Coordinates = {
-    latitude: number;
-    longitude: number;
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
 };
 
-export default Coordinates
-  
+export default Coordinates;
