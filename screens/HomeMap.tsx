@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
+import MapView from "react-native-maps";
 
 const HomeMap: React.FC = () => {
   return (
     <View className="bg-white h-full w-full justify-center items-center">
-      <Text className="text-black font-black text-4xl">UHub</Text>
+      <MapView className="w-full h-full" />
     </View>
   );
 };
