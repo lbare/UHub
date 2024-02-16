@@ -10,6 +10,7 @@ const HomeNavigation: React.FC = () => {
       <Stack.Screen
         name="HomeMap"
         component={HomeMap}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

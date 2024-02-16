@@ -3,6 +3,8 @@ import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import { foodVendorExamples } from "../models/FoodVendor";
+import CustomModal from "../components/Modal";
+import { FoodVendor } from "../models/FoodVendor";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -13,10 +15,39 @@ const UVicRegion: Coordinates = {
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
-  const [markerSelected, setMarkerSelected] = useState<boolean>(false);
+  const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
+    null
+  );
+  const [selectedVendor, setSelectedVendor] = useState<FoodVendor | null>(null);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const onMarkerPress = (vendor: FoodVendor) => {
+    setSelectedLocation(vendor.location);
+    setSelectedVendor(vendor);
+    const adjustedLatitude =
+      vendor.location.latitude - region.latitudeDelta * 0.105;
+    setRegion({
+      latitude: adjustedLatitude,
+      longitude: vendor.location.longitude,
+      latitudeDelta: region.latitudeDelta / 3,
+      longitudeDelta: region.longitudeDelta / 3,
+    });
+    setModalVisible(true);
+  };
+
+  const onModalHide = () => {
+    if (selectedLocation) {
+      setRegion({
+        ...UVicRegion,
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+      });
+    }
+    setModalVisible(false);
+  };
 
   return (
-    <View className="bg-white h-full w-full justify-center items-center">
+    <View className="bg-white flex h-full w-full justify-center items-center">
       <MapView
         className="flex justify-center items-center w-full h-full"
         initialRegion={UVicRegion}
@@ -27,11 +58,33 @@ const HomeMap: React.FC = () => {
         mapType="standard"
         userInterfaceStyle="light"
         showsUserLocation={true}
-        onPress={() => {
-          console.log("Centering map to UVic");
-          setRegion(UVicRegion);
-          if (markerSelected) setMarkerSelected(false);
-        }}
+        onPress={onModalHide}
+        customMapStyle={[
+          {
+            elementType: "labels",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "administrative.land_parcel",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "administrative.neighborhood",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+        ]}
       >
         {foodVendorExamples.map((vendor) => (
           <Marker
@@ -41,18 +94,16 @@ const HomeMap: React.FC = () => {
             description={vendor.description}
             flat={false}
             stopPropagation={true}
-            onPress={() => {
-              console.log("Centering map to vendor:", vendor.name);
-              setRegion({
-                ...vendor.location,
-                latitudeDelta: UVicRegion.latitudeDelta / 2,
-                longitudeDelta: UVicRegion.longitudeDelta / 2,
-              });
-              setMarkerSelected(true);
-            }}
+            onPress={() => onMarkerPress(vendor)}
           />
         ))}
       </MapView>
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        onModalHide={onModalHide}
+        vendor={selectedVendor!}
+      />
     </View>
   );
 };
