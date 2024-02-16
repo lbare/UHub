@@ -1,41 +1,131 @@
-import React, { useState } from "react";
-import { Modal, View, Text, Button, StyleSheet } from "react-native";
+import React from "react";
+import {
+  Modal,
+  View,
+  Text,
+  Button,
+  TouchableWithoutFeedback,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { FoodVendor } from "../models/FoodVendor";
 
-const CustomModal: React.FC = (props) => {
-  const [modalVisible, setModalVisible] = useState(false);
+interface CustomModalProps {
+  modalVisible: boolean;
+  setModalVisible: (visible: boolean) => void;
+  onModalHide: () => void;
+  vendor: FoodVendor;
+}
+
+const CustomModal: React.FC<CustomModalProps> = ({
+  modalVisible,
+  setModalVisible,
+  onModalHide,
+  vendor,
+}) => {
+  const hideModal = () => {
+    setModalVisible(false);
+    onModalHide();
+  };
+
+  const hoursArray = vendor
+    ? Object.entries(vendor.hours).map(([day, { open, close }]) => ({
+        day,
+        open,
+        close,
+      }))
+    : [];
 
   return (
-    <View className="w-full h-full justify-center items-center bg-black">
-      <Modal
-        animationType="slide"
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View className="flex items-center justify-center mt-20">
-          <View
-            style={styles.modalView}
-            className="m-20 bg-gray-500 border-full p-20 items-center shadow-xl"
+    <Modal
+      animationType="slide"
+      visible={modalVisible}
+      onRequestClose={hideModal}
+      transparent={true}
+      onDismiss={hideModal}
+      className="h-full w-full flex items-center justify-start"
+    >
+      <TouchableOpacity
+        onPressOut={hideModal}
+        className="w-full h-1/2 absolute top-0"
+      />
+      {vendor && (
+        <View
+          className="bg-white w-full mt-48 rounded-3xl"
+          style={{
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: -5,
+            },
+            shadowOpacity: 0.15,
+            shadowRadius: 5,
+            elevation: 5,
+          }}
+        >
+          <ScrollView
+            contentContainerStyle={{
+              alignItems: "center",
+              paddingBottom: 16,
+              paddingHorizontal: 16,
+            }}
           >
-            <Text className="mb-15">Text</Text>
-            <Button title="Hide Modal" onPress={() => setModalVisible(false)} />
-          </View>
+            <Image
+              source={{
+                uri: "https://images.unsplash.com/photo-1682687982298-c7514a167088?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              }}
+              style={{ width: "100%", height: 200, borderRadius: 16 }}
+              className="my-4"
+            />
+            <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
+
+            {vendor.menu.sections.map((section, index) => (
+              <View key={index} className="mb-6">
+                <Text className="text-xl font-semibold mb-2">
+                  {section.name}
+                </Text>
+                {section.items.map((item, itemIndex) => (
+                  <View key={itemIndex} className="mb-4">
+                    <Text className="text-lg font-medium">
+                      {item.name} - ${item.price.toFixed(2)}
+                    </Text>
+                    {item.description && (
+                      <Text className="text-sm">{item.description}</Text>
+                    )}
+                    {item.tags &&
+                      item.tags.map((tag, tagIndex) => (
+                        <Text
+                          key={tagIndex}
+                          className="text-xs font-semibold text-gray-500 mr-2 inline-block"
+                        >
+                          {tag}
+                        </Text>
+                      ))}
+                  </View>
+                ))}
+              </View>
+            ))}
+            <View className="mt-4 w-full">
+              <Text className="text-2xl font-bold mb-4 tr">Hours</Text>
+              {hoursArray.map(({ day, open, close }, index) => (
+                <View className="w-full flex-row justify-between items-center">
+                  <Text key={index} className="text-lg mb-2 flex-1">
+                    {day}:
+                  </Text>
+                  <View className="flex-1 items-center">
+                    <Text key={`${index}-open`} className="text-lg mb-2">
+                      {open} - {close}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
         </View>
-      </Modal>
-    </View>
+      )}
+    </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalView: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});
 
 export default CustomModal;
