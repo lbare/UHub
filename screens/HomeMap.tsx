@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import { foodVendorExamples } from "../models/FoodVendor";
+import CustomModal from "../components/Modal";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -17,7 +18,10 @@ const HomeMap: React.FC = () => {
 
   return (
     <View className="bg-white h-full w-full justify-center items-center">
-      <MapView
+      <CustomModal />
+      <Text className="text-2xl font-bold">UVic Food Vendors</Text>
+
+      {/* <MapView
         className="flex justify-center items-center w-full h-full"
         initialRegion={UVicRegion}
         region={region}
@@ -52,7 +56,7 @@ const HomeMap: React.FC = () => {
             }}
           />
         ))}
-      </MapView>
+      </MapView> */}
     </View>
   );
 };
