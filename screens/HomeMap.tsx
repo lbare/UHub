@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
-import { foodVendorExamples } from "../models/FoodVendor";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
 import DataFetcher from "../services/DataFetcher";
@@ -13,7 +12,7 @@ const _mapView = React.createRef<MapView>();
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
-  latitudeDelta: 0.015,
+  latitudeDelta: 0.02,
   longitude: -123.3121273188308,
   longitudeDelta: 0.01,
 };
@@ -75,6 +74,7 @@ const HomeMap: React.FC = () => {
 
   useEffect(() => {
     dataFetcher.getAllBuildings(setBuildings);
+    onZoomChange(UVicRegion);
   }, []);
 
   const calculateZoomLevel = (latitudeDelta: number) => {
@@ -168,15 +168,17 @@ const HomeMap: React.FC = () => {
       >
         {buildings.map((building) =>
           building.vendors.map((vendor, index) => (
-            <CustomMarker
-              keyp={index}
-              name={vendor.name}
-              coordinate={vendor.location}
-              image={require("../assets/3448609.png")}
-              vendor={vendor}
-              onPressCustom={() => onMarkerPress(vendor)}
-              zoomLevel={zoomLevel}
-            />
+            <React.Fragment key={index}>
+              <CustomMarker
+                keyp={index}
+                name={vendor.name}
+                coordinate={vendor.location}
+                image={require("../assets/3448609.png")}
+                vendor={vendor}
+                onPressCustom={() => onMarkerPress(vendor)}
+                zoomLevel={zoomLevel}
+              />
+            </React.Fragment>
           ))
         )}
       </MapView>
