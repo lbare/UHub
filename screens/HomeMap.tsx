@@ -27,6 +27,7 @@ interface CustomMarkerProps {
   image: ImageSourcePropType;
   vendor: FoodVendor;
   onPressCustom: () => void;
+  zoomLevel: number;
 }
 
 const CustomMarker: React.FC<CustomMarkerProps> = ({
@@ -35,6 +36,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
   coordinate,
   image,
   vendor,
+  zoomLevel,
   onPressCustom,
 }) => (
   <Marker
@@ -45,7 +47,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     stopPropagation={true}
     key={keyp}
   >
-    <View className="flex justify-center items-center">
+    <View className="flex justify-start items-center h-12">
       <Image
         source={image}
         resizeMode="contain"
@@ -54,13 +56,16 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
           height: 30,
         }}
       />
-      <Text className="text-gray-600 text-sm">{name}</Text>
+      {zoomLevel > 14.8 ? (
+        <Text className="text-gray-600 text-sm">{name}</Text>
+      ) : null}
     </View>
   </Marker>
 );
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
+  const [zoomLevel, setZoomLevel] = useState<number>(15);
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
     null
   );
@@ -71,6 +76,19 @@ const HomeMap: React.FC = () => {
   useEffect(() => {
     dataFetcher.getAllBuildings(setBuildings);
   }, []);
+
+  const calculateZoomLevel = (latitudeDelta: number) => {
+    const maxLatitude = 180;
+    const zoomLevel = Math.round(
+      Math.log(maxLatitude / latitudeDelta) / Math.LN2
+    );
+    return zoomLevel;
+  };
+
+  const onZoomChange = (newRegion: Coordinates) => {
+    const newZoomLevel = calculateZoomLevel(newRegion.latitudeDelta);
+    setZoomLevel(newZoomLevel);
+  };
 
   const onMarkerPress = (vendor: FoodVendor) => {
     setSelectedLocation(vendor.location);
@@ -119,6 +137,7 @@ const HomeMap: React.FC = () => {
         mapType="standard"
         userInterfaceStyle="light"
         showsUserLocation={true}
+        onRegionChange={onZoomChange}
         onPress={onModalHide}
         customMapStyle={[
           {
@@ -156,6 +175,7 @@ const HomeMap: React.FC = () => {
               image={require("../assets/3448609.png")}
               vendor={vendor}
               onPressCustom={() => onMarkerPress(vendor)}
+              zoomLevel={zoomLevel}
             />
           ))
         )}
