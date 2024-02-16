@@ -133,14 +133,16 @@ const HomeMap: React.FC = () => {
           buildings.map((building) => {
             return building.vendors.map((vendor, index) => {
               return (
-                <CustomMarker
-                  keyp={index}
-                  name={vendor.name}
-                  coordinate={vendor.location}
-                  image = {require('../assets/3448609.png')}
-                  vendor={vendor}
-                  onPressCustom={() => onMarkerPress(vendor)}
-                /> 
+                <React.Fragment key = {'cm-paremt'+vendor.name}>
+                  <CustomMarker
+                    keyp={index}
+                    name={vendor.name}
+                    coordinate={vendor.location}
+                    image = {require('../assets/3448609.png')}
+                    vendor={vendor}
+                    onPressCustom={() => onMarkerPress(vendor)}
+                  /> 
+                </React.Fragment>
               );
             });
           })
