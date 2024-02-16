@@ -7,7 +7,7 @@ import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
 import DataFetcher from "../services/DataFetcher";
 import { Building } from "../models/Building";
-import { Image, ImageSourcePropType } from "react-native";
+import { Text, Image, ImageSourcePropType } from "react-native";
 
 const _mapView = React.createRef<MapView>();
 
@@ -33,10 +33,12 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({keyp, name, coordinate, imag
   <React.Fragment key = {keyp}>
   <Marker title={name} coordinate={coordinate} onPress={() => onPressCustom()} flat={false} stopPropagation={true} >
     <Image
+      className="px-5"
       source={image}
       style={{ width: 30, height: 30 }} // Adjust size as needed
       resizeMode="contain"
     />
+    <Text className="text-gray-600 text-sm">{name}</Text>
   </Marker>
   </React.Fragment>
 );
