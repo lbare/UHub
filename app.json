@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "UHub",
-    "slug": "uhub",
+    "name": "UHub (alpha)",
+    "slug": "uhub-test",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +12,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "app.uhub.seng480A.uvic",
+      "googleServicesFile": "./src/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,9 +31,20 @@
     },
     "extra": {
       "eas": {
-        "projectId": "f4c8d9aa-d7ab-4ee1-8230-7686773a00c3"
+        "projectId": "d4381a75-54fe-454a-bd33-0d2fcf2be2e7"
       }
     },
-    "owner": "lbare"
+    "owner": "rahulniraula",
+    "plugins": [
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }
