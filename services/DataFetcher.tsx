@@ -26,12 +26,14 @@ class DataFetcher {
         return;
       }
 
+      success(buildingExamples);
+      return;
+      
+
+      //Forcing local data for now to avoid error during demo when no internet
       const dataCollection = collection(db, this.collectionName);
       getDocs(dataCollection)
-        .then( _ => {
-          //Forcing local data for now to avoid error when no internet
-          this.buildings_cache = buildingExamples
-          success(buildingExamples);
+        .then( documents => {
           // const documents = snapshot.docs.map(doc => doc.data() as Building);
           // console.log(documents);
           // this.buildings_cache = documents;
