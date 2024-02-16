@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import { foodVendorExamples } from "../models/FoodVendor";
@@ -59,6 +59,32 @@ const HomeMap: React.FC = () => {
         userInterfaceStyle="light"
         showsUserLocation={true}
         onPress={onModalHide}
+        customMapStyle={[
+          {
+            elementType: "labels",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "administrative.land_parcel",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "administrative.neighborhood",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+        ]}
       >
         {foodVendorExamples.map((vendor) => (
           <Marker
