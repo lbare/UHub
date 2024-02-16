@@ -3,8 +3,6 @@ import {
   Modal,
   View,
   Text,
-  Button,
-  TouchableWithoutFeedback,
   Image,
   ScrollView,
   TouchableOpacity,
@@ -67,19 +65,19 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <ScrollView
             contentContainerStyle={{
               alignItems: "center",
-              paddingBottom: 16,
+              paddingVertical: 16,
               paddingHorizontal: 16,
             }}
           >
-            <Image
-              source={{
-                uri: "https://images.unsplash.com/photo-1682687982298-c7514a167088?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              }}
-              style={{ width: "100%", height: 200, borderRadius: 16 }}
-              className="my-4"
-            />
             <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
 
+            <Image
+              source={{
+                uri: vendor.image,
+              }}
+              style={{ width: "100%", height: 200, borderRadius: 16 }}
+              className="mb-4"
+            />
             {vendor.menu.sections.map((section, index) => (
               <View key={index} className="mb-6">
                 <Text className="text-xl font-semibold mb-2">
