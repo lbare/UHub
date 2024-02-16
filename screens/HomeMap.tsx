@@ -114,8 +114,8 @@ const HomeMap: React.FC = () => {
       const new_region = {
         latitude: selectedLocation.latitude,
         longitude: selectedLocation.longitude,
-        latitudeDelta: region.latitudeDelta,
-        longitudeDelta: region.longitudeDelta,
+        latitudeDelta: selectedLocation.latitudeDelta,
+        longitudeDelta: selectedLocation.longitudeDelta,
       };
 
       if (_mapView.current) {
