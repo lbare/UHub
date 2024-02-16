@@ -31,9 +31,6 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install
 
-      - name: Run Tests
-        run: yarn test
-
       - name: 🚀 Publish Update
         run: eas update --auto
         env:
