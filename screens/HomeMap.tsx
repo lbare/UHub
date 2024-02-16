@@ -112,9 +112,10 @@ const HomeMap: React.FC = () => {
   const onModalHide = () => {
     if (selectedLocation) {
       const new_region = {
-        ...UVicRegion,
         latitude: selectedLocation.latitude,
         longitude: selectedLocation.longitude,
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta,
       };
 
       if (_mapView.current) {
