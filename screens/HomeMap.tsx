@@ -29,18 +29,34 @@ interface CustomMarkerProps {
   onPressCustom: () => void;
 }
 
-const CustomMarker: React.FC<CustomMarkerProps> = ({keyp, name, coordinate, image, vendor, onPressCustom }) => (
-  <React.Fragment key = {keyp}>
-  <Marker title={name} coordinate={coordinate} onPress={() => onPressCustom()} flat={false} stopPropagation={true} >
-    <Image
-      className="px-5"
-      source={image}
-      style={{ width: 30, height: 30 }} // Adjust size as needed
-      resizeMode="contain"
-    />
-    <Text className="text-gray-600 text-sm">{name}</Text>
+const CustomMarker: React.FC<CustomMarkerProps> = ({
+  keyp,
+  name,
+  coordinate,
+  image,
+  vendor,
+  onPressCustom,
+}) => (
+  <Marker
+    title={name}
+    coordinate={coordinate}
+    onPress={() => onPressCustom()}
+    flat={false}
+    stopPropagation={true}
+    key={keyp}
+  >
+    <View className="flex justify-center items-center">
+      <Image
+        source={image}
+        resizeMode="contain"
+        style={{
+          width: 30,
+          height: 30,
+        }}
+      />
+      <Text className="text-gray-600 text-sm">{name}</Text>
+    </View>
   </Marker>
-  </React.Fragment>
 );
 
 const HomeMap: React.FC = () => {
@@ -93,7 +109,7 @@ const HomeMap: React.FC = () => {
   return (
     <View className="bg-white flex h-full w-full justify-center items-center">
       <MapView
-        ref={_mapView} 
+        ref={_mapView}
         className="flex justify-center items-center w-full h-full"
         initialRegion={UVicRegion}
         region={region}
@@ -131,24 +147,18 @@ const HomeMap: React.FC = () => {
           },
         ]}
       >
-        {
-          buildings.map((building) => {
-            return building.vendors.map((vendor, index) => {
-              return (
-                <React.Fragment key = {'cm-paremt'+vendor.name}>
-                  <CustomMarker
-                    keyp={index}
-                    name={vendor.name}
-                    coordinate={vendor.location}
-                    image = {require('../assets/3448609.png')}
-                    vendor={vendor}
-                    onPressCustom={() => onMarkerPress(vendor)}
-                  /> 
-                </React.Fragment>
-              );
-            });
-          })
-        }
+        {buildings.map((building) =>
+          building.vendors.map((vendor, index) => (
+            <CustomMarker
+              keyp={index}
+              name={vendor.name}
+              coordinate={vendor.location}
+              image={require("../assets/3448609.png")}
+              vendor={vendor}
+              onPressCustom={() => onMarkerPress(vendor)}
+            />
+          ))
+        )}
       </MapView>
       <CustomModal
         modalVisible={modalVisible}
