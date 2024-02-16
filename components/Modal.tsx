@@ -79,7 +79,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="mb-4"
             />
             {vendor.menu.sections.map((section, index) => (
-              <View key={index} className="mb-6">
+              <React.Fragment key={index}>
+                <View key={index} className="mb-6 w-full">
                 <Text className="text-xl font-semibold mb-2">
                   {section.name}
                 </Text>
@@ -102,12 +103,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       ))}
                   </View>
                 ))}
-              </View>
+                </View>
+              </React.Fragment>
             ))}
             <View className="mt-4 w-full">
               <Text className="text-2xl font-bold mb-4 tr">Hours</Text>
               {hoursArray.map(({ day, open, close }, index) => (
-                <View className="w-full flex-row justify-between items-center">
+                <React.Fragment key={index}>
+                  <View className="w-full flex-row justify-between items-center">
                   <Text key={index} className="text-lg mb-2 flex-1">
                     {day}:
                   </Text>
@@ -117,6 +120,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     </Text>
                   </View>
                 </View>
+                </React.Fragment>
               ))}
             </View>
           </ScrollView>
