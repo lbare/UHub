@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "UHub",
-    "slug": "uhub",
+    "name": "UHub (alpha)",
+    "slug": "uhub-test",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,15 +12,24 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "app.uhub.seng480A.uvic",
+      "googleServicesFile": "./src/GoogleService-Info.plist",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBJWMWCK9PvYKUaIdIHJ7ybsXFpQlxl8Nc"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServicesFile": "./src/google-services.json",
+      "package": "app.uhub.seng480A.uvic"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +39,17 @@
         "projectId": "f4c8d9aa-d7ab-4ee1-8230-7686773a00c3"
       }
     },
-    "owner": "lbare"
+    "owner": "lbare",
+    "plugins": [
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }
