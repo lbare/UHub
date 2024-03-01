@@ -1,0 +1,48 @@
+/* main.css */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #FFFFFF;
+    margin: 10%;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #2B26AD;
+    padding-top: 30px;
+}
+
+a {
+    color: #FFBF40;
+}
+
+a:visited {
+    color: #ffa319;
+}
+
+#logo {
+    /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+    /* font-family: 'Arial Narrow', sans-serif;
+    font-size: 12em; */
+    display: block;
+    margin: auto;
+    width: 60%;
+    max-width: 400px;
+}
+
+.tagline {
+    text-align: center;
+}
+
+.container {
+    padding: 20px;
+    background-color: #c7d0ff;
+    border-radius: 15px;
+
+    p {
+        margin: 0;
+    }
+}
