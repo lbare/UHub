@@ -16,11 +16,13 @@ h1, h2, h3 {
 }
 
 a {
-    color: #FFBF40;
+    /* color: #FFBF40; */
+    color: #2B26AD;
 }
 
 a:visited {
-    color: #ffa319;
+    /* color: #ffa319; */
+    color: #45146d;
 }
 
 .tagline {
