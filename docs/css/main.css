@@ -6,8 +6,8 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #FFFFFF;
-    margin: 10%;
-    padding: 0;
+    margin: 50px 10%;
+    padding: 0px;
 }
 
 h1, h2, h3 {
@@ -23,6 +23,28 @@ a:visited {
     color: #ffa319;
 }
 
+.tagline {
+    text-align: center;
+    padding: 0px;
+    margin-bottom: 50px;
+}
+
+.container {
+    padding: 20px;
+    background-color: #c7d0ff;
+    border-radius: 15px;
+
+    p {
+        margin: 0;
+    }
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 #logo {
     /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
     /* font-family: 'Arial Narrow', sans-serif;
@@ -33,16 +55,22 @@ a:visited {
     max-width: 400px;
 }
 
-.tagline {
-    text-align: center;
+#icon {
+    width: 256px;
+    margin: 20px;
+    border-radius: 50px;
+    box-shadow: 5px 9px 10px rgba(0, 0, 0, 0.2);
 }
 
-.container {
-    padding: 20px;
-    background-color: #c7d0ff;
-    border-radius: 15px;
+#download-info {
+    margin-left: 20px;
 
-    p {
-        margin: 0;
+    h2, h3, h4 {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    h4 {
+        margin-bottom: 20px;
     }
 }
