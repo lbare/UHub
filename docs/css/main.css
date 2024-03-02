@@ -39,16 +39,13 @@ a:visited {
     }
 }
 
-.flex-column {
+.flex-row {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
 #logo {
-    /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
-    /* font-family: 'Arial Narrow', sans-serif;
-    font-size: 12em; */
     display: block;
     margin: auto;
     width: 60%;
