@@ -66,6 +66,19 @@ button {
 
     img {
         width: 24%;
+        max-height: 720px;
+        object-fit: contain;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .screenshots-container {
+        justify-content: flex-start;
+
+        img {
+            width: auto;
+            margin-right: 15px;
+        }
     }
 }
 
