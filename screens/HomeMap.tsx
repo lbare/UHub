@@ -4,9 +4,9 @@ import MapView, { Marker } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
-import DataFetcher from "../services/DataFetcher";
-import { Building } from "../models/Building";
+import { BuildingContext } from "../contexts/BuildingContext";
 import { Text, Image, ImageSourcePropType } from "react-native";
+import { useContext } from "react";
 
 const _mapView = React.createRef<MapView>();
 
@@ -16,8 +16,6 @@ const UVicRegion: Coordinates = {
   longitude: -123.3121273188308,
   longitudeDelta: 0.01,
 };
-
-const dataFetcher = new DataFetcher();
 
 interface CustomMarkerProps {
   keyp: number;
@@ -70,10 +68,10 @@ const HomeMap: React.FC = () => {
   );
   const [selectedVendor, setSelectedVendor] = useState<FoodVendor | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [buildings, setBuildings] = useState<Building[]>([]);
+  const buildings = useContext(BuildingContext);
 
   useEffect(() => {
-    dataFetcher.getAllBuildings(setBuildings);
+    // dataFetcher.getAllBuildings(setBuildings);
     onZoomChange(UVicRegion);
   }, []);
 
@@ -328,21 +326,22 @@ const HomeMap: React.FC = () => {
         onPress={onModalHide}
         customMapStyle={mapStyles}
       >
-        {buildings.map((building) =>
-          building.vendors.map((vendor, index) => (
-            <React.Fragment key={index}>
-              <CustomMarker
-                keyp={index}
-                name={vendor.name}
-                coordinate={vendor.location}
-                image={require("../assets/3448609.png")}
-                vendor={vendor}
-                onPressCustom={() => onMarkerPress(vendor)}
-                zoomLevel={zoomLevel}
-              />
-            </React.Fragment>
-          ))
-        )}
+        {buildings &&
+          buildings.map((building) =>
+            building.vendors.map((vendor, index) => (
+              <React.Fragment key={index}>
+                <CustomMarker
+                  keyp={index}
+                  name={vendor.name}
+                  coordinate={vendor.location}
+                  image={require("../assets/3448609.png")}
+                  vendor={vendor}
+                  onPressCustom={() => onMarkerPress(vendor)}
+                  zoomLevel={zoomLevel}
+                />
+              </React.Fragment>
+            ))
+          )}
       </MapView>
       <CustomModal
         modalVisible={modalVisible}
