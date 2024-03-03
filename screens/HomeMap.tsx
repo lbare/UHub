@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -317,7 +317,7 @@ const HomeMap: React.FC = () => {
         className="flex justify-center items-center w-full h-full"
         initialRegion={UVicRegion}
         region={region}
-        provider="google"
+        provider= {PROVIDER_GOOGLE}
         maxZoomLevel={20}
         minZoomLevel={15}
         mapType="standard"
