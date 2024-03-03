@@ -34,6 +34,7 @@ type MenuSection = {
 };
 
 type Menu = {
+    // id: string;
     sections: MenuSection[];
 };
 
@@ -778,6 +779,8 @@ const uniclubMenuExample: Menu = {
     ]
 };
 
+// TODO: Would be better for search library functionality
+// if this was an array rather than an object with keys
 const menuExample = {
     greens: greensMenuExample,
     felicitas: felicitasMenuExample,
@@ -786,5 +789,21 @@ const menuExample = {
     entree: EntreeMenu,
     uniclub: uniclubMenuExample
 };
+
+// // Proposed change to array (better for search)
+// const menuExampleNew = [
+//     greensMenuExample,
+//     felicitasMenuExample,
+//     theGrillMenuExample,
+//     starbucksMenu,
+//     EntreeMenu,
+//     uniclubMenuExample
+// ];
+
+// // where we add an 'id' key to each menu object
+// const greensMenuExample: Menu = {
+//     id: "greens",
+//     sections: [/* ... */]
+// }
 
 export { Menu, MenuItem, menuExample };

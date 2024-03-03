@@ -24,7 +24,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.greens,
+    menu: menuExample.greens, // TODO: filter id === "greens instead"
   },
   starbucks: {
     name: "Starbucks",
