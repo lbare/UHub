@@ -25,6 +25,16 @@ a:visited {
     color: #45146d;
 }
 
+button {
+    background-color: #2B26AD;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0px;
+}
+
 .tagline {
     text-align: center;
     padding: 0px;
