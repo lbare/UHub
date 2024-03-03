@@ -81,6 +81,29 @@ button {
     }
 }
 
+@media screen and (max-width: 640px) {
+    .screenshots-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+
+    .flex-column-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #icon-wrapper {
+        margin-bottom: 20px;
+    }
+}
+
 #logo {
     display: block;
     margin: auto;
