@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { FoodVendor } from "../models/FoodVendor";
 
+import { DayOfWeek, getVendorHoursForDayString, isVendorCurrentlyOpen } from "../models/VendorHours";
+
 interface CustomModalProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
@@ -27,13 +29,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
     onModalHide();
   };
 
-  const hoursArray = vendor
-    ? Object.entries(vendor.hours).map(([day, { open, close }]) => ({
-        day,
-        open,
-        close,
-      }))
-    : [];
+  const hoursArray = vendor ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
+    day,
+    timeRanges,
+  })) : [];
 
   return (
     <Modal
@@ -108,20 +107,28 @@ const CustomModal: React.FC<CustomModalProps> = ({
             ))}
             <View className="mt-4 w-full">
               <Text className="text-2xl font-bold mb-4 tr">Hours</Text>
-              {hoursArray.map(({ day, open, close }, index) => (
+
+              <Text className="text-lg mb-2">
+                {isVendorCurrentlyOpen(vendor.hours)
+                  ? "Open now"
+                  : "Closed now"}
+              </Text>
+
+              {hoursArray.map(({ day, timeRanges }, index) => (
                 <React.Fragment key={index}>
-                  <View className="w-full flex-row justify-between items-center">
-                  <Text key={index} className="text-lg mb-2 flex-1">
-                    {day}:
-                  </Text>
-                  <View className="flex-1 items-center">
-                    <Text key={`${index}-open`} className="text-lg mb-2">
-                      {open} - {close}
+                  <View className="w-full flex-row justify-between items-top">
+                    <Text key={index} className="text-lg mb-2 flex-1">
+                      {day}:
                     </Text>
+                    <View className="flex-1">
+                      <Text className="text-lg mb-2">
+                        {getVendorHoursForDayString(vendor.hours, day as DayOfWeek)}
+                      </Text>
+                    </View>
                   </View>
-                </View>
                 </React.Fragment>
               ))}
+              
             </View>
           </ScrollView>
         </View>
