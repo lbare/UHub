@@ -25,19 +25,12 @@ class DataFetcher {
         success(this.buildings_cache);
         return;
       }
-
-      success(buildingExamples);
-      return;
-      
-
-      //Forcing local data for now to avoid error during demo when no internet
       const dataCollection = collection(db, this.collectionName);
       getDocs(dataCollection)
         .then( documents => {
-          // const documents = snapshot.docs.map(doc => doc.data() as Building);
-          // console.log(documents);
-          // this.buildings_cache = documents;
-          // success(documents);
+          const buildings = documents.docs.map(doc => doc.data() as Building);
+          this.buildings_cache = buildings;
+          success(buildings);
         })
         .catch(error => {
           console.error("Error fetching buildings: ", error);
@@ -45,9 +38,9 @@ class DataFetcher {
 
   }
 
-    getAllFoodVendorsInBuilding(building: Building) : FoodVendor[] {
-        return building.vendors;
-    }
+  getAllFoodVendorsInBuilding(building: Building) : FoodVendor[] {
+      return building.vendors;
+  }
 }
 
 export default DataFetcher;
