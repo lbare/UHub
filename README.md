@@ -58,5 +58,8 @@ eas login
 eas build:configure
 
 # for every new build
-eas build --platform all
+# (builds for android + ios [requires Apple Developer Credentials])
+eas build --profile preview --platform all
+# (builds android apk)
+eas build --profile preview --platform android
 ```
