@@ -25,6 +25,10 @@ class DataFetcher {
         success(this.buildings_cache);
         return;
       }
+      
+      success(buildingExamples);
+      return;
+
       const dataCollection = collection(db, this.collectionName);
       getDocs(dataCollection)
         .then( documents => {
