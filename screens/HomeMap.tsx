@@ -14,10 +14,10 @@ import { BuildingContext } from "../contexts/BuildingContext";
 import { Text, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
-import DataFetcher from "../services/DataFetcher";
 import { MagnifyingGlass, X } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
+import DataFetcher from "../services/DataFetcher";
 
 const _mapView = React.createRef<MapView>();
 
