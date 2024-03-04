@@ -34,12 +34,13 @@ type MenuSection = {
 };
 
 type Menu = {
-    // id: string;
+    id: string;
     sections: MenuSection[];
 };
 
 //Menu Example from Greens in Cove from Feburary 13th 2024
 const greensMenuExample: Menu = {
+    id: "greens",
     sections: [
         {
             name: "Plant Based Eats Made to Order",
@@ -116,6 +117,7 @@ const greensMenuExample: Menu = {
 };
 
 const felicitasMenuExample: Menu = {
+    id: "felicitas",
     sections : [
         {
             name: "Pub Style Favorites",
@@ -373,6 +375,7 @@ const felicitasMenuExample: Menu = {
 }
 
 const theGrillMenuExample: Menu = {
+    id: "theGrill",
     sections : [
         {
             name: "BREAKFAST",
@@ -546,6 +549,7 @@ const theGrillMenuExample: Menu = {
 }
 
 const starbucksMenu: Menu = {
+    id: "starbucks",
     sections: [
         {
             name: "Coffee",
@@ -617,6 +621,7 @@ const starbucksMenu: Menu = {
 };
 
 const EntreeMenu: Menu = {
+    id: "entree",
     sections: [
         {
             name: "Main",
@@ -682,6 +687,7 @@ const EntreeMenu: Menu = {
 };
 
 const uniclubMenuExample: Menu = {
+    id: "uniclub",
     sections: [
         {
             name: "LIGHTER MEALS",
@@ -779,31 +785,13 @@ const uniclubMenuExample: Menu = {
     ]
 };
 
-// TODO: Would be better for search library functionality
-// if this was an array rather than an object with keys
-const menuExample = {
-    greens: greensMenuExample,
-    felicitas: felicitasMenuExample,
-    theGrill: theGrillMenuExample,
-    starbucks: starbucksMenu,
-    entree: EntreeMenu,
-    uniclub: uniclubMenuExample
-};
-
-// // Proposed change to array (better for search)
-// const menuExampleNew = [
-//     greensMenuExample,
-//     felicitasMenuExample,
-//     theGrillMenuExample,
-//     starbucksMenu,
-//     EntreeMenu,
-//     uniclubMenuExample
-// ];
-
-// // where we add an 'id' key to each menu object
-// const greensMenuExample: Menu = {
-//     id: "greens",
-//     sections: [/* ... */]
-// }
+const menuExample = [
+    greensMenuExample,
+    felicitasMenuExample,
+    theGrillMenuExample,
+    starbucksMenu,
+    EntreeMenu,
+    uniclubMenuExample
+];
 
 export { Menu, MenuItem, menuExample };
