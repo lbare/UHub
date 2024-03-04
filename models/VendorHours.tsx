@@ -39,6 +39,43 @@ const vendorHoursToString = (vendorHours: VendorHours): string => {
   return hoursString;
 }
 
+//Needs unit tests
+const dateFromStringTime = (timeString: string): Date => {
+  // Split the string into hours and minutes
+  var timeParts = timeString.split(":");
+  var hours = parseInt(timeParts[0], 10);
+  var minutes = parseInt(timeParts[1].split(" ")[0], 10);
+
+  // Convert 12-hour format to 24-hour format if necessary
+  if (timeParts[1].indexOf("PM") !== -1 && hours < 12) {
+      hours += 12;
+  } else if (timeParts[1].indexOf("AM") !== -1 && hours === 12) {
+      hours = 0;
+  }
+
+  // Create a new Date object with today's date and the specified time
+  var date = new Date();
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(0);
+  
+  return date;
+}
+
+const compareTime = (time1: string, time2: string): number => {
+  //Hacky way to use Date to compare time
+  const date1 = dateFromStringTime(time1);
+  const date2 = dateFromStringTime(time2);
+
+  if (date1 < date2) {
+    return -1;
+  } else if (date1 > date2) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 const isVendorOpenHelper = (vendorHours: VendorHours, day: DayOfWeek, currentTime: string): boolean => {
   const todayHours = vendorHours[day];
 
@@ -46,8 +83,11 @@ const isVendorOpenHelper = (vendorHours: VendorHours, day: DayOfWeek, currentTim
     return false;
   }
 
-  //TODO: Implement logic to check if the vendor is open
-  
+  for (const timeRange of todayHours) {
+    if (compareTime(currentTime, timeRange.open) >= 0 && compareTime(currentTime, timeRange.close) <= 0) {
+      return true;
+    }
+  }
 
   return false;
 };
