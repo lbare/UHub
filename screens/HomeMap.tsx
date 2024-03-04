@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, TextInput } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
@@ -7,6 +7,7 @@ import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
 import { Text, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
+import { MagnifyingGlass, Sliders } from "phosphor-react-native";
 
 const _mapView = React.createRef<MapView>();
 
@@ -69,6 +70,7 @@ const HomeMap: React.FC = () => {
   const [selectedVendor, setSelectedVendor] = useState<FoodVendor | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const buildings = useContext(BuildingContext);
+  const [searchInput, setSearchInput] = useState<string>("");
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -317,7 +319,7 @@ const HomeMap: React.FC = () => {
         className="flex justify-center items-center w-full h-full"
         initialRegion={UVicRegion}
         region={region}
-        provider= {PROVIDER_GOOGLE}
+        provider={PROVIDER_GOOGLE}
         maxZoomLevel={20}
         minZoomLevel={15}
         mapType="standard"
@@ -326,7 +328,39 @@ const HomeMap: React.FC = () => {
         onPress={onModalHide}
         customMapStyle={mapStyles}
       >
-        {buildings &&
+        <View className="w-full absolute left-0 right-0 top-20 items-center">
+          <View className="flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
+            <View className="w-16 h-full justify-center items-center border-red-500 border">
+              <MagnifyingGlass size={24} weight="bold" color="#383838" />
+            </View>
+            <TextInput
+              style={{
+                width: "80%",
+                height: "100%",
+                fontSize: 22,
+                color: "#383838",
+              }}
+              placeholder="Search"
+              placeholderTextColor="#383838"
+              value={searchInput}
+              onChangeText={(text) => setSearchInput(text)}
+            />
+            <View
+              className="h-full w-16 bg-neutral-800"
+              style={{
+                backgroundColor: "#383838",
+                borderRadius: 12,
+                height: "100%",
+                width: "10%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Sliders size={24} weight="bold" color="#383838" />
+            </View>
+          </View>
+        </View>
+        {null &&
           buildings.map((building) =>
             building.vendors.map((vendor, index) => (
               <React.Fragment key={index}>
