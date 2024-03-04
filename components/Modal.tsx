@@ -1,5 +1,5 @@
-import React from "react";
-import { TabView, SceneMap } from 'react-native-tab-view';
+import React, { useState, useEffect } from "react";
+import { TabView, SceneMap } from "react-native-tab-view";
 import {
   Modal,
   View,
@@ -7,11 +7,15 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  useWindowDimensions
+  useWindowDimensions,
 } from "react-native";
 import { FoodVendor } from "../models/FoodVendor";
 
-import { DayOfWeek, getVendorHoursForDayString, isVendorCurrentlyOpen } from "../models/VendorHours";
+import {
+  DayOfWeek,
+  getVendorHoursForDayString,
+  isVendorCurrentlyOpen,
+} from "../models/VendorHours";
 
 interface CustomModalProps {
   modalVisible: boolean;
@@ -31,10 +35,20 @@ const CustomModal: React.FC<CustomModalProps> = ({
     onModalHide();
   };
 
-  const hoursArray = vendor ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
-    day,
-    timeRanges,
-  })) : [];
+  const hoursArray = vendor
+    ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
+        day,
+        timeRanges,
+      }))
+    : [];
+
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (vendor && vendor.menu.sections.length > 0) {
+      setSelectedSection(vendor.menu.sections[0].name);
+    }
+  }, [vendor]);
 
   return (
     <Modal
@@ -51,7 +65,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white w-full rounded-xl"
+          className="bg-white mt-48 w-full rounded-xl"
           style={{
             shadowColor: "#000",
             shadowOffset: {
@@ -70,8 +84,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
               paddingHorizontal: 16,
             }}
           >
-            
-
             <Image
               source={{
                 uri: vendor.image,
@@ -80,34 +92,66 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="mb-4"
             />
             <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
-            {vendor.menu.sections.map((section, index) => (
-              <React.Fragment key={index}>
-                <View key={index} className="mb-6 w-full">
-                <Text className="text-xl font-semibold mb-2">
-                  {section.name}
-                </Text>
-                {section.items.map((item, itemIndex) => (
-                  <View key={itemIndex} className="mb-4">
-                    <Text className="text-lg font-medium">
-                      {item.name} - ${item.price.toFixed(2)}
+
+            <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
+              {vendor.menu.sections.length > 1 &&
+                vendor.menu.sections.map((section, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    className={`justify-center items-center mx-2 my-2 ${
+                      selectedSection && selectedSection === section.name
+                        ? "border-b-2 border-black"
+                        : ""
+                    }`}
+                    onPress={() => setSelectedSection(section.name)}
+                  >
+                    <Text
+                      className={`text-m font-extrabold ${
+                        selectedSection && selectedSection === section.name
+                          ? "text-black text-lg"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {section.name}
                     </Text>
-                    {item.description && (
-                      <Text className="text-sm">{item.description}</Text>
-                    )}
-                    {item.tags &&
-                      item.tags.map((tag, tagIndex) => (
-                        <Text
-                          key={tagIndex}
-                          className="text-xs font-semibold text-gray-500 mr-2 inline-block"
-                        >
-                          {tag}
-                        </Text>
-                      ))}
-                  </View>
+                  </TouchableOpacity>
                 ))}
-                </View>
-              </React.Fragment>
-            ))}
+            </View>
+
+            {vendor.menu.sections.map((section, index) => {
+              if (section.name === selectedSection) {
+                return (
+                  <React.Fragment key={index}>
+                    <View className="mb-6 w-full">
+                      <Text className="text-xl font-semibold mb-2">
+                        {section.name}
+                      </Text>
+                      {section.items.map((item, itemIndex) => (
+                        <View key={itemIndex} className="mb-4">
+                          <Text className="text-lg font-medium">
+                            {item.name} - ${item.price.toFixed(2)}
+                          </Text>
+                          {item.description && (
+                            <Text className="text-sm">{item.description}</Text>
+                          )}
+                          {item.tags &&
+                            item.tags.map((tag, tagIndex) => (
+                              <Text
+                                key={tagIndex}
+                                className="text-xs font-semibold text-gray-500 mr-2 inline-block"
+                              >
+                                {tag}
+                              </Text>
+                            ))}
+                        </View>
+                      ))}
+                    </View>
+                  </React.Fragment>
+                );
+              }
+              return null;
+            })}
+
             <View className="mt-4 w-full">
               <Text className="text-2xl font-bold mb-4 tr">Hours</Text>
 
@@ -125,13 +169,15 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     </Text>
                     <View className="flex-1">
                       <Text className="text-lg mb-2">
-                        {getVendorHoursForDayString(vendor.hours, day as DayOfWeek)}
+                        {getVendorHoursForDayString(
+                          vendor.hours,
+                          day as DayOfWeek
+                        )}
                       </Text>
                     </View>
                   </View>
                 </React.Fragment>
               ))}
-              
             </View>
           </ScrollView>
         </View>
