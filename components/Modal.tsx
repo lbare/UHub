@@ -1,4 +1,5 @@
 import React from "react";
+import { TabView, SceneMap } from 'react-native-tab-view';
 import {
   Modal,
   View,
@@ -6,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  useWindowDimensions
 } from "react-native";
 import { FoodVendor } from "../models/FoodVendor";
 
@@ -36,7 +38,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   return (
     <Modal
-      animationType="slide"
+      // animationType="slide"
       visible={modalVisible}
       onRequestClose={hideModal}
       transparent={true}
@@ -49,7 +51,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white w-full mt-48 rounded-3xl"
+          className="bg-white w-full rounded-xl"
           style={{
             shadowColor: "#000",
             shadowOffset: {
@@ -68,7 +70,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               paddingHorizontal: 16,
             }}
           >
-            <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
+            
 
             <Image
               source={{
@@ -77,6 +79,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               style={{ width: "100%", height: 200, borderRadius: 16 }}
               className="mb-4"
             />
+            <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
             {vendor.menu.sections.map((section, index) => (
               <React.Fragment key={index}>
                 <View key={index} className="mb-6 w-full">
