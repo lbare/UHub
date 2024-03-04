@@ -46,12 +46,8 @@ const isVendorOpenHelper = (vendorHours: VendorHours, day: DayOfWeek, currentTim
     return false;
   }
 
-  for (const interval of todayHours) {
-    const { open, close } = interval;
-    if (currentTime >= open && currentTime <= close) {
-      return true; 
-    }
-  }
+  //TODO: Implement logic to check if the vendor is open
+  
 
   return false;
 };
