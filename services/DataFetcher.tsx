@@ -29,7 +29,6 @@ class DataFetcher {
       getDocs(dataCollection)
         .then( documents => {
           const buildings = documents.docs.map(doc => doc.data() as Building);
-          console.log(buildings);
           this.buildings_cache = buildings;
           success(buildings);
         })
