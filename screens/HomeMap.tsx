@@ -6,7 +6,8 @@ import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
 import DataFetcher from "../services/DataFetcher";
 import { Building } from "../models/Building";
-import { Text, Image, ImageSourcePropType } from "react-native";
+import { Text, TextInput, Image, ImageSourcePropType } from "react-native";
+import MenuSearch from "../services/MenuSearch";
 
 const _mapView = React.createRef<MapView>();
 
@@ -18,6 +19,7 @@ const UVicRegion: Coordinates = {
 };
 
 const dataFetcher = new DataFetcher();
+const menuSearch = new MenuSearch();
 
 interface CustomMarkerProps {
   keyp: number;
@@ -127,6 +129,19 @@ const HomeMap: React.FC = () => {
 
   return (
     <View className="bg-white flex h-full w-full justify-center items-center">
+      {/* <TextInput
+        placeholder="Search..."
+        onChangeText={(text) => {menuSearch.searchAllMenuItems(text);}}
+        style={{
+          width: "80%",
+          height: 40,
+          borderWidth: 1,
+          borderColor: "gray",
+          borderRadius: 5,
+          paddingHorizontal: 10,
+          marginTop: 10,
+        }}
+      /> */}
       <MapView
         ref={_mapView}
         className="flex justify-center items-center w-full h-full"
