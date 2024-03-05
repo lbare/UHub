@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
-  ScrollView,
-} from "react-native";
+import React, { useState, useEffect, useContext } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
-import { Text, Image, ImageSourcePropType } from "react-native";
-import { useContext } from "react";
+import {
+  Text,
+  TextInput,
+  Image,
+  ImageSourcePropType,
+  ScrollView,
+
+  View,
+} from "react-native";
 import MenuSearch from "../services/MenuSearch";
 import { MagnifyingGlass, X } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
