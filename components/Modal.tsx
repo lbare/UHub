@@ -34,6 +34,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     setModalVisible(false);
     onModalHide();
   };
+  const [hoursVisible, setHoursVisible] = useState<boolean>(false);
 
   const hoursArray = vendor
     ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
@@ -41,6 +42,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
         timeRanges,
       }))
     : [];
+
+    const toggleHoursVisibility = () => {
+      setHoursVisible(!hoursVisible);
+    };
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
@@ -92,11 +97,35 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="mb-4"
             />
             <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
-            <Text className="text-lg mb-2">
+            <Text className="text-lg mb-2" style={{ textAlign: 'left'}}>
                 {isVendorCurrentlyOpen(vendor.hours)
                   ? "Open now"
                   : "Closed now"}
               </Text>
+
+
+              <TouchableOpacity onPress={toggleHoursVisibility} style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 18, marginBottom: 4, textAlign: 'left' }}>
+                Hours {hoursVisible ? '▲' : '▼'}
+              </Text>
+              </TouchableOpacity>
+
+              {hoursVisible && hoursArray.map(({ day, timeRanges }, index) => (
+                <View key={index} style={{ flexDirection: "row", justifyContent: "flex-start", width: "100%", marginBottom: 2 }}>
+                  <Text style={{ fontSize: 16, minWidth: 90 }}>{day}:</Text>
+                  <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                    {getVendorHoursForDayString(vendor.hours, day as DayOfWeek)
+                      .split(', ') // Split the hours string by comma and space
+                      .map((timeRange, i) => (
+                        <Text key={i} style={{ fontSize: 16 }}>
+                          {i > 0 ? '' : ''}{timeRange}
+                        </Text>
+                      ))
+                    }
+                  </View>
+                </View>
+              ))}
+
 
             <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
               
@@ -158,11 +187,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
               return null;
             })}
 
-            <View className="mt-4 w-full">
-              <Text className="text-2xl font-bold mb-4 tr">Hours</Text>
+            {/* <View className="mt-4 w-full">
+              <Text className="text-2xl font-bold mb-4 tr">Hours</Text> */}
 
 
-              {hoursArray.map(({ day, timeRanges }, index) => (
+              {/* {hoursArray.map(({ day, timeRanges }, index) => (
                 <React.Fragment key={index}>
                   <View className="w-full flex-row justify-between items-top">
                     <Text key={index} className="text-lg mb-2 flex-1">
@@ -178,8 +207,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     </View>
                   </View>
                 </React.Fragment>
-              ))}
-            </View>
+              ))} */}
+              
+
+
+            {/* </View> */}
           </ScrollView>
         </View>
       )}
