@@ -162,22 +162,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
                         {section.name}
                       </Text>
                       {section.items.map((item, itemIndex) => (
-                        <View key={itemIndex} className="mb-4" style = {{backgroundColor: "#f0f4f5", marginLeft:-15, paddingLeft:15, marginRight: -15, paddingRight: 15, paddingBottom: 8}}>
+                        <View key={itemIndex} className="" style={{ backgroundColor: (itemIndex % 2 == 0) ? "#FAF2F0" : "white", marginLeft: -15, paddingLeft: 15, marginRight: -15, paddingRight: 15, paddingBottom: 8 }}>
                           <Text className="text-lg font-medium">
-                            {item.name} - ${item.price.toFixed(2)}
+                            {item.name} 
                           </Text>
                           {item.description && (
-                            <Text className="text-sm">{item.description}</Text>
+                            <Text className="text-sm mt-1">{item.description}</Text>
                           )}
-                          {item.tags &&
-                            item.tags.map((tag, tagIndex) => (
-                              <Text
-                                key={tagIndex}
-                                className="text-xs font-semibold text-gray-500 mr-2 inline-block"
-                              >
-                                {tag}
-                              </Text>
-                            ))}
+
+                            <Text className="text-md mt-1 font-semibold">
+                            ${item.price}
+                          </Text>
                         </View>
                       ))}
                     </View>
@@ -187,31 +182,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
               return null;
             })}
 
-            {/* <View className="mt-4 w-full">
-              <Text className="text-2xl font-bold mb-4 tr">Hours</Text> */}
-
-
-              {/* {hoursArray.map(({ day, timeRanges }, index) => (
-                <React.Fragment key={index}>
-                  <View className="w-full flex-row justify-between items-top">
-                    <Text key={index} className="text-lg mb-2 flex-1">
-                      {day}:
-                    </Text>
-                    <View className="flex-1">
-                      <Text className="text-lg mb-2">
-                        {getVendorHoursForDayString(
-                          vendor.hours,
-                          day as DayOfWeek
-                        )}
-                      </Text>
-                    </View>
-                  </View>
-                </React.Fragment>
-              ))} */}
-              
-
-
-            {/* </View> */}
           </ScrollView>
         </View>
       )}
