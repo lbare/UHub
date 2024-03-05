@@ -37,9 +37,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   const hoursArray = vendor
     ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
-        day,
-        timeRanges,
-      }))
+      day,
+      timeRanges,
+    }))
     : [];
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -52,7 +52,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   return (
     <Modal
-      // animationType="slide"
+      animationType="slide"
       visible={modalVisible}
       onRequestClose={hideModal}
       transparent={true}
@@ -65,7 +65,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white w-full rounded-xl"
+          className="bg-white mt-48 w-full rounded-xl"
           style={{
             shadowColor: "#000",
             shadowOffset: {
@@ -81,7 +81,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
             contentContainerStyle={{
               alignItems: "center",
               paddingVertical: 16,
-              paddingHorizontal: 16,
+              paddingHorizontal: 10,
             }}
           >
             <Image
@@ -93,30 +93,28 @@ const CustomModal: React.FC<CustomModalProps> = ({
             />
             <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
             <Text className="text-lg mb-2">
-                {isVendorCurrentlyOpen(vendor.hours)
-                  ? "Open now"
-                  : "Closed now"}
-              </Text>
+              {isVendorCurrentlyOpen(vendor.hours)
+                ? "Open now"
+                : "Closed now"}
+            </Text>
 
             <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
-              
-              {vendor.menu.sections.length > 1 &&
+
+              {vendor.menu.sections.length > 0 &&
                 vendor.menu.sections.map((section, index) => (
                   <TouchableOpacity
                     key={index}
-                    className={`justify-center items-center mx-2 my-2 ${
-                      selectedSection && selectedSection === section.name
-                        ? "border-b-2 border-black"
-                        : ""
-                    }`}
+                    className={`justify-center items-center mx-2 my-2 ${selectedSection && selectedSection === section.name
+                      ? "border-b-2 border-black"
+                      : ""
+                      }`}
                     onPress={() => setSelectedSection(section.name)}
                   >
                     <Text
-                      className={`text-m font-extrabold ${
-                        selectedSection && selectedSection === section.name
-                          ? "text-black text-lg"
-                          : "text-gray-500"
-                      }`}
+                      className={`text-m font-extrabold ${selectedSection && selectedSection === section.name
+                        ? "text-black text-lg"
+                        : "text-gray-500"
+                        }`}
                     >
                       {section.name}
                     </Text>
@@ -129,26 +127,22 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 return (
                   <React.Fragment key={index}>
                     <View className="mb-6 w-full">
-                      <Text className="text-xl font-semibold mb-2">
-                        {section.name}
-                      </Text>
                       {section.items.map((item, itemIndex) => (
-                        <View key={itemIndex} className="mb-4" style = {{backgroundColor: "#f0f4f5", marginLeft:-15, paddingLeft:15, marginRight: -15, paddingRight: 15, paddingBottom: 8}}>
+                        <View key={itemIndex} className="" style={{ backgroundColor: (itemIndex % 2 == 0) ? "#FAF2F0" : "white", marginLeft: -15, paddingLeft: 15, marginRight: -15, paddingRight: 15, paddingBottom: 8 }}>
                           <Text className="text-lg font-medium">
-                            {item.name} - ${item.price.toFixed(2)}
+                            {item.name}
                           </Text>
                           {item.description && (
-                            <Text className="text-sm">{item.description}</Text>
+                            <Text className="text-sm mt-1">{item.description}</Text>
                           )}
-                          {item.tags &&
-                            item.tags.map((tag, tagIndex) => (
-                              <Text
-                                key={tagIndex}
-                                className="text-xs font-semibold text-gray-500 mr-2 inline-block"
-                              >
-                                {tag}
-                              </Text>
-                            ))}
+                          {item.tags && item.tags.length > 0 && (
+                            <Text className="text-xs mt-1 font-semibold text-gray-500 mr-2 inline-block">
+                              {item.tags.join(", ")}
+                            </Text>
+                          )}
+                          <Text className="text-md mt-1 font-semibold">
+                            ${item.price}
+                          </Text>
                         </View>
                       ))}
                     </View>
