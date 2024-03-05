@@ -8,6 +8,7 @@ import { BuildingContext } from "../contexts/BuildingContext";
 import { Text, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
 import { MagnifyingGlass, Sliders } from "phosphor-react-native";
+import { SearchBar } from "@rneui/themed";
 
 const _mapView = React.createRef<MapView>();
 
@@ -328,38 +329,26 @@ const HomeMap: React.FC = () => {
         onPress={onModalHide}
         customMapStyle={mapStyles}
       >
-        <View className="w-full absolute left-0 right-0 top-20 items-center">
-          <View className="flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
-            <View className="w-16 h-full justify-center items-center border-red-500 border">
-              <MagnifyingGlass size={24} weight="bold" color="#383838" />
-            </View>
-            <TextInput
-              style={{
-                width: "80%",
-                height: "100%",
-                fontSize: 22,
-                color: "#383838",
-              }}
-              placeholder="Search"
-              placeholderTextColor="#383838"
-              value={searchInput}
-              onChangeText={(text) => setSearchInput(text)}
-            />
-            <View
-              className="h-full w-16 bg-neutral-800"
-              style={{
-                backgroundColor: "#383838",
-                borderRadius: 12,
-                height: "100%",
-                width: "10%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Sliders size={24} weight="bold" color="#383838" />
-            </View>
-          </View>
-        </View>
+        <SearchBar
+          containerStyle={{
+            width: "80%",
+            position: "absolute",
+            top: "10%",
+            backgroundColor: "#71B0ED",
+            borderRadius: 10,
+            shadowColor: "black",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
+          }}
+          inputStyle={{ color: "white", fontSize: 20, fontWeight: "bold" }}
+          placeholder="Search for a vendor"
+          value={searchInput}
+          onChangeText={(text) => setSearchInput(text)}
+          leftIcon={<MagnifyingGlass />}
+          rightIcon={<Sliders />}
+        />
         {null &&
           buildings.map((building) =>
             building.vendors.map((vendor, index) => (
