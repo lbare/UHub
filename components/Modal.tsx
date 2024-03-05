@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { Feather } from '@expo/vector-icons';
 import {
   Modal,
   View,
@@ -7,7 +7,6 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  useWindowDimensions,
 } from "react-native";
 import { FoodVendor } from "../models/FoodVendor";
 
@@ -15,6 +14,8 @@ import {
   DayOfWeek,
   getVendorHoursForDayString,
   isVendorCurrentlyOpen,
+  vendorNextOpenOrCloseTimeString,
+  isDayToday
 } from "../models/VendorHours";
 
 interface CustomModalProps {
@@ -34,7 +35,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
     setModalVisible(false);
     onModalHide();
   };
-  const [hoursVisible, setHoursVisible] = useState<boolean>(false);
 
   const hoursArray = vendor
     ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
@@ -43,11 +43,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
     }))
     : [];
 
-    const toggleHoursVisibility = () => {
-      setHoursVisible(!hoursVisible);
-    };
-
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [showExpandedHours, setShowExpandedHours] = useState(false);
 
   useEffect(() => {
     if (vendor && vendor.menu.sections.length > 0) {
@@ -70,7 +67,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white mt-48 w-full rounded-xl"
+          className="bg-white mt-48 w-full h-full rounded-xl"
           style={{
             shadowColor: "#000",
             shadowOffset: {
@@ -84,7 +81,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         >
           <ScrollView
             contentContainerStyle={{
-              alignItems: "center",
+              alignItems: "flex-start",
               paddingVertical: 16,
               paddingHorizontal: 10,
             }}
@@ -96,36 +93,36 @@ const CustomModal: React.FC<CustomModalProps> = ({
               style={{ width: "100%", height: 200, borderRadius: 16 }}
               className="mb-4"
             />
-            <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
-            <Text className="text-lg mb-2">
-              {isVendorCurrentlyOpen(vendor.hours)
-                ? "Open now"
-                : "Closed now"}
-            </Text>
-
-
-              <TouchableOpacity onPress={toggleHoursVisibility} style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: 18, marginBottom: 4, textAlign: 'left' }}>
-                Hours {hoursVisible ? '▲' : '▼'}
+            <Text className="text-2xl font-bold">{vendor.name}</Text>
+            <View className={`flex flex-row items-center`}>
+              <Text className={`text-lg font-semibold ${isVendorCurrentlyOpen(vendor.hours) ? 'text-green-600' : 'text-red-600 opacity-70'}`}>
+                {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
               </Text>
-              </TouchableOpacity>
-
-              {hoursVisible && hoursArray.map(({ day, timeRanges }, index) => (
-                <View key={index} style={{ flexDirection: "row", justifyContent: "flex-start", width: "100%", marginBottom: 2 }}>
-                  <Text style={{ fontSize: 16, minWidth: 90 }}>{day}:</Text>
-                  <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
-                    {getVendorHoursForDayString(vendor.hours, day as DayOfWeek)
-                      .split(', ') // Split the hours string by comma and space
-                      .map((timeRange, i) => (
-                        <Text key={i} style={{ fontSize: 16 }}>
-                          {i > 0 ? '' : ''}{timeRange}
-                        </Text>
-                      ))
-                    }
-                  </View>
+              <TouchableOpacity onPress={() => setShowExpandedHours(!showExpandedHours)}>
+                <View className="flex flex-row items-center">
+                  <Text className="font-normal opacity-80">
+                    {" · " + vendorNextOpenOrCloseTimeString(vendor.hours) + ""}
+                  </Text>
+                  <Feather name={showExpandedHours ? 'chevron-up' : 'chevron-down'} size={20} color="grey" />
                 </View>
-              ))}
+              </TouchableOpacity>
+            </View>
 
+            {showExpandedHours && (
+              <View className="mt-1 w-full">
+                <Text className="font-normal opacity-60">Open Hours</Text>
+                {hoursArray.map(({ day, timeRanges }, index) => (
+                  <View key={index} className="flex flex-row items-center mt-1">
+                  {/*Couldn't figureout a way to do the minWidth with Tailwind min-w-__ did not work */}
+                  <Text style={{ minWidth: 100 }} className={`'font-light' ${isDayToday(day as DayOfWeek) ? 'opacity-80' : 'opacity-60' }`}>{day}:</Text>
+                  <Text className={`'font-light' opacity-60 ${isDayToday(day as DayOfWeek) ? 'opacity-80' : 'opacity-60'}`}>{getVendorHoursForDayString(vendor.hours, day as DayOfWeek)}</Text>
+                </View>
+                
+                ))}
+              </View>
+            )}
+
+            <Text className="text-lg font-semibold mt-4">Menu</Text>
 
             <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
 
@@ -140,8 +137,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     onPress={() => setSelectedSection(section.name)}
                   >
                     <Text
-                      className={`text-m font-extrabold ${selectedSection && selectedSection === section.name
-                        ? "text-black text-lg"
+                      className={`text-xs font-extrabold ${selectedSection && selectedSection === section.name
+                        ? "text-black text-base"
                         : "text-gray-500"
                         }`}
                     >
@@ -180,7 +177,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
               }
               return null;
             })}
-
+            {/* Extra view below is a Work around for the scroll not going all the way to the bottom */}
+            <View className="h-48"></View>
           </ScrollView>
         </View>
       )}
