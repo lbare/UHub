@@ -9,6 +9,7 @@ import { Text, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
 import { SearchBar } from "@rneui/themed";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import MenuSearch from "../services/MenuSearch";
 
 const _mapView = React.createRef<MapView>();
 
@@ -18,6 +19,9 @@ const UVicRegion: Coordinates = {
   longitude: -123.3121273188308,
   longitudeDelta: 0.01,
 };
+
+const dataFetcher = new DataFetcher();
+const menuSearch = new MenuSearch();
 
 interface CustomMarkerProps {
   keyp: number;

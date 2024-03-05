@@ -1,29 +1,72 @@
 
+import Fuse, {FuseResult} from "fuse.js";
+import {Building} from "../models/Building"
 import {menuExample, Menu, MenuItem} from '../models/Menu';
+import DataFetcher from './DataFetcher'
+import { FoodVendor } from "../models/FoodVendor";
 
 class MenuSearch {
+  
+  fuse_obj: any = undefined;
+  dataFetcher = new DataFetcher();
+  allBuildings : Building[] = [];
+  
+  allMenuItemWithVendors: Map<MenuItem, FoodVendor> = new Map<MenuItem, FoodVendor>();
+  allMenuItem : MenuItem[] = [];
 
-    private getAllMenuItems = (() => {
-        let allMenu = [menuExample.entree, menuExample.felicitas, menuExample.greens, menuExample.starbucks, menuExample.theGrill, menuExample.uniclub];
-        let allMenuItem : MenuItem[] = [];
+  constructor() {
 
-        allMenu.forEach((menu: Menu) => {
-            menu.sections.forEach((section: any) => {
-                section.items.forEach((item: any) => {
-                    allMenuItem.push(item);
-                });
-            });
-        });
+    this.dataFetcher.getAllBuildings((buildings) => {
+      this.allBuildings = buildings;
+      this.getAllMenuItems();
 
-        return allMenuItem;
-    });
+      this.fuse_obj = new Fuse(this.allMenuItem, {
+        keys: ['name'],
+      });
+    })
+    
+  }
+  
+  private getAllMenuItems = (() => {
+    let allFoodVendors: FoodVendor[] = [];
+    this.allBuildings.forEach((building)=>{
+      building.vendors.forEach((foodVendor) => {
+        allFoodVendors.push(foodVendor)
+        foodVendor.menu.sections.forEach((section)=>{
+          section.items.forEach((item)=>{
+            this.allMenuItem.push(item);
+            this.allMenuItemWithVendors.set(item, foodVendor);
+          })
+        })
+      })
+    })
+  });
 
-    public searchAllMenuItems = (search : string): MenuItem[] => {
-        let filteredMenu = this.getAllMenuItems().filter((menuItem: MenuItem) => {
-            //straight forward search for now to be improved with a library
-            return menuItem.name.toLowerCase().includes(search.toLowerCase());
-        });
+  
+  public searchAllMenuItems = (searchString : string): Map<MenuItem, FoodVendor> => {
 
-        return filteredMenu;
-    }
+    console.log(`searchTerm: ${searchString}`);
+    
+    if (this.fuse_obj === undefined) return new Map<MenuItem, FoodVendor>();
+    
+    let filteredMenu = this.fuse_obj.search(searchString);
+
+    let filteredFuseMenuResult = filteredMenu as FuseResult<MenuItem>[];
+
+    const mapItemVenor = new Map<MenuItem, FoodVendor>();
+    filteredFuseMenuResult.forEach((fuseResultMenuItem)=>{
+      const item = fuseResultMenuItem.item;
+      const foodVendor = this.allMenuItemWithVendors.get(item)
+      if(foodVendor !== undefined){
+        mapItemVenor.set(item, foodVendor);
+      }
+    })
+
+    
+    console.log(filteredFuseMenuResult);
+
+    return mapItemVenor;
+  }
 }
+
+export default MenuSearch;

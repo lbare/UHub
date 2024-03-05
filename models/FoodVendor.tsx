@@ -24,7 +24,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.greens,
+    menu: menuExample.find((menu) => menu.id === "greens")!,
   },
   starbucks: {
     name: "Starbucks",
@@ -38,7 +38,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.starbucks,
+    menu: menuExample.find((menu) => menu.id === "starbucks")!,
   },
   thegrill: {
     name: "The Grill",
@@ -51,7 +51,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001
     },
     hours: vendorHoursExample,
-    menu: menuExample.theGrill
+    menu: menuExample.find((menu) => menu.id === "theGrill")!
   },
   felicitas: {
     name: "Felicitas",
@@ -64,7 +64,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001
     },
     hours: vendorHoursExample,
-    menu: menuExample.felicitas
+    menu: menuExample.find((menu) => menu.id === "felicitas")!
   },
   entree: {
     name: "Entree",
@@ -77,7 +77,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001
     },
     hours: vendorHoursExample,
-    menu: menuExample.entree
+    menu: menuExample.find((menu) => menu.id === "entree")!
   },
   uniClub: {
     name: "University Club of Victoria",
@@ -90,7 +90,7 @@ const foodVendorExamples = {
       longitudeDelta: 0.001
     },
     hours: vendorHoursExample,
-    menu: menuExample.uniclub
+    menu: menuExample.find((menu) => menu.id === "uniclub")!
   }
 };
 
