@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { SearchBar } from "@rneui/themed";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MenuSearch from "../services/MenuSearch";
+import DataFetcher from "../services/DataFetcher";
 
 const _mapView = React.createRef<MapView>();
 
