@@ -18,6 +18,9 @@ import { MagnifyingGlass, X } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
 import DataFetcher from "../services/DataFetcher";
+import { MagnifyingGlass, X } from "phosphor-react-native";
+import { SearchBar } from "../components/SearchBar";
+import { MenuItem } from "../models/Menu";
 
 const _mapView = React.createRef<MapView>();
 
