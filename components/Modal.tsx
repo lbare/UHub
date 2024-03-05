@@ -65,7 +65,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white mt-48 w-full rounded-xl"
+          className="bg-white w-full rounded-xl"
           style={{
             shadowColor: "#000",
             shadowOffset: {
@@ -92,8 +92,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="mb-4"
             />
             <Text className="text-3xl font-bold mb-4">{vendor.name}</Text>
+            <Text className="text-lg mb-2">
+                {isVendorCurrentlyOpen(vendor.hours)
+                  ? "Open now"
+                  : "Closed now"}
+              </Text>
 
             <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
+              
               {vendor.menu.sections.length > 1 &&
                 vendor.menu.sections.map((section, index) => (
                   <TouchableOpacity
@@ -127,7 +133,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                         {section.name}
                       </Text>
                       {section.items.map((item, itemIndex) => (
-                        <View key={itemIndex} className="mb-4">
+                        <View key={itemIndex} className="mb-4" style = {{backgroundColor: "#f0f4f5", marginLeft:-15, paddingLeft:15, marginRight: -15, paddingRight: 15, paddingBottom: 8}}>
                           <Text className="text-lg font-medium">
                             {item.name} - ${item.price.toFixed(2)}
                           </Text>
@@ -155,11 +161,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
             <View className="mt-4 w-full">
               <Text className="text-2xl font-bold mb-4 tr">Hours</Text>
 
-              <Text className="text-lg mb-2">
-                {isVendorCurrentlyOpen(vendor.hours)
-                  ? "Open now"
-                  : "Closed now"}
-              </Text>
 
               {hoursArray.map(({ day, timeRanges }, index) => (
                 <React.Fragment key={index}>
