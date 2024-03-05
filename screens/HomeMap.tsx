@@ -7,8 +7,8 @@ import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
 import { Text, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
-import { MagnifyingGlass, Sliders } from "phosphor-react-native";
 import { SearchBar } from "@rneui/themed";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const _mapView = React.createRef<MapView>();
 
@@ -314,10 +314,26 @@ const HomeMap: React.FC = () => {
   ];
 
   return (
-    <View className="bg-white flex h-full w-full justify-center items-center">
+    <View
+      // className="bg-white flex h-full w-full justify-center items-center"
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <MapView
         ref={_mapView}
-        className="flex justify-center items-center w-full h-full"
+        // className="flex justify-center items-center w-full h-full"
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+        }}
         initialRegion={UVicRegion}
         region={region}
         provider={PROVIDER_GOOGLE}
@@ -332,8 +348,8 @@ const HomeMap: React.FC = () => {
         <SearchBar
           containerStyle={{
             width: "80%",
-            position: "absolute",
             top: "10%",
+            position: "absolute",
             backgroundColor: "#71B0ED",
             borderRadius: 10,
             shadowColor: "black",
@@ -341,14 +357,36 @@ const HomeMap: React.FC = () => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5,
+            justifyContent: "center",
           }}
-          inputStyle={{ color: "white", fontSize: 20, fontWeight: "bold" }}
-          placeholder="Search for a vendor"
+          disabledInputStyle={{
+            color: "#404040",
+            fontSize: 20,
+            backgroundColor: "#71B0ED",
+          }}
+          labelStyle={{
+            color: "#404040",
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+          inputStyle={{
+            color: "#404040",
+            fontSize: 20,
+            fontWeight: "bold",
+            // backgroundColor: "#71B0ED",
+          }}
+          inputContainerStyle={{
+            backgroundColor: "#71B0ED",
+          }}
+          placeholder="Search"
           value={searchInput}
           onChangeText={(text) => setSearchInput(text)}
-          leftIcon={<MagnifyingGlass />}
-          rightIcon={<Sliders />}
+          leftIcon={<Icon name="magnify" size={26} color="#ffffff" />}
+          leftIconContainerStyle={{}}
+          rightIcon={<Icon name="close" size={26} color="#ffffff" />}
+          rightIconContainerStyle={{}}
         />
+
         {null &&
           buildings.map((building) =>
             building.vendors.map((vendor, index) => (
