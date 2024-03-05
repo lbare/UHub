@@ -13,18 +13,22 @@ export default function App() {
 
   useEffect(() => {
     const fetchBuildings = async () => {
-      const buildingsColRef = collection(db, "buildings");
-      const querySnapshot = await getDocs(buildingsColRef);
+      try {
+        const buildingsColRef = collection(db, "Building");
+        const querySnapshot = await getDocs(buildingsColRef);
 
-      const buildingsArray: Building[] = [];
+        const buildingsArray: Building[] = [];
 
-      querySnapshot.forEach((doc) => {
-        const buildingData = doc.data() as Building;
-        buildingsArray.push(buildingData);
-      });
+        querySnapshot.forEach((doc) => {
+          const buildingData = doc.data() as Building;
+          buildingsArray.push(buildingData);
+        });
 
-      setBuildings(buildingsArray);
-      console.log("Buildings fetched:", buildingsArray);
+        setBuildings(buildingsArray);
+        console.log("Buildings fetched:", buildingsArray);
+      } catch (error) {
+        console.error("Error fetching buildings:", error);
+      }
     };
 
     fetchBuildings();
