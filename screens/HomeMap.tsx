@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   TextInput,
@@ -88,6 +88,13 @@ const HomeMap: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Map<MenuItem, FoodVendor>>(
     new Map()
   );
+  const searchInputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -343,6 +350,7 @@ const HomeMap: React.FC = () => {
   if (searchOpen)
     return (
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           flex: 1,
         }}
@@ -361,6 +369,7 @@ const HomeMap: React.FC = () => {
             }}
           >
             <SearchBar
+              ref={searchInputRef}
               searchInput={searchInput}
               selected={searchOpen}
               setSelected={setSearchOpen}
@@ -423,7 +432,9 @@ const HomeMap: React.FC = () => {
         }}
       >
         {!modalVisible && (
-          <View
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => setSearchOpen(true)}
             style={{
               position: "absolute",
               top: 0,
@@ -433,8 +444,9 @@ const HomeMap: React.FC = () => {
               backgroundColor: "transparent",
             }}
           >
-            <SearchBar
-              shadowStyle={{
+            <View
+              className="flex w-full items-center justify-center mt-16"
+              style={{
                 shadowColor: "#000000",
                 shadowOffset: {
                   width: 2,
@@ -444,12 +456,17 @@ const HomeMap: React.FC = () => {
                 shadowRadius: 5,
                 elevation: 5,
               }}
-              selected={searchOpen}
-              setSelected={setSearchOpen}
-              searchInput={searchInput}
-              setSearchInput={setSearchInput}
-            />
-          </View>
+            >
+              <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
+                <View className="flex w-16 h-full justify-center items-center">
+                  <MagnifyingGlass size={24} color="#383838" weight="bold" />
+                </View>
+                <View className="h-full w-3/5 justify-center items-start">
+                  <Text className="font-semiBold text-2xl">Search</Text>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
         )}
         <MapView
           ref={_mapView}
