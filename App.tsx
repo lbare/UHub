@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeNavigation from "./navigation/HomeNavigation";
-import { Building } from "./models/Building";
-import { getDocs, doc, collection } from "firebase/firestore";
-import { BuildingContext } from "./contexts/BuildingContext";
-import { db } from "./services/firebase";
 import { Building } from "./models/Building";
 import { getDocs, doc, collection } from "firebase/firestore";
 import { BuildingContext } from "./contexts/BuildingContext";
