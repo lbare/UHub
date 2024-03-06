@@ -1,21 +1,23 @@
 import React from "react";
 import { TextInput, View, TouchableOpacity } from "react-native";
-import { MagnifyingGlass, X } from "phosphor-react-native";
+import { MagnifyingGlass, X, CaretLeft } from "phosphor-react-native";
 
 interface SearchBarProps {
   searchInput: string;
   setSearchInput: (input: string) => void;
-  onFocus?: () => void;
   onBlur?: () => void;
   shadowStyle?: any;
+  selected?: boolean;
+  setSelected: (selected: boolean) => void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   searchInput,
   setSearchInput,
-  onFocus,
   onBlur,
   shadowStyle,
+  selected,
+  setSelected,
 }) => {
   return (
     <View
@@ -23,16 +25,25 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       style={shadowStyle}
     >
       <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
-        <View className="flex w-16 h-full justify-center items-center">
-          <MagnifyingGlass size={24} color="#383838" weight="bold" />
-        </View>
+        {!selected ? (
+          <View className="flex w-16 h-full justify-center items-center">
+            <MagnifyingGlass size={24} color="#383838" weight="bold" />
+          </View>
+        ) : (
+          <TouchableOpacity
+            className="flex w-16 h-full justify-center items-center"
+            onPress={() => setSelected(false)}
+          >
+            <CaretLeft size={24} color="#383838" weight="bold" />
+          </TouchableOpacity>
+        )}
         <TextInput
           className="h-full w-3/5 justify-center items-center font-semiBold text-2xl"
           placeholder="Search"
           placeholderTextColor="#383838"
           value={searchInput}
           onChangeText={(text) => setSearchInput(text)}
-          onFocus={onFocus}
+          onFocus={() => setSelected(true)}
         />
         {searchInput !== "" ? (
           <TouchableOpacity
