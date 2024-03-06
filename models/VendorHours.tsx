@@ -14,8 +14,25 @@ const formatTimeRange = (timeRange: TimeRange): string => {
 };
 
 const getVendorHoursForDayString = (vendorHours: VendorHours, day: DayOfWeek, includeDay: boolean = false): string => {
+  let hoursString = 'Closed';
+  const timeRanges = vendorHours[day];
+
+  if (timeRanges.length > 0) {
+    var dayHoursString = '';
+    if(includeDay){
+      dayHoursString += `${day}: `;
+    }
+    dayHoursString += timeRanges.map(formatTimeRange).join(', ');
+    hoursString = dayHoursString;
+  }
+
+  return hoursString.trim(); // Trim to remove any trailing newline
+};
+
+const getVendorHoursForTodayString = (vendorHours: VendorHours, includeDay: boolean = false): string => {
   let hoursString = '';
-    const timeRanges = vendorHours[day];
+  const day = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+  const timeRanges = vendorHours[day];
 
   if (timeRanges.length > 0) {
     var dayHoursString = '';
@@ -98,13 +115,42 @@ const isVendorCurrentlyOpen = (vendorHours: VendorHours): boolean => {
   return isVendorOpenHelper(vendorHours, currentDay, currentTime);
 };
 
+const vendorNextOpenOrCloseTimeString = (vendorHours: VendorHours): string => {
+  var returnString = 'Closed Today';
+
+  const isOpen = isVendorCurrentlyOpen(vendorHours);
+
+  const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  const currentTimeAsDate = dateFromStringTime(currentTime);
+
+  const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+  const todayHours = vendorHours[currentDay];
+
+  for (const timeRange of todayHours) {
+    if (compareTime(currentTime, timeRange.close) <= 0) {
+      if (compareTime(currentTime, timeRange.open) >= 0) {
+        return `Closes ${timeRange.close}`;
+      }else{
+        return `Opens ${timeRange.open}`;
+      }
+    }
+  }
+
+  return returnString;
+}
+
+const todaysDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+const isDayToday = (day: DayOfWeek): boolean => {
+  return day === todaysDay;
+}
+
 const vendorHoursExample: VendorHours = {
   Monday: [
     { open: "09:00 AM", close: "12:00 PM" },
-    { open: "01:00 PM", close: "06:00 PM" },
   ],
   Tuesday: [
-    { open: "09:00 AM", close: "06:00 PM" },
+    { open: "09:00 AM", close: "12:00 PM" },
+    { open: "01:00 PM", close: "06:00 PM" },
   ],
   Wednesday: [
     { open: "09:00 AM", close: "12:00 PM" },
@@ -120,8 +166,7 @@ const vendorHoursExample: VendorHours = {
     { open: "10:00 AM", close: "08:00 PM" },
   ],
   Sunday: [
-    { open: "10:00 AM", close: "05:00 PM" },
   ],
 };
 
-export {DayOfWeek, VendorHours, vendorHoursExample, isVendorCurrentlyOpen, getVendorHoursForDayString, vendorHoursToString}
+export {DayOfWeek, VendorHours, vendorHoursExample, isVendorCurrentlyOpen, getVendorHoursForDayString, getVendorHoursForTodayString, vendorHoursToString, vendorNextOpenOrCloseTimeString, isDayToday}
