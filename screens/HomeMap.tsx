@@ -362,8 +362,9 @@ const HomeMap: React.FC = () => {
           >
             <SearchBar
               searchInput={searchInput}
+              selected={searchOpen}
+              setSelected={setSearchOpen}
               setSearchInput={setSearchInput}
-              onFocus={() => setSearchOpen(true)}
               onBlur={() => setSearchOpen(false)}
             />
           </View>
@@ -371,8 +372,8 @@ const HomeMap: React.FC = () => {
         <View style={{ marginTop: 140, alignItems: "center" }}>
           {Array.from(searchResults.entries()).map(
             ([menuItem, foodVendor], index) => (
-              <View className="w-full border p-4">
-                <Text key={index} className="text-xl">
+              <View key={index} className="w-full border p-4">
+                <Text className="text-xl">
                   {menuItem.name} - {foodVendor.name}
                 </Text>
               </View>
@@ -417,9 +418,10 @@ const HomeMap: React.FC = () => {
                 shadowRadius: 5,
                 elevation: 5,
               }}
+              selected={searchOpen}
+              setSelected={setSearchOpen}
               searchInput={searchInput}
               setSearchInput={setSearchInput}
-              onFocus={() => setSearchOpen(true)}
             />
           </View>
         )}
