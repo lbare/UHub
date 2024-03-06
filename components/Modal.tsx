@@ -33,6 +33,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 }) => {
   const hideModal = () => {
     setModalVisible(false);
+    setShowExpandedHours(false);
     onModalHide();
   };
 
