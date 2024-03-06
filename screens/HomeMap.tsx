@@ -58,7 +58,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     stopPropagation={true}
     key={keyp}
   >
-    <View className="flex justify-start items-center h-12">
+    <View className="flex justify-start items-center w-12 h-12">
       <Image
         source={image}
         resizeMode="contain"
@@ -369,12 +369,41 @@ const HomeMap: React.FC = () => {
             />
           </View>
         )}
-        <View style={{ marginTop: 140, alignItems: "center" }}>
+        <View
+          style={{
+            marginTop: 130,
+            alignItems: "flex-start",
+            padding: 8,
+            width: "100%",
+          }}
+        >
           {Array.from(searchResults.entries()).map(
             ([menuItem, foodVendor], index) => (
-              <View key={index} className="w-full border p-4">
-                <Text className="text-xl">
-                  {menuItem.name} - {foodVendor.name}
+              <View
+                key={index}
+                className=""
+                style={{
+                  backgroundColor: index % 2 == 0 ? "#F0F0F0" : "white",
+                  marginLeft: -15,
+                  paddingLeft: 15,
+                  marginRight: -15,
+                  paddingRight: 15,
+                  paddingBottom: 8,
+                  paddingVertical: 8,
+                  width: "100%",
+                }}
+              >
+                <Text className="text-lg font-medium">{foodVendor.name}</Text>
+                {menuItem.name && (
+                  <Text className="text-sm mt-1">{menuItem.name}</Text>
+                )}
+                {menuItem.tags && menuItem.tags.length > 0 && (
+                  <Text className="text-xs mt-1 font-semibold text-gray-500 mr-2 inline-block">
+                    {menuItem.tags.join(", ")}
+                  </Text>
+                )}
+                <Text className="text-md mt-1 font-semibold">
+                  ${menuItem.price}
                 </Text>
               </View>
             )
@@ -385,7 +414,6 @@ const HomeMap: React.FC = () => {
   else
     return (
       <View
-        // className="bg-white flex h-full w-full justify-center items-center"
         style={{
           flex: 1,
           justifyContent: "center",
@@ -451,7 +479,7 @@ const HomeMap: React.FC = () => {
                     keyp={index}
                     name={vendor.name}
                     coordinate={vendor.location}
-                    image={require("../assets/3448609.png")}
+                    image={require("../assets/marker.png")}
                     vendor={vendor}
                     onPressCustom={() => onMarkerPress(vendor)}
                     zoomLevel={zoomLevel}
