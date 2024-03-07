@@ -111,7 +111,7 @@ const HomeMap: React.FC = () => {
   };
 
   const unselectMarker = () => {
-    //setSelectedLocation(null);
+    setSelectedVendor(null);
   }
 
   var mapStyles = [
@@ -454,6 +454,8 @@ const HomeMap: React.FC = () => {
                     keyp={index}
                     name={vendor.name}
                     coordinate={vendor.location}
+                    isSelected={vendor.name === selectedVendor?.name}
+                    zIndex={index}
                     image={require("../assets/marker.png")}
                     vendor={vendor}
                     onPressCustom={() => onMarkerPress(vendor)}
