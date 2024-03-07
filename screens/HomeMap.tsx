@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import CustomMarker from "../components/CustomMarker";
 import CustomModal from "../components/Modal";
 import { SearchBar } from "../components/SearchBar";
@@ -30,6 +30,8 @@ const menuSearch = new MenuSearch();
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
+  const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
+  const [userLastRegionBeforeTap, setUserLastRegionBeforeTap] = useState<Coordinates>(UVicRegion);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
     null
@@ -51,11 +53,6 @@ const HomeMap: React.FC = () => {
   }, [searchOpen]);
 
   useEffect(() => {
-    // dataFetcher.getAllBuildings(setBuildings);
-    onZoomChange(UVicRegion);
-  }, []);
-
-  useEffect(() => {
     if (searchInput !== "") {
       const results = menuSearch.searchAllMenuItems(searchInput);
       setSearchResults(results);
@@ -75,9 +72,17 @@ const HomeMap: React.FC = () => {
     setZoomLevel(newZoomLevel);
   };
 
+  const onZoomChangeComplete = (newRegion: Coordinates, isGesture: Details) => {
+    if (isGesture) {
+      isGesture && setUserLastRegion(newRegion);
+    }
+  };
+
   const onMarkerPress = (vendor: FoodVendor) => {
     setSelectedLocation(vendor.location);
     setSelectedVendor(vendor);
+    setUserLastRegionBeforeTap(userLastRegion);
+
     const adjustedlatitude = vendor.location.latitude - 0.00083;
     const newRegion = {
       latitude: adjustedlatitude,
@@ -89,21 +94,13 @@ const HomeMap: React.FC = () => {
     if (_mapView.current) {
       _mapView.current.animateToRegion(newRegion, 200);
     }
-    //setRegion(newRegion);
     setModalVisible(true);
   };
 
   const onModalHide = () => {
     if (selectedLocation) {
-      const new_region = {
-        latitude: selectedLocation.latitude,
-        longitude: selectedLocation.longitude,
-        latitudeDelta: selectedLocation.latitudeDelta * 5,
-        longitudeDelta: selectedLocation.longitudeDelta * 5,
-      };
-
       if (_mapView.current) {
-        _mapView.current.animateToRegion(new_region, 200);
+        _mapView.current.animateToRegion(userLastRegionBeforeTap, 200);
       }
     }
     unselectMarker();
@@ -180,7 +177,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#bdbdbd",
         },
-        ],
+      ],
     },
     {
       featureType: "poi",
@@ -198,7 +195,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#181818",
         },
-        ],
+      ],
     },
     {
       featureType: "poi.park",
@@ -216,7 +213,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#1b1b1b",
         },
-        ],
+      ],
     },
     {
       featureType: "road",
@@ -234,7 +231,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#8a8a8a",
         },
-        ],
+      ],
     },
     {
       featureType: "road.arterial",
@@ -252,7 +249,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#3c3c3c",
         },
-        ],
+      ],
     },
     {
       featureType: "road.highway.controlled_access",
@@ -288,7 +285,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#000000",
         },
-        ],
+      ],
     },
     {
       featureType: "water",
@@ -443,6 +440,7 @@ const HomeMap: React.FC = () => {
           mapType="standard"
           showsUserLocation={true}
           onRegionChange={onZoomChange}
+          onRegionChangeComplete={onZoomChangeComplete}
           onPress={onModalHide}
           customMapStyle={mapStyles}
         >
