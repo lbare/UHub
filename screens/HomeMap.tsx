@@ -1,23 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import { MagnifyingGlass } from "phosphor-react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
-  View,
+  ScrollView,
+  Text,
   TextInput,
   TouchableOpacity,
-  Keyboard,
-  ScrollView,
+  View
 } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import Coordinates from "../models/Coordinates";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import CustomMarker from "../components/CustomMarker";
 import CustomModal from "../components/Modal";
-import { FoodVendor } from "../models/FoodVendor";
-import { BuildingContext } from "../contexts/BuildingContext";
-import { Text, Image, ImageSourcePropType } from "react-native";
-import { useContext } from "react";
-import MenuSearch from "../services/MenuSearch";
-import DataFetcher from "../services/DataFetcher";
-import { MagnifyingGlass, X } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
+import { BuildingContext } from "../contexts/BuildingContext";
+import Coordinates from "../models/Coordinates";
+import { FoodVendor } from "../models/FoodVendor";
 import { MenuItem } from "../models/Menu";
+import MenuSearch from "../services/MenuSearch";
 
 const _mapView = React.createRef<MapView>();
 
@@ -28,51 +26,7 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
-const dataFetcher = new DataFetcher();
 const menuSearch = new MenuSearch();
-
-interface CustomMarkerProps {
-  keyp: number;
-  name: string;
-  coordinate: Coordinates;
-  image: ImageSourcePropType;
-  vendor: FoodVendor;
-  onPressCustom: () => void;
-  zoomLevel: number;
-}
-
-const CustomMarker: React.FC<CustomMarkerProps> = ({
-  keyp,
-  name,
-  coordinate,
-  image,
-  vendor,
-  zoomLevel,
-  onPressCustom,
-}) => (
-  <Marker
-    title={name}
-    coordinate={coordinate}
-    onPress={() => onPressCustom()}
-    flat={false}
-    stopPropagation={true}
-    key={keyp}
-  >
-    <View className="flex justify-start items-center w-12 h-12">
-      <Image
-        source={image}
-        resizeMode="contain"
-        style={{
-          width: 30,
-          height: 30,
-        }}
-      />
-      {zoomLevel > 14.8 ? (
-        <Text className="text-gray-600 text-sm">{name}</Text>
-      ) : null}
-    </View>
-  </Marker>
-);
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
@@ -124,13 +78,12 @@ const HomeMap: React.FC = () => {
   const onMarkerPress = (vendor: FoodVendor) => {
     setSelectedLocation(vendor.location);
     setSelectedVendor(vendor);
-    const adjustedLatitude =
-      vendor.location.latitude - region.latitudeDelta * 0.105;
+    const adjustedlatitude = vendor.location.latitude - 0.00083;
     const newRegion = {
-      latitude: adjustedLatitude,
+      latitude: adjustedlatitude,
       longitude: vendor.location.longitude,
-      latitudeDelta: region.latitudeDelta / 3,
-      longitudeDelta: region.longitudeDelta / 3,
+      latitudeDelta: region.latitudeDelta / 8,
+      longitudeDelta: region.longitudeDelta / 8,
     };
 
     if (_mapView.current) {
@@ -153,8 +106,13 @@ const HomeMap: React.FC = () => {
         _mapView.current.animateToRegion(new_region, 200);
       }
     }
+    unselectMarker();
     setModalVisible(false);
   };
+
+  const unselectMarker = () => {
+    //setSelectedLocation(null);
+  }
 
   var mapStyles = [
     {
@@ -222,7 +180,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#bdbdbd",
         },
-      ],
+        ],
     },
     {
       featureType: "poi",
@@ -240,7 +198,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#181818",
         },
-      ],
+        ],
     },
     {
       featureType: "poi.park",
@@ -258,7 +216,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#1b1b1b",
         },
-      ],
+        ],
     },
     {
       featureType: "road",
@@ -276,7 +234,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#8a8a8a",
         },
-      ],
+        ],
     },
     {
       featureType: "road.arterial",
@@ -294,7 +252,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#3c3c3c",
         },
-      ],
+        ],
     },
     {
       featureType: "road.highway.controlled_access",
@@ -330,7 +288,7 @@ const HomeMap: React.FC = () => {
         {
           color: "#000000",
         },
-      ],
+        ],
     },
     {
       featureType: "water",
