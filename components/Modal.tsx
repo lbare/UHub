@@ -68,7 +68,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white mt-48 w-full h-full rounded-xl"
+          className="bg-white mt-48 w-full h-full rounded-xl overflow-hidden"
           style={{
             shadowColor: "#000",
             shadowOffset: {
