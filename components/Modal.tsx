@@ -16,6 +16,7 @@ import {
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
   isDayToday,
+  daysOfWeekInOrder
 } from "../models/VendorHours";
 
 interface CustomModalProps {
@@ -36,13 +37,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
     setShowExpandedHours(false);
     onModalHide();
   };
-
-  const hoursArray = vendor
-    ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
-      day,
-      timeRanges,
-    }))
-    : [];
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [showExpandedHours, setShowExpandedHours] = useState(false);
@@ -136,7 +130,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               {showExpandedHours && (
                 <View className="mt-1 w-full">
                   <Text className="font-normal opacity-60">Open Hours</Text>
-                  {hoursArray.map(({ day, timeRanges }, index) => (
+                  {daysOfWeekInOrder.map((day, index) => (
                     <View
                       key={index}
                       className="flex flex-row items-center mt-1"
