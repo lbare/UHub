@@ -59,6 +59,11 @@ const HomeMap: React.FC = () => {
     }
   }, [searchInput]);
 
+  useEffect(() => {
+    // dataFetcher.getAllBuildings(setBuildings);
+    onZoomChange(UVicRegion);
+  }, []);
+
   const calculateZoomLevel = (latitudeDelta: number) => {
     const maxLatitude = 180;
     const zoomLevel = Math.round(
