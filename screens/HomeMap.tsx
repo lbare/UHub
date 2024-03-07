@@ -113,6 +113,7 @@ const HomeMap: React.FC = () => {
   };
 
   const unselectMarker = () => {
+    setSelectedLocation(null);
     setSelectedVendor(null);
   }
 
