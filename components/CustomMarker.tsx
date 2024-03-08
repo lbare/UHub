@@ -35,21 +35,21 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     zIndex={isSelected ? 1 : 0}
   >
     <View className="flex justify-start items-center w-full h-full">
-        <Image
-          source={image}
-          resizeMode="contain"
-          style={{
-            width: isSelected ? 40 : 30,
-            height: isSelected ? 40 : 30,
-          }}
-        />
+      <Image
+        source={image}
+        resizeMode="contain"
+        style={{
+          width: isSelected ? 40 : 30,
+          height: isSelected ? 40 : 30,
+        }}
+      />
 
       {zoomLevel > 14.8 ? (
         <Text className="text-gray-600 text-sm w-f">{name}</Text>
       ) : null}
     </View>
     <Callout tooltip={true}>
-        <Text></Text>
+      <Text></Text>
     </Callout>
   </Marker>
 );

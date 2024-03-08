@@ -1,5 +1,20 @@
-type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
-const daysOfWeekInOrder: DayOfWeek[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+type DayOfWeek =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
+const daysOfWeekInOrder: DayOfWeek[] = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 type TimeRange = {
   open: string;
@@ -14,33 +29,42 @@ const formatTimeRange = (timeRange: TimeRange): string => {
   return `${timeRange.open} - ${timeRange.close}`;
 };
 
-const getVendorHoursForDayString = (vendorHours: VendorHours, day: DayOfWeek, includeDay: boolean = false): string => {
-  let hoursString = 'Closed';
+const getVendorHoursForDayString = (
+  vendorHours: VendorHours,
+  day: DayOfWeek,
+  includeDay: boolean = false
+): string => {
+  let hoursString = "Closed";
   const timeRanges = vendorHours[day];
 
   if (timeRanges.length > 0) {
-    var dayHoursString = '';
-    if(includeDay){
+    var dayHoursString = "";
+    if (includeDay) {
       dayHoursString += `${day}: `;
     }
-    dayHoursString += timeRanges.map(formatTimeRange).join(', ');
+    dayHoursString += timeRanges.map(formatTimeRange).join(", ");
     hoursString = dayHoursString;
   }
 
   return hoursString.trim(); // Trim to remove any trailing newline
 };
 
-const getVendorHoursForTodayString = (vendorHours: VendorHours, includeDay: boolean = false): string => {
-  let hoursString = '';
-  const day = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+const getVendorHoursForTodayString = (
+  vendorHours: VendorHours,
+  includeDay: boolean = false
+): string => {
+  let hoursString = "";
+  const day = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  }) as DayOfWeek;
   const timeRanges = vendorHours[day];
 
   if (timeRanges.length > 0) {
-    var dayHoursString = '';
-    if(includeDay){
+    var dayHoursString = "";
+    if (includeDay) {
       dayHoursString += `${day}: `;
     }
-    dayHoursString += timeRanges.map(formatTimeRange).join(', ');
+    dayHoursString += timeRanges.map(formatTimeRange).join(", ");
     hoursString += dayHoursString;
   }
 
@@ -48,14 +72,14 @@ const getVendorHoursForTodayString = (vendorHours: VendorHours, includeDay: bool
 };
 
 const vendorHoursToString = (vendorHours: VendorHours): string => {
-  let hoursString = '';
+  let hoursString = "";
 
   for (const day in vendorHours) {
     hoursString += getVendorHoursForDayString(vendorHours, day as DayOfWeek);
   }
 
   return hoursString;
-}
+};
 
 //Needs unit tests
 const dateFromStringTime = (timeString: string): Date => {
@@ -66,9 +90,9 @@ const dateFromStringTime = (timeString: string): Date => {
 
   // Convert 12-hour format to 24-hour format if necessary
   if (timeParts[1].indexOf("PM") !== -1 && hours < 12) {
-      hours += 12;
+    hours += 12;
   } else if (timeParts[1].indexOf("AM") !== -1 && hours === 12) {
-      hours = 0;
+    hours = 0;
   }
 
   // Create a new Date object with today's date and the specified time
@@ -76,9 +100,9 @@ const dateFromStringTime = (timeString: string): Date => {
   date.setHours(hours);
   date.setMinutes(minutes);
   date.setSeconds(0);
-  
+
   return date;
-}
+};
 
 const compareTime = (time1: string, time2: string): number => {
   //Hacky way to use Date to compare time
@@ -92,9 +116,13 @@ const compareTime = (time1: string, time2: string): number => {
   } else {
     return 0;
   }
-}
+};
 
-const isVendorOpenHelper = (vendorHours: VendorHours, day: DayOfWeek, currentTime: string): boolean => {
+const isVendorOpenHelper = (
+  vendorHours: VendorHours,
+  day: DayOfWeek,
+  currentTime: string
+): boolean => {
   const todayHours = vendorHours[day];
 
   if (!todayHours) {
@@ -102,7 +130,10 @@ const isVendorOpenHelper = (vendorHours: VendorHours, day: DayOfWeek, currentTim
   }
 
   for (const timeRange of todayHours) {
-    if (compareTime(currentTime, timeRange.open) >= 0 && compareTime(currentTime, timeRange.close) <= 0) {
+    if (
+      compareTime(currentTime, timeRange.open) >= 0 &&
+      compareTime(currentTime, timeRange.close) <= 0
+    ) {
       return true;
     }
   }
@@ -111,44 +142,56 @@ const isVendorOpenHelper = (vendorHours: VendorHours, day: DayOfWeek, currentTim
 };
 
 const isVendorCurrentlyOpen = (vendorHours: VendorHours): boolean => {
-  const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-  const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+  const currentTime = new Date().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+  const currentDay = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  }) as DayOfWeek;
   return isVendorOpenHelper(vendorHours, currentDay, currentTime);
 };
 
 const vendorNextOpenOrCloseTimeString = (vendorHours: VendorHours): string => {
-  var returnString = 'Closed Today';
+  var returnString = "Closed Today";
 
   const isOpen = isVendorCurrentlyOpen(vendorHours);
 
-  const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  const currentTime = new Date().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
   const currentTimeAsDate = dateFromStringTime(currentTime);
 
-  const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+  const currentDay = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  }) as DayOfWeek;
   const todayHours = vendorHours[currentDay];
 
   for (const timeRange of todayHours) {
     if (compareTime(currentTime, timeRange.close) <= 0) {
       if (compareTime(currentTime, timeRange.open) >= 0) {
         return `Closes ${timeRange.close}`;
-      }else{
+      } else {
         return `Opens ${timeRange.open}`;
       }
     }
   }
 
   return returnString;
-}
+};
 
-const todaysDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }) as DayOfWeek;
+const todaysDay = new Date().toLocaleDateString("en-US", {
+  weekday: "long",
+}) as DayOfWeek;
 const isDayToday = (day: DayOfWeek): boolean => {
   return day === todaysDay;
-}
+};
 
 const vendorHoursExample: VendorHours = {
-  Monday: [
-    { open: "09:00 AM", close: "12:00 PM" },
-  ],
+  Monday: [{ open: "09:00 AM", close: "12:00 PM" }],
   Tuesday: [
     { open: "09:00 AM", close: "12:00 PM" },
     { open: "01:00 PM", close: "06:00 PM" },
@@ -157,17 +200,21 @@ const vendorHoursExample: VendorHours = {
     { open: "09:00 AM", close: "12:00 PM" },
     { open: "01:00 PM", close: "06:00 PM" },
   ],
-  Thursday: [
-    { open: "09:00 AM", close: "06:00 PM" },
-  ],
-  Friday: [
-    { open: "09:00 AM", close: "08:00 PM" },
-  ],
-  Saturday: [
-    { open: "10:00 AM", close: "08:00 PM" },
-  ],
-  Sunday: [
-  ],
+  Thursday: [{ open: "09:00 AM", close: "06:00 PM" }],
+  Friday: [{ open: "09:00 AM", close: "08:00 PM" }],
+  Saturday: [{ open: "10:00 AM", close: "08:00 PM" }],
+  Sunday: [],
 };
 
-export {DayOfWeek, VendorHours, vendorHoursExample, daysOfWeekInOrder, isVendorCurrentlyOpen, getVendorHoursForDayString, getVendorHoursForTodayString, vendorHoursToString, vendorNextOpenOrCloseTimeString, isDayToday}
+export {
+  DayOfWeek,
+  VendorHours,
+  vendorHoursExample,
+  daysOfWeekInOrder,
+  isVendorCurrentlyOpen,
+  getVendorHoursForDayString,
+  getVendorHoursForTodayString,
+  vendorHoursToString,
+  vendorNextOpenOrCloseTimeString,
+  isDayToday,
+};
