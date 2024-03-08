@@ -174,13 +174,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   vendor.menu.sections.map((section, index) => (
                     <TouchableOpacity
                       key={index}
-                      className={`justify-center items-center mx-2 my-2 h-6`}
+                      className={`justify-center items-center mx-2 my-2 h-6 ${
+                        selectedSection && selectedSection === section.name
+                          ? "border-b-2 border-white"
+                          : ""
+                      } `}
                       onPress={() => setSelectedSection(section.name)}
                     >
                       <Text
-                        className={`text-xs font-extrabold underline ${
+                        className={`text-xs font-extrabold ${
                           selectedSection && selectedSection === section.name
-                            ? "text-neutral-200 text-base underline"
+                            ? "text-neutral-200 text-base"
                             : "text-neutral-400 font-semibold"
                         }`}
                       >
@@ -210,7 +214,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                 paddingVertical: 8,
                               }}
                             >
-                              <Text className="text-lg font-medium text-neutral-200">
+                              <Text className="text-base font-medium text-neutral-200">
                                 {item.name}
                               </Text>
                               {item.description && (
