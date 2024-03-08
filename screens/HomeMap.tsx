@@ -6,20 +6,17 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Details, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
-import DataFetcher from "../services/DataFetcher";
-import { MagnifyingGlass } from "phosphor-react-native";
+import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
-import { CustomMarker } from "../components/CustomMarker";
-
-const _mapView = React.createRef<MapView>();
+import CustomMarker from "../components/CustomMarker";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -28,17 +25,20 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
-const dataFetcher = new DataFetcher();
 const menuSearch = new MenuSearch();
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
+  const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
+  const [userLastRegionBeforeTap, setUserLastRegionBeforeTap] =
+    useState<Coordinates>(UVicRegion);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
     null
   );
   const [selectedVendor, setSelectedVendor] = useState<FoodVendor | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [openedModalFromSearch, setOpenedModalFromSearch] = useState<boolean>(false);
   const buildings = useContext(BuildingContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -53,8 +53,6 @@ const HomeMap: React.FC = () => {
     }
   }, [searchOpen]);
 
-  useEffect(() => onZoomChange(UVicRegion), []);
-
   useEffect(() => {
     if (searchInput !== "") {
       const results = menuSearch.searchAllMenuItems(searchInput);
@@ -63,6 +61,11 @@ const HomeMap: React.FC = () => {
       setSearchResults(new Map());
     }
   }, [searchInput]);
+
+  useEffect(() => {
+    // dataFetcher.getAllBuildings(setBuildings);
+    onZoomChange(UVicRegion);
+  }, []);
 
   const calculateZoomLevel = (latitudeDelta: number) => {
     const maxLatitude = 180;
@@ -77,18 +80,24 @@ const HomeMap: React.FC = () => {
     setZoomLevel(newZoomLevel);
   };
 
+  const onZoomChangeComplete = (newRegion: Coordinates, isGesture: Details) => {
+    if (isGesture) {
+      isGesture && setUserLastRegion(newRegion);
+    }
+  };
+
   const onMarkerPress = (vendor: FoodVendor) => {
     setSelectedLocation(vendor.location);
     setSelectedVendor(vendor);
-    const adjustedLatitude =
-      vendor.location.latitude - region.latitudeDelta * 0.105;
-    const newRegion = {
-      latitude: adjustedLatitude,
-      longitude: vendor.location.longitude,
-      latitudeDelta: region.latitudeDelta / 3,
-      longitudeDelta: region.longitudeDelta / 3,
-    };
+    setUserLastRegionBeforeTap(userLastRegion);
 
+    const adjustedlatitude = vendor.location.latitude - 0.00083;
+    const newRegion = {
+      latitude: adjustedlatitude,
+      longitude: vendor.location.longitude,
+      latitudeDelta: region.latitudeDelta / 8,
+      longitudeDelta: region.longitudeDelta / 8,
+    };
     if (_mapView.current) {
       _mapView.current.animateToRegion(newRegion, 200);
     }
@@ -97,18 +106,21 @@ const HomeMap: React.FC = () => {
 
   const onModalHide = () => {
     if (selectedLocation) {
-      const new_region = {
-        latitude: selectedLocation.latitude,
-        longitude: selectedLocation.longitude,
-        latitudeDelta: selectedLocation.latitudeDelta * 5,
-        longitudeDelta: selectedLocation.longitudeDelta * 5,
-      };
-
       if (_mapView.current) {
-        _mapView.current.animateToRegion(new_region, 200);
+        _mapView.current.animateToRegion(userLastRegionBeforeTap, 200);
       }
     }
+    unselectMarker();
     setModalVisible(false);
+    if (openedModalFromSearch) {
+      setSearchOpen(true);
+      setOpenedModalFromSearch(false);
+    }
+  };
+
+  const unselectMarker = () => {
+    setSelectedLocation(null);
+    setSelectedVendor(null);
   };
 
   var mapStyles = [
@@ -298,22 +310,78 @@ const HomeMap: React.FC = () => {
     },
   ];
 
-  if (searchOpen)
-    return (
+  return (
+    <View className="flex-1">
       <View
         style={{
-          flex: 1,
-          backgroundColor: "#383838",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      >
+        <MapView
+          ref={_mapView}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+          }}
+          initialRegion={UVicRegion}
+          region={region}
+          provider={PROVIDER_GOOGLE}
+          maxZoomLevel={20}
+          minZoomLevel={15}
+          mapType="standard"
+          showsUserLocation={true}
+          onRegionChange={onZoomChange}
+          onRegionChangeComplete={onZoomChangeComplete}
+          onPress={onModalHide}
+          customMapStyle={mapStyles}
+        >
+          {buildings &&
+            buildings.map((building) =>
+              building.vendors.map((vendor, index) => (
+                <React.Fragment key={index}>
+                  <CustomMarker
+                    keyp={index}
+                    name={vendor.name}
+                    coordinate={vendor.location}
+                    isSelected={vendor.name === selectedVendor?.name}
+                    zIndex={index}
+                    image={require("../assets/marker.png")}
+                    onPressCustom={() => onMarkerPress(vendor)}
+                    zoomLevel={zoomLevel}
+                  />
+                </React.Fragment>
+              ))
+            )}
+        </MapView>
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          onModalHide={onModalHide}
+          vendor={selectedVendor!}
+        />
+      </View>
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: searchOpen ? 2 : -1, // Control layering based on searchOpen
+          opacity: searchOpen ? 1 : 0, // Control visibility based on searchOpen
+          height: searchOpen ? "100%" : 0, // Prevents interaction when not visiblesd
+          backgroundColor: "#1D1D1D",
         }}
       >
         {!modalVisible && (
           <View
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: 1,
               width: "100%",
               height: 150,
               borderRadius: 20,
@@ -341,13 +409,10 @@ const HomeMap: React.FC = () => {
           </View>
         )}
         <ScrollView
-          style={{
-            marginTop: 150,
-          }}
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
-            backgroundColor: "#383838",
+            backgroundColor: "#1D1D1D",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
           }}
@@ -355,142 +420,91 @@ const HomeMap: React.FC = () => {
         >
           {Array.from(searchResults.entries()).map(
             ([menuItem, foodVendor], index) => (
-              <View
+              <TouchableOpacity
                 key={index}
                 className="flex-row px-6 py-3 justify-between items-center"
                 style={{
-                  backgroundColor: index % 2 == 0 ? "#404040" : "#383838",
+                  backgroundColor: index % 2 == 0 ? "#282828" : "#1D1D1D",
                   width: "100%",
+                }}
+                onPress={() => {
+                  setSearchOpen(false);
+                  setOpenedModalFromSearch(true);
+                  onMarkerPress(foodVendor);
                 }}
               >
                 <View className="flex-row">
-                  <View className="rounded-full border-2 w-12 h-12 bg-neutral-600 border-gray-200 justify-center items-center">
-                    <Text className="text-lg font-medium text-gray-200">
-                      SUB
+                  <View className="items-start justify-center w-16">
+                    <Text className="text-lg font-semibold text-neutral-400">
+                      ${menuItem.price.toFixed(2)}
                     </Text>
                   </View>
+
                   <View className="w-64 pl-4 justify-start">
-                    <Text className="text-xl font-medium text-gray-200">
+                    <Text className="text-xl font-medium text-neutral-200">
                       {foodVendor.name}
                     </Text>
                     {menuItem.name && (
-                      <Text className="text-sm text-gray-400">
+                      <Text className="text-sm text-neutral-400">
                         {menuItem.name}
                       </Text>
                     )}
                     {menuItem.tags && menuItem.tags.length > 0 && (
-                      <Text className="text-xs font-semibold text-gray-400 mr-2 inline-block">
+                      <Text className="text-xs font-semibold text-neutral-400 mr-2 inline-block">
                         {menuItem.tags.join(", ")}
                       </Text>
                     )}
                   </View>
+                  <View className="w-12 h-12 justify-center items-end">
+                    <ArrowUpRight size={20} color="#A3A3A3" />
+                  </View>
                 </View>
-                <View className="justify-end items-end">
-                  <Text className="text-lg font-semibold text-gray-400">
-                    ${menuItem.price}
-                  </Text>
-                </View>
-              </View>
+              </TouchableOpacity>
             )
           )}
         </ScrollView>
       </View>
-    );
-  else
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        {!modalVisible && (
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => setSearchOpen(true)}
+      {!(searchOpen || modalVisible) && (
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setSearchOpen(true)}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            backgroundColor: "transparent",
+          }}
+        >
+          <View
+            className="flex w-full items-center justify-center mt-16"
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: 1,
-              backgroundColor: "transparent",
+              shadowColor: "#000000",
+              shadowOffset: {
+                width: 2,
+                height: 2,
+              },
+              shadowOpacity: 0.6,
+              shadowRadius: 5,
+              elevation: 5,
             }}
           >
-            <View
-              className="flex w-full items-center justify-center mt-16"
-              style={{
-                shadowColor: "#000000",
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-                shadowOpacity: 0.6,
-                shadowRadius: 5,
-                elevation: 5,
-              }}
-            >
-              <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
-                <View className="flex w-16 h-full justify-center items-center">
-                  <MagnifyingGlass size={24} color="#383838" weight="bold" />
-                </View>
-                <View className="h-full w-3/5 justify-center items-start">
-                  <Text className="font-semiBold text-2xl text-neutral-800">
-                    Search
-                  </Text>
-                </View>
+            <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
+              <View className="flex w-16 h-full justify-center items-center">
+                <MagnifyingGlass size={24} color="#383838" weight="bold" />
+              </View>
+              <View className="h-full w-3/5 justify-center items-start">
+                <Text className="font-semiBold text-2xl text-neutral-800">
+                  Search
+                </Text>
               </View>
             </View>
-          </TouchableOpacity>
-        )}
-        <MapView
-          ref={_mapView}
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
-          }}
-          initialRegion={UVicRegion}
-          region={region}
-          provider={PROVIDER_GOOGLE}
-          maxZoomLevel={20}
-          minZoomLevel={15}
-          mapType="standard"
-          showsUserLocation={true}
-          onRegionChange={onZoomChange}
-          onPress={onModalHide}
-          customMapStyle={mapStyles}
-        >
-          {buildings &&
-            buildings.map((building) =>
-              building.vendors.map((vendor, index) => (
-                <React.Fragment key={index}>
-                  <CustomMarker
-                    keyp={index}
-                    name={vendor.name}
-                    coordinate={vendor.location}
-                    image={require("../assets/marker.png")}
-                    vendor={vendor}
-                    onPressCustom={() => onMarkerPress(vendor)}
-                    zoomLevel={zoomLevel}
-                  />
-                </React.Fragment>
-              ))
-            )}
-        </MapView>
-        <CustomModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          onModalHide={onModalHide}
-          vendor={selectedVendor!}
-        />
-      </View>
-    );
+          </View>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 };
 
 export default HomeMap;
