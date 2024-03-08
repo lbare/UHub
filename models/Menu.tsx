@@ -879,6 +879,447 @@ const uniclubMenuExample: Menu = {
   ],
 };
 
+
+
+
+const TreksMenu: Menu = {
+  id: "treks",
+  sections: [
+    {
+      name: "Daily Selections",
+      items: [
+        {
+          name: "Grilled Panini",
+          price: 5.50,
+          description: "",
+        },
+        {
+          name: "Salad Bar",
+          price: 5.50,
+          description: "",
+        },
+        {
+          name: "Soup",
+          price: 4.40,
+          description: "",
+        },
+      ],
+    },
+    {
+      name: "Combos",
+      items: [
+        {
+          name: "Soup + Small Salad",
+          price: 7.50,
+          description: "",
+        },
+        {
+          name: "Soup + Large Salad",
+          price: 11.50,
+          description: "",
+        },
+        {
+          name: "Panini + Soup",
+          price: 10.50,
+          description: "",
+        },
+        {
+          name: "Panini + Small Salad",
+          price: 10.50,
+          description: "",
+        }
+      ],
+    },
+    {
+      name: "Add to Any Meal",
+      items: [
+        {
+          name: "Fountain Drink 22oz",
+          price: 1.75,
+          description: "",
+        },
+        {
+          name: "Coffee/Tea 12oz",
+          price: 1.75,
+          description: "",
+        },
+        {
+          name: "Fountain Drink 22oz",
+          price: 2.59,
+          description: "",
+        }
+      ],
+    },
+  ],
+}
+
+const MacMenu: Menu = {
+  id: "mac",
+  sections: [
+    {
+      name: "Coffee",
+      items: [
+        {
+          name: "Caffè Americano",
+          price: 2.95,
+          description:
+            "Espresso shots topped with hot water create a light layer of crema culminating in this wonderfully rich cup with depth and nuance.",
+        },
+        {
+          name: "Caffè Latte",
+          price: 3.65,
+          description:
+            "Rich, full-bodied espresso with bittersweet milk and a hint of sweetness.",
+        },
+        {
+          name: "Cappuccino",
+          price: 3.45,
+          description:
+            "Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.",
+        },
+      ],
+    },
+    {
+      name: "Tea",
+      items: [
+        {
+          name: "Teavana® Shaken Iced Tea",
+          price: 2.75,
+          description:
+            "A smooth, delightful blend of water, ice, Teavana® tea and flavors of your choice, each served over ice.",
+        },
+        {
+          name: "Chai Latte",
+          price: 4.25,
+          description:
+            "Black tea infused with cinnamon, clove, and other warming spices are combined with steamed milk and topped with foam for the perfect balance of sweet and spicy.",
+        },
+      ],
+    },
+    {
+      name: "Bakery",
+      items: [
+        {
+          name: "Blueberry Muffin",
+          price: 2.95,
+          description:
+            "Blueberry muffin with a soft, moist center, and a hint of lemon.",
+        },
+        {
+          name: "Classic Coffee Cake",
+          price: 3.25,
+          description:
+            "A traditional coffee cake with a crumbly cinnamon streusel topping.",
+        },
+      ],
+    },
+    {
+      name: "Sandwiches & Wraps",
+      items: [
+        {
+          name: "Turkey & Swiss Sandwich",
+          price: 6.95,
+          description:
+            "Slow-roasted turkey, Swiss cheese, and crisp lettuce on a hearty wheat bread.",
+        },
+        {
+          name: "Mozzarella & Tomato Panini",
+          price: 7.25,
+          description:
+            "Fresh mozzarella, sliced tomatoes, and basil pesto on ciabatta bread.",
+        },
+      ],
+    },
+    // Additional sections can be added here such as "Salads", "Smoothies", etc.
+  ],
+};
+
+
+
+const ChopBoxMenu: Menu = {
+  id: "chopbox",
+  sections: [
+    {
+      name: "Signature Chop Boxes",
+      items: [
+        {
+          name: "Tangerino Pad Thai",
+          price: 8.00,
+          description: "Authentic Pad Thai with a twist: tangy tangerine sauce.",
+        },
+        {
+          name: "Mongolian Black Bean",
+          price: 8.00,
+          description: "Served with a tangy ginger & scallion Shanghai noodles.",
+        },
+        {
+          name: "Green Thai Curry",
+          price: 8.00,
+          description: "Coconut curry sauced with bamboo leaves & chili with egg noodles.",
+        },
+        {
+          name: "Red Thai Curry",
+          price: 8.00,
+          description: "Medium spicy red curry with a sweet & smoky relish.",
+        },
+      ],
+    },
+    {
+      name: "Add Ons",
+      items: [
+        {
+          name: "Soft Boiled Egg",
+          price: 1.50,
+          description: "",
+        },
+        {
+          name: "Chili Oil",
+          price: 1.50,
+          description: "",
+        },
+        {
+          name: "Chicken Breast",
+          price: 3.00,
+          description: "",
+        }
+      ],
+    },
+    {
+      name: "Add to Any Meal",
+      items: [
+        {
+          name: "Appetizer",
+          price: 5.75,
+          description: "",
+        },
+        {
+          name: "Coffee/Tea",
+          price: 2.00,
+          description: "",
+        },
+        {
+          name: "Cookie",
+          price: 1.50,
+          description: "",
+        }
+      ],
+    },
+  ],
+};
+
+
+
+
+
+const FrescoMenu: Menu = {
+  id: "fresco",
+  sections: [
+    {
+      name: "Main",
+      items: [
+        {
+          name: "Soft Tacos",
+          price: 3.00, // Assuming 3 for $7.50 refers to individual price.
+          description: "Soft taco with choice of chicken or carnitas, salsa verde, lettuce, onion, cilantro & radish.",
+        },
+        {
+          name: "Burritos",
+          price: 8.00,
+          description: "Burrito with choice of protein, black beans, rice, salsa roja, cheese, sour cream, lettuce, onion & cilantro.",
+        },
+        {
+          name: "Taco Salad",
+          price: 6.00,
+          description: "Served with mixed greens, black beans, cheese, salsa fresca, guacamole & chipotle dressing.",
+        },
+        {
+          name: "Bean & Cheese Quesadilla",
+          price: 8.00,
+          description: "A flour tortilla filled with black beans & cheese. Served with salsa roja & sour cream.",
+        },
+      ],
+    },
+    {
+      name: "Add Ons",
+      items: [
+        {
+          name: "Make it a Combo",
+          price: 4.00,
+          description: "Add soft tacos, rice & beans or salad for an extra cost.",
+        },
+        {
+          name: "Guacamole",
+          price: 2.00,
+          description: "",
+        },
+        {
+          name: "Cheese",
+          price: 1.00,
+          description: "",
+        },
+        {
+          name: "Salsa Roja",
+          price: 0.50,
+          description: "",
+        },
+        {
+          name: "Salsa Verde",
+          price: 0.50,
+          description: "",
+        },
+        {
+          name: "Sour Cream",
+          price: 0.50,
+          description: "",
+        },
+        {
+          name: "Vegan Cheese",
+          price: 2.00,
+          description: "",
+        }
+      ],
+    },
+    {
+      name: "Sides",
+      items: [
+        {
+          name: "Rice",
+          price: 3.00,
+          description: "",
+        },
+        {
+          name: "Beans",
+          price: 3.00,
+          description: "",
+        },
+        {
+          name: "Fresco Fries",
+          price: 5.50,
+          description: "Served with chipotle sauce.",
+        },
+        {
+          name: "Jalapeno & Cheese Bites",
+          price: 5.00,
+          description: "",
+        },
+        {
+          name: "Fresco Chips & Salsa",
+          price: 7.50,
+          description: "",
+        },
+        {
+          name: "Churros",
+          price: 2.00,
+          description: "Plain or filled with caramel or chocolate sauce.",
+        }
+      ],
+    },
+  ],
+}
+
+
+
+
+const GradHouseMenu: Menu = {
+  id: "gradhouse",
+  sections: [
+    {
+      name: "Snacks N Things",
+      items: [
+        {
+          name: "House Nachos",
+          price: 14,
+          description:
+            "Tortilla chips topped with diced tomatoes, green onions, banana peppers, and mozzarella. Served with sour cream and salsa. Add chicken for $4.",
+        },
+        {
+          name: "Yam Fries",
+          price: 8,
+          description: "We took a yam and then we cut it into fry shapes. Served with chipotle mayo.",
+        },
+        {
+          name: "Fries",
+          price: 5,
+          description: "If you need clarification on this one, you're on your own.",
+        },
+        {
+          name: "Quesadilla",
+          price: 12.25,
+          description:
+            "Chicken, green onion, tomato, banana peppers, cheddar, and mozzarella cheese inside of a tortilla. Served with salsa and sour cream. Ask to sub soy ginger tofu for chicken.",
+        },
+        {
+          name: "Wings",
+          price: 15,
+          description:
+            "All you need to know is that our wings are better than Fels's wings. 10 per order. Choice of hot, nude, hot & pepper, or sweet chili.",
+        },
+        {
+          name: "Perogies",
+          price: 7,
+          description:
+            "Potato and cheese filling, just like your grandma intended. Served with sour cream and your choice of garden salad or fries.",
+        },
+        {
+          name: "Grilled Cheese",
+          price: 7,
+          description:
+            "Garlic butter, cheese, bread. All good stuff. Served with your choice of garden salad or fries. Add bacon for $2 | Add tomato for $2.",
+        },
+        {
+          name: "Lentil Kitchari",
+          price: 4,
+          description: "A lentil and rice stew – all your vitamins in one bowl.",
+        },
+      ],
+    },
+    {
+      name: "Burgers, Wraps & Salads",
+      items: [
+        {
+          name: "Beef Burger",
+          price: 14.50,
+          description:
+            "Your classic beef patty with burger sauce, lettuce, tomato, and red onion served on a brioche bun. Add bacon $1.50 | Add cheddar $1.50 | Add mushrooms $1.",
+        },
+        {
+          name: "Citrus Chicken Burger",
+          price: 14,
+          description:
+            "Citrus marinated chicken breast with spicy slaw served on a brioche bun. Add bacon $1.50 | Add cheddar $1.50 | Add mushrooms $1.",
+        },
+        {
+          name: "Chickpea Lentil Burger",
+          price: 12,
+          description:
+            "Chickpea lentil patty with beet hummus, lettuce, tomato, and red onion served on a brioche bun. Add bacon $1.50 | Add cheddar $1.50 | Add mushrooms $1.",
+        },
+        {
+          name: "Veggie Wrap",
+          price: 13.50,
+          description:
+            "Sweet potato, cucumber, tomato, spinach, arugula, bell pepper, pumpkin seeds, and cilantro wrapped in a tortilla with beet hummus and balsamic dressing.",
+        },
+        {
+          name: "Halifornia Wrap",
+          price: 12,
+          description:
+            "I've renamed this out of spite - California is in America and I am from Halifax. Nobody can stop me. Chicken, lettuce, spinach, salsa and guacamole wrapped in a tortilla.",
+        },
+        {
+          name: "Grad House Salad",
+          price: 9.50,
+          description:
+            "Spinach, arugula, cucumber, grape tomatoes, and mushrooms tossed in balsamic vinaigrette and topped with feta and walnuts. Ask to make vegetarian or vegan.",
+        },
+      ],
+    },
+  ],
+}
+
+
+
+
 const menuExample = [
   greensMenuExample,
   felicitasMenuExample,
@@ -886,6 +1327,11 @@ const menuExample = [
   starbucksMenu,
   EntreeMenu,
   uniclubMenuExample,
+  ChopBoxMenu,
+  FrescoMenu,
+  GradHouseMenu,
+  MacMenu,
+  TreksMenu
 ];
 
 export { Menu, MenuItem, menuExample };
