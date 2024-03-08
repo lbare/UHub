@@ -464,12 +464,12 @@ const HomeMap: React.FC = () => {
                   </View>
 
                   <View className="w-64 pl-4 justify-start">
-                    <Text className="text-xl font-medium text-neutral-200">
-                      {foodVendor.name}
+                    <Text className="text-lg font-medium text-neutral-200">
+                      {menuItem.name}
                     </Text>
                     {menuItem.name && (
-                      <Text className="text-sm text-neutral-400">
-                        {menuItem.name}
+                      <Text className="text-base text-neutral-400">
+                        {foodVendor.name}
                       </Text>
                     )}
                     {menuItem.tags && menuItem.tags.length > 0 && (
