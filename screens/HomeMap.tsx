@@ -383,7 +383,7 @@ const HomeMap: React.FC = () => {
                 <View className="flex-row">
                   <View className="items-start justify-center w-16">
                     <Text className="text-lg font-semibold text-neutral-400">
-                      ${menuItem.price}
+                      ${menuItem.price.toFixed(2)}
                     </Text>
                   </View>
 
