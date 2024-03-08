@@ -4,8 +4,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Image,
-  ImageSourcePropType,
   Text,
 } from "react-native";
 import MapView, { Details, Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -48,7 +46,6 @@ const HomeMap: React.FC = () => {
     new Map()
   );
   const searchInputRef = useRef<TextInput>(null);
-  const _mapView = React.createRef<MapView>();
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -312,10 +309,6 @@ const HomeMap: React.FC = () => {
       ],
     },
   ];
-
-  useEffect(() => {
-    console.log(modalVisible);
-  }, [modalVisible]);
 
   return (
     <View className="flex-1">
