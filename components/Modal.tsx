@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Feather } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
 import {
   Modal,
   View,
@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-} from "react-native";
+  } from "react-native";
 import { FoodVendor } from "../models/FoodVendor";
 
 import {
@@ -84,11 +84,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               source={{
                 uri: vendor.image,
               }}
-              style={{
-                height: 150,
-                width: "100%",
-              }}
-              className="-mt-4 w-full"
+              className="-mt-4 w-full h-48 rounded-l"
             />
 
             <View className="w-full pl-3 pr-3">
@@ -230,6 +226,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
               {/* Extra view below is a Work around for the scroll not going all the way to the bottom */}
               <View className="h-48"></View>
             </View>
+
+
           </ScrollView>
 
           <View className="absolute top-3 right-4">
