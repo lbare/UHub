@@ -314,52 +314,105 @@ const HomeMap: React.FC = () => {
     console.log(modalVisible);
   }, [modalVisible]);
 
-  if (searchOpen)
-    return (
+  return (
+    <View className="flex-1">
       <View
         style={{
-          flex: 1,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      >
+        <MapView
+          ref={_mapView}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+          }}
+          initialRegion={UVicRegion}
+          region={region}
+          provider={PROVIDER_GOOGLE}
+          maxZoomLevel={20}
+          minZoomLevel={15}
+          mapType="standard"
+          showsUserLocation={true}
+          onRegionChange={onZoomChange}
+          onRegionChangeComplete={onZoomChangeComplete}
+          onPress={onModalHide}
+          customMapStyle={mapStyles}
+        >
+          {buildings &&
+            buildings.map((building) =>
+              building.vendors.map((vendor, index) => (
+                <React.Fragment key={index}>
+                  <CustomMarker
+                    keyp={index}
+                    name={vendor.name}
+                    coordinate={vendor.location}
+                    isSelected={vendor.name === selectedVendor?.name}
+                    zIndex={index}
+                    image={require("../assets/marker.png")}
+                    onPressCustom={() => onMarkerPress(vendor)}
+                    zoomLevel={zoomLevel}
+                  />
+                </React.Fragment>
+              ))
+            )}
+        </MapView>
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          onModalHide={onModalHide}
+          vendor={selectedVendor!}
+        />
+      </View>
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: searchOpen ? 2 : -1, // Control layering based on searchOpen
+          opacity: searchOpen ? 1 : 0, // Control visibility based on searchOpen
+          height: searchOpen ? "100%" : 0, // Prevents interaction when not visiblesd
           backgroundColor: "#1D1D1D",
         }}
       >
-        {!modalVisible && (
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: 1,
-              width: "100%",
-              height: 150,
-              borderRadius: 20,
-            }}
-          >
-            <SearchBar
-              shadowStyle={{
-                shadowColor: "#000000",
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-                shadowOpacity: 0.3,
-                shadowRadius: 5,
-                elevation: 5,
-              }}
-              clearResults={() => setSearchResults(new Map())}
-              ref={searchInputRef}
-              searchInput={searchInput}
-              selected={searchOpen}
-              setSelected={setSearchOpen}
-              setSearchInput={setSearchInput}
-              onBlur={() => setSearchOpen(false)}
-            />
-          </View>
-        )}
-        <ScrollView
+      {!modalVisible && (
+        <View
           style={{
-            marginTop: 150,
+            width: "100%",
+            height: 150,
+            borderRadius: 20,
           }}
+        >
+          <SearchBar
+            shadowStyle={{
+              shadowColor: "#000000",
+              shadowOffset: {
+                width: 2,
+                height: 2,
+              },
+              shadowOpacity: 0.3,
+              shadowRadius: 5,
+              elevation: 5,
+            }}
+            clearResults={() => setSearchResults(new Map())}
+            ref={searchInputRef}
+            searchInput={searchInput}
+            selected={searchOpen}
+            setSelected={setSearchOpen}
+            setSearchInput={setSearchInput}
+            onBlur={() => setSearchOpen(false)}
+          />
+        </View>
+      )}
+        <ScrollView
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
@@ -416,19 +469,7 @@ const HomeMap: React.FC = () => {
           )}
         </ScrollView>
       </View>
-    );
-  else
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        {!modalVisible && (
+      {!(searchOpen || modalVisible) && (
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => setSearchOpen(true)}
@@ -467,53 +508,8 @@ const HomeMap: React.FC = () => {
             </View>
           </TouchableOpacity>
         )}
-        <MapView
-          ref={_mapView}
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
-          }}
-          initialRegion={UVicRegion}
-          region={region}
-          provider={PROVIDER_GOOGLE}
-          maxZoomLevel={20}
-          minZoomLevel={15}
-          mapType="standard"
-          showsUserLocation={true}
-          onRegionChange={onZoomChange}
-          onRegionChangeComplete={onZoomChangeComplete}
-          onPress={onModalHide}
-          customMapStyle={mapStyles}
-        >
-          {buildings &&
-            buildings.map((building) =>
-              building.vendors.map((vendor, index) => (
-                <React.Fragment key={index}>
-                  <CustomMarker
-                    keyp={index}
-                    name={vendor.name}
-                    coordinate={vendor.location}
-                    isSelected={vendor.name === selectedVendor?.name}
-                    zIndex={index}
-                    image={require("../assets/marker.png")}
-                    onPressCustom={() => onMarkerPress(vendor)}
-                    zoomLevel={zoomLevel}
-                  />
-                </React.Fragment>
-              ))
-            )}
-        </MapView>
-        <CustomModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          onModalHide={onModalHide}
-          vendor={selectedVendor!}
-        />
-      </View>
-    );
+    </View>
+  );
 };
 
 export default HomeMap;
