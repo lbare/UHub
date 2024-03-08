@@ -365,8 +365,10 @@ const HomeMap: React.FC = () => {
         <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          changeVendor={onMarkerPress}
           onModalHide={onModalHide}
           vendor={selectedVendor!}
+          building={buildings.find((b) => b.vendors.includes(selectedVendor!))!}
         />
       </View>
       <View
