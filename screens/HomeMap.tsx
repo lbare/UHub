@@ -4,11 +4,9 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Image,
-  ImageSourcePropType,
   Text,
 } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -16,7 +14,7 @@ import { BuildingContext } from "../contexts/BuildingContext";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import DataFetcher from "../services/DataFetcher";
-import { MagnifyingGlass, X } from "phosphor-react-native";
+import { MagnifyingGlass } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
 import { CustomMarker } from "../components/CustomMarker";
@@ -24,28 +22,14 @@ import { CustomMarker } from "../components/CustomMarker";
 const _mapView = React.createRef<MapView>();
 
 const UVicRegion: Coordinates = {
-  // latitude: 48.463440294565316,
-  // latitudeDelta: 0.02,
-  // longitude: -123.3121273188308,
-  // longitudeDelta: 0.01,
-  latitude: 48.46477193608986,
-  latitudeDelta: 0.002,
-  longitude: -123.30808666750896,
-  longitudeDelta: 0.001,
+  latitude: 48.463440294565316,
+  latitudeDelta: 0.02,
+  longitude: -123.3121273188308,
+  longitudeDelta: 0.01,
 };
 
 const dataFetcher = new DataFetcher();
 const menuSearch = new MenuSearch();
-
-interface CustomMarkerProps {
-  keyp: number;
-  name: string;
-  coordinate: Coordinates;
-  image: ImageSourcePropType;
-  vendor: FoodVendor;
-  onPressCustom: () => void;
-  zoomLevel: number;
-}
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
@@ -62,7 +46,6 @@ const HomeMap: React.FC = () => {
     new Map()
   );
   const searchInputRef = useRef<TextInput>(null);
-  const [markerSize, setMarkerSize] = useState(100);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -70,10 +53,7 @@ const HomeMap: React.FC = () => {
     }
   }, [searchOpen]);
 
-  useEffect(() => {
-    // dataFetcher.getAllBuildings(setBuildings);
-    onZoomChange(UVicRegion);
-  }, []);
+  useEffect(() => onZoomChange(UVicRegion), []);
 
   useEffect(() => {
     if (searchInput !== "") {
@@ -89,9 +69,6 @@ const HomeMap: React.FC = () => {
     const zoomLevel = Math.round(
       Math.log(maxLatitude / latitudeDelta) / Math.LN2
     );
-    // setMarkerSize(Math.max(20, zoomLevel * 5));
-    console.log("Marker Size", markerSize);
-
     return zoomLevel;
   };
 
@@ -115,13 +92,8 @@ const HomeMap: React.FC = () => {
     if (_mapView.current) {
       _mapView.current.animateToRegion(newRegion, 200);
     }
-    //setRegion(newRegion);
     setModalVisible(true);
   };
-
-  useEffect(() => {
-    console.log(zoomLevel);
-  }, [zoomLevel]);
 
   const onModalHide = () => {
     if (selectedLocation) {
@@ -325,10 +297,6 @@ const HomeMap: React.FC = () => {
       ],
     },
   ];
-
-  useEffect(() => {
-    console.log(modalVisible);
-  }, [modalVisible]);
 
   if (searchOpen)
     return (
