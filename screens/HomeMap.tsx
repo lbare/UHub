@@ -106,18 +106,35 @@ const HomeMap: React.FC = () => {
     setModalVisible(true);
   };
 
-  const onModalHide = () => {
-    if (selectedLocation) {
+  const onModalHide = (gotoSearch : boolean) => {
+    //TODO: this logic doesn't really make sense, it should be refactored
+    // I wanted to preserve the user's last region before tapping on a marker
+    // and then return to that region after the modal is closed
+    // but it didn't look very good seemed jumpy
+    // so I just set it back to zooming out on the vendor they were looking at
+    if (selectedVendor) {
+      const adjustedlatitude = selectedVendor.location.latitude;
+      const newRegion = {
+        latitude: adjustedlatitude,
+        longitude: selectedVendor.location.longitude,
+        latitudeDelta: region.latitudeDelta / 4,
+        longitudeDelta: region.longitudeDelta / 4,
+      };
       if (_mapView.current) {
-        _mapView.current.animateToRegion(userLastRegionBeforeTap, 200);
+        _mapView.current.animateToRegion(newRegion, 200);
       }
     }
+
     unselectMarker();
     setModalVisible(false);
-    if (openedModalFromSearch) {
+
+    if (gotoSearch) {
       setSearchOpen(true);
-      setOpenedModalFromSearch(false);
+    }else{
+      setSearchOpen(false);
+      setSearchInput("")
     }
+    setOpenedModalFromSearch(false);
   };
 
   const unselectMarker = () => {
@@ -341,7 +358,6 @@ const HomeMap: React.FC = () => {
           showsUserLocation={true}
           onRegionChange={onZoomChange}
           onRegionChangeComplete={onZoomChangeComplete}
-          onPress={onModalHide}
           customMapStyle={mapStyles}
         >
           {buildings &&
@@ -384,7 +400,7 @@ const HomeMap: React.FC = () => {
           backgroundColor: "#1D1D1D",
         }}
       >
-        {!modalVisible && (
+        {(!modalVisible && searchOpen) && (
           <View
             style={{
               width: "100%",

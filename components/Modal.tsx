@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
 import {
-  Modal,
-  View,
-  Text,
   Image,
+  Modal,
   ScrollView,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import {
   FoodVendor,
@@ -14,25 +14,25 @@ import {
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
 
+import { ArrowLeft, ArrowRight, MagnifyingGlass } from "phosphor-react-native";
+import { Building } from "../models/Building";
 import {
   DayOfWeek,
+  daysOfWeekInOrder,
   getVendorHoursForDayString,
+  isDayToday,
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
-  isDayToday,
-  daysOfWeekInOrder,
 } from "../models/VendorHours";
-import { Building } from "../models/Building";
-import { ArrowLeft, ArrowRight } from "phosphor-react-native";
 
 interface CustomModalProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   changeVendor: (vendor: FoodVendor) => void;
-  onModalHide: () => void;
+  onModalHide: (gotoSearch: boolean) => void;
   vendor: FoodVendor;
   building: Building;
-  openedModalFromSearch?: boolean;
+  openedModalFromSearch: boolean;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -42,12 +42,12 @@ const CustomModal: React.FC<CustomModalProps> = ({
   onModalHide,
   vendor,
   building,
-  openedModalFromSearch = false,
+  openedModalFromSearch,
 }) => {
-  const hideModal = () => {
+  const hideModal = (exit: boolean) => {
     setModalVisible(false);
     setShowExpandedHours(false);
-    onModalHide();
+    onModalHide(!exit);
   };
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -63,16 +63,16 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <Modal
       animationType="slide"
       visible={modalVisible}
-      onRequestClose={hideModal}
       transparent={true}
-      onDismiss={hideModal}
       className="h-full w-full items-center justify-start"
       style={{
         backgroundColor: "#1D1D1D",
       }}
     >
       <TouchableOpacity
-        onPressOut={hideModal}
+        onPressOut={() => {
+          hideModal(true);
+        }}
         className="w-full h-1/2 absolute top-0"
       />
       {vendor && (
@@ -292,7 +292,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
           <View className="absolute top-3 right-4">
             <View className="bg-neutral-500 opacity-100 rounded-full h-6 w-6" />
-            <TouchableOpacity onPress={hideModal}>
+            <TouchableOpacity
+              onPress={() => {
+                hideModal(true);
+              }}
+            >
               <Feather
                 name="x"
                 size={24}
@@ -302,6 +306,24 @@ const CustomModal: React.FC<CustomModalProps> = ({
               />
             </TouchableOpacity>
           </View>
+
+          {openedModalFromSearch && (
+            <View className="absolute top-3 left-4">
+              <TouchableOpacity
+                onPress={() => {
+                  hideModal(false);
+                }}
+              >
+                <View className="bg-neutral-500 opacity-100 rounded-full h-6 w-6 items-center" />
+
+                <MagnifyingGlass
+                  size={23}
+                  color="white"
+                  style={{ marginTop: -24 }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       )}
     </Modal>
