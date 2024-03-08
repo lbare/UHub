@@ -55,6 +55,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
       transparent={true}
       onDismiss={hideModal}
       className="h-full w-full items-center justify-start"
+      style={{
+        backgroundColor: "#1D1D1D",
+      }}
     >
       <TouchableOpacity
         onPressOut={hideModal}
@@ -62,8 +65,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white mt-48 w-full h-full rounded-xl overflow-hidden"
+          className="mt-48 w-full h-full rounded-xl overflow-hidden"
           style={{
+            backgroundColor: "#1D1D1D",
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -88,10 +92,12 @@ const CustomModal: React.FC<CustomModalProps> = ({
             />
 
             <View className="w-full pl-3 pr-3">
-              <Text className="text-2xl font-bold mt-2">{vendor.name}</Text>
+              <Text className="text-2xl font-bold mt-2 text-neutral-200">
+                {vendor.name}
+              </Text>
 
               {vendor.description && (
-                <Text className="text-base -mt-1 mb-1">
+                <Text className="text-base -mt-1 mb-1 text-neutral-300">
                   {vendor.description}
                 </Text>
               )}
@@ -100,8 +106,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 <Text
                   className={`text-base font-semibold ${
                     isVendorCurrentlyOpen(vendor.hours)
-                      ? "text-green-600"
-                      : "text-red-600 opacity-70"
+                      ? "text-green-400"
+                      : "text-red-400 opacity-70"
                   }`}
                 >
                   {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
@@ -110,7 +116,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   onPress={() => setShowExpandedHours(!showExpandedHours)}
                 >
                   <View className="flex flex-row items-center">
-                    <Text className="font-normal opacity-80">
+                    <Text className="font-normal opacity-80 text-neutral-300">
                       {" · " +
                         vendorNextOpenOrCloseTimeString(vendor.hours) +
                         ""}
@@ -126,7 +132,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
               {showExpandedHours && (
                 <View className="mt-1 w-full">
-                  <Text className="font-normal opacity-60">Open Hours</Text>
+                  <Text className="font-normal opacity-60 text-neutral-200">
+                    Open Hours
+                  </Text>
                   {daysOfWeekInOrder.map((day, index) => (
                     <View
                       key={index}
@@ -135,19 +143,19 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       {/*Couldn't figureout a way to do the minWidth with Tailwind min-w-__ did not work */}
                       <Text
                         style={{ minWidth: 100 }}
-                        className={`'font-light' ${
+                        className={`font-light text-neutral-200 ${
                           isDayToday(day as DayOfWeek)
-                            ? "opacity-80"
-                            : "opacity-60"
+                            ? "opacity-100 font-semibold"
+                            : "opacity-80"
                         }`}
                       >
                         {day}:
                       </Text>
                       <Text
-                        className={`'font-light' opacity-60 ${
+                        className={`font-light text-neutral-400 ${
                           isDayToday(day as DayOfWeek)
-                            ? "opacity-80"
-                            : "opacity-60"
+                            ? "opacity-100 font-semibold"
+                            : "opacity-80"
                         }`}
                       >
                         {getVendorHoursForDayString(
@@ -159,7 +167,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   ))}
                 </View>
               )}
-              <View className="border-b border-gray-300 mt-2" />
+              <View className="border-b border-neutral-300 mt-2" />
 
               <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
                 {vendor.menu.sections.length > 1 &&
@@ -170,10 +178,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       onPress={() => setSelectedSection(section.name)}
                     >
                       <Text
-                        className={`text-xs font-extrabold ${
+                        className={`text-xs font-extrabold underline ${
                           selectedSection && selectedSection === section.name
-                            ? "text-black text-base underline"
-                            : "text-gray-500"
+                            ? "text-neutral-200 text-base underline"
+                            : "text-neutral-400 font-semibold"
                         }`}
                       >
                         {section.name}
@@ -193,7 +201,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                               className="flex-1"
                               style={{
                                 backgroundColor:
-                                  itemIndex % 2 == 0 ? "#F0F0F0" : "white",
+                                  itemIndex % 2 == 0 ? "#282828" : "#1D1D1D",
                                 marginLeft: -15,
                                 paddingLeft: 15,
                                 marginRight: -15,
@@ -202,21 +210,21 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                 paddingVertical: 8,
                               }}
                             >
-                              <Text className="text-lg font-medium">
+                              <Text className="text-lg font-medium text-neutral-200">
                                 {item.name}
                               </Text>
                               {item.description && (
-                                <Text className="text-sm mt-1">
+                                <Text className="text-sm mt-1 text-neutral-400">
                                   {item.description}
                                 </Text>
                               )}
                               {item.tags && item.tags.length > 0 && (
-                                <Text className="text-xs mt-1 font-semibold text-gray-500 mr-2 inline-block">
+                                <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
                                   {item.tags.join(", ")}
                                 </Text>
                               )}
-                              <Text className="text-md mt-1 font-semibold">
-                                ${item.price}
+                              <Text className="text-md mt-1 font-semibold text-neutral-200">
+                                ${item.price.toFixed(2)}
                               </Text>
                             </View>
                           </View>
@@ -233,7 +241,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </ScrollView>
 
           <View className="absolute top-3 right-4">
-            <View className="bg-gray-500 opacity-100 rounded-full h-6 w-6" />
+            <View className="bg-neutral-500 opacity-100 rounded-full h-6 w-6" />
             <TouchableOpacity onPress={hideModal}>
               <Feather
                 name="x"
