@@ -45,7 +45,9 @@ const HomeMap: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Map<MenuItem, FoodVendor>>(
     new Map()
   );
+
   const searchInputRef = useRef<TextInput>(null);
+  const _mapView = React.createRef<MapView>();
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
