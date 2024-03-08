@@ -14,7 +14,7 @@ import {
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
 
-import { ArrowLeft, ArrowRight, MagnifyingGlass } from "phosphor-react-native";
+import { CaretLeft, CaretRight, MagnifyingGlass } from "phosphor-react-native";
 import { Building } from "../models/Building";
 import {
   DayOfWeek,
@@ -105,7 +105,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
             {!openedModalFromSearch && (
               <TouchableOpacity
-                className="absolute left-1 mt-20"
+                className="absolute left-1 mt-20 w-8 h-8 rounded-full justify-center items-center"
                 onPress={() => {
                   const previousVendor = getPreviousFoodVendorInBuilding(
                     vendor,
@@ -114,15 +114,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   changeVendor(previousVendor);
                 }}
               >
-                <View className="bg-white/75 rounded-xl">
-                  <ArrowLeft />
-                </View>
+                <CaretLeft color="#ededed" weight="bold" size={32} />
               </TouchableOpacity>
             )}
 
             {!openedModalFromSearch && (
               <TouchableOpacity
-                className="absolute right-1 mt-20"
+                className="absolute right-1 mt-20 w-8 h-8 rounded-full justify-center items-center"
                 onPress={() => {
                   const previousVendor = getNextFoodVendorInBuilding(
                     vendor,
@@ -131,9 +129,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   changeVendor(previousVendor);
                 }}
               >
-                <View className="bg-white/75 rounded-xl">
-                  <ArrowRight />
-                </View>
+                <CaretRight color="#ededed" weight="bold" size={32} />
               </TouchableOpacity>
             )}
 
@@ -291,18 +287,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </ScrollView>
 
           <View className="absolute top-3 right-4">
-            <View className="bg-neutral-500 opacity-100 rounded-full h-6 w-6" />
             <TouchableOpacity
+              className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
+              style={{ backgroundColor: "#ededed" }}
               onPress={() => {
                 hideModal(true);
               }}
             >
               <Feather
                 name="x"
-                size={24}
-                color="white"
+                size={20}
+                color="#154058"
                 className="opacity-100"
-                style={{ marginTop: -24 }}
               />
             </TouchableOpacity>
           </View>
@@ -310,17 +306,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
           {openedModalFromSearch && (
             <View className="absolute top-3 left-4">
               <TouchableOpacity
+                className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
+                style={{ backgroundColor: "#ededed" }}
                 onPress={() => {
                   hideModal(false);
                 }}
               >
-                <View className="bg-neutral-500 opacity-100 rounded-full h-6 w-6 items-center" />
-
-                <MagnifyingGlass
-                  size={23}
-                  color="white"
-                  style={{ marginTop: -24 }}
-                />
+                <MagnifyingGlass size={20} color="#154058" weight="bold" />
               </TouchableOpacity>
             </View>
           )}
