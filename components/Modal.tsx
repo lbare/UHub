@@ -32,6 +32,7 @@ interface CustomModalProps {
   onModalHide: () => void;
   vendor: FoodVendor;
   building: Building;
+  openedModalFromSearch?: boolean;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -41,6 +42,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   onModalHide,
   vendor,
   building,
+  openedModalFromSearch = false,
 }) => {
   const hideModal = () => {
     setModalVisible(false);
@@ -101,35 +103,39 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="-mt-4 w-full h-48 rounded-l"
             />
 
-            <TouchableOpacity
-              className="absolute left-1 mt-20"
-              onPress={() => {
-                const previousVendor = getPreviousFoodVendorInBuilding(
-                  vendor,
-                  building
-                );
-                changeVendor(previousVendor);
-              }}
-            >
-              <View className="bg-white/75 rounded-xl">
-                <ArrowLeft />
-              </View>
-            </TouchableOpacity>
+            {!openedModalFromSearch && (
+              <TouchableOpacity
+                className="absolute left-1 mt-20"
+                onPress={() => {
+                  const previousVendor = getPreviousFoodVendorInBuilding(
+                    vendor,
+                    building
+                  );
+                  changeVendor(previousVendor);
+                }}
+              >
+                <View className="bg-white/75 rounded-xl">
+                  <ArrowLeft />
+                </View>
+              </TouchableOpacity>
+            )}
 
-            <TouchableOpacity
-              className="absolute right-1 mt-20"
-              onPress={() => {
-                const previousVendor = getNextFoodVendorInBuilding(
-                  vendor,
-                  building
-                );
-                changeVendor(previousVendor);
-              }}
-            >
-              <View className="bg-white/75 rounded-xl">
-                <ArrowRight />
-              </View>
-            </TouchableOpacity>
+            {!openedModalFromSearch && (
+              <TouchableOpacity
+                className="absolute right-1 mt-20"
+                onPress={() => {
+                  const previousVendor = getNextFoodVendorInBuilding(
+                    vendor,
+                    building
+                  );
+                  changeVendor(previousVendor);
+                }}
+              >
+                <View className="bg-white/75 rounded-xl">
+                  <ArrowRight />
+                </View>
+              </TouchableOpacity>
+            )}
 
             <View className="w-full pl-3 pr-3">
               <Text className="text-2xl font-bold mt-2 text-neutral-200">
