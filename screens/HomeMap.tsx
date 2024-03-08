@@ -16,36 +16,20 @@ import { BuildingContext } from "../contexts/BuildingContext";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import DataFetcher from "../services/DataFetcher";
-import { MagnifyingGlass, X } from "phosphor-react-native";
+import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
 import { CustomMarker } from "../components/CustomMarker";
 
-const _mapView = React.createRef<MapView>();
-
 const UVicRegion: Coordinates = {
-  // latitude: 48.463440294565316,
-  // latitudeDelta: 0.02,
-  // longitude: -123.3121273188308,
-  // longitudeDelta: 0.01,
-  latitude: 48.46477193608986,
-  latitudeDelta: 0.002,
-  longitude: -123.30808666750896,
-  longitudeDelta: 0.001,
+  latitude: 48.463440294565316,
+  latitudeDelta: 0.02,
+  longitude: -123.3121273188308,
+  longitudeDelta: 0.01,
 };
 
 const dataFetcher = new DataFetcher();
 const menuSearch = new MenuSearch();
-
-interface CustomMarkerProps {
-  keyp: number;
-  name: string;
-  coordinate: Coordinates;
-  image: ImageSourcePropType;
-  vendor: FoodVendor;
-  onPressCustom: () => void;
-  zoomLevel: number;
-}
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
@@ -62,7 +46,7 @@ const HomeMap: React.FC = () => {
     new Map()
   );
   const searchInputRef = useRef<TextInput>(null);
-  const [markerSize, setMarkerSize] = useState(100);
+  const _mapView = React.createRef<MapView>();
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -89,9 +73,6 @@ const HomeMap: React.FC = () => {
     const zoomLevel = Math.round(
       Math.log(maxLatitude / latitudeDelta) / Math.LN2
     );
-    // setMarkerSize(Math.max(20, zoomLevel * 5));
-    console.log("Marker Size", markerSize);
-
     return zoomLevel;
   };
 
@@ -113,15 +94,13 @@ const HomeMap: React.FC = () => {
     };
 
     if (_mapView.current) {
+      console.log("RUN");
+
       _mapView.current.animateToRegion(newRegion, 200);
     }
     //setRegion(newRegion);
     setModalVisible(true);
   };
-
-  useEffect(() => {
-    console.log(zoomLevel);
-  }, [zoomLevel]);
 
   const onModalHide = () => {
     if (selectedLocation) {
@@ -335,7 +314,7 @@ const HomeMap: React.FC = () => {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#383838",
+          backgroundColor: "#1D1D1D",
         }}
       >
         {!modalVisible && (
@@ -379,7 +358,7 @@ const HomeMap: React.FC = () => {
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
-            backgroundColor: "#383838",
+            backgroundColor: "#1D1D1D",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
           }}
@@ -387,42 +366,47 @@ const HomeMap: React.FC = () => {
         >
           {Array.from(searchResults.entries()).map(
             ([menuItem, foodVendor], index) => (
-              <View
+              <TouchableOpacity
                 key={index}
                 className="flex-row px-6 py-3 justify-between items-center"
                 style={{
-                  backgroundColor: index % 2 == 0 ? "#404040" : "#383838",
+                  backgroundColor: index % 2 == 0 ? "#282828" : "#1D1D1D",
                   width: "100%",
+                }}
+                onPress={() => {
+                  setSearchOpen(false);
+                  setSearchInput("");
+                  setSearchResults(new Map());
+                  onMarkerPress(foodVendor);
                 }}
               >
                 <View className="flex-row">
-                  <View className="rounded-full border-2 w-12 h-12 bg-neutral-600 border-gray-200 justify-center items-center">
-                    <Text className="text-lg font-medium text-gray-200">
-                      SUB
+                  <View className="items-start justify-center w-16">
+                    <Text className="text-lg font-semibold text-neutral-400">
+                      ${menuItem.price}
                     </Text>
                   </View>
+
                   <View className="w-64 pl-4 justify-start">
-                    <Text className="text-xl font-medium text-gray-200">
+                    <Text className="text-xl font-medium text-neutral-200">
                       {foodVendor.name}
                     </Text>
                     {menuItem.name && (
-                      <Text className="text-sm text-gray-400">
+                      <Text className="text-sm text-neutral-400">
                         {menuItem.name}
                       </Text>
                     )}
                     {menuItem.tags && menuItem.tags.length > 0 && (
-                      <Text className="text-xs font-semibold text-gray-400 mr-2 inline-block">
+                      <Text className="text-xs font-semibold text-neutral-400 mr-2 inline-block">
                         {menuItem.tags.join(", ")}
                       </Text>
                     )}
                   </View>
+                  <View className="w-12 h-12 justify-center items-end">
+                    <ArrowUpRight size={20} color="#A3A3A3" />
+                  </View>
                 </View>
-                <View className="justify-end items-end">
-                  <Text className="text-lg font-semibold text-gray-400">
-                    ${menuItem.price}
-                  </Text>
-                </View>
-              </View>
+              </TouchableOpacity>
             )
           )}
         </ScrollView>
