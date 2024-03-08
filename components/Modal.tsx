@@ -220,6 +220,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               <View className="border-b border-neutral-300 mt-2" />
 
               <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
+                <View className="w-full bg-neutral-500 h-0.5" />
                 {vendor.menu.sections.length > 1 &&
                   vendor.menu.sections.map((section, index) => (
                     <TouchableOpacity
@@ -248,7 +249,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 if (section.name === selectedSection) {
                   return (
                     <React.Fragment key={index}>
-                      <View className="mb-6 w-full px-3">
+                      <View className="mb-6 w-full px-4">
                         {section.items.map((item, itemIndex) => (
                           <View className="flex flex-row" key={itemIndex}>
                             <View
