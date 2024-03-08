@@ -3,29 +3,36 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Keyboard,
   ScrollView,
+  Image,
+  ImageSourcePropType,
+  Text,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
-import { Text, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import DataFetcher from "../services/DataFetcher";
 import { MagnifyingGlass, X } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
+import { BuildingOutline } from "../components/BuildingOutline";
+import { CustomMarker } from "../components/CustomMarker";
 
 const _mapView = React.createRef<MapView>();
 
 const UVicRegion: Coordinates = {
-  latitude: 48.463440294565316,
-  latitudeDelta: 0.02,
-  longitude: -123.3121273188308,
-  longitudeDelta: 0.01,
+  // latitude: 48.463440294565316,
+  // latitudeDelta: 0.02,
+  // longitude: -123.3121273188308,
+  // longitudeDelta: 0.01,
+  latitude: 48.46477193608986,
+  latitudeDelta: 0.002,
+  longitude: -123.30808666750896,
+  longitudeDelta: 0.001,
 };
 
 const dataFetcher = new DataFetcher();
@@ -40,39 +47,6 @@ interface CustomMarkerProps {
   onPressCustom: () => void;
   zoomLevel: number;
 }
-
-const CustomMarker: React.FC<CustomMarkerProps> = ({
-  keyp,
-  name,
-  coordinate,
-  image,
-  vendor,
-  zoomLevel,
-  onPressCustom,
-}) => (
-  <Marker
-    title={name}
-    coordinate={coordinate}
-    onPress={() => onPressCustom()}
-    flat={false}
-    stopPropagation={true}
-    key={keyp}
-  >
-    <View className="flex justify-start items-center w-12 h-12">
-      <Image
-        source={image}
-        resizeMode="contain"
-        style={{
-          width: 30,
-          height: 30,
-        }}
-      />
-      {zoomLevel > 14.8 ? (
-        <Text className="text-gray-600 text-sm">{name}</Text>
-      ) : null}
-    </View>
-  </Marker>
-);
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
@@ -89,18 +63,13 @@ const HomeMap: React.FC = () => {
     new Map()
   );
   const searchInputRef = useRef<TextInput>(null);
+  const [markerSize, setMarkerSize] = useState(100);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [searchOpen]);
-
-  useEffect(() => {
-    if (searchInput === "") {
-      setSearchResults(new Map());
-    }
-  }, [searchInput]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -111,6 +80,8 @@ const HomeMap: React.FC = () => {
     if (searchInput !== "") {
       const results = menuSearch.searchAllMenuItems(searchInput);
       setSearchResults(results);
+    } else {
+      setSearchResults(new Map());
     }
   }, [searchInput]);
 
@@ -119,6 +90,9 @@ const HomeMap: React.FC = () => {
     const zoomLevel = Math.round(
       Math.log(maxLatitude / latitudeDelta) / Math.LN2
     );
+    // setMarkerSize(Math.max(20, zoomLevel * 5));
+    console.log("Marker Size", markerSize);
+
     return zoomLevel;
   };
 
@@ -145,6 +119,10 @@ const HomeMap: React.FC = () => {
     //setRegion(newRegion);
     setModalVisible(true);
   };
+
+  useEffect(() => {
+    console.log(zoomLevel);
+  }, [zoomLevel]);
 
   const onModalHide = () => {
     if (selectedLocation) {
@@ -519,7 +497,7 @@ const HomeMap: React.FC = () => {
           showsUserLocation={true}
           onRegionChange={onZoomChange}
           onPress={onModalHide}
-          // customMapStyle={mapStyles}
+          customMapStyle={mapStyles}
         >
           {buildings &&
             buildings.map((building) =>

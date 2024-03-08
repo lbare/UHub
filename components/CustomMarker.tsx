@@ -10,19 +10,16 @@ interface CustomMarkerProps {
   coordinate: Coordinates;
   image: ImageSourcePropType;
   vendor: FoodVendor;
-  isSelected: boolean;
-  zIndex: number;
   onPressCustom: () => void;
   zoomLevel: number;
 }
-
-const CustomMarker: React.FC<CustomMarkerProps> = ({
+export const CustomMarker: React.FC<CustomMarkerProps> = ({
   keyp,
   name,
   coordinate,
   image,
+  vendor,
   zoomLevel,
-  isSelected,
   onPressCustom,
 }) => (
   <Marker
@@ -32,26 +29,19 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     flat={false}
     stopPropagation={true}
     key={keyp}
-    zIndex={isSelected ? 1 : 0}
   >
-    <View className="flex justify-start items-center w-full h-full">
+    <View className="flex justify-start items-center w-12 h-12">
       <Image
         source={image}
         resizeMode="contain"
         style={{
-          width: isSelected ? 40 : 30,
-          height: isSelected ? 40 : 30,
+          width: 30,
+          height: 30,
         }}
       />
-
       {zoomLevel > 14.8 ? (
-        <Text className="text-gray-600 text-sm w-f">{name}</Text>
+        <Text className="text-gray-200 text-sm">{name}</Text>
       ) : null}
     </View>
-    <Callout tooltip={true}>
-      <Text></Text>
-    </Callout>
   </Marker>
 );
-
-export default CustomMarker;
