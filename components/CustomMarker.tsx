@@ -30,7 +30,7 @@ export const CustomMarker: React.FC<CustomMarkerProps> = ({
     stopPropagation={true}
     key={keyp}
   >
-    <View className="flex justify-start items-center w-12 h-12">
+    <View className="flex justify-start items-center w-20 h-12">
       <Image
         source={image}
         resizeMode="contain"
