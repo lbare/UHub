@@ -1,5 +1,6 @@
-import { collection, getDocs, doc } from "firebase/firestore";
+import { getDocs, addDoc } from "firebase/firestore";
 import { db } from "./firebase";
+import { collection } from "firebase/firestore";
 import { Building, buildingExamples } from "../models/Building";
 import { FoodVendor } from "../models/FoodVendor";
 
@@ -40,5 +41,16 @@ class DataFetcher {
     return building.vendors;
   }
 }
+
+export const addBuildingsToFirebase = async () => {
+  try {
+    const buildingsRef = collection(db, "Building");
+    for (const building of buildingExamples) {
+      await addDoc(buildingsRef, building);
+    }
+  } catch (error) {
+    console.error("Error adding building: ", error);
+  }
+};
 
 export default DataFetcher;

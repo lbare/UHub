@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
 import {
-  Modal,
-  View,
-  Text,
   Image,
+  Modal,
   ScrollView,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import {
   FoodVendor,
@@ -14,24 +14,25 @@ import {
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
 
+import { CaretLeft, CaretRight, MagnifyingGlass } from "phosphor-react-native";
+import { Building } from "../models/Building";
 import {
   DayOfWeek,
+  daysOfWeekInOrder,
   getVendorHoursForDayString,
+  isDayToday,
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
-  isDayToday,
-  daysOfWeekInOrder,
 } from "../models/VendorHours";
-import { Building } from "../models/Building";
-import { ArrowLeft, ArrowRight } from "phosphor-react-native";
 
 interface CustomModalProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   changeVendor: (vendor: FoodVendor) => void;
-  onModalHide: () => void;
+  onModalHide: (gotoSearch: boolean) => void;
   vendor: FoodVendor;
   building: Building;
+  openedModalFromSearch: boolean;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -41,11 +42,12 @@ const CustomModal: React.FC<CustomModalProps> = ({
   onModalHide,
   vendor,
   building,
+  openedModalFromSearch,
 }) => {
-  const hideModal = () => {
+  const hideModal = (exit: boolean) => {
     setModalVisible(false);
     setShowExpandedHours(false);
-    onModalHide();
+    onModalHide(!exit);
   };
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -61,16 +63,16 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <Modal
       animationType="slide"
       visible={modalVisible}
-      onRequestClose={hideModal}
       transparent={true}
-      onDismiss={hideModal}
       className="h-full w-full items-center justify-start"
       style={{
         backgroundColor: "#1D1D1D",
       }}
     >
       <TouchableOpacity
-        onPressOut={hideModal}
+        onPressOut={() => {
+          hideModal(true);
+        }}
         className="w-full h-1/2 absolute top-0"
       />
       {vendor && (
@@ -100,76 +102,84 @@ const CustomModal: React.FC<CustomModalProps> = ({
               }}
               className="-mt-4 w-full h-48 rounded-l"
             />
-
-            <TouchableOpacity
-              className="absolute left-1 mt-20"
-              onPress={() => {
-                const previousVendor = getPreviousFoodVendorInBuilding(
-                  vendor,
-                  building
-                );
-                changeVendor(previousVendor);
-              }}
-            >
-              <View className="bg-white/75 rounded-xl">
-                <ArrowLeft />
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className="absolute right-1 mt-20"
-              onPress={() => {
-                const previousVendor = getNextFoodVendorInBuilding(
-                  vendor,
-                  building
-                );
-                changeVendor(previousVendor);
-              }}
-            >
-              <View className="bg-white/75 rounded-xl">
-                <ArrowRight />
-              </View>
-            </TouchableOpacity>
-
-            <View className="w-full pl-3 pr-3">
-              <Text className="text-2xl font-bold mt-2 text-neutral-200">
-                {vendor.name}
-              </Text>
-
-              {vendor.description && (
-                <Text className="text-base -mt-1 mb-1 text-neutral-300">
-                  {vendor.description}
-                </Text>
-              )}
-
-              <View className={`flex flex-row items-center`}>
-                <Text
-                  className={`text-base font-semibold ${
-                    isVendorCurrentlyOpen(vendor.hours)
-                      ? "text-green-400"
-                      : "text-red-400 opacity-70"
-                  }`}
-                >
-                  {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
-                </Text>
+            <View className="w-full justify-center items-center">
+              <View className="w-full flex-row justify-between items-center">
                 <TouchableOpacity
-                  onPress={() => setShowExpandedHours(!showExpandedHours)}
+                  className="w-8 h-8 pl-3 rounded-full justify-center items-center"
+                  onPress={() => {
+                    if (!openedModalFromSearch) {
+                      const previousVendor = getNextFoodVendorInBuilding(
+                        vendor,
+                        building
+                      );
+                      changeVendor(previousVendor);
+                    }
+                  }}
                 >
-                  <View className="flex flex-row items-center">
-                    <Text className="font-normal opacity-80 text-neutral-300">
-                      {" · " +
-                        vendorNextOpenOrCloseTimeString(vendor.hours) +
-                        ""}
+                  {!openedModalFromSearch && (
+                    <CaretLeft color="#EDEDEDD2" weight="bold" size={32} />
+                  )}
+                </TouchableOpacity>
+
+                <View className="flex w-5/6 items-center justify-center">
+                  <Text className="text-2xl font-bold mt-2 text-neutral-200">
+                    {vendor.name}
+                  </Text>
+
+                  {vendor.description && (
+                    <View className="w-11/12">
+                      <Text className="text-xs text-center my-1 text-neutral-300">
+                        {vendor.description}
+                      </Text>
+                    </View>
+                  )}
+                  <View className={`flex flex-row items-center`}>
+                    <Text
+                      className={`text-base font-semibold ${
+                        isVendorCurrentlyOpen(vendor.hours)
+                          ? "text-green-400"
+                          : "text-red-400 opacity-70"
+                      }`}
+                    >
+                      {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
                     </Text>
-                    <Feather
-                      name={showExpandedHours ? "chevron-up" : "chevron-down"}
-                      size={20}
-                      color="grey"
-                    />
+                    <TouchableOpacity
+                      onPress={() => setShowExpandedHours(!showExpandedHours)}
+                    >
+                      <View className="flex flex-row items-center">
+                        <Text className="font-normal opacity-80 text-neutral-300">
+                          {" · " +
+                            vendorNextOpenOrCloseTimeString(vendor.hours) +
+                            ""}
+                        </Text>
+                        <Feather
+                          name={
+                            showExpandedHours ? "chevron-up" : "chevron-down"
+                          }
+                          size={20}
+                          color="grey"
+                        />
+                      </View>
+                    </TouchableOpacity>
                   </View>
+                </View>
+                <TouchableOpacity
+                  className="w-8 h-8 pr-3 rounded-full justify-center items-center"
+                  onPress={() => {
+                    if (!openedModalFromSearch) {
+                      const previousVendor = getNextFoodVendorInBuilding(
+                        vendor,
+                        building
+                      );
+                      changeVendor(previousVendor);
+                    }
+                  }}
+                >
+                  {!openedModalFromSearch && (
+                    <CaretRight color="#EDEDEDD2" weight="bold" size={32} />
+                  )}
                 </TouchableOpacity>
               </View>
-
               {showExpandedHours && (
                 <View className="mt-1 w-full">
                   <Text className="font-normal opacity-60 text-neutral-200">
@@ -210,6 +220,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               <View className="border-b border-neutral-300 mt-2" />
 
               <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
+                <View className="w-full bg-neutral-500 h-0.5" />
                 {vendor.menu.sections.length > 1 &&
                   vendor.menu.sections.map((section, index) => (
                     <TouchableOpacity
@@ -238,7 +249,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 if (section.name === selectedSection) {
                   return (
                     <React.Fragment key={index}>
-                      <View className="mb-6 w-full">
+                      <View className="mb-6 w-full px-4">
                         {section.items.map((item, itemIndex) => (
                           <View className="flex flex-row" key={itemIndex}>
                             <View
@@ -285,17 +296,35 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </ScrollView>
 
           <View className="absolute top-3 right-4">
-            <View className="bg-neutral-500 opacity-100 rounded-full h-6 w-6" />
-            <TouchableOpacity onPress={hideModal}>
+            <TouchableOpacity
+              className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
+              style={{ backgroundColor: "#ededed" }}
+              onPress={() => {
+                hideModal(true);
+              }}
+            >
               <Feather
                 name="x"
-                size={24}
-                color="white"
+                size={20}
+                color="#154058"
                 className="opacity-100"
-                style={{ marginTop: -24 }}
               />
             </TouchableOpacity>
           </View>
+
+          {openedModalFromSearch && (
+            <View className="absolute top-3 left-4">
+              <TouchableOpacity
+                className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
+                style={{ backgroundColor: "#ededed" }}
+                onPress={() => {
+                  hideModal(false);
+                }}
+              >
+                <MagnifyingGlass size={20} color="#154058" weight="bold" />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       )}
     </Modal>

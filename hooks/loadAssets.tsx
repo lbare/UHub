@@ -5,6 +5,8 @@ const loadAssets = async () => {
     Asset.loadAsync([
       require("../assets/marker.png"),
       require("../assets/splash.png"),
+      require("../assets/logo.png"),
+      require("../assets/full-logo.png"),
     ]),
   ]);
 };
