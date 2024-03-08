@@ -1,21 +1,23 @@
-import { MagnifyingGlass } from "phosphor-react-native";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-  ScrollView,
-  Text,
+  View,
   TextInput,
   TouchableOpacity,
-  View,
+  Keyboard,
+  ScrollView,
 } from "react-native";
-import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
-import CustomMarker from "../components/CustomMarker";
-import CustomModal from "../components/Modal";
-import { SearchBar } from "../components/SearchBar";
-import { BuildingContext } from "../contexts/BuildingContext";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
+import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
-import { MenuItem } from "../models/Menu";
+import { BuildingContext } from "../contexts/BuildingContext";
+import { Text, Image, ImageSourcePropType } from "react-native";
+import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
+import DataFetcher from "../services/DataFetcher";
+import { MagnifyingGlass, X } from "phosphor-react-native";
+import { SearchBar } from "../components/SearchBar";
+import { MenuItem } from "../models/Menu";
 
 const _mapView = React.createRef<MapView>();
 
@@ -26,13 +28,54 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
+const dataFetcher = new DataFetcher();
 const menuSearch = new MenuSearch();
+
+interface CustomMarkerProps {
+  keyp: number;
+  name: string;
+  coordinate: Coordinates;
+  image: ImageSourcePropType;
+  vendor: FoodVendor;
+  onPressCustom: () => void;
+  zoomLevel: number;
+}
+
+const CustomMarker: React.FC<CustomMarkerProps> = ({
+  keyp,
+  name,
+  coordinate,
+  image,
+  vendor,
+  zoomLevel,
+  onPressCustom,
+}) => (
+  <Marker
+    title={name}
+    coordinate={coordinate}
+    onPress={() => onPressCustom()}
+    flat={false}
+    stopPropagation={true}
+    key={keyp}
+  >
+    <View className="flex justify-start items-center w-12 h-12">
+      <Image
+        source={image}
+        resizeMode="contain"
+        style={{
+          width: 30,
+          height: 30,
+        }}
+      />
+      {zoomLevel > 14.8 ? (
+        <Text className="text-gray-600 text-sm">{name}</Text>
+      ) : null}
+    </View>
+  </Marker>
+);
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
-  const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
-  const [userLastRegionBeforeTap, setUserLastRegionBeforeTap] =
-    useState<Coordinates>(UVicRegion);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
     null
@@ -54,9 +97,8 @@ const HomeMap: React.FC = () => {
   }, [searchOpen]);
 
   useEffect(() => {
-    if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(searchInput);
-      setSearchResults(results);
+    if (searchInput === "") {
+      setSearchResults(new Map());
     }
   }, [searchInput]);
 
@@ -64,6 +106,13 @@ const HomeMap: React.FC = () => {
     // dataFetcher.getAllBuildings(setBuildings);
     onZoomChange(UVicRegion);
   }, []);
+
+  useEffect(() => {
+    if (searchInput !== "") {
+      const results = menuSearch.searchAllMenuItems(searchInput);
+      setSearchResults(results);
+    }
+  }, [searchInput]);
 
   const calculateZoomLevel = (latitudeDelta: number) => {
     const maxLatitude = 180;
@@ -78,44 +127,39 @@ const HomeMap: React.FC = () => {
     setZoomLevel(newZoomLevel);
   };
 
-  const onZoomChangeComplete = (newRegion: Coordinates, isGesture: Details) => {
-    if (isGesture) {
-      isGesture && setUserLastRegion(newRegion);
-    }
-  };
-
   const onMarkerPress = (vendor: FoodVendor) => {
     setSelectedLocation(vendor.location);
     setSelectedVendor(vendor);
-    setUserLastRegionBeforeTap(userLastRegion);
-
-    const adjustedlatitude = vendor.location.latitude - 0.00083;
+    const adjustedLatitude =
+      vendor.location.latitude - region.latitudeDelta * 0.105;
     const newRegion = {
-      latitude: adjustedlatitude,
+      latitude: adjustedLatitude,
       longitude: vendor.location.longitude,
-      latitudeDelta: region.latitudeDelta / 8,
-      longitudeDelta: region.longitudeDelta / 8,
+      latitudeDelta: region.latitudeDelta / 3,
+      longitudeDelta: region.longitudeDelta / 3,
     };
 
     if (_mapView.current) {
       _mapView.current.animateToRegion(newRegion, 200);
     }
+    //setRegion(newRegion);
     setModalVisible(true);
   };
 
   const onModalHide = () => {
     if (selectedLocation) {
+      const new_region = {
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+        latitudeDelta: selectedLocation.latitudeDelta * 5,
+        longitudeDelta: selectedLocation.longitudeDelta * 5,
+      };
+
       if (_mapView.current) {
-        _mapView.current.animateToRegion(userLastRegionBeforeTap, 200);
+        _mapView.current.animateToRegion(new_region, 200);
       }
     }
-    unselectMarker();
     setModalVisible(false);
-  };
-
-  const unselectMarker = () => {
-    setSelectedLocation(null);
-    setSelectedVendor(null);
   };
 
   var mapStyles = [
@@ -311,10 +355,10 @@ const HomeMap: React.FC = () => {
 
   if (searchOpen)
     return (
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
+      <View
+        style={{
           flex: 1,
+          backgroundColor: "#383838",
         }}
       >
         {!modalVisible && (
@@ -325,12 +369,23 @@ const HomeMap: React.FC = () => {
               left: 0,
               right: 0,
               zIndex: 1,
-              backgroundColor: "transparent",
               width: "100%",
-              height: "100%",
+              height: 150,
+              borderRadius: 20,
             }}
           >
             <SearchBar
+              shadowStyle={{
+                shadowColor: "#000000",
+                shadowOffset: {
+                  width: 2,
+                  height: 2,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 5,
+                elevation: 5,
+              }}
+              clearResults={() => setSearchResults(new Map())}
               ref={searchInputRef}
               searchInput={searchInput}
               selected={searchOpen}
@@ -340,47 +395,61 @@ const HomeMap: React.FC = () => {
             />
           </View>
         )}
-        <View
+        <ScrollView
           style={{
-            marginTop: 130,
-            alignItems: "flex-start",
-            padding: 8,
-            width: "100%",
+            marginTop: 150,
           }}
+          contentContainerStyle={{
+            alignItems: "flex-start",
+            width: "100%",
+            backgroundColor: "#383838",
+            borderRadius: 20,
+            height: searchResults.size === 0 ? "100%" : undefined,
+          }}
+          keyboardShouldPersistTaps="handled"
         >
           {Array.from(searchResults.entries()).map(
             ([menuItem, foodVendor], index) => (
               <View
                 key={index}
-                className=""
+                className="flex-row px-6 py-3 justify-between items-center"
                 style={{
-                  backgroundColor: index % 2 == 0 ? "#F0F0F0" : "white",
-                  marginLeft: -15,
-                  paddingLeft: 15,
-                  marginRight: -15,
-                  paddingRight: 15,
-                  paddingBottom: 8,
-                  paddingVertical: 8,
+                  backgroundColor: index % 2 == 0 ? "#404040" : "#383838",
                   width: "100%",
                 }}
               >
-                <Text className="text-lg font-medium">{foodVendor.name}</Text>
-                {menuItem.name && (
-                  <Text className="text-sm mt-1">{menuItem.name}</Text>
-                )}
-                {menuItem.tags && menuItem.tags.length > 0 && (
-                  <Text className="text-xs mt-1 font-semibold text-gray-500 mr-2 inline-block">
-                    {menuItem.tags.join(", ")}
+                <View className="flex-row">
+                  <View className="rounded-full border-2 w-12 h-12 bg-neutral-600 border-gray-200 justify-center items-center">
+                    <Text className="text-lg font-medium text-gray-200">
+                      SUB
+                    </Text>
+                  </View>
+                  <View className="w-64 pl-4 justify-start">
+                    <Text className="text-xl font-medium text-gray-200">
+                      {foodVendor.name}
+                    </Text>
+                    {menuItem.name && (
+                      <Text className="text-sm text-gray-400">
+                        {menuItem.name}
+                      </Text>
+                    )}
+                    {menuItem.tags && menuItem.tags.length > 0 && (
+                      <Text className="text-xs font-semibold text-gray-400 mr-2 inline-block">
+                        {menuItem.tags.join(", ")}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+                <View className="justify-end items-end">
+                  <Text className="text-lg font-semibold text-gray-400">
+                    ${menuItem.price}
                   </Text>
-                )}
-                <Text className="text-md mt-1 font-semibold">
-                  ${menuItem.price}
-                </Text>
+                </View>
               </View>
             )
           )}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   else
     return (
@@ -424,7 +493,9 @@ const HomeMap: React.FC = () => {
                   <MagnifyingGlass size={24} color="#383838" weight="bold" />
                 </View>
                 <View className="h-full w-3/5 justify-center items-start">
-                  <Text className="font-semiBold text-2xl">Search</Text>
+                  <Text className="font-semiBold text-2xl text-neutral-800">
+                    Search
+                  </Text>
                 </View>
               </View>
             </View>
@@ -447,9 +518,8 @@ const HomeMap: React.FC = () => {
           mapType="standard"
           showsUserLocation={true}
           onRegionChange={onZoomChange}
-          onRegionChangeComplete={onZoomChangeComplete}
           onPress={onModalHide}
-          customMapStyle={mapStyles}
+          // customMapStyle={mapStyles}
         >
           {buildings &&
             buildings.map((building) =>
@@ -459,8 +529,6 @@ const HomeMap: React.FC = () => {
                     keyp={index}
                     name={vendor.name}
                     coordinate={vendor.location}
-                    isSelected={vendor.name === selectedVendor?.name}
-                    zIndex={index}
                     image={require("../assets/marker.png")}
                     vendor={vendor}
                     onPressCustom={() => onMarkerPress(vendor)}
