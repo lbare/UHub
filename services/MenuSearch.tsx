@@ -44,7 +44,6 @@ class MenuSearch {
   public searchAllMenuItems = (
     searchString: string
   ): Map<MenuItem, FoodVendor> => {
-    console.log(`searchTerm: ${searchString}`);
 
     if (this.fuse_obj === undefined) return new Map<MenuItem, FoodVendor>();
 
@@ -60,8 +59,6 @@ class MenuSearch {
         mapItemVenor.set(item, foodVendor);
       }
     });
-
-    console.log(filteredFuseMenuResult);
 
     return mapItemVenor;
   };
