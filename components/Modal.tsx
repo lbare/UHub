@@ -15,7 +15,8 @@ import {
   getVendorHoursForDayString,
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
-  isDayToday
+  isDayToday,
+  daysOfWeekInOrder
 } from "../models/VendorHours";
 
 interface CustomModalProps {
@@ -37,13 +38,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
     onModalHide();
   };
 
-  const hoursArray = vendor
-    ? Object.entries(vendor.hours).map(([day, timeRanges]) => ({
-      day,
-      timeRanges,
-    }))
-    : [];
-
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [showExpandedHours, setShowExpandedHours] = useState(false);
 
@@ -60,7 +54,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       onRequestClose={hideModal}
       transparent={true}
       onDismiss={hideModal}
-      className="h-full w-full flex items-center justify-start"
+      className="h-full w-full items-center justify-start"
     >
       <TouchableOpacity
         onPressOut={hideModal}
@@ -68,7 +62,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       />
       {vendor && (
         <View
-          className="bg-white mt-48 w-full h-full rounded-xl"
+          className="bg-white mt-48 w-full h-full rounded-xl overflow-hidden"
           style={{
             shadowColor: "#000",
             shadowOffset: {
@@ -93,24 +87,38 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="-mt-4 w-full h-48 rounded-l"
             />
 
-            <View className="pl-3 pr-3">
-
+            <View className="w-full pl-3 pr-3">
               <Text className="text-2xl font-bold mt-2">{vendor.name}</Text>
-              
+
               {vendor.description && (
-                <Text className="text-base -mt-1 mb-1">{vendor.description}</Text>
+                <Text className="text-base -mt-1 mb-1">
+                  {vendor.description}
+                </Text>
               )}
 
               <View className={`flex flex-row items-center`}>
-                <Text className={`text-base font-semibold ${isVendorCurrentlyOpen(vendor.hours) ? 'text-green-600' : 'text-red-600 opacity-70'}`}>
+                <Text
+                  className={`text-base font-semibold ${isVendorCurrentlyOpen(vendor.hours)
+                    ? "text-green-600"
+                    : "text-red-600 opacity-70"
+                    }`}
+                >
                   {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
                 </Text>
-                <TouchableOpacity onPress={() => setShowExpandedHours(!showExpandedHours)}>
+                <TouchableOpacity
+                  onPress={() => setShowExpandedHours(!showExpandedHours)}
+                >
                   <View className="flex flex-row items-center">
                     <Text className="font-normal opacity-80">
-                      {" · " + vendorNextOpenOrCloseTimeString(vendor.hours) + ""}
+                      {" · " +
+                        vendorNextOpenOrCloseTimeString(vendor.hours) +
+                        ""}
                     </Text>
-                    <Feather name={showExpandedHours ? 'chevron-up' : 'chevron-down'} size={20} color="grey" />
+                    <Feather
+                      name={showExpandedHours ? "chevron-up" : "chevron-down"}
+                      size={20}
+                      color="grey"
+                    />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -118,34 +126,49 @@ const CustomModal: React.FC<CustomModalProps> = ({
               {showExpandedHours && (
                 <View className="mt-1 w-full">
                   <Text className="font-normal opacity-60">Open Hours</Text>
-                  {hoursArray.map(({ day, timeRanges }, index) => (
-                    <View key={index} className="flex flex-row items-center mt-1">
+                  {daysOfWeekInOrder.map((day, index) => (
+                    <View
+                      key={index}
+                      className="flex flex-row items-center mt-1"
+                    >
                       {/*Couldn't figureout a way to do the minWidth with Tailwind min-w-__ did not work */}
-                      <Text style={{ minWidth: 100 }} className={`'font-light' ${isDayToday(day as DayOfWeek) ? 'opacity-80' : 'opacity-60'}`}>{day}:</Text>
-                      <Text className={`'font-light' opacity-60 ${isDayToday(day as DayOfWeek) ? 'opacity-80' : 'opacity-60'}`}>{getVendorHoursForDayString(vendor.hours, day as DayOfWeek)}</Text>
+                      <Text
+                        style={{ minWidth: 100 }}
+                        className={`'font-light' ${isDayToday(day as DayOfWeek)
+                          ? "opacity-80"
+                          : "opacity-60"
+                          }`}
+                      >
+                        {day}:
+                      </Text>
+                      <Text
+                        className={`'font-light' opacity-60 ${isDayToday(day as DayOfWeek)
+                          ? "opacity-80"
+                          : "opacity-60"
+                          }`}
+                      >
+                        {getVendorHoursForDayString(
+                          vendor.hours,
+                          day as DayOfWeek
+                        )}
+                      </Text>
                     </View>
-
                   ))}
                 </View>
               )}
               <View className="border-b border-gray-300 mt-2" />
-              <Text className="text-lg font-semibold mt-1 w-full">Menu</Text>
 
               <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
-
-                {vendor.menu.sections.length > 0 &&
+                {vendor.menu.sections.length > 1 &&
                   vendor.menu.sections.map((section, index) => (
                     <TouchableOpacity
                       key={index}
-                      className={`justify-center items-center mx-2 my-2 ${selectedSection && selectedSection === section.name
-                        ? "border-b-2 border-black"
-                        : ""
-                        }`}
+                      className={`justify-center items-center mx-2 my-2 h-6`}
                       onPress={() => setSelectedSection(section.name)}
                     >
                       <Text
                         className={`text-xs font-extrabold ${selectedSection && selectedSection === section.name
-                          ? "text-black text-base"
+                          ? "text-black text-base underline"
                           : "text-gray-500"
                           }`}
                       >
@@ -161,21 +184,37 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     <React.Fragment key={index}>
                       <View className="mb-6 w-full">
                         {section.items.map((item, itemIndex) => (
-                          <View key={itemIndex} className="" style={{ backgroundColor: (itemIndex % 2 == 0) ? "#FAF2F0" : "white", marginLeft: -15, paddingLeft: 15, marginRight: -15, paddingRight: 15, paddingBottom: 8 }}>
-                            <Text className="text-lg font-medium">
-                              {item.name}
-                            </Text>
-                            {item.description && (
-                              <Text className="text-sm mt-1">{item.description}</Text>
-                            )}
-                            {item.tags && item.tags.length > 0 && (
-                              <Text className="text-xs mt-1 font-semibold text-gray-500 mr-2 inline-block">
-                                {item.tags.join(", ")}
+                          <View className="flex flex-row" key={itemIndex}>
+                            <View
+                              className="flex-1"
+                              style={{
+                                backgroundColor:
+                                  itemIndex % 2 == 0 ? "#F0F0F0" : "white",
+                                marginLeft: -15,
+                                paddingLeft: 15,
+                                marginRight: -15,
+                                paddingRight: 15,
+                                paddingBottom: 8,
+                                paddingVertical: 8,
+                              }}
+                            >
+                              <Text className="text-lg font-medium">
+                                {item.name}
                               </Text>
-                            )}
-                            <Text className="text-md mt-1 font-semibold">
-                              ${item.price}
-                            </Text>
+                              {item.description && (
+                                <Text className="text-sm mt-1">
+                                  {item.description}
+                                </Text>
+                              )}
+                              {item.tags && item.tags.length > 0 && (
+                                <Text className="text-xs mt-1 font-semibold text-gray-500 mr-2 inline-block">
+                                  {item.tags.join(", ")}
+                                </Text>
+                              )}
+                              <Text className="text-md mt-1 font-semibold">
+                                ${item.price}
+                              </Text>
+                            </View>
                           </View>
                         ))}
                       </View>
@@ -194,12 +233,15 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <View className="absolute top-3 right-4">
             <View className="bg-gray-500 opacity-100 rounded-full h-6 w-6" />
             <TouchableOpacity onPress={hideModal}>
-              <Feather name="x" size={24} color="white" className="opacity-100" style={{ marginTop: -24 }} />
+              <Feather
+                name="x"
+                size={24}
+                color="white"
+                className="opacity-100"
+                style={{ marginTop: -24 }}
+              />
             </TouchableOpacity>
           </View>
-
-
-
         </View>
       )}
     </Modal>

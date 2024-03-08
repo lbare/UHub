@@ -1,4 +1,5 @@
 type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+const daysOfWeekInOrder: DayOfWeek[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 type TimeRange = {
   open: string;
@@ -169,4 +170,4 @@ const vendorHoursExample: VendorHours = {
   ],
 };
 
-export {DayOfWeek, VendorHours, vendorHoursExample, isVendorCurrentlyOpen, getVendorHoursForDayString, getVendorHoursForTodayString, vendorHoursToString, vendorNextOpenOrCloseTimeString, isDayToday}
+export {DayOfWeek, VendorHours, vendorHoursExample, daysOfWeekInOrder, isVendorCurrentlyOpen, getVendorHoursForDayString, getVendorHoursForTodayString, vendorHoursToString, vendorNextOpenOrCloseTimeString, isDayToday}
