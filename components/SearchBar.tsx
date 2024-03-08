@@ -53,7 +53,6 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
             <TouchableOpacity
               className="h-full w-16 justify-center items-center"
               onPress={() => {
-                setSelected(false);
                 setSearchInput("");
               }}
             >

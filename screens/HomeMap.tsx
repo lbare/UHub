@@ -15,7 +15,6 @@ import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
-import DataFetcher from "../services/DataFetcher";
 import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
@@ -41,6 +40,7 @@ const HomeMap: React.FC = () => {
   );
   const [selectedVendor, setSelectedVendor] = useState<FoodVendor | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [openedModalFromSearch, setOpenedModalFromSearch] = useState<boolean>(false);
   const buildings = useContext(BuildingContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -101,7 +101,6 @@ const HomeMap: React.FC = () => {
       latitudeDelta: region.latitudeDelta / 8,
       longitudeDelta: region.longitudeDelta / 8,
     };
-
     if (_mapView.current) {
       _mapView.current.animateToRegion(newRegion, 200);
     }
@@ -116,6 +115,10 @@ const HomeMap: React.FC = () => {
     }
     unselectMarker();
     setModalVisible(false);
+    if (openedModalFromSearch) {
+      setSearchOpen(true);
+      setOpenedModalFromSearch(false);
+    }
   };
 
   const unselectMarker = () => {
@@ -383,35 +386,35 @@ const HomeMap: React.FC = () => {
           backgroundColor: "#1D1D1D",
         }}
       >
-      {!modalVisible && (
-        <View
-          style={{
-            width: "100%",
-            height: 150,
-            borderRadius: 20,
-          }}
-        >
-          <SearchBar
-            shadowStyle={{
-              shadowColor: "#000000",
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 0.3,
-              shadowRadius: 5,
-              elevation: 5,
+        {!modalVisible && (
+          <View
+            style={{
+              width: "100%",
+              height: 150,
+              borderRadius: 20,
             }}
-            clearResults={() => setSearchResults(new Map())}
-            ref={searchInputRef}
-            searchInput={searchInput}
-            selected={searchOpen}
-            setSelected={setSearchOpen}
-            setSearchInput={setSearchInput}
-            onBlur={() => setSearchOpen(false)}
-          />
-        </View>
-      )}
+          >
+            <SearchBar
+              shadowStyle={{
+                shadowColor: "#000000",
+                shadowOffset: {
+                  width: 2,
+                  height: 2,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 5,
+                elevation: 5,
+              }}
+              clearResults={() => setSearchResults(new Map())}
+              ref={searchInputRef}
+              searchInput={searchInput}
+              selected={searchOpen}
+              setSelected={setSearchOpen}
+              setSearchInput={setSearchInput}
+              onBlur={() => setSearchOpen(false)}
+            />
+          </View>
+        )}
         <ScrollView
           contentContainerStyle={{
             alignItems: "flex-start",
@@ -433,8 +436,7 @@ const HomeMap: React.FC = () => {
                 }}
                 onPress={() => {
                   setSearchOpen(false);
-                  setSearchInput("");
-                  setSearchResults(new Map());
+                  setOpenedModalFromSearch(true);
                   onMarkerPress(foodVendor);
                 }}
               >
@@ -470,44 +472,44 @@ const HomeMap: React.FC = () => {
         </ScrollView>
       </View>
       {!(searchOpen || modalVisible) && (
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => setSearchOpen(true)}
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setSearchOpen(true)}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            backgroundColor: "transparent",
+          }}
+        >
+          <View
+            className="flex w-full items-center justify-center mt-16"
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: 1,
-              backgroundColor: "transparent",
+              shadowColor: "#000000",
+              shadowOffset: {
+                width: 2,
+                height: 2,
+              },
+              shadowOpacity: 0.6,
+              shadowRadius: 5,
+              elevation: 5,
             }}
           >
-            <View
-              className="flex w-full items-center justify-center mt-16"
-              style={{
-                shadowColor: "#000000",
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-                shadowOpacity: 0.6,
-                shadowRadius: 5,
-                elevation: 5,
-              }}
-            >
-              <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
-                <View className="flex w-16 h-full justify-center items-center">
-                  <MagnifyingGlass size={24} color="#383838" weight="bold" />
-                </View>
-                <View className="h-full w-3/5 justify-center items-start">
-                  <Text className="font-semiBold text-2xl text-neutral-800">
-                    Search
-                  </Text>
-                </View>
+            <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
+              <View className="flex w-16 h-full justify-center items-center">
+                <MagnifyingGlass size={24} color="#383838" weight="bold" />
+              </View>
+              <View className="h-full w-3/5 justify-center items-start">
+                <Text className="font-semiBold text-2xl text-neutral-800">
+                  Search
+                </Text>
               </View>
             </View>
-          </TouchableOpacity>
-        )}
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
