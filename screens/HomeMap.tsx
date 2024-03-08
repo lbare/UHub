@@ -8,7 +8,7 @@ import {
   ImageSourcePropType,
   Text,
 } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Details, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -19,7 +19,7 @@ import DataFetcher from "../services/DataFetcher";
 import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem } from "../models/Menu";
-import { CustomMarker } from "../components/CustomMarker";
+import CustomMarker from "../components/CustomMarker";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -28,11 +28,13 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
-const dataFetcher = new DataFetcher();
 const menuSearch = new MenuSearch();
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
+  const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
+  const [userLastRegionBeforeTap, setUserLastRegionBeforeTap] =
+    useState<Coordinates>(UVicRegion);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
     null
@@ -55,11 +57,6 @@ const HomeMap: React.FC = () => {
   }, [searchOpen]);
 
   useEffect(() => {
-    // dataFetcher.getAllBuildings(setBuildings);
-    onZoomChange(UVicRegion);
-  }, []);
-
-  useEffect(() => {
     if (searchInput !== "") {
       const results = menuSearch.searchAllMenuItems(searchInput);
       setSearchResults(results);
@@ -67,6 +64,11 @@ const HomeMap: React.FC = () => {
       setSearchResults(new Map());
     }
   }, [searchInput]);
+
+  useEffect(() => {
+    // dataFetcher.getAllBuildings(setBuildings);
+    onZoomChange(UVicRegion);
+  }, []);
 
   const calculateZoomLevel = (latitudeDelta: number) => {
     const maxLatitude = 180;
@@ -81,41 +83,44 @@ const HomeMap: React.FC = () => {
     setZoomLevel(newZoomLevel);
   };
 
+  const onZoomChangeComplete = (newRegion: Coordinates, isGesture: Details) => {
+    if (isGesture) {
+      isGesture && setUserLastRegion(newRegion);
+    }
+  };
+
   const onMarkerPress = (vendor: FoodVendor) => {
     setSelectedLocation(vendor.location);
     setSelectedVendor(vendor);
-    const adjustedLatitude =
-      vendor.location.latitude - region.latitudeDelta * 0.105;
+    setUserLastRegionBeforeTap(userLastRegion);
+
+    const adjustedlatitude = vendor.location.latitude - 0.00083;
     const newRegion = {
-      latitude: adjustedLatitude,
+      latitude: adjustedlatitude,
       longitude: vendor.location.longitude,
-      latitudeDelta: region.latitudeDelta / 3,
-      longitudeDelta: region.longitudeDelta / 3,
+      latitudeDelta: region.latitudeDelta / 8,
+      longitudeDelta: region.longitudeDelta / 8,
     };
 
     if (_mapView.current) {
-      console.log("RUN");
-
       _mapView.current.animateToRegion(newRegion, 200);
     }
-    //setRegion(newRegion);
     setModalVisible(true);
   };
 
   const onModalHide = () => {
     if (selectedLocation) {
-      const new_region = {
-        latitude: selectedLocation.latitude,
-        longitude: selectedLocation.longitude,
-        latitudeDelta: selectedLocation.latitudeDelta * 5,
-        longitudeDelta: selectedLocation.longitudeDelta * 5,
-      };
-
       if (_mapView.current) {
-        _mapView.current.animateToRegion(new_region, 200);
+        _mapView.current.animateToRegion(userLastRegionBeforeTap, 200);
       }
     }
+    unselectMarker();
     setModalVisible(false);
+  };
+
+  const unselectMarker = () => {
+    setSelectedLocation(null);
+    setSelectedVendor(null);
   };
 
   var mapStyles = [
@@ -479,6 +484,7 @@ const HomeMap: React.FC = () => {
           mapType="standard"
           showsUserLocation={true}
           onRegionChange={onZoomChange}
+          onRegionChangeComplete={onZoomChangeComplete}
           onPress={onModalHide}
           customMapStyle={mapStyles}
         >
@@ -490,8 +496,9 @@ const HomeMap: React.FC = () => {
                     keyp={index}
                     name={vendor.name}
                     coordinate={vendor.location}
+                    isSelected={vendor.name === selectedVendor?.name}
+                    zIndex={index}
                     image={require("../assets/marker.png")}
-                    vendor={vendor}
                     onPressCustom={() => onMarkerPress(vendor)}
                     zoomLevel={zoomLevel}
                   />
