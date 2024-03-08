@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "37094280542",
+    "project_id": "uhub-b1a4d",
+    "storage_bucket": "uhub-b1a4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37094280542:android:810538718c159ebfa853cf",
+        "android_client_info": {
+          "package_name": "app.uhub.seng480A.uvic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwXBg2vypYz4XGT-RWAGpcyeMVHDRMrR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
