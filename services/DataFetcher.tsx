@@ -41,4 +41,6 @@ class DataFetcher {
   }
 }
 
+// const addBuildingsToFirebase
+
 export default DataFetcher;
