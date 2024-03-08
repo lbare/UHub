@@ -34,7 +34,6 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     key={keyp}
     zIndex={isSelected ? 1 : 0}
   >
-    <Callout tooltip={true} />
     <View className="flex justify-start items-center w-full h-full">
         <Image
           source={image}
@@ -49,6 +48,9 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
         <Text className="text-gray-600 text-sm w-f">{name}</Text>
       ) : null}
     </View>
+    <Callout tooltip={true}>
+        <Text></Text>
+    </Callout>
   </Marker>
 );
 
