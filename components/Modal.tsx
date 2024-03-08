@@ -133,7 +133,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       </Text>
                     </View>
                   )}
-                  <View className={`flex flex-row items-center`}>
+                  <View className={`flex flex-row items-center px-4`}>
                     <Text
                       className={`text-base font-semibold ${
                         isVendorCurrentlyOpen(vendor.hours)
