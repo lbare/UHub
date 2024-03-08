@@ -120,7 +120,8 @@ const buildingExamples: Building[] = [
   bookStoreBuildingExample,
   macBuildingExample,
   GradBuildingExample,
-  MysticBuildingExample
+  MysticBuildingExample,
+  LibBuildingExample
 ];
 
 export { Building, buildingExamples };

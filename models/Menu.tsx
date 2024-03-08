@@ -1327,7 +1327,11 @@ const menuExample = [
   starbucksMenu,
   EntreeMenu,
   uniclubMenuExample,
-  ChopBoxMenu
+  ChopBoxMenu,
+  FrescoMenu,
+  GradHouseMenu,
+  MacMenu,
+  TreksMenu
 ];
 
 export { Menu, MenuItem, menuExample };
