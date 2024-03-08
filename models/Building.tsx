@@ -35,7 +35,7 @@ const subBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.felicitas, foodVendorExamples.thegrill],
+  vendors: [foodVendorExamples.felicitas, foodVendorExamples.thegrill, foodVendorExamples.munchie, foodVendorExamples.hfb],
 };
 
 const bookStoreBuildingExample: Building = {
@@ -69,11 +69,58 @@ const macBuildingExample: Building = {
   vendors: [foodVendorExamples.mac],
 };
 
+const MysticBuildingExample: Building = {
+  name: "Jamie Cassels center",
+  description:
+    "Jamie Cassels Centre (JCC) contains academic and administrative offices.",
+  image:
+    "https://www.uvic.ca/info/_assets/images/content-main/buildings-jamie-cassels-720x405.jpg",
+  location: { 
+    latitude: 48.46497598248455,
+    longitude: -123.31095511732323,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  },
+  vendors: [foodVendorExamples.chopbox, foodVendorExamples.fresco, foodVendorExamples.treks ],
+};
+
+const GradBuildingExample: Building = {
+  name: "Jamie Cassels center",
+  description:
+    "Home on campus for UVIC graduate students",
+  image:
+    "https://gss.uvic.ca/wp-content/uploads/2020/01/Orientation-Social-Image.jpg",
+  location: { 
+    latitude: 48.466136567816996, 
+    longitude: -123.30747612930818,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  },
+  vendors: [foodVendorExamples.gradhouse],
+};
+
+const LibBuildingExample: Building = {
+  name: "Mcpherson Library",
+  description:
+    "The centre includes an enhanced learning commons, a media commons, an international commons, collaborative learning classrooms, the Bibliocafe and educational support services.",
+  image:
+    "https://www.uvic.ca/info/_assets/images/content-main/buildings-mearns-720x405.jpg",
+  location: { 
+    latitude: 48.463314927944296, 
+    longitude: -123.30976598859489,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  },
+  vendors: [foodVendorExamples.biblio],
+};
+
 const buildingExamples: Building[] = [
   coveBuildingExample,
   subBuildingExample,
   bookStoreBuildingExample,
-  macBuildingExample
+  macBuildingExample,
+  GradBuildingExample,
+  MysticBuildingExample
 ];
 
 export { Building, buildingExamples };
