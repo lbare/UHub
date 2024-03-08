@@ -33,7 +33,9 @@ export default function App() {
       } catch (error) {
         console.error("Error fetching buildings:", error);
       } finally {
-        setIsReady(true);
+        setTimeout(() => {
+          setIsReady(true);
+        }, 2000);
       }
     };
 

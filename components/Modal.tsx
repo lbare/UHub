@@ -133,7 +133,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       </Text>
                     </View>
                   )}
-                  <View className={`flex flex-row items-center px-4`}>
+                  <View className={`flex flex-row items-center`}>
                     <Text
                       className={`text-base font-semibold ${
                         isVendorCurrentlyOpen(vendor.hours)
@@ -181,7 +181,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 </TouchableOpacity>
               </View>
               {showExpandedHours && (
-                <View className="mt-1 w-full">
+                <View className="mt-1 w-11/12 mx-4">
                   <Text className="font-normal opacity-60 text-neutral-200">
                     Open Hours
                   </Text>
