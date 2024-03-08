@@ -104,20 +104,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
             />
             <View className="w-full justify-center items-center">
               <View className="w-full flex-row justify-between items-center">
-                {!openedModalFromSearch && (
-                  <TouchableOpacity
-                    className="w-8 h-8 pl-3 rounded-full justify-center items-center"
-                    onPress={() => {
-                      const previousVendor = getPreviousFoodVendorInBuilding(
-                        vendor,
-                        building
-                      );
-                      changeVendor(previousVendor);
-                    }}
-                  >
-                    <CaretLeft color="#EDEDEDD2" weight="bold" size={32} />
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  className="w-8 h-8 pl-3 rounded-full justify-center items-center"
+                  onPress={() => {
+                    const previousVendor = getPreviousFoodVendorInBuilding(
+                      vendor,
+                      building
+                    );
+                    changeVendor(previousVendor);
+                  }}
+                >
+                  <CaretLeft color="#EDEDEDD2" weight="bold" size={32} />
+                </TouchableOpacity>
 
                 <View className="flex w-5/6 items-center justify-center">
                   <Text className="text-2xl font-bold mt-2 text-neutral-200">
@@ -161,20 +159,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     </TouchableOpacity>
                   </View>
                 </View>
-                {!openedModalFromSearch && (
-                  <TouchableOpacity
-                    className="w-8 h-8 pr-3 rounded-full justify-center items-center"
-                    onPress={() => {
-                      const previousVendor = getNextFoodVendorInBuilding(
-                        vendor,
-                        building
-                      );
-                      changeVendor(previousVendor);
-                    }}
-                  >
-                    <CaretRight color="#EDEDEDD2" weight="bold" size={32} />
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  className="w-8 h-8 pr-3 rounded-full justify-center items-center"
+                  onPress={() => {
+                    const previousVendor = getNextFoodVendorInBuilding(
+                      vendor,
+                      building
+                    );
+                    changeVendor(previousVendor);
+                  }}
+                >
+                  <CaretRight color="#EDEDEDD2" weight="bold" size={32} />
+                </TouchableOpacity>
               </View>
               {showExpandedHours && (
                 <View className="mt-1 w-full">
