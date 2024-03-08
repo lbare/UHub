@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import CustomMarker from "../components/CustomMarker";
@@ -31,7 +31,8 @@ const menuSearch = new MenuSearch();
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
   const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
-  const [userLastRegionBeforeTap, setUserLastRegionBeforeTap] = useState<Coordinates>(UVicRegion);
+  const [userLastRegionBeforeTap, setUserLastRegionBeforeTap] =
+    useState<Coordinates>(UVicRegion);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
     null
@@ -115,7 +116,7 @@ const HomeMap: React.FC = () => {
   const unselectMarker = () => {
     setSelectedLocation(null);
     setSelectedVendor(null);
-  }
+  };
 
   var mapStyles = [
     {

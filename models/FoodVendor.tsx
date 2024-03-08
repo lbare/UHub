@@ -48,50 +48,54 @@ const foodVendorExamples = {
       latitude: 48.46485803452279,
       longitude: -123.30817796788351,
       latitudeDelta: 0.001,
-      longitudeDelta: 0.001
+      longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.find((menu) => menu.id === "theGrill")!
+    menu: menuExample.find((menu) => menu.id === "theGrill")!,
   },
   felicitas: {
     name: "Felicitas",
-    description: "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
-    image: "https://www.felicitas.ca/wp-content/uploads/2024/01/FELS_BOTB_Digicaster_1.2_web.jpg",
+    description:
+      "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
+    image:
+      "https://www.felicitas.ca/wp-content/uploads/2024/01/FELS_BOTB_Digicaster_1.2_web.jpg",
     location: {
       latitude: 48.46460219027596,
       longitude: -123.30794900242859,
       latitudeDelta: 0.001,
-      longitudeDelta: 0.001
+      longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.find((menu) => menu.id === "felicitas")!
+    menu: menuExample.find((menu) => menu.id === "felicitas")!,
   },
   entree: {
     name: "Entree",
     description: "",
-    image: "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
     location: {
-      latitude: 48.464306646410556, 
+      latitude: 48.464306646410556,
       longitude: -123.30712176290265,
       latitudeDelta: 0.001,
-      longitudeDelta: 0.001
+      longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.find((menu) => menu.id === "entree")!
+    menu: menuExample.find((menu) => menu.id === "entree")!,
   },
   uniClub: {
     name: "University Club of Victoria",
-    description: "Scenic cafe at University of Victoria offering burgers, sandwiches & salads, plus a pondside patio.",
+    description:
+      "Scenic cafe at University of Victoria offering burgers, sandwiches & salads, plus a pondside patio.",
     image: "https://vitp.ca/wp-content/uploads/2012/12/UVIC-SS3lr1.jpg",
     location: {
       latitude: 48.464051945701065,
-      longitude:  -123.31754308323926,
+      longitude: -123.31754308323926,
       latitudeDelta: 0.001,
-      longitudeDelta: 0.001
+      longitudeDelta: 0.001,
     },
     hours: vendorHoursExample,
-    menu: menuExample.find((menu) => menu.id === "uniclub")!
-  }
+    menu: menuExample.find((menu) => menu.id === "uniclub")!,
+  },
 };
 
 export { FoodVendor, VendorHours, foodVendorExamples };

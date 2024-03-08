@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import {
   Modal,
   View,
@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  } from "react-native";
+} from "react-native";
 import { FoodVendor } from "../models/FoodVendor";
 
 import {
@@ -16,7 +16,7 @@ import {
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
   isDayToday,
-  daysOfWeekInOrder
+  daysOfWeekInOrder,
 } from "../models/VendorHours";
 
 interface CustomModalProps {
@@ -98,10 +98,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
               <View className={`flex flex-row items-center`}>
                 <Text
-                  className={`text-base font-semibold ${isVendorCurrentlyOpen(vendor.hours)
-                    ? "text-green-600"
-                    : "text-red-600 opacity-70"
-                    }`}
+                  className={`text-base font-semibold ${
+                    isVendorCurrentlyOpen(vendor.hours)
+                      ? "text-green-600"
+                      : "text-red-600 opacity-70"
+                  }`}
                 >
                   {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
                 </Text>
@@ -134,18 +135,20 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       {/*Couldn't figureout a way to do the minWidth with Tailwind min-w-__ did not work */}
                       <Text
                         style={{ minWidth: 100 }}
-                        className={`'font-light' ${isDayToday(day as DayOfWeek)
-                          ? "opacity-80"
-                          : "opacity-60"
-                          }`}
+                        className={`'font-light' ${
+                          isDayToday(day as DayOfWeek)
+                            ? "opacity-80"
+                            : "opacity-60"
+                        }`}
                       >
                         {day}:
                       </Text>
                       <Text
-                        className={`'font-light' opacity-60 ${isDayToday(day as DayOfWeek)
-                          ? "opacity-80"
-                          : "opacity-60"
-                          }`}
+                        className={`'font-light' opacity-60 ${
+                          isDayToday(day as DayOfWeek)
+                            ? "opacity-80"
+                            : "opacity-60"
+                        }`}
                       >
                         {getVendorHoursForDayString(
                           vendor.hours,
@@ -167,10 +170,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       onPress={() => setSelectedSection(section.name)}
                     >
                       <Text
-                        className={`text-xs font-extrabold ${selectedSection && selectedSection === section.name
-                          ? "text-black text-base underline"
-                          : "text-gray-500"
-                          }`}
+                        className={`text-xs font-extrabold ${
+                          selectedSection && selectedSection === section.name
+                            ? "text-black text-base underline"
+                            : "text-gray-500"
+                        }`}
                       >
                         {section.name}
                       </Text>
@@ -226,8 +230,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
               {/* Extra view below is a Work around for the scroll not going all the way to the bottom */}
               <View className="h-48"></View>
             </View>
-
-
           </ScrollView>
 
           <View className="absolute top-3 right-4">
