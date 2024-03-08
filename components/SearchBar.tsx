@@ -9,38 +9,42 @@ interface SearchBarProps {
   shadowStyle?: any;
   selected?: boolean;
   setSelected: (selected: boolean) => void;
+  clearResults?: () => void;
 }
 
 export const SearchBar = forwardRef<TextInput, SearchBarProps>(
   (
-    { searchInput, setSearchInput, onBlur, shadowStyle, selected, setSelected },
+    {
+      searchInput,
+      setSearchInput,
+      onBlur,
+      shadowStyle,
+      selected,
+      setSelected,
+      clearResults,
+    },
     ref
   ) => {
     return (
       <View
         className="flex w-full items-center justify-center mt-16"
-        style={shadowStyle}
+        // style={shadowStyle}
       >
         <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
-          {!selected ? (
-            <View className="flex w-16 h-full justify-center items-center">
-              <MagnifyingGlass size={24} color="#383838" weight="bold" />
-            </View>
-          ) : (
-            <TouchableOpacity
-              className="flex w-16 h-full justify-center items-center"
-              onPress={() => {
-                setSelected(false);
-              }}
-            >
-              <CaretLeft size={24} color="#383838" weight="bold" />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            className="flex w-16 h-full justify-center items-center"
+            onPress={() => {
+              setSelected(false);
+              setSearchInput("");
+              if (clearResults) clearResults();
+            }}
+          >
+            <CaretLeft size={24} color="#1B1B1B" weight="bold" />
+          </TouchableOpacity>
           <TextInput
             ref={ref}
-            className="h-full w-3/5 justify-center items-center font-semiBold text-2xl"
-            placeholder="Search"
-            placeholderTextColor="#383838"
+            className="h-full w-3/5 justify-center items-center font-bold text-2xl pb-1"
+            style={{ color: "#1B1B1B" }}
             value={searchInput}
             onChangeText={(text) => setSearchInput(text)}
             onFocus={() => setSelected(true)}
@@ -48,9 +52,12 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
           {searchInput !== "" ? (
             <TouchableOpacity
               className="h-full w-16 justify-center items-center"
-              onPress={() => setSearchInput("")}
+              onPress={() => {
+                setSelected(false);
+                setSearchInput("");
+              }}
             >
-              <X size={24} color="#5F1515" weight="bold" />
+              <X size={24} color="#1B1B1B" weight="bold" />
             </TouchableOpacity>
           ) : (
             <View className="h-full w-16" />
