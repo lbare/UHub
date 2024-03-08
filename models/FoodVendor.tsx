@@ -1,6 +1,7 @@
 import { Menu, menuExample } from "./Menu";
 import Coordinates from "./Coordinates";
 import { VendorHours, vendorHoursExample } from "./VendorHours";
+import { Building } from "./Building";
 
 type FoodVendor = {
   name: string;
@@ -10,6 +11,18 @@ type FoodVendor = {
   hours: VendorHours;
   menu: Menu;
 };
+
+const getNextFoodVendorInBuilding = (vendor: FoodVendor, building : Building) => {
+  const vendorsInBuilding = building.vendors;
+  const index = vendorsInBuilding.findIndex((v) => v.name === vendor.name);
+  return vendorsInBuilding[(index + 1) % vendorsInBuilding.length];
+}
+
+const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building : Building) => {
+  const vendorsInBuilding = building.vendors;
+  const index = vendorsInBuilding.findIndex((v) => v.name === vendor.name);
+  return vendorsInBuilding[(index - 1 + vendorsInBuilding.length) % vendorsInBuilding.length];
+}
 
 const foodVendorExamples = {
   greens: {
@@ -219,4 +232,4 @@ const foodVendorExamples = {
   },
 };
 
-export { FoodVendor, VendorHours, foodVendorExamples };
+export { FoodVendor, VendorHours, foodVendorExamples, getNextFoodVendorInBuilding, getPreviousFoodVendorInBuilding};
