@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
+  Image,
 } from "react-native";
-import MapView, { Details, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -38,7 +39,8 @@ const HomeMap: React.FC = () => {
   );
   const [selectedVendor, setSelectedVendor] = useState<FoodVendor | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [openedModalFromSearch, setOpenedModalFromSearch] = useState<boolean>(false);
+  const [openedModalFromSearch, setOpenedModalFromSearch] =
+    useState<boolean>(false);
   const buildings = useContext(BuildingContext);
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -106,7 +108,7 @@ const HomeMap: React.FC = () => {
     setModalVisible(true);
   };
 
-  const onModalHide = (gotoSearch : boolean) => {
+  const onModalHide = (gotoSearch: boolean) => {
     //TODO: this logic doesn't really make sense, it should be refactored
     // I wanted to preserve the user's last region before tapping on a marker
     // and then return to that region after the modal is closed
@@ -130,9 +132,9 @@ const HomeMap: React.FC = () => {
 
     if (gotoSearch) {
       setSearchOpen(true);
-    }else{
+    } else {
       setSearchOpen(false);
-      setSearchInput("")
+      setSearchInput("");
     }
     setOpenedModalFromSearch(false);
   };
@@ -400,7 +402,7 @@ const HomeMap: React.FC = () => {
           backgroundColor: "#1D1D1D",
         }}
       >
-        {(!modalVisible && searchOpen) && (
+        {!modalVisible && searchOpen && (
           <View
             style={{
               width: "100%",
@@ -476,8 +478,8 @@ const HomeMap: React.FC = () => {
                       </Text>
                     )}
                   </View>
-                  <View className="w-12 h-12 justify-center items-end">
-                    <ArrowUpRight size={20} color="#A3A3A3" />
+                  <View className="w-12 h-12 justify-center items-start">
+                    <ArrowUpRight size={20} color="#EB6931" />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -511,14 +513,34 @@ const HomeMap: React.FC = () => {
               elevation: 5,
             }}
           >
-            <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
+            <View
+              className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl items-center justify-start"
+              style={{
+                backgroundColor: "#EDEDED",
+              }}
+            >
               <View className="flex w-16 h-full justify-center items-center">
-                <MagnifyingGlass size={24} color="#383838" weight="bold" />
+                <MagnifyingGlass size={24} color="#154058" weight="bold" />
               </View>
               <View className="h-full w-3/5 justify-center items-start">
-                <Text className="font-semiBold text-2xl text-neutral-800">
+                <Text
+                  className="font-semiBold text-2xl"
+                  style={{
+                    color: "#154058",
+                  }}
+                >
                   Search
                 </Text>
+              </View>
+              <View className="h-full w-16 justify-center items-center">
+                <Image
+                  source={require("../assets/logo.png")}
+                  style={{
+                    width: 45,
+                    height: 45,
+                  }}
+                  resizeMode="center"
+                />
               </View>
             </View>
           </View>

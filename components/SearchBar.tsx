@@ -28,9 +28,14 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
     return (
       <View
         className="flex w-full items-center justify-center mt-16"
-        // style={shadowStyle}
+        style={shadowStyle}
       >
-        <View className="flex flex-row w-5/6 h-16 bg-blue-400 shadow-xl rounded-2xl">
+        <View
+          className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl"
+          style={{
+            backgroundColor: "#EDEDED",
+          }}
+        >
           <TouchableOpacity
             className="flex w-16 h-full justify-center items-center"
             onPress={() => {
@@ -39,15 +44,16 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
               if (clearResults) clearResults();
             }}
           >
-            <CaretLeft size={24} color="#1D1D1D" weight="bold" />
+            <CaretLeft size={24} color="#154058" weight="bold" />
           </TouchableOpacity>
           <TextInput
             ref={ref}
             className="h-full w-3/5 justify-center items-center font-bold text-2xl pb-1"
-            style={{ color: "#1D1D1D" }}
+            style={{ color: "#154058" }}
             value={searchInput}
             onChangeText={(text) => setSearchInput(text)}
             onFocus={() => setSelected(true)}
+            returnKeyType="search"
           />
           {searchInput !== "" ? (
             <TouchableOpacity
@@ -56,7 +62,7 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
                 setSearchInput("");
               }}
             >
-              <X size={24} color="#1D1D1D" weight="bold" />
+              <X size={24} color="#154058" weight="bold" />
             </TouchableOpacity>
           ) : (
             <View className="h-full w-16" />
