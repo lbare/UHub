@@ -102,76 +102,80 @@ const CustomModal: React.FC<CustomModalProps> = ({
               }}
               className="-mt-4 w-full h-48 rounded-l"
             />
+            <View className="w-full justify-center items-center">
+              <View className="w-full flex-row justify-between items-center">
+                {!openedModalFromSearch && (
+                  <TouchableOpacity
+                    className="w-8 h-8 pl-3 rounded-full justify-center items-center"
+                    onPress={() => {
+                      const previousVendor = getPreviousFoodVendorInBuilding(
+                        vendor,
+                        building
+                      );
+                      changeVendor(previousVendor);
+                    }}
+                  >
+                    <CaretLeft color="#EDEDEDD2" weight="bold" size={32} />
+                  </TouchableOpacity>
+                )}
 
-            {!openedModalFromSearch && (
-              <TouchableOpacity
-                className="absolute left-1 mt-20 w-8 h-8 rounded-full justify-center items-center"
-                onPress={() => {
-                  const previousVendor = getPreviousFoodVendorInBuilding(
-                    vendor,
-                    building
-                  );
-                  changeVendor(previousVendor);
-                }}
-              >
-                <CaretLeft color="#ededed" weight="bold" size={32} />
-              </TouchableOpacity>
-            )}
+                <View className="flex w-5/6 items-center justify-center">
+                  <Text className="text-2xl font-bold mt-2 text-neutral-200">
+                    {vendor.name}
+                  </Text>
 
-            {!openedModalFromSearch && (
-              <TouchableOpacity
-                className="absolute right-1 mt-20 w-8 h-8 rounded-full justify-center items-center"
-                onPress={() => {
-                  const previousVendor = getNextFoodVendorInBuilding(
-                    vendor,
-                    building
-                  );
-                  changeVendor(previousVendor);
-                }}
-              >
-                <CaretRight color="#ededed" weight="bold" size={32} />
-              </TouchableOpacity>
-            )}
-
-            <View className="w-full pl-3 pr-3">
-              <Text className="text-2xl font-bold mt-2 text-neutral-200">
-                {vendor.name}
-              </Text>
-
-              {vendor.description && (
-                <Text className="text-base -mt-1 mb-1 text-neutral-300">
-                  {vendor.description}
-                </Text>
-              )}
-
-              <View className={`flex flex-row items-center`}>
-                <Text
-                  className={`text-base font-semibold ${
-                    isVendorCurrentlyOpen(vendor.hours)
-                      ? "text-green-400"
-                      : "text-red-400 opacity-70"
-                  }`}
-                >
-                  {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => setShowExpandedHours(!showExpandedHours)}
-                >
-                  <View className="flex flex-row items-center">
-                    <Text className="font-normal opacity-80 text-neutral-300">
-                      {" · " +
-                        vendorNextOpenOrCloseTimeString(vendor.hours) +
-                        ""}
+                  {vendor.description && (
+                    <View className="w-11/12">
+                      <Text className="text-xs text-center my-1 text-neutral-300">
+                        {vendor.description}
+                      </Text>
+                    </View>
+                  )}
+                  <View className={`flex flex-row items-center`}>
+                    <Text
+                      className={`text-base font-semibold ${
+                        isVendorCurrentlyOpen(vendor.hours)
+                          ? "text-green-400"
+                          : "text-red-400 opacity-70"
+                      }`}
+                    >
+                      {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
                     </Text>
-                    <Feather
-                      name={showExpandedHours ? "chevron-up" : "chevron-down"}
-                      size={20}
-                      color="grey"
-                    />
+                    <TouchableOpacity
+                      onPress={() => setShowExpandedHours(!showExpandedHours)}
+                    >
+                      <View className="flex flex-row items-center">
+                        <Text className="font-normal opacity-80 text-neutral-300">
+                          {" · " +
+                            vendorNextOpenOrCloseTimeString(vendor.hours) +
+                            ""}
+                        </Text>
+                        <Feather
+                          name={
+                            showExpandedHours ? "chevron-up" : "chevron-down"
+                          }
+                          size={20}
+                          color="grey"
+                        />
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                </View>
+                {!openedModalFromSearch && (
+                  <TouchableOpacity
+                    className="w-8 h-8 pr-3 rounded-full justify-center items-center"
+                    onPress={() => {
+                      const previousVendor = getNextFoodVendorInBuilding(
+                        vendor,
+                        building
+                      );
+                      changeVendor(previousVendor);
+                    }}
+                  >
+                    <CaretRight color="#EDEDEDD2" weight="bold" size={32} />
+                  </TouchableOpacity>
+                )}
               </View>
-
               {showExpandedHours && (
                 <View className="mt-1 w-full">
                   <Text className="font-normal opacity-60 text-neutral-200">
@@ -240,7 +244,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 if (section.name === selectedSection) {
                   return (
                     <React.Fragment key={index}>
-                      <View className="mb-6 w-full">
+                      <View className="mb-6 w-full px-3">
                         {section.items.map((item, itemIndex) => (
                           <View className="flex flex-row" key={itemIndex}>
                             <View
