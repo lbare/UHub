@@ -879,6 +879,88 @@ const uniclubMenuExample: Menu = {
   ],
 };
 
+
+
+const MacMenu: Menu = {
+  id: "mac",
+  sections: [
+    {
+      name: "Coffee",
+      items: [
+        {
+          name: "Caffè Americano",
+          price: 2.95,
+          description:
+            "Espresso shots topped with hot water create a light layer of crema culminating in this wonderfully rich cup with depth and nuance.",
+        },
+        {
+          name: "Caffè Latte",
+          price: 3.65,
+          description:
+            "Rich, full-bodied espresso with bittersweet milk and a hint of sweetness.",
+        },
+        {
+          name: "Cappuccino",
+          price: 3.45,
+          description:
+            "Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.",
+        },
+      ],
+    },
+    {
+      name: "Tea",
+      items: [
+        {
+          name: "Teavana® Shaken Iced Tea",
+          price: 2.75,
+          description:
+            "A smooth, delightful blend of water, ice, Teavana® tea and flavors of your choice, each served over ice.",
+        },
+        {
+          name: "Chai Latte",
+          price: 4.25,
+          description:
+            "Black tea infused with cinnamon, clove, and other warming spices are combined with steamed milk and topped with foam for the perfect balance of sweet and spicy.",
+        },
+      ],
+    },
+    {
+      name: "Bakery",
+      items: [
+        {
+          name: "Blueberry Muffin",
+          price: 2.95,
+          description:
+            "Blueberry muffin with a soft, moist center, and a hint of lemon.",
+        },
+        {
+          name: "Classic Coffee Cake",
+          price: 3.25,
+          description:
+            "A traditional coffee cake with a crumbly cinnamon streusel topping.",
+        },
+      ],
+    },
+    {
+      name: "Sandwiches & Wraps",
+      items: [
+        {
+          name: "Turkey & Swiss Sandwich",
+          price: 6.95,
+          description:
+            "Slow-roasted turkey, Swiss cheese, and crisp lettuce on a hearty wheat bread.",
+        },
+        {
+          name: "Mozzarella & Tomato Panini",
+          price: 7.25,
+          description:
+            "Fresh mozzarella, sliced tomatoes, and basil pesto on ciabatta bread.",
+        },
+      ],
+    },
+    // Additional sections can be added here such as "Salads", "Smoothies", etc.
+  ],
+};
 const menuExample = [
   greensMenuExample,
   felicitasMenuExample,
@@ -886,6 +968,7 @@ const menuExample = [
   starbucksMenu,
   EntreeMenu,
   uniclubMenuExample,
+  MacMenu
 ];
 
 export { Menu, MenuItem, menuExample };

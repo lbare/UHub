@@ -53,10 +53,27 @@ const bookStoreBuildingExample: Building = {
   vendors: [foodVendorExamples.starbucks, foodVendorExamples.uniClub],
 };
 
+
+const macBuildingExample: Building = {
+  name: "MAC's",
+  description:
+    "Mac's in the MacLaurin Building is the best place on campus to get a custom-made sandwich or wrap.",
+  image:
+    "https://uvss.ca/wp-content/uploads/2024/01/BOOKSTORE_WEBSLIDER_SPRING2019.jpg",
+  location: {
+    latitude: 48.46278553698842,
+    longitude: -123.31336066821612,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  },
+  vendors: [foodVendorExamples.mac],
+};
+
 const buildingExamples: Building[] = [
   coveBuildingExample,
   subBuildingExample,
   bookStoreBuildingExample,
+  macBuildingExample
 ];
 
 export { Building, buildingExamples };

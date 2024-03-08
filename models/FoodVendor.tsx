@@ -96,6 +96,20 @@ const foodVendorExamples = {
     hours: vendorHoursExample,
     menu: menuExample.find((menu) => menu.id === "uniclub")!,
   },
+  mac: {
+    name: "Mac",
+    description:
+      "Mac's in the MacLaurin Building is the best place on campus to get a custom-made sandwich or wrap.",
+    image: "https://vitp.ca/wp-content/uploads/2012/12/UVIC-SS3lr1.jpg",
+    location: {
+      latitude: 48.46278553698842,
+      longitude: -123.31336066821612,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
+    hours: vendorHoursExample,
+    menu: menuExample.find((menu) => menu.id === "mac")!,
+  },
 };
 
 export { FoodVendor, VendorHours, foodVendorExamples };
