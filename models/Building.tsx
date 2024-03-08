@@ -3,6 +3,7 @@ import Coordinates from "./Coordinates";
 
 type Building = {
   name: string;
+  code: string;
   description: string;
   image: string;
   location: Coordinates;
@@ -11,6 +12,7 @@ type Building = {
 
 const coveBuildingExample: Building = {
   name: "Building One",
+  code: "B1",
   description:
     "Dining facility featuring a 700 person seating capacity across two levels with an open concept and food court",
   image: "https://www.uvic.ca/services/food/assets/images/cove-stairs",
@@ -25,6 +27,7 @@ const coveBuildingExample: Building = {
 
 const subBuildingExample: Building = {
   name: "Student Union Building",
+  code: "SUB",
   description:
     "The Student Union Building (SUB) is the social hub of campus, providing a variety of services and amenities for students, faculty, staff and visitors.",
   image:
@@ -40,6 +43,7 @@ const subBuildingExample: Building = {
 
 const bookStoreBuildingExample: Building = {
   name: "University of Victoria Bookstore",
+  code: "SUB",
   description:
     "The University of Victoria Bookstore is a not-for-profit corporation that serves the campus community. We are owned and operated by the University of Victoria Students' Society.",
   image:
