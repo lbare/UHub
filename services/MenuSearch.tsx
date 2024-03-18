@@ -50,6 +50,8 @@ class MenuSearch {
 
   public removeTagFilter = (tag: MenuItemTag) => {
     this.curTagFilters = this.curTagFilters.filter((t) => t !== tag);
+    console.log("Remove Tag Filter:", tag);
+    console.log("curTagFilters:", this.curTagFilters);
   };
 
   public clearTagFilters = () => {

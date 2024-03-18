@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   Image,
+  Button,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
@@ -16,8 +17,9 @@ import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
-import { MenuItem } from "../models/Menu";
+import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
+import TagFilterButton from "../components/TagFilterButton";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -429,6 +431,17 @@ const HomeMap: React.FC = () => {
               setSearchInput={setSearchInput}
               onBlur={() => setSearchOpen(false)}
             />
+            <TagFilterButton
+              text="Vegan"
+              tag={MenuItemTag.Vegan}
+              menuSearchObject={menuSearch}
+              curSearchInput={searchInput}
+            />
+            {/* <Button
+              // onPress={onPressLearnMore}
+              title="Learn More"
+              color="#841584"
+            /> */}
           </View>
         )}
         <ScrollView
