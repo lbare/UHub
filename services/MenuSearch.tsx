@@ -1,6 +1,6 @@
 import Fuse, { FuseResult } from "fuse.js";
 import { Building } from "../models/Building";
-import { menuExample, Menu, MenuItem } from "../models/Menu";
+import { menuExample, Menu, MenuItem, MenuItemTag } from "../models/Menu";
 import DataFetcher from "./DataFetcher";
 import { FoodVendor } from "../models/FoodVendor";
 
@@ -14,6 +14,7 @@ class MenuSearch {
     FoodVendor
   >();
   allMenuItem: MenuItem[] = [];
+  curTagFilters: MenuItemTag[] = [];
 
   constructor() {
     this.dataFetcher.getAllBuildings((buildings) => {
@@ -41,18 +42,49 @@ class MenuSearch {
     });
   };
 
+  public addTagFilter = (tag: MenuItemTag) => {
+    this.curTagFilters.push(tag);
+    console.log("Added Tag Filter:", tag);
+    console.log("curTagFilters:", this.curTagFilters);
+  };
+
+  public removeTagFilter = (tag: MenuItemTag) => {
+    this.curTagFilters = this.curTagFilters.filter((t) => t !== tag);
+  };
+
+  public clearTagFilters = () => {
+    this.curTagFilters = [];
+  };
+
   public searchAllMenuItems = (
     searchString: string
   ): Map<MenuItem, FoodVendor> => {
-
     if (this.fuse_obj === undefined) return new Map<MenuItem, FoodVendor>();
 
-    let filteredMenu = this.fuse_obj.search(searchString);
+    // TODO: for testing only. Remove after
+    // this.addTagFilter(MenuItemTag.GlutenFreeOption);
 
-    let filteredFuseMenuResult = filteredMenu as FuseResult<MenuItem>[];
+    let searchResults = this.fuse_obj.search(searchString);
+    let fuseSearchResults = searchResults as FuseResult<MenuItem>[];
+
+    console.log("fuseSearchResults:", fuseSearchResults);
+
+    let filteredResults = fuseSearchResults.filter((fuseResultMenuItem) => {
+      let item = fuseResultMenuItem.item;
+      for (let i = 0; i < this.curTagFilters.length; i++) {
+        console.log("item.name:", item?.name);
+        console.log("item.tags:", item?.tags);
+        if (!item?.tags?.includes(this.curTagFilters[i])) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    console.log("filteredResults:", filteredResults);
 
     const mapItemVenor = new Map<MenuItem, FoodVendor>();
-    filteredFuseMenuResult.forEach((fuseResultMenuItem) => {
+    filteredResults.forEach((fuseResultMenuItem) => {
       const item = fuseResultMenuItem.item;
       const foodVendor = this.allMenuItemWithVendors.get(item);
       if (foodVendor !== undefined) {
@@ -60,6 +92,7 @@ class MenuSearch {
       }
     });
 
+    console.log("Search Results:", mapItemVenor);
     return mapItemVenor;
   };
 }

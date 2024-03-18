@@ -1334,4 +1334,4 @@ const menuExample = [
   TreksMenu
 ];
 
-export { Menu, MenuItem, menuExample };
+export { Menu, MenuItem, MenuItemTag, menuExample };
