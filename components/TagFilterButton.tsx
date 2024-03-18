@@ -9,14 +9,14 @@ interface TagFilterButtonProps {
   text: string;
   tag: MenuItemTag;
   menuSearchObject: MenuSearch;
-  curSearchInput: string;
+  onUpdate: () => void;
 }
 
 const TagFilterButton: React.FC<TagFilterButtonProps> = ({
   text,
   tag,
   menuSearchObject,
-  curSearchInput,
+  onUpdate,
 }) => {
   const [isToggled, setToggle] = React.useState(false);
 
@@ -30,9 +30,9 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
         } else {
           menuSearchObject.addTagFilter(tag);
         }
-        // TODO: Fix this hack doesn't work right now
-        // TODO: Make this better. Just temporary solution
-        menuSearchObject.searchAllMenuItems(curSearchInput);
+        // Calls the parent's search function to search with the
+        // existing query and new filters
+        onUpdate();
       }}
       title={text ?? "Tag Button"}
       color={isToggled ? "#0055FF" : "#000088"}

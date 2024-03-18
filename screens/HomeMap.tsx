@@ -60,18 +60,23 @@ const HomeMap: React.FC = () => {
   }, [searchOpen]);
 
   useEffect(() => {
-    if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(searchInput);
-      setSearchResults(results);
-    } else {
-      setSearchResults(new Map());
-    }
+    onSearchChange();
   }, [searchInput]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
     onZoomChange(UVicRegion);
   }, []);
+
+  const onSearchChange = () => {
+    console.log("onSearchChange called!");
+    if (searchInput !== "") {
+      const results = menuSearch.searchAllMenuItems(searchInput);
+      setSearchResults(results);
+    } else {
+      setSearchResults(new Map());
+    }
+  };
 
   const calculateZoomLevel = (latitudeDelta: number) => {
     const maxLatitude = 180;
@@ -435,7 +440,7 @@ const HomeMap: React.FC = () => {
               text="Vegan"
               tag={MenuItemTag.Vegan}
               menuSearchObject={menuSearch}
-              curSearchInput={searchInput}
+              onUpdate={onSearchChange}
             />
             {/* <Button
               // onPress={onPressLearnMore}
