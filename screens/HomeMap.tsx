@@ -16,8 +16,9 @@ import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
-import { MenuItem } from "../models/Menu";
+import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
+import TagFilterButton from "../components/TagFilterButton";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -58,18 +59,22 @@ const HomeMap: React.FC = () => {
   }, [searchOpen]);
 
   useEffect(() => {
-    if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(searchInput);
-      setSearchResults(results);
-    } else {
-      setSearchResults(new Map());
-    }
+    onSearchChange();
   }, [searchInput]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
     onZoomChange(UVicRegion);
   }, []);
+
+  const onSearchChange = () => {
+    if (searchInput !== "") {
+      const results = menuSearch.searchAllMenuItems(searchInput);
+      setSearchResults(results);
+    } else {
+      setSearchResults(new Map());
+    }
+  };
 
   const calculateZoomLevel = (latitudeDelta: number) => {
     const maxLatitude = 180;
@@ -406,7 +411,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 150,
+              height: 195,
               borderRadius: 20,
             }}
           >
@@ -429,6 +434,39 @@ const HomeMap: React.FC = () => {
               setSearchInput={setSearchInput}
               onBlur={() => setSearchOpen(false)}
             />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                margin: 10,
+                marginTop: 15,
+              }}
+            >
+              <TagFilterButton
+                text="Vegan"
+                tag={MenuItemTag.Vegan}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+              <TagFilterButton
+                text="Dairy Free"
+                tag={MenuItemTag.DairyFree}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+              <TagFilterButton
+                text="Gluten Free"
+                tag={MenuItemTag.GlutenFree}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+              <TagFilterButton
+                text="GF Option"
+                tag={MenuItemTag.GlutenFreeOption}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+            </View>
           </View>
         )}
         <ScrollView
