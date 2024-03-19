@@ -1,6 +1,6 @@
 import { Menu, menuExample } from "./Menu";
 import Coordinates from "./Coordinates";
-import { VendorHours, vendorHoursExample, bibliocafeHours } from "./VendorHours";
+import { VendorHours, vendorHoursExamples, bibliocafeHours } from "./VendorHours";
 import { Building } from "./Building";
 
 type FoodVendor = {
@@ -36,7 +36,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "greens")!,
   },
   starbucks: {
@@ -50,7 +50,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "starbucks")!,
   },
   thegrill: {
@@ -63,7 +63,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "theGrill")!,
   },
   felicitas: {
@@ -78,7 +78,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "felicitas")!,
   },
   entree: {
@@ -92,7 +92,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "entree")!,
   },
   uniClub: {
@@ -106,7 +106,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "uniclub")!,
   },
   mac: {
@@ -120,7 +120,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "mac")!,
   },
 
@@ -135,7 +135,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "chopbox")!,
   },
   
@@ -150,7 +150,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "fresco")!,
   },
 
@@ -165,7 +165,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "gradhouse")!,
   },
 
@@ -180,7 +180,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "treks")!,
   },
 
@@ -211,7 +211,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "theGrill")!,
   },
 
@@ -227,7 +227,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "starbucks")!,
   },
 };
