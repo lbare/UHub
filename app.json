@@ -29,6 +29,11 @@
         "backgroundColor": "#eeeeee"
       },
       "googleServicesFile": "./src/google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBJWMWCK9PvYKUaIdIHJ7ybsXFpQlxl8Nc"
+        }  
+      },
       "package": "app.uhub.seng480A.uvic"
     },
     "web": {
