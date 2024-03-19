@@ -6,7 +6,6 @@ import {
   ScrollView,
   Text,
   Image,
-  Button,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
@@ -407,7 +406,6 @@ const HomeMap: React.FC = () => {
           opacity: searchOpen ? 1 : 0, // Control visibility based on searchOpen
           height: searchOpen ? "100%" : 0, // Prevents interaction when not visiblesd
           backgroundColor: "#1D1D1D",
-          // backgroundColor: "#FF0000",
         }}
       >
         {!modalVisible && searchOpen && (
@@ -479,8 +477,6 @@ const HomeMap: React.FC = () => {
             backgroundColor: "#1D1D1D",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
-            // marginTop: 400,
-            // paddingTop: 100,
           }}
           keyboardShouldPersistTaps="handled"
         >

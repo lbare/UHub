@@ -1,16 +1,6 @@
-import {
-  View,
-  Image,
-  Text,
-  ImageSourcePropType,
-  Button,
-  Pressable,
-} from "react-native";
-import Coordinates from "../models/Coordinates";
+import { Text, Pressable } from "react-native";
 import { MenuItemTag } from "../models/Menu";
 import MenuSearch from "../services/MenuSearch";
-import { FoodVendor } from "../models/FoodVendor";
-import { Callout, Marker } from "react-native-maps";
 import React from "react";
 interface TagFilterButtonProps {
   text: string;
@@ -37,22 +27,16 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
     } else {
       menuSearchObject.addTagFilter(tag);
     }
-    // Calls the parent's search function to search with the
-    // existing query and new filters
+    // Calls the parent's search function to redo search
+    // with the existing query and new filters
     onUpdate();
   };
 
   return (
-    // <Button
-    //   onPress={handlePress}
-    //   title={text ?? "Tag Button"}
-    //   color={isToggled ? "#0055FF" : "#000088"}
-    // />
     <Pressable
       onPress={handlePress}
       style={{
-        backgroundColor: isToggled ? "#EB6931" : "#00000000",
-        // width: 200,
+        backgroundColor: isToggled ? "#EB6931FF" : "#00000000",
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderColor: "#FFFFFF",

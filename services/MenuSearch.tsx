@@ -63,9 +63,6 @@ class MenuSearch {
   ): Map<MenuItem, FoodVendor> => {
     if (this.fuse_obj === undefined) return new Map<MenuItem, FoodVendor>();
 
-    // TODO: for testing only. Remove after
-    // this.addTagFilter(MenuItemTag.GlutenFreeOption);
-
     let searchResults = this.fuse_obj.search(searchString);
     let fuseSearchResults = searchResults as FuseResult<MenuItem>[];
 
