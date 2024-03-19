@@ -51,6 +51,17 @@ button {
     }
 }
 
+.notice-container {
+    padding: 10px 20px;
+    background-color: #6279f977;
+    border-radius: 15px;
+
+    p {
+        margin: 0;
+        font-size: 14px;
+    }
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;
