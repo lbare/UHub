@@ -1,78 +1,144 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>UHub - Product Page</title>
-  <link href="./css/main.css" type="text/css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <img id="logo" src="./assets/uhub_text_logo.png" alt="UHub">
-  <h1 class="tagline">The one stop app for UVic community resources!</h1>
-  <div class="container flex-row flex-column-mobile">
-    <div id="icon-wrapper">
-      <img id="icon" src="./assets/uhub_icon.png" alt="UHub App Icon">
-      <div class="flex-row" style="padding: 0px 20px; justify-content: center;">
-        <img id="ios-logo" src="./assets/ios_logo.png" alt="ios logo" style="margin-right: 10px;">
-        <img id="android-logo" src="./assets/android_logo.png" alt="Android logo">
+  <head>
+    <title>UHub - Product Page</title>
+    <link href="./css/main.css" type="text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <img id="logo" src="./assets/uhub_text_logo.png" alt="UHub" />
+    <h1 class="tagline">The one stop app for UVic community resources!</h1>
+    <div class="container">
+      <div class="flex-row flex-column-mobile">
+        <div id="icon-wrapper">
+          <img id="icon" src="./assets/uhub_icon.png" alt="UHub App Icon" />
+          <div
+            class="flex-row"
+            style="padding: 0px 20px; justify-content: center"
+          >
+            <img
+              id="ios-logo"
+              src="./assets/ios_logo.png"
+              alt="ios logo"
+              style="margin-right: 10px"
+            />
+            <img
+              id="android-logo"
+              src="./assets/android_logo.png"
+              alt="Android logo"
+            />
+          </div>
+        </div>
+        <div id="download-info">
+          <h2>Download it today!</h2>
+          <h4>Free Early-Access Beta</h4>
+          <p>
+            Be one of the first to try out UHub and help shape the app by
+            sharing your feedback!
+          </p>
+          <br />
+          <button
+            onclick="window.open('https://testflight.apple.com/join/V59ISKq6', '_blank')"
+            style="margin-right: 10px"
+          >
+            Download for ios
+          </button>
+          <button
+            onclick="window.open('https://github.com/lbare/UHub/releases', '_blank')"
+          >
+            Download .apk for Android
+          </button>
+          <br />
+          &#x27A4;
+          <a href="./instructions.html" target="_blank" style="color: #333"
+            >Click here for installation instructions.</a
+          >
+          <br /><br />
+          <p>
+            <b>Send us your feedback and suggestions</b>:
+            <a href="https://forms.gle/f4CxD4CVYF3d4KeE6" target="_blank"
+              >https://forms.gle/f4CxD4CVYF3d4KeE6</a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="notice-container" style="margin-top: 20px">
+        <p>
+          NOTICE: The current food menu data may not be 100% complete or
+          accurate right now as our current goal is to get user feedback on the
+          features as early as possible during development. Thank you for your
+          understanding.
+        </p>
       </div>
     </div>
-    <div id="download-info">
-      <h2>Download it today!</h2>
-      <h4>Free Early-Access Beta</h4>
-      <p>Be one of the first to try out UHub and help shape the app by sharing your feedback!</p>
-      <br/>
-      <!-- TODO: Update Download Links -->
-      <button onclick="window.open('https://testflight.apple.com/join/V59ISKq6', '_blank')" style="margin-right: 10px;">Download for ios</button>
-      <button onclick="window.open('https://github.com/lbare/UHub/releases', '_blank')">Download .apk for Android</button>
-      <br/>
-      &#x27A4; <a href="./instructions.html" target="_blank" style="color: #333">Click here for installation instructions.</a>
-      <br/><br/>
-      <p><b>Send us your feedback and suggestions</b>: <a href="https://forms.gle/f4CxD4CVYF3d4KeE6" target="_blank">https://forms.gle/f4CxD4CVYF3d4KeE6</a></p>
+    <h2>Description</h2>
+    <p>
+      UHub is a centralized platform to discover and explore resources on
+      campus.
+      <br /><br />
+      With UHub, students can find the locations of food outlets on campus and
+      browse their menus. With various search options available to find specific
+      food items, dietary restrictions, and more, UHub removes the stress of
+      finding what to eat on campus.
+      <br /><br />
+      Stop googling for lackluster campus resources and find everything you need
+      in a centralized user-friendly experience with more features like study
+      space availability coming soon.
+    </p>
+    <h2>Screenshots</h2>
+    <div class="screenshots-container">
+      <img
+        src="./assets/screenshots/uhub_screenshot_m2-1.jpg"
+        alt="UHub Screenshot 1"
+      />
+      <img
+        src="./assets/screenshots/uhub_screenshot_m2-4.jpg"
+        alt="UHub Screenshot 2"
+      />
+      <img
+        src="./assets/screenshots/uhub_screenshot_m2-2.jpg"
+        alt="UHub Screenshot 3"
+      />
+      <img
+        src="./assets/screenshots/uhub_screenshot_m2-3.jpg"
+        alt="UHub Screenshot 4"
+      />
     </div>
-  </div>
-  <h2>Description</h2>
-  <p>
-    UHub is a centralized platform to discover and explore resources on campus.
-    <br/><br/>
-    With UHub, students can find the locations of food outlets on campus and browse their menus.
-    With various search options available to find specific food items, dietary restrictions, and more,
-    UHub removes the stress of finding what to eat on campus.
-    <br/><br/>
-    Stop googling for lackluster campus resources and find everything you need in
-    a centralized user-friendly experience with more features like study space availability coming soon.
-  </p>
-  <h2>Screenshots</h2>
-  <div class="screenshots-container">
-    <img src="./assets/screenshots/uhub_screenshot_m2-1.jpg" alt="UHub Screenshot 1">
-    <img src="./assets/screenshots/uhub_screenshot_m2-4.jpg" alt="UHub Screenshot 2">
-    <img src="./assets/screenshots/uhub_screenshot_m2-2.jpg" alt="UHub Screenshot 3">
-    <img src="./assets/screenshots/uhub_screenshot_m2-3.jpg" alt="UHub Screenshot 4">
-  </div>
-  <h2>Key Features</h2>
-  <ul>
-    <li>Discover and explore food outlets on campus with a fully interactive map</li>
-    <li>Browse detailed menus of food outlets</li>
-    <li>Search the menu of all food outlets simultaneously</li>
-    <li>See dietary restriction information</li>
-    <li>View hours of operation</li>
-  </ul>
-  <p><u>Coming soon:</u></p>
-  <ul>
-    <li>Filter results by dietary restrictions, buildings, and more</li>
-    <li>View currently available study spaces on campus</li>
-  </ul>
-  <h2>About the Team</h2>
-  <p>
-    We are a team of four UVic students currently in a Software Engineering class on <i>startup programming</i>
-    with the goal of developing an app that brings disjoint campus resources into one centralized and easy to use place.
-    We are using this project to learn about building a new tech startup while also trying to solve
-    some of the common problems we face daily as students on campus.
-  </p>
-  <h2>Links</h2>
-  <p>
-    GitHub: <a href="https://github.com/lbare/UHub" target="_blank">https://github.com/lbare/UHub</a>
-    <br/>
-    Wiki: <a href="https://github.com/lbare/UHub/wiki" target="_blank">https://github.com/lbare/UHub/wiki</a>
-  </p>
-</body>
+    <h2>Key Features</h2>
+    <ul>
+      <li>
+        Discover and explore food outlets on campus with a fully interactive map
+      </li>
+      <li>Browse detailed menus of food outlets</li>
+      <li>Search the menu of all food outlets simultaneously</li>
+      <li>See dietary restriction information</li>
+      <li>View hours of operation</li>
+    </ul>
+    <p><u>Coming soon:</u></p>
+    <ul>
+      <li>Filter results by dietary restrictions, buildings, and more</li>
+      <li>View currently available study spaces on campus</li>
+    </ul>
+    <h2>About the Team</h2>
+    <p>
+      We are a team of four UVic students currently in a Software Engineering
+      class on <i>startup programming</i>
+      with the goal of developing an app that brings disjoint campus resources
+      into one centralized and easy to use place. We are using this project to
+      learn about building a new tech startup while also trying to solve some of
+      the common problems we face daily as students on campus.
+    </p>
+    <h2>Links</h2>
+    <p>
+      GitHub:
+      <a href="https://github.com/lbare/UHub" target="_blank"
+        >https://github.com/lbare/UHub</a
+      >
+      <br />
+      Wiki:
+      <a href="https://github.com/lbare/UHub/wiki" target="_blank"
+        >https://github.com/lbare/UHub/wiki</a
+      >
+    </p>
+  </body>
 </html>
