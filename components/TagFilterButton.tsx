@@ -1,4 +1,11 @@
-import { View, Image, Text, ImageSourcePropType, Button } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  ImageSourcePropType,
+  Button,
+  Pressable,
+} from "react-native";
 import Coordinates from "../models/Coordinates";
 import { MenuItemTag } from "../models/Menu";
 import MenuSearch from "../services/MenuSearch";
@@ -20,23 +27,40 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
 }) => {
   const [isToggled, setToggle] = React.useState(false);
 
+  const handlePress = () => {
+    console.log("Tag Filter Pressed:", tag);
+    setToggle(!isToggled);
+    if (isToggled) {
+      menuSearchObject.removeTagFilter(tag);
+    } else {
+      menuSearchObject.addTagFilter(tag);
+    }
+    // Calls the parent's search function to search with the
+    // existing query and new filters
+    onUpdate();
+  };
+
   return (
-    <Button
-      onPress={() => {
-        console.log("Tag Filter Pressed:", tag);
-        setToggle(!isToggled);
-        if (isToggled) {
-          menuSearchObject.removeTagFilter(tag);
-        } else {
-          menuSearchObject.addTagFilter(tag);
-        }
-        // Calls the parent's search function to search with the
-        // existing query and new filters
-        onUpdate();
+    // <Button
+    //   onPress={handlePress}
+    //   title={text ?? "Tag Button"}
+    //   color={isToggled ? "#0055FF" : "#000088"}
+    // />
+    <Pressable
+      onPress={handlePress}
+      style={{
+        backgroundColor: isToggled ? "#0055FF" : "#000088",
+        // width: 200,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 30,
+        alignSelf: "flex-start",
       }}
-      title={text ?? "Tag Button"}
-      color={isToggled ? "#0055FF" : "#000088"}
-    />
+    >
+      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+        {text ?? "Tag Button"}
+      </Text>
+    </Pressable>
   );
 };
 
