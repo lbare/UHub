@@ -195,22 +195,6 @@ const isDayToday = (day: DayOfWeek): boolean => {
   return day === todaysDay;
 };
 
-const vendorHoursExample: VendorHours = {
-  Monday: [{ open: "09:00 AM", close: "12:00 PM" }],
-  Tuesday: [
-    { open: "09:00 AM", close: "12:00 PM" },
-    { open: "01:00 PM", close: "06:00 PM" },
-  ],
-  Wednesday: [
-    { open: "09:00 AM", close: "12:00 PM" },
-    { open: "01:00 PM", close: "06:00 PM" },
-  ],
-  Thursday: [{ open: "09:00 AM", close: "06:00 PM" }],
-  Friday: [{ open: "09:00 AM", close: "08:00 PM" }],
-  Saturday: [{ open: "10:00 AM", close: "08:00 PM" }],
-  Sunday: [],
-};
-
 const bibliocafeHours: VendorHoursWithId = {
   id: "biblio",
   hours: {
@@ -237,7 +221,59 @@ const macsHours: VendorHoursWithId = {
   }
 };
 
-const vendorHoursExamples: VendorHoursWithId[] = [bibliocafeHours, macsHours];
+const generalStoreHours: VendorHoursWithId = {
+  id: "generalStore",
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Friday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const boardWalkCafe: VendorHoursWithId = {
+  id: "boardwalkCafe",
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Friday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const boosterJuice: VendorHoursWithId = {
+  id: "boosterJuice",
+  hours: {
+    Monday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Tuesday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Wednesday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Thursday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Friday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const chopBox: VendorHoursWithId = {
+  id: "mystic_common_hours",
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "3:00 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "3:00 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "3:00 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "3:00 PM" }],
+    Friday: [{ open: "11:00 AM", close: "3:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const vendorHoursExamples: VendorHoursWithId[] = [bibliocafeHours, macsHours, generalStoreHours, boardWalkCafe, boosterJuice, chopBox];
 
 export {
   DayOfWeek,

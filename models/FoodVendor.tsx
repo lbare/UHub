@@ -135,7 +135,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
     menu: menuExample.find((menu) => menu.id === "chopbox")!,
   },
   
@@ -150,7 +150,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
     menu: menuExample.find((menu) => menu.id === "fresco")!,
   },
 

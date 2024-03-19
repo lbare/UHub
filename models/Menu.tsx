@@ -1,5 +1,6 @@
 enum MenuItemTag {
   Vegan = "Vegan",
+  VeganOption = "Vegan Option",
   Spicy = "Spicy",
   GlutenFree = "Gluten Free",
   GlutenFreeOption = "Gluten Free Option",
@@ -13,6 +14,7 @@ type MenuItemSize = {
 
 type MenuItemSide = {
   name: string;
+  description?: string;
   price: number;
 };
 
@@ -29,6 +31,7 @@ type MenuItem = {
 
 type MenuSection = {
   name: string;
+  sides?: MenuItemSide[];
   description?: string;
   items: MenuItem[];
 };
@@ -1038,69 +1041,91 @@ const ChopBoxMenu: Menu = {
       name: "Signature Chop Boxes",
       items: [
         {
-          name: "Tangerino Pad Thai",
+          name: "Tamarind Pad Thai",
           price: 8.00,
-          description: "Authentic Pad Thai with a twist: tangy tangerine sauce.",
+          description: "Authentic Pad Thai with Shanghai noodles",
+          tags: []
         },
         {
           name: "Mongolian Black Bean",
           price: 8.00,
-          description: "Served with a tangy ginger & scallion Shanghai noodles.",
+          description: "Sweet & salty with ginger & sesame with Shanghai noodles",
+          tags: []
         },
         {
           name: "Green Thai Curry",
           price: 8.00,
-          description: "Coconut curry sauced with bamboo leaves & chili with egg noodles.",
+          description: "Coconut curry flavoured with lime leaves & chili with egg noodles",
+          tags: [MenuItemTag.VeganOption]
         },
         {
           name: "Red Thai Curry",
           price: 8.00,
-          description: "Medium spicy red curry with a sweet & smoky relish.",
-        },
-      ],
-    },
-    {
-      name: "Add Ons",
-      items: [
-        {
-          name: "Soft Boiled Egg",
-          price: 1.50,
-          description: "",
+          description: "Mildly spiced Thai coconut curry with egg noodles",
+          tags: [MenuItemTag.VeganOption]
         },
         {
-          name: "Chili Oil",
-          price: 1.50,
-          description: "",
-        },
-        {
-          name: "Chicken Breast",
-          price: 3.00,
-          description: "",
+          name: "Panang Curry",
+          price: 8.00,
+          description: "Medium spiced with a hint of sweet & salty with egg noodles",
+          tags: [MenuItemTag.VeganOption]
         }
       ],
+      description: "Substitute any box with steamed rice (Vegan), rice noodles (Vegan), Shanghai noodles or egg noodles",
+      sides: [
+        {name: "Add Protein", price: 3.50, description: "Choose from tofu (Vegan), chicken breast, shrimp or beef"},
+        {name: "Extra Sauce", price: 1.00}
+      ]
+    },
+    {
+      name: "Ramen",
+      items: [
+        {
+          name: "Ramen",
+          price: 6.50,
+          description: "Fresh noodles & vegetables in mushroom stock."
+        }
+      ],
+    sides: [
+      {
+        name: "Tofu",
+        price: 3.50
+      },
+      {
+        name: "Soft boiled egg",
+        price: 2.00
+      },
+      {
+        name: "Chicken",
+        price: 3.50
+      }
+    ]
     },
     {
       name: "Add to Any Meal",
       items: [
         {
-          name: "Appetizer",
-          price: 5.75,
-          description: "",
+          name: "Fountain Drink 22oz",
+          price: 1.75
         },
         {
-          name: "Coffee/Tea",
-          price: 2.00,
-          description: "",
+          name: "Coffee/Tea 12oz",
+          price: 1.75
         },
         {
-          name: "Cookie",
-          price: 1.50,
-          description: "",
+          name: "Coffee 16oz",
+          price: 1.95
+        },
+        {
+          name: "Fountain Drink 22oz (alt)",
+          price: 2.59
         }
-      ],
-    },
-  ],
+      ]
+    }
+  ]
 };
+
+
 
 const FrescoMenu: Menu = {
   id: "fresco",
