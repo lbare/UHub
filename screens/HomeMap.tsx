@@ -406,15 +406,15 @@ const HomeMap: React.FC = () => {
           zIndex: searchOpen ? 2 : -1, // Control layering based on searchOpen
           opacity: searchOpen ? 1 : 0, // Control visibility based on searchOpen
           height: searchOpen ? "100%" : 0, // Prevents interaction when not visiblesd
-          // backgroundColor: "#1D1D1D",
-          backgroundColor: "#FF0000",
+          backgroundColor: "#1D1D1D",
+          // backgroundColor: "#FF0000",
         }}
       >
         {!modalVisible && searchOpen && (
           <View
             style={{
               width: "100%",
-              height: 300, // TODO: Change this to set space for filters
+              height: 195,
               borderRadius: 20,
             }}
           >
@@ -437,38 +437,46 @@ const HomeMap: React.FC = () => {
               setSearchInput={setSearchInput}
               onBlur={() => setSearchOpen(false)}
             />
-            <TagFilterButton
-              text="Vegan"
-              tag={MenuItemTag.Vegan}
-              menuSearchObject={menuSearch}
-              onUpdate={onSearchChange}
-            />
-            <TagFilterButton
-              text="Dairy Free"
-              tag={MenuItemTag.DairyFree}
-              menuSearchObject={menuSearch}
-              onUpdate={onSearchChange}
-            />
-            <TagFilterButton
-              text="Gluten Free"
-              tag={MenuItemTag.GlutenFree}
-              menuSearchObject={menuSearch}
-              onUpdate={onSearchChange}
-            />
-            <TagFilterButton
-              text="GF Option"
-              tag={MenuItemTag.GlutenFreeOption}
-              menuSearchObject={menuSearch}
-              onUpdate={onSearchChange}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                margin: 10,
+                marginTop: 15,
+              }}
+            >
+              <TagFilterButton
+                text="Vegan"
+                tag={MenuItemTag.Vegan}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+              <TagFilterButton
+                text="Dairy Free"
+                tag={MenuItemTag.DairyFree}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+              <TagFilterButton
+                text="Gluten Free"
+                tag={MenuItemTag.GlutenFree}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+              <TagFilterButton
+                text="GF Option"
+                tag={MenuItemTag.GlutenFreeOption}
+                menuSearchObject={menuSearch}
+                onUpdate={onSearchChange}
+              />
+            </View>
           </View>
         )}
         <ScrollView
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
-            // backgroundColor: "#1D1D1D",
-            backgroundColor: "#AAAAAA",
+            backgroundColor: "#1D1D1D",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
             // marginTop: 400,

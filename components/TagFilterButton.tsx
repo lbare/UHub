@@ -49,10 +49,12 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
     <Pressable
       onPress={handlePress}
       style={{
-        backgroundColor: isToggled ? "#0055FF" : "#000088",
+        backgroundColor: isToggled ? "#EB6931" : "#00000000",
         // width: 200,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderColor: "#FFFFFF",
+        borderWidth: 2,
         borderRadius: 30,
         alignSelf: "flex-start",
       }}
