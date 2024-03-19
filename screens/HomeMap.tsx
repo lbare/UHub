@@ -68,7 +68,6 @@ const HomeMap: React.FC = () => {
   }, []);
 
   const onSearchChange = () => {
-    console.log("onSearchChange called!");
     if (searchInput !== "") {
       const results = menuSearch.searchAllMenuItems(searchInput);
       setSearchResults(results);

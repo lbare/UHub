@@ -20,7 +20,6 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
   );
 
   const handlePress = () => {
-    console.log("Tag Filter Pressed:", tag);
     setToggle(!isToggled);
     if (isToggled) {
       menuSearchObject.removeTagFilter(tag);
