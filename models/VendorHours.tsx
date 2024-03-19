@@ -206,10 +206,21 @@ const vendorHoursExample: VendorHours = {
   Sunday: [],
 };
 
+const bibliocafeHours: VendorHours = {
+  Monday: [{ open: "08:00 AM", close: "8:00 PM" }],
+  Tuesday: [{ open: "08:00 AM", close: "8:00 PM" }],
+  Wednesday: [{ open: "08:00 AM", close: "8:00 PM" }],
+  Thursday: [{ open: "08:00 AM", close: "8:00 PM" }],
+  Friday: [{ open: "08:00 AM", close: "4:00 PM" }],
+  Saturday: [{ open: "10:00 AM", close: "04:00 PM" }],
+  Sunday: [{ open: "10:00 AM", close: "04:00 PM" }],
+};
+
 export {
   DayOfWeek,
   VendorHours,
   vendorHoursExample,
+  bibliocafeHours,
   daysOfWeekInOrder,
   isVendorCurrentlyOpen,
   getVendorHoursForDayString,

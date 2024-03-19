@@ -1,6 +1,6 @@
 import { Menu, menuExample } from "./Menu";
 import Coordinates from "./Coordinates";
-import { VendorHours, vendorHoursExample } from "./VendorHours";
+import { VendorHours, vendorHoursExample, bibliocafeHours } from "./VendorHours";
 import { Building } from "./Building";
 
 type FoodVendor = {
@@ -195,8 +195,8 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: vendorHoursExample,
-    menu: menuExample.find((menu) => menu.id === "starbucks")!,
+    hours: bibliocafeHours,
+    menu: menuExample.find((menu) => menu.id === "biblio")!,
   },
 
   hfb: {

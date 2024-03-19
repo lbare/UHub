@@ -115,7 +115,7 @@ const GradBuildingExample: Building = {
 
 const LibBuildingExample: Building = {
   name: "McPherson Library",
-  code: "MCL",
+  code: "LIB",
   description:
     "The centre includes an enhanced learning commons, a media commons, an international commons, collaborative learning classrooms, the Bibliocafe and educational support services.",
   image:

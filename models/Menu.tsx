@@ -20,7 +20,7 @@ type MenuItem = {
   name: string;
   price: number;
   tags?: MenuItemTag[];
-  //todo: [image] decide weather the image string is url or base64
+  //todo: [image] decide whether the image string is url or base64
   image?: string;
   description?: string;
   sizes?: MenuItemSize[];
@@ -879,9 +879,6 @@ const uniclubMenuExample: Menu = {
   ],
 };
 
-
-
-
 const TreksMenu: Menu = {
   id: "treks",
   sections: [
@@ -1034,8 +1031,6 @@ const MacMenu: Menu = {
   ],
 };
 
-
-
 const ChopBoxMenu: Menu = {
   id: "chopbox",
   sections: [
@@ -1106,10 +1101,6 @@ const ChopBoxMenu: Menu = {
     },
   ],
 };
-
-
-
-
 
 const FrescoMenu: Menu = {
   id: "fresco",
@@ -1217,9 +1208,6 @@ const FrescoMenu: Menu = {
   ],
 }
 
-
-
-
 const GradHouseMenu: Menu = {
   id: "gradhouse",
   sections: [
@@ -1317,6 +1305,246 @@ const GradHouseMenu: Menu = {
   ],
 }
 
+const biblioCafe: Menu = {
+  id: "biblio",
+  sections: [
+    {
+      name: "Hot Beverages",
+      items: [
+        {
+          name: "Drip Coffee",
+          price: 2.65,
+          sizes: [
+            { name: "12oz", price: 2.65 },
+            { name: "16oz", price: 2.95 },
+            { name: "20oz", price: 3.25 }
+          ]
+        },
+        {
+          name: "Tea",
+          price: 2.65,
+          sizes: [
+            { name: "12oz", price: 2.65 },
+            { name: "16oz", price: 2.95 },
+            { name: "20oz", price: 3.25 }
+          ]
+        },
+        {
+          name: "Americano",
+          price: 3.65,
+          sizes: [
+            { name: "12oz", price: 3.65 },
+            { name: "16oz", price: 4.25 },
+            { name: "20oz", price: 4.65 }
+          ]
+        },
+        {
+          name: "Cappuccino",
+          price: 4.25,
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 4.85 },
+            { name: "20oz", price: 5.45 }
+          ]
+        },
+        {
+          name: "Latte",
+          price: 4.45,
+          sizes: [
+            { name: "12oz", price: 4.45 },
+            { name: "16oz", price: 4.95 },
+            { name: "20oz", price: 5.45 }
+          ]
+        },
+        {
+          name: "Latte Vanilla",
+          price: 5.25,
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 5.75 },
+            { name: "20oz", price: 6.25 }
+          ]
+        },
+        {
+          name: "Caramel Macchiato",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "White Chocolate Macchiato",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "Espresso",
+          price: 2.95,
+          sizes: [
+            { name: "Single", price: 2.95 },
+            { name: "Double", price: 3.25 },
+          ]
+        },
+        {
+          name: "Mocha",
+          price: 4.85,
+          sizes: [
+            { name: "12oz", price: 4.85 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.85 }
+          ]
+        },
+        {
+          name: "Hot Chocolate",
+          price: 4.25,
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 4.45 },
+            { name: "20oz", price: 4.65 }
+          ]
+        },
+        {
+          name: "Steamed Milk",
+          price: 3.25,
+          sizes: [
+            { name: "12oz", price: 3.25 },
+            { name: "16oz", price: 3.35 },
+            { name: "20oz", price: 3.75 }
+          ]
+        },
+        {
+          name: "London Fog",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "Chai Latte",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "Matcha Latte",
+          price: 5.25,
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 5.75 },
+            { name: "20oz", price: 6.25 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Cold Drinks",
+      items: [
+        {
+          name: "Iced Coffee",
+          price: 4.95,
+          sizes: [
+            { name: "16oz", price: 4.95 }
+          ]
+        },
+        {
+          name: "Coffee Frappe",
+          price: 5.95,
+          sizes: [
+            { name: "16oz", price: 5.95 }
+          ]
+        },
+        {
+          name: "Mocha Frappe",
+          price: 5.95,
+          sizes: [
+            { name: "16oz", price: 5.95 }
+          ]
+        },
+        {
+          name: "Caramel Coffee Frappe",
+          price: 5.95,
+          sizes: [
+            { name: "16oz", price: 5.95 }
+          ]
+        },
+        {
+          name: "Green Tea Matcha Frappe",
+          price: 5.95,
+          sizes: [
+            { name: "16oz", price: 5.95 }
+          ]
+        },
+        {
+          name: "Fruit Smoothie",
+          price: 5.95,
+          sizes: [
+            { name: "16oz", price: 5.95 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Grab + Go",
+      items: [
+        {
+          name: "Wedge Sandwich",
+          price: 5.00,
+        },
+        {
+          name: "Deluxe Sandwich",
+          price: 9.49
+        },
+        {
+          name: "Premium Sandwich",
+          price: 9.99
+        },
+        {
+          name: "Green Salad",
+          price: 8.29
+        },
+        {
+          name: "Specialty Salad",
+          price: 9.99
+        },
+        {
+          name: "Rolls (Beef & Veggie)",
+          price: 3.49
+        },
+        {
+          name: "Samosas (Chicken & Veggie)",
+          price: 5.00
+        },
+        {
+          name: "Veggies + Hummus",
+          price: 6.29
+        },
+        {
+          name: "Veggies + Dip",
+          price: 6.29
+        },
+        {
+          name: "Fruit + Cheese",
+          price: 6.29
+        },
+        {
+          name: "Parfait",
+          price: 6.49
+        }
+      ]
+    }
+  ]
+};
 
 
 
@@ -1331,7 +1559,8 @@ const menuExample = [
   FrescoMenu,
   GradHouseMenu,
   MacMenu,
-  TreksMenu
+  TreksMenu,
+  biblioCafe,
 ];
 
 export { Menu, MenuItem, MenuItemTag, menuExample };
