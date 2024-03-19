@@ -25,7 +25,9 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
   menuSearchObject,
   onUpdate,
 }) => {
-  const [isToggled, setToggle] = React.useState(false);
+  const [isToggled, setToggle] = React.useState(
+    menuSearchObject.curTagFilters.includes(tag)
+  );
 
   const handlePress = () => {
     console.log("Tag Filter Pressed:", tag);
