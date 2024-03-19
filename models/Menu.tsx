@@ -882,77 +882,6 @@ const uniclubMenuExample: Menu = {
   ],
 };
 
-const TreksMenu: Menu = {
-  id: "treks",
-  sections: [
-    {
-      name: "Daily Selections",
-      items: [
-        {
-          name: "Grilled Panini",
-          price: 5.50,
-          description: "",
-        },
-        {
-          name: "Salad Bar",
-          price: 5.50,
-          description: "",
-        },
-        {
-          name: "Soup",
-          price: 4.40,
-          description: "",
-        },
-      ],
-    },
-    {
-      name: "Combos",
-      items: [
-        {
-          name: "Soup + Small Salad",
-          price: 7.50,
-          description: "",
-        },
-        {
-          name: "Soup + Large Salad",
-          price: 11.50,
-          description: "",
-        },
-        {
-          name: "Panini + Soup",
-          price: 10.50,
-          description: "",
-        },
-        {
-          name: "Panini + Small Salad",
-          price: 10.50,
-          description: "",
-        }
-      ],
-    },
-    {
-      name: "Add to Any Meal",
-      items: [
-        {
-          name: "Fountain Drink 22oz",
-          price: 1.75,
-          description: "",
-        },
-        {
-          name: "Coffee/Tea 12oz",
-          price: 1.75,
-          description: "",
-        },
-        {
-          name: "Fountain Drink 22oz",
-          price: 2.59,
-          description: "",
-        }
-      ],
-    },
-  ],
-}
-
 const MacMenu: Menu = {
   id: "mac",
   sections: [
@@ -1033,6 +962,8 @@ const MacMenu: Menu = {
     // Additional sections can be added here such as "Salads", "Smoothies", etc.
   ],
 };
+
+//Mystic Market Vendors 
 
 const ChopBoxMenu: Menu = {
   id: "chopbox",
@@ -1125,108 +1056,182 @@ const ChopBoxMenu: Menu = {
   ]
 };
 
-
-
 const FrescoMenu: Menu = {
   id: "fresco",
   sections: [
     {
-      name: "Main",
+      name: "Fresco Taco Bar",
       items: [
         {
           name: "Soft Tacos",
-          price: 3.00, // Assuming 3 for $7.50 refers to individual price.
-          description: "Soft taco with choice of chicken or carnitas, salsa verde, lettuce, onion, cilantro & radish.",
+          description: "BEAN/ BEEF/ CHICKEN on corn tortilla + salsa fresco; ROCKFISH served on flour tortilla + aioli, slaw, mango salsa. 3 for $10.99",
+          price: 3.79,
+          sizes: [
+            { name: "Each", price: 3.79 },
+            { name: "3 for", price: 10.99 }
+          ]
         },
         {
           name: "Burritos",
-          price: 8.00,
-          description: "Burrito with choice of protein, black beans, rice, salsa roja, cheese, sour cream, lettuce, onion & cilantro.",
+          description: "BEAN/ BEEF/ CHICKEN flour tortilla + beans + brown rice, each with lettuce, sour cream & salsa",
+          price: 10.99,
         },
         {
           name: "Taco Salad",
-          price: 6.00,
-          description: "Served with mixed greens, black beans, cheese, salsa fresca, guacamole & chipotle dressing.",
+          description: "Mixed beans, tortilla chips, and iceberg lettuce with salsa fresco, sour cream & cheese",
+          price: 10.99
         },
         {
-          name: "Bean & Cheese Quesadilla",
-          price: 8.00,
-          description: "A flour tortilla filled with black beans & cheese. Served with salsa roja & sour cream.",
+          name: "Cheese Quesadilla",
+          description: "BEAN/ BEEF/ CHICKEN with cheese grilled in a flour tortilla, served with sour cream & salsa",
+          price: 10.99,
         },
-      ],
+        {
+          name: "Extreme Fresco Fries",
+          description: "Served with shredded cheese, sour cream & salsa fresco",
+          price: 8.99
+        },
+        {
+          name: "Value Bean Burrito",
+          description: "Chickpeas & mixed beans wrapped in flour tortilla",
+          price: 5.00
+        },
+        {
+          name: "Crisp Beef Burrito",
+          description: "served with taco sauce",
+          price: 6.00
+        }
+      ]
     },
     {
-      name: "Add Ons",
+      name: "Add-Ons",
       items: [
         {
-          name: "Make it a Combo",
-          price: 4.00,
-          description: "Add soft tacos, rice & beans or salad for an extra cost.",
+          name: "Chicken/Beef",
+          price: 4.99,
+          tags: []
         },
         {
           name: "Guacamole",
-          price: 2.00,
-          description: "",
-        },
-        {
-          name: "Cheese",
-          price: 1.00,
-          description: "",
-        },
-        {
-          name: "Salsa Roja",
-          price: 0.50,
-          description: "",
-        },
-        {
-          name: "Salsa Verde",
-          price: 0.50,
-          description: "",
+          price: 3.49
         },
         {
           name: "Sour Cream",
-          price: 0.50,
-          description: "",
+          price: 1.49
+        },
+        {
+          name: "Salsa Fresco",
+          price: 1.49
+        },
+        {
+          name: "Cheese",
+          price: 2.00
         },
         {
           name: "Vegan Cheese",
-          price: 2.00,
-          description: "",
+          price: 2.99
         }
-      ],
+      ]
     },
     {
       name: "Sides",
       items: [
         {
-          name: "Rice",
-          price: 3.00,
-          description: "",
+          name: "Mexican Rice",
+          price: 3.79
         },
         {
-          name: "Beans",
-          price: 3.00,
-          description: "",
+          name: "Refried Beans",
+          price: 3.79
         },
         {
           name: "Fresco Fries",
-          price: 5.50,
-          description: "Served with chipotle sauce.",
+          price: 5.49
         },
         {
-          name: "Jalapeno & Cheese Bites",
-          price: 5.00,
+          name: "Chips & Salsa",
+          price: 6.99
+        }
+      ]
+    },
+    {
+      name: "Make It a Combo",
+      description: "Add fries + 24oz fountain drink/12oz coffee",
+      items: [
+        {
+          name: "Combo",
+          price: 4.99
+        }
+      ]
+    }
+  ]
+};
+
+const TreksMenu: Menu = {
+  id: "treks",
+  sections: [
+    {
+      name: "Daily Selections",
+      items: [
+        {
+          name: "Grilled Panini",
+          price: 5.50,
           description: "",
         },
         {
-          name: "Fresco Chips & Salsa",
+          name: "Salad Bar",
+          price: 5.50,
+          description: "",
+        },
+        {
+          name: "Soup",
+          price: 4.40,
+          description: "",
+        },
+      ],
+    },
+    {
+      name: "Combos",
+      items: [
+        {
+          name: "Soup + Small Salad",
           price: 7.50,
           description: "",
         },
         {
-          name: "Churros",
-          price: 2.00,
-          description: "Plain or filled with caramel or chocolate sauce.",
+          name: "Soup + Large Salad",
+          price: 11.50,
+          description: "",
+        },
+        {
+          name: "Panini + Soup",
+          price: 10.50,
+          description: "",
+        },
+        {
+          name: "Panini + Small Salad",
+          price: 10.50,
+          description: "",
+        }
+      ],
+    },
+    {
+      name: "Add to Any Meal",
+      items: [
+        {
+          name: "Fountain Drink 22oz",
+          price: 1.75,
+          description: "",
+        },
+        {
+          name: "Coffee/Tea 12oz",
+          price: 1.75,
+          description: "",
+        },
+        {
+          name: "Fountain Drink 22oz",
+          price: 2.59,
+          description: "",
         }
       ],
     },
