@@ -2,7 +2,7 @@ import { Menu, menuExample } from "./Menu";
 import Coordinates from "./Coordinates";
 import { VendorHours, vendorHoursExamples, bibliocafeHours } from "./VendorHours";
 import { Building } from "./Building";
-import { BUILDING_CODES } from "./Constants";
+import { BUILDING_CODES, VENDOR_NAMES } from "./Constants";
 
 type FoodVendor = {
   name: string;
@@ -29,7 +29,7 @@ const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building : Building
 const foodVendorExamples : FoodVendor[] = [
 
   {
-    name: "Starbucks",
+    name: VENDOR_NAMES.STARBUCKS,
     building_code: BUILDING_CODES.BOOKSTORE,
     description: "Coffee and Pastries",
     image:
@@ -45,7 +45,7 @@ const foodVendorExamples : FoodVendor[] = [
   },
 
   {
-    name: "University Club of Victoria",
+    name: VENDOR_NAMES.UNICLUB,
     building_code: BUILDING_CODES.BOOKSTORE,
     description:
       "Scenic cafe at University of Victoria offering burgers, sandwiches & salads, plus a pondside patio.",
@@ -61,7 +61,7 @@ const foodVendorExamples : FoodVendor[] = [
   },
 
   {
-    name: "Mac",
+    name: VENDOR_NAMES.MACS,
     building_code: BUILDING_CODES.MACLAUREN,
     description:
       "Mac's in the MacLaurin Building is the best place on campus to get a custom-made sandwich or wrap.",
@@ -80,7 +80,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // Entree
   {
-    name: "Entree",
+    name: VENDOR_NAMES.ENTREE,
     building_code: BUILDING_CODES.COVE,
     description: "",
     image:
@@ -97,7 +97,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // Greens
   {
-    name: "Greens",
+    name: VENDOR_NAMES.GREENS,
     building_code: BUILDING_CODES.COVE,
     description: "Plant Based Eats Made to Order",
     image:
@@ -116,7 +116,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // Chopbox
   {
-    name: "Chopbox",
+    name: VENDOR_NAMES.CHOPBOX,
     building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
     description:
       "Asian inspired noodles",
@@ -133,7 +133,7 @@ const foodVendorExamples : FoodVendor[] = [
   
   // Freshco Taco
   {
-    name: "Fresco Taco",
+    name: VENDOR_NAMES.FRESCO,
     building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
     description:
       "Tacos ",
@@ -150,7 +150,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // Treks
   {
-    name: "Treks",
+    name: VENDOR_NAMES.TREKS,
     building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
     description:
       "Soups, salad bar, flatbread sandwiches",
@@ -168,7 +168,7 @@ const foodVendorExamples : FoodVendor[] = [
   // GradHouse Building
   // Gradhouse
   {
-    name: "Gradhouse",
+    name: VENDOR_NAMES.GRADHOUSE,
     building_code: BUILDING_CODES.GRADUATE_BUILDING,
     description:
       "Home on campus for UVIC graduate students",
@@ -186,7 +186,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Library Building
   // Biblio
   {
-    name: "Biblio",
+    name: VENDOR_NAMES.BIBLIO,
     building_code: BUILDING_CODES.MCPHERSON_LIBRARY,
     description:
     "A great place to enjoy coffee, and grab a quick bite to eat on campus",
@@ -204,7 +204,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Student Union Building
   // Health Food Bar
   {
-    name: "Health Food Bar",
+    name: VENDOR_NAMES.HEALTH_FB,
     building_code: BUILDING_CODES.SUB,
     description:
     "House made items, rice bowls, wraps, sandwiches, fresh juice, smoothies, vegan & gluten free options.",
@@ -222,7 +222,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // Felicitas
   {
-    name: "Felicitas",
+    name: VENDOR_NAMES.FELICITAS,
     building_code: BUILDING_CODES.SUB,
     description:
       "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
@@ -240,7 +240,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // The Grill
   {
-    name: "The Grill",
+    name: VENDOR_NAMES.GRILL,
     building_code: BUILDING_CODES.SUB,
     description: "Serving up delicious grilled delights with a twist!",
     image: "https://uvss.ca/wp-content/uploads/2022/11/GrillLogoRed.png", // You can insert the URL of the vendor's image here
@@ -256,7 +256,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   // Munchie Bar
   {
-    name: "Munchie Bar",
+    name: VENDOR_NAMES.MUNCHIE,
     building_code: BUILDING_CODES.SUB,
     description:
     "Handmade espresso beverages, quality baking with vegan, organic and gluten free options. Delicious Italian-style sandwiches.",
