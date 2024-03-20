@@ -41,7 +41,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "starbucks")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.STARBUCKS)!,
   },
 
   {
@@ -57,7 +57,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "uniclub")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.UNICLUB)!,
   },
 
   {
@@ -73,7 +73,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "mac")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.MACS)!,
   },
 
   // The Cove
@@ -92,7 +92,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "entree")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.ENTREE)!,
   },
 
   // Greens
@@ -109,7 +109,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "greens")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.GREENS)!,
   },
 
   // Mystic Market Vendors
@@ -128,7 +128,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
-    menu: menuExample.find((menu) => menu.id === "chopbox")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.CHOPBOX)!,
   },
   
   // Freshco Taco
@@ -145,7 +145,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
-    menu: menuExample.find((menu) => menu.id === "fresco")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.FRESCO)!,
   },
 
   // Treks
@@ -162,7 +162,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
-    menu: menuExample.find((menu) => menu.id === "treks")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.TREKS)!,
   },
 
   // GradHouse Building
@@ -180,7 +180,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "gradhouse")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.GRADHOUSE)!,
   },
 
   // Library Building
@@ -198,7 +198,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "biblio")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.BIBLIO)!,
   },
 
   // Student Union Building
@@ -217,7 +217,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "theGrill")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.GRILL)!,
   },
 
   // Felicitas
@@ -235,7 +235,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "felicitas")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.FELICITAS)!,
   },
 
   // The Grill
@@ -251,7 +251,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "theGrill")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.GRILL)!,
   },
 
   // Munchie Bar
@@ -269,7 +269,7 @@ const foodVendorExamples : FoodVendor[] = [
       longitudeDelta: 0.001,
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "starbucks")!,
+    menu: menuExample.find((menu) => menu.vendor_name === VENDOR_NAMES.STARBUCKS)!,
   }, 
 ];
 

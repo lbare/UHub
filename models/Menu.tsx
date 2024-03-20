@@ -1,3 +1,5 @@
+import { VENDOR_NAMES } from "./Constants";
+
 enum MenuItemTag {
   Vegan = "Vegan",
   VeganOption = "Vegan Option",
@@ -39,13 +41,13 @@ type MenuSection = {
 };
 
 type Menu = {
-  id: string;
+  vendor_name: string;
   sections: MenuSection[];
 };
 
 //Menu Example from Greens in Cove from Feburary 13th 2024
 const greensMenuExample: Menu = {
-  id: "greens",
+  vendor_name: VENDOR_NAMES.GREENS,
   sections: [
     {
       name: "Plant Based Eats Made to Order",
@@ -152,7 +154,7 @@ const greensMenuExample: Menu = {
 };
 
 const felicitasMenuExample: Menu = {
-  id: "felicitas",
+  vendor_name: VENDOR_NAMES.FELICITAS,
   sections: [
     {
       name: "Pub Style Favorites",
@@ -435,7 +437,7 @@ const felicitasMenuExample: Menu = {
 };
 
 const theGrillMenuExample: Menu = {
-  id: "theGrill",
+  vendor_name: VENDOR_NAMES.GRILL,
   sections: [
     {
       name: "BREAKFAST",
@@ -627,7 +629,7 @@ const theGrillMenuExample: Menu = {
 };
 
 const starbucksMenu: Menu = {
-  id: "starbucks",
+  vendor_name: VENDOR_NAMES.STARBUCKS,
   sections: [
     {
       name: "Coffee",
@@ -708,7 +710,7 @@ const starbucksMenu: Menu = {
 };
 
 const EntreeMenu: Menu = {
-  id: "entree",
+  vendor_name: VENDOR_NAMES.ENTREE,
   sections: [
     {
       name: "Main",
@@ -774,7 +776,7 @@ const EntreeMenu: Menu = {
 };
 
 const uniclubMenuExample: Menu = {
-  id: "uniclub",
+  vendor_name: VENDOR_NAMES.UNICLUB,
   sections: [
     {
       name: "LIGHTER MEALS",
@@ -885,7 +887,7 @@ const uniclubMenuExample: Menu = {
 };
 
 const MacMenu: Menu = {
-  id: "mac",
+  vendor_name: VENDOR_NAMES.MACS,
   sections: [
     {
       name: "Coffee",
@@ -968,7 +970,7 @@ const MacMenu: Menu = {
 // Mystic Market Building 
 
 const ChopBoxMenu: Menu = {
-  id: "chopbox",
+  vendor_name: VENDOR_NAMES.CHOPBOX,
   sections: [
     {
       name: "Signature Chop Boxes",
@@ -1059,7 +1061,7 @@ const ChopBoxMenu: Menu = {
 };
 
 const FrescoMenu: Menu = {
-  id: "fresco",
+  vendor_name: VENDOR_NAMES.FRESCO,
   sections: [
     {
       name: "Fresco Taco Bar",
@@ -1170,7 +1172,7 @@ const FrescoMenu: Menu = {
 };
 
 const TreksMenu: Menu = {
-  id: "treks",
+  vendor_name: VENDOR_NAMES.TREKS,
   sections: [
     {
       name: "Sandwich",
@@ -1229,7 +1231,7 @@ const TreksMenu: Menu = {
 
 // GradHouse Building
 const GradHouseMenu: Menu = {
-  id: "gradhouse",
+  vendor_name: VENDOR_NAMES.GRADHOUSE,
   sections: [
     {
       name: "Snacks N Things",
@@ -1327,7 +1329,7 @@ const GradHouseMenu: Menu = {
 
 // Library Building 
 const biblioCafe: Menu = {
-  id: "biblio",
+  vendor_name: VENDOR_NAMES.BIBLIO,
   sections: [
     {
       name: "Hot Beverages",

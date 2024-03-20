@@ -9,4 +9,26 @@ const BUILDING_CODES = {
     MCPHERSON_LIBRARY: "LIB",
 };
 
-export { BUILDING_CODES };
+const VENDOR_NAMES = {
+    BIBLIO: "Biblio",
+    HEALTH_FB: "Health Food Bar",
+    FELICITAS: "Felicitas",
+    GRILL: "The Grill",
+    MUNCHIE: "Munchie Bar",
+
+    GRADHOUSE: "Gradhouse",
+    STARBUCKS: "Starbucks",
+    UNICLUB: "University Club of Victoria",
+    MACS: "Mac's",
+
+    ENTREE: "Entree",
+    GREENS: "Greens",
+
+    TREKS: "Treks",
+    CHOPBOX: "Chopbox",
+    FRESCO: "Fresco Taco Bar",
+
+
+};
+
+export { BUILDING_CODES, VENDOR_NAMES};
