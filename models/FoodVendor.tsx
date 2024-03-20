@@ -2,6 +2,7 @@ import { Menu, menuExample } from "./Menu";
 import Coordinates from "./Coordinates";
 import { VendorHours, vendorHoursExamples, bibliocafeHours } from "./VendorHours";
 import { Building } from "./Building";
+import { BUILDING_CODES } from "./Constants";
 
 type FoodVendor = {
   name: string;
@@ -29,7 +30,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   {
     name: "Starbucks",
-    building_code: "BOOK",
+    building_code: BUILDING_CODES.BOOKSTORE,
     description: "Coffee and Pastries",
     image:
       "https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/1200px-Starbucks_Corporation_Logo_2011.svg.png",
@@ -45,7 +46,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   {
     name: "University Club of Victoria",
-    building_code: "BOOK",
+    building_code: BUILDING_CODES.BOOKSTORE,
     description:
       "Scenic cafe at University of Victoria offering burgers, sandwiches & salads, plus a pondside patio.",
     image: "https://vitp.ca/wp-content/uploads/2012/12/UVIC-SS3lr1.jpg",
@@ -61,7 +62,7 @@ const foodVendorExamples : FoodVendor[] = [
 
   {
     name: "Mac",
-    building_code: "MAC",
+    building_code: BUILDING_CODES.MACLAUREN,
     description:
       "Mac's in the MacLaurin Building is the best place on campus to get a custom-made sandwich or wrap.",
     image: "https://www.uvic.ca/services/food/assets/images/photos/main/sandwichmain.jpg",
@@ -80,7 +81,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Entree
   {
     name: "Entree",
-    building_code: "COVE",
+    building_code: BUILDING_CODES.COVE,
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
@@ -97,7 +98,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Greens
   {
     name: "Greens",
-    building_code: "COVE",
+    building_code: BUILDING_CODES.COVE,
     description: "Plant Based Eats Made to Order",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
@@ -116,7 +117,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Chopbox
   {
     name: "Chopbox",
-    building_code: "JCC",
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
     description:
       "Asian inspired noodles",
     image: "https://www.currentmillwork.com/wp-content/uploads/2021/01/UVIC-Food-Service-Gallery-10.jpg",
@@ -133,7 +134,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Freshco Taco
   {
     name: "Fresco Taco",
-    building_code: "JCC",
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
     description:
       "Tacos ",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
@@ -150,7 +151,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Treks
   {
     name: "Treks",
-    building_code: "JCC",
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
     description:
       "Soups, salad bar, flatbread sandwiches",
     image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
@@ -168,7 +169,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Gradhouse
   {
     name: "Gradhouse",
-    building_code: "GSC",
+    building_code: BUILDING_CODES.GRADUATE_BUILDING,
     description:
       "Home on campus for UVIC graduate students",
     image: "https://gss.uvic.ca/wp-content/uploads/2020/01/Orientation-Social-Image.jpg",
@@ -186,7 +187,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Biblio
   {
     name: "Biblio",
-    building_code: "LIB",
+    building_code: BUILDING_CODES.MCPHERSON_LIBRARY,
     description:
     "A great place to enjoy coffee, and grab a quick bite to eat on campus",
     image: "https://live.staticflickr.com/3106/2899508226_65cfd6a0db_b.jpg",
@@ -204,7 +205,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Health Food Bar
   {
     name: "Health Food Bar",
-    building_code: "SUB",
+    building_code: BUILDING_CODES.SUB,
     description:
     "House made items, rice bowls, wraps, sandwiches, fresh juice, smoothies, vegan & gluten free options.",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRKKkBVJcCXP2XZv9CI8BxYdsHkgSFIDaSLw&usqp=CAU",
@@ -222,7 +223,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Felicitas
   {
     name: "Felicitas",
-    building_code: "SUB",
+    building_code: BUILDING_CODES.SUB,
     description:
       "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
     image:
@@ -240,7 +241,7 @@ const foodVendorExamples : FoodVendor[] = [
   // The Grill
   {
     name: "The Grill",
-    building_code: "SUB",
+    building_code: BUILDING_CODES.SUB,
     description: "Serving up delicious grilled delights with a twist!",
     image: "https://uvss.ca/wp-content/uploads/2022/11/GrillLogoRed.png", // You can insert the URL of the vendor's image here
     location: {
@@ -256,7 +257,7 @@ const foodVendorExamples : FoodVendor[] = [
   // Munchie Bar
   {
     name: "Munchie Bar",
-    building_code: "SUB",
+    building_code: BUILDING_CODES.SUB,
     description:
     "Handmade espresso beverages, quality baking with vegan, organic and gluten free options. Delicious Italian-style sandwiches.",
     image: "https://events.uvic.ca/live/image/gid/19/width/1260/crop/1/6793_Cinecenta.jpg",
