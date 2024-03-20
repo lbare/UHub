@@ -25,20 +25,7 @@ const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building : Building
 }
 
 const foodVendorExamples = {
-  greens: {
-    name: "Greens",
-    description: "Plant Based Eats Made to Order",
-    image:
-      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    location: {
-      latitude: 48.4642125,
-      longitude: -123.3072344,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
-    },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "greens")!,
-  },
+
   starbucks: {
     name: "Starbucks",
     description: "Coffee and Pastries",
@@ -53,48 +40,7 @@ const foodVendorExamples = {
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "starbucks")!,
   },
-  thegrill: {
-    name: "The Grill",
-    description: "Serving up delicious grilled delights with a twist!",
-    image: "https://uvss.ca/wp-content/uploads/2022/11/GrillLogoRed.png", // You can insert the URL of the vendor's image here
-    location: {
-      latitude: 48.46485803452279,
-      longitude: -123.30817796788351,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
-    },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "theGrill")!,
-  },
-  felicitas: {
-    name: "Felicitas",
-    description:
-      "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
-    image:
-      "https://www.felicitas.ca/wp-content/uploads/2024/01/FELS_BOTB_Digicaster_1.2_web.jpg",
-    location: {
-      latitude: 48.46460219027596,
-      longitude: -123.30794900242859,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
-    },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "felicitas")!,
-  },
-  entree: {
-    name: "Entree",
-    description: "",
-    image:
-      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    location: {
-      latitude: 48.464306646410556,
-      longitude: -123.30712176290265,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
-    },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "entree")!,
-  },
+  
   uniClub: {
     name: "University Club of Victoria",
     description:
@@ -124,8 +70,38 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "mac")!,
   },
 
-  // Mystic Market Vendors
+  // The Cove
+  entree: {
+    name: "Entree",
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    location: {
+      latitude: 48.464306646410556,
+      longitude: -123.30712176290265,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
+    menu: menuExample.find((menu) => menu.id === "entree")!,
+  },
 
+  greens: {
+    name: "Greens",
+    description: "Plant Based Eats Made to Order",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    location: {
+      latitude: 48.4642125,
+      longitude: -123.3072344,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
+    menu: menuExample.find((menu) => menu.id === "greens")!,
+  },
+
+  // Mystic Market Vendors
   chopbox: {
     name: "Chopbox",
     description:
@@ -157,7 +133,7 @@ const foodVendorExamples = {
   },
 
   treks: {
-    name: "treks",
+    name: "Treks",
     description:
       "Soups, salad bar, flatbread sandwiches",
     image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
@@ -171,8 +147,9 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "treks")!,
   },
 
+  // GradHouse Building
   gradhouse: {
-    name: "gradhouse",
+    name: "Gradhouse",
     description:
       "Home on campus for UVIC graduate students",
     image: "https://gss.uvic.ca/wp-content/uploads/2020/01/Orientation-Social-Image.jpg",
@@ -186,8 +163,9 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "gradhouse")!,
   },
 
+  // Library Building
   biblio: {
-    name: "biblio",
+    name: "Biblio",
     description:
     "A great place to enjoy coffee, and grab a quick bite to eat on campus",
     image: "https://live.staticflickr.com/3106/2899508226_65cfd6a0db_b.jpg",
@@ -201,6 +179,7 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "biblio")!,
   },
 
+  // Student Union Building
   hfb: {
     name: "Health Food Bar",
     description:
@@ -210,6 +189,36 @@ const foodVendorExamples = {
  
       latitude: 48.46501468824788,
       longitude: -123.30821467799807,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
+    menu: menuExample.find((menu) => menu.id === "theGrill")!,
+  },
+
+  felicitas: {
+    name: "Felicitas",
+    description:
+      "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
+    image:
+      "https://www.felicitas.ca/wp-content/uploads/2024/01/FELS_BOTB_Digicaster_1.2_web.jpg",
+    location: {
+      latitude: 48.46460219027596,
+      longitude: -123.30794900242859,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
+    menu: menuExample.find((menu) => menu.id === "felicitas")!,
+  },
+
+  thegrill: {
+    name: "The Grill",
+    description: "Serving up delicious grilled delights with a twist!",
+    image: "https://uvss.ca/wp-content/uploads/2022/11/GrillLogoRed.png", // You can insert the URL of the vendor's image here
+    location: {
+      latitude: 48.46485803452279,
+      longitude: -123.30817796788351,
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
