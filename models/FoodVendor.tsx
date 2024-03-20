@@ -25,9 +25,9 @@ const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building : Building
   return vendorsInBuilding[(index - 1 + vendorsInBuilding.length) % vendorsInBuilding.length];
 }
 
-const foodVendorExamples = {
+const foodVendorExamples : FoodVendor[] = [
 
-  starbucks: {
+  {
     name: "Starbucks",
     building_code: "BOOK",
     description: "Coffee and Pastries",
@@ -41,9 +41,9 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "starbucks")!,
-  } as FoodVendor,
+  },
 
-  uniClub: {
+  {
     name: "University Club of Victoria",
     building_code: "BOOK",
     description:
@@ -57,9 +57,9 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "uniclub")!,
-  } as FoodVendor,
+  },
 
-  mac: {
+  {
     name: "Mac",
     building_code: "MAC",
     description:
@@ -73,10 +73,12 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "mac")!,
-  } as FoodVendor,
+  },
 
   // The Cove
-  entree: {
+
+  // Entree
+  {
     name: "Entree",
     building_code: "COVE",
     description: "",
@@ -90,9 +92,10 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "entree")!,
-  } as FoodVendor,
+  },
 
-  greens: {
+  // Greens
+  {
     name: "Greens",
     building_code: "COVE",
     description: "Plant Based Eats Made to Order",
@@ -106,10 +109,12 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "greens")!,
-  } as FoodVendor,
+  },
 
   // Mystic Market Vendors
-  chopbox: {
+
+  // Chopbox
+  {
     name: "Chopbox",
     building_code: "JCC",
     description:
@@ -123,9 +128,10 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
     menu: menuExample.find((menu) => menu.id === "chopbox")!,
-  } as FoodVendor,
+  },
   
-  fresco: {
+  // Freshco Taco
+  {
     name: "Fresco Taco",
     building_code: "JCC",
     description:
@@ -139,9 +145,10 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
     menu: menuExample.find((menu) => menu.id === "fresco")!,
-  } as FoodVendor,
+  },
 
-  treks: {
+  // Treks
+  {
     name: "Treks",
     building_code: "JCC",
     description:
@@ -155,10 +162,11 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
     menu: menuExample.find((menu) => menu.id === "treks")!,
-  } as FoodVendor,
+  },
 
   // GradHouse Building
-  gradhouse: {
+  // Gradhouse
+  {
     name: "Gradhouse",
     building_code: "GSC",
     description:
@@ -172,10 +180,11 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "gradhouse")!,
-  } as FoodVendor,
+  },
 
   // Library Building
-  biblio: {
+  // Biblio
+  {
     name: "Biblio",
     building_code: "LIB",
     description:
@@ -189,10 +198,11 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "biblio")!,
-  } as FoodVendor,
+  },
 
   // Student Union Building
-  hfb: {
+  // Health Food Bar
+  {
     name: "Health Food Bar",
     building_code: "SUB",
     description:
@@ -207,9 +217,10 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "theGrill")!,
-  } as FoodVendor,
+  },
 
-  felicitas: {
+  // Felicitas
+  {
     name: "Felicitas",
     building_code: "SUB",
     description:
@@ -224,9 +235,10 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "felicitas")!,
-  } as FoodVendor,
+  },
 
-  thegrill: {
+  // The Grill
+  {
     name: "The Grill",
     building_code: "SUB",
     description: "Serving up delicious grilled delights with a twist!",
@@ -239,9 +251,10 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "theGrill")!,
-  } as FoodVendor,
+  },
 
-  munchie: {
+  // Munchie Bar
+  {
     name: "Munchie Bar",
     building_code: "SUB",
     description:
@@ -256,7 +269,7 @@ const foodVendorExamples = {
     },
     hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "starbucks")!,
-  } as FoodVendor, 
-};
+  }, 
+];
 
 export { FoodVendor, VendorHours, foodVendorExamples, getNextFoodVendorInBuilding, getPreviousFoodVendorInBuilding};

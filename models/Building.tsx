@@ -22,7 +22,7 @@ const coveBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.entree, foodVendorExamples.greens],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "COVE"),
 };
 
 const subBuildingExample: Building = {
@@ -38,12 +38,7 @@ const subBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [
-    foodVendorExamples.felicitas,
-    foodVendorExamples.thegrill,
-    foodVendorExamples.munchie,
-    foodVendorExamples.hfb,
-  ],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "SUB"),
 };
 
 const bookStoreBuildingExample: Building = {
@@ -59,7 +54,7 @@ const bookStoreBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.starbucks, foodVendorExamples.uniClub],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "BOOK"),
 };
 
 const macBuildingExample: Building = {
@@ -75,7 +70,7 @@ const macBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.mac],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "MAC"),
 };
 
 const MysticBuildingExample: Building = {
@@ -91,11 +86,7 @@ const MysticBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [
-    foodVendorExamples.chopbox,
-    foodVendorExamples.fresco,
-    foodVendorExamples.treks,
-  ],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "JCC"),
 };
 
 const GradBuildingExample: Building = {
@@ -110,7 +101,7 @@ const GradBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.gradhouse],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "GSC"),
 };
 
 const LibBuildingExample: Building = {
@@ -126,7 +117,7 @@ const LibBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.biblio],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === "LIB"),
 };
 
 const buildingExamples: Building[] = [
