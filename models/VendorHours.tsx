@@ -338,7 +338,7 @@ const STATIC_GetVendorHoursFor = (vendorName: string): VendorHours => {
   );
 
   if (!vendorHours) {
-    console.log (`Vendor ${vendorName}'s hours not found, sending back undefined hours`);
+    console.log(`Vendor ${vendorName}'s hours not found, sending back undefined hours`);
     return UndefinedHours.hours;
   }
 

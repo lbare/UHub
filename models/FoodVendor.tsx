@@ -14,13 +14,13 @@ type FoodVendor = {
   menu: Menu;
 };
 
-const getNextFoodVendorInBuilding = (vendor: FoodVendor, building : Building) => {
+const getNextFoodVendorInBuilding = (vendor: FoodVendor, building: Building) => {
   const vendorsInBuilding = building.vendors;
   const index = vendorsInBuilding.findIndex((v) => v.name === vendor.name);
   return vendorsInBuilding[(index + 1) % vendorsInBuilding.length];
 }
 
-const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building : Building) => {
+const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building: Building) => {
   const vendorsInBuilding = building.vendors;
   const index = vendorsInBuilding.findIndex((v) => v.name === vendor.name);
   return vendorsInBuilding[(index - 1 + vendorsInBuilding.length) % vendorsInBuilding.length];
@@ -37,7 +37,7 @@ type FV_GENERATOR = {
   longitude: number
 }
 
-const CreateVendor = (generator : FV_GENERATOR) : FoodVendor => {
+const CreateVendor = (generator: FV_GENERATOR): FoodVendor => {
   return {
     name: generator.vendor_name,
     building_code: generator.building_code,
@@ -54,7 +54,7 @@ const CreateVendor = (generator : FV_GENERATOR) : FoodVendor => {
   }
 }
 
-const foodVendorExamples : FoodVendor[] = [
+const foodVendorExamples: FoodVendor[] = [
   CreateVendor({
     vendor_name: VENDOR_NAMES.STARBUCKS,
     building_code: BUILDING_CODES.BOOKSTORE,
@@ -121,7 +121,7 @@ const foodVendorExamples : FoodVendor[] = [
     description:
       "Tacos ",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296, 
+    latitude: 48.46483425099296,
     longitude: -123.3116956137913
   }),
 
@@ -131,7 +131,7 @@ const foodVendorExamples : FoodVendor[] = [
     description:
       "Soups, salad bar, flatbread sandwiches",
     image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
-    latitude: 48.46480437387054, 
+    latitude: 48.46480437387054,
     longitude: -123.31174779073204
   }),
 
@@ -141,7 +141,7 @@ const foodVendorExamples : FoodVendor[] = [
     description:
       "Home on campus for UVIC graduate students",
     image: "https://gss.uvic.ca/wp-content/uploads/2020/01/Orientation-Social-Image.jpg",
-    latitude: 48.466136567816996, 
+    latitude: 48.466136567816996,
     longitude: -123.30747612930818
   }),
 
@@ -149,9 +149,9 @@ const foodVendorExamples : FoodVendor[] = [
     vendor_name: VENDOR_NAMES.BIBLIO,
     building_code: BUILDING_CODES.MCPHERSON_LIBRARY,
     description:
-    "A great place to enjoy coffee, and grab a quick bite to eat on campus",
+      "A great place to enjoy coffee, and grab a quick bite to eat on campus",
     image: "https://live.staticflickr.com/3106/2899508226_65cfd6a0db_b.jpg",
-    latitude: 48.463514414260366, 
+    latitude: 48.463514414260366,
     longitude: -123.30989988311102
   }),
 
@@ -159,7 +159,7 @@ const foodVendorExamples : FoodVendor[] = [
     vendor_name: VENDOR_NAMES.HEALTH_FB,
     building_code: BUILDING_CODES.SUB,
     description:
-    "House made items, rice bowls, wraps, sandwiches, fresh juice, smoothies, vegan & gluten free options.",
+      "House made items, rice bowls, wraps, sandwiches, fresh juice, smoothies, vegan & gluten free options.",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRKKkBVJcCXP2XZv9CI8BxYdsHkgSFIDaSLw&usqp=CAU",
     latitude: 48.46501468824788,
     longitude: -123.30821467799807
@@ -189,11 +189,11 @@ const foodVendorExamples : FoodVendor[] = [
     vendor_name: VENDOR_NAMES.MUNCHIE,
     building_code: BUILDING_CODES.SUB,
     description:
-    "Handmade espresso beverages, quality baking with vegan, organic and gluten free options. Delicious Italian-style sandwiches.",
+      "Handmade espresso beverages, quality baking with vegan, organic and gluten free options. Delicious Italian-style sandwiches.",
     image: "https://events.uvic.ca/live/image/gid/19/width/1260/crop/1/6793_Cinecenta.jpg",
     latitude: 48.46555743717081,
     longitude: -123.30808186056898
   }),
 ]
 
-export { FoodVendor, VendorHours, foodVendorExamples, getNextFoodVendorInBuilding, getPreviousFoodVendorInBuilding};
+export { FoodVendor, VendorHours, foodVendorExamples, getNextFoodVendorInBuilding, getPreviousFoodVendorInBuilding };

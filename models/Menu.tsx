@@ -1018,8 +1018,8 @@ const ChopBoxMenu: Menu = {
       ],
       description: "Substitute any box with steamed rice (Vegan), rice noodles (Vegan), Shanghai noodles or egg noodles",
       sides: [
-        {name: "Add Protein", price: 3.50, description: "Choose from tofu (Vegan), chicken breast, shrimp or beef"},
-        {name: "Extra Sauce", price: 1.00}
+        { name: "Add Protein", price: 3.50, description: "Choose from tofu (Vegan), chicken breast, shrimp or beef" },
+        { name: "Extra Sauce", price: 1.00 }
       ]
     },
     {
@@ -1031,20 +1031,20 @@ const ChopBoxMenu: Menu = {
           description: "Fresh noodles & vegetables in mushroom stock."
         }
       ],
-    sides: [
-      {
-        name: "Tofu",
-        price: 3.50
-      },
-      {
-        name: "Soft boiled egg",
-        price: 2.00
-      },
-      {
-        name: "Chicken",
-        price: 3.50
-      }
-    ]
+      sides: [
+        {
+          name: "Tofu",
+          price: 3.50
+        },
+        {
+          name: "Soft boiled egg",
+          price: 2.00
+        },
+        {
+          name: "Chicken",
+          price: 3.50
+        }
+      ]
     },
     {
       name: "Add to Any Meal",
@@ -1186,19 +1186,19 @@ const TreksMenu: Menu = {
   sections: [
     {
       name: "Sandwich",
-      items:[
+      items: [
         {
           name: "Build Your Own Sandwich",
           price: 9.99,
           description: "Choose your base, spread, cheese, protein, and add-ons to build your perfect sandwich.",
           sides: [
-            {name: "Base", price: 0, description: "Wrap: Whole Wheat, Plain, Tomato, Spinach, Herb & Garlic. Bread: Whole Wheat, Multigrain, Sourdough, Marble Rye"},
-            {name: "Spreads", price: 0, description: "Vegan Cheddar, Regular Cheddar, Smoked Cheddar, Havarti, Swiss"},
-            {name: "Cheese", price: 0, description: "Regular Mustard, Dijon, Mayo, Chipotle Mayo, Horseradish Mayo, Roast Garlic & Chive Mayo, Sweet Onion Dressing"},
-            {name: "Protein", price: 0, description: "Spicy Black Beans, Hummus, Pesto Chickpeas, Pesto Chicken Salad, Smoked Pepper Salmon Salad, Egg Salad, Tuna Salad, Cajun Chicken, Black Forest Ham, Buffalo Chicken, Roast Beef"},
-            {name: "Gluten Friendly Wrap", price: 2.00},
-            {name: "Avocado", price: 3.00},
-            {name: "Bacon", price: 1.50}
+            { name: "Base", price: 0, description: "Wrap: Whole Wheat, Plain, Tomato, Spinach, Herb & Garlic. Bread: Whole Wheat, Multigrain, Sourdough, Marble Rye" },
+            { name: "Spreads", price: 0, description: "Vegan Cheddar, Regular Cheddar, Smoked Cheddar, Havarti, Swiss" },
+            { name: "Cheese", price: 0, description: "Regular Mustard, Dijon, Mayo, Chipotle Mayo, Horseradish Mayo, Roast Garlic & Chive Mayo, Sweet Onion Dressing" },
+            { name: "Protein", price: 0, description: "Spicy Black Beans, Hummus, Pesto Chickpeas, Pesto Chicken Salad, Smoked Pepper Salmon Salad, Egg Salad, Tuna Salad, Cajun Chicken, Black Forest Ham, Buffalo Chicken, Roast Beef" },
+            { name: "Gluten Friendly Wrap", price: 2.00 },
+            { name: "Avocado", price: 3.00 },
+            { name: "Bacon", price: 1.50 }
           ]
         }
       ],
@@ -1237,7 +1237,7 @@ const TreksMenu: Menu = {
     }
 
   ]
-}; 
+};
 
 // GradHouse Building
 const GradHouseMenu: Menu = {
@@ -1597,12 +1597,12 @@ const menuExample = [
 
 const STATIC_GetMenuForVendor = (vendorName: string): Menu => {
   const menu = menuExample.find((menu) => menu.vendor_name === vendorName);
-  
+
   if (menu) {
     return menu;
-  } 
+  }
 
-  console.log (`No menu found for vendor: ${vendorName}, returning samle menu.`);
+  console.log(`No menu found for vendor: ${vendorName}, returning samle menu.`);
   return noMenu;
 
 }

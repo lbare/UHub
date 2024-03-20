@@ -35,4 +35,4 @@ const VENDOR_NAMES = {
     TOFINOS: "Tofino's",
 };
 
-export { BUILDING_CODES, VENDOR_NAMES};
+export { BUILDING_CODES, VENDOR_NAMES };
