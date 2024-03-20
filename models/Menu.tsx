@@ -45,6 +45,16 @@ type Menu = {
   sections: MenuSection[];
 };
 
+const noMenu: Menu = {
+  vendor_name: "NA",
+  sections: [
+    {
+      name: "No Menu Available",
+      items: [],
+    },
+  ],
+};
+
 //Menu Example from Greens in Cove from Feburary 13th 2024
 const greensMenuExample: Menu = {
   vendor_name: VENDOR_NAMES.GREENS,
@@ -1570,8 +1580,6 @@ const biblioCafe: Menu = {
   ]
 };
 
-
-
 const menuExample = [
   greensMenuExample,
   felicitasMenuExample,
@@ -1587,4 +1595,18 @@ const menuExample = [
   biblioCafe,
 ];
 
-export { Menu, MenuItem, MenuItemTag, menuExample };
+const STATIC_GetMenuForVendor = (vendorName: string): Menu => {
+  const menu = menuExample.find((menu) => menu.vendor_name === vendorName);
+  
+  if (menu) {
+    return menu;
+  } 
+
+  console.log (`No menu found for vendor: ${vendorName}, returning samle menu.`);
+  return noMenu;
+
+}
+
+
+
+export { Menu, MenuItem, MenuItemTag, STATIC_GetMenuForVendor };

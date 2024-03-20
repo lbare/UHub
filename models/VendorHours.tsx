@@ -1,3 +1,5 @@
+import { VENDOR_NAMES } from "./Constants";
+
 type DayOfWeek =
   | "Monday"
   | "Tuesday"
@@ -6,6 +8,7 @@ type DayOfWeek =
   | "Friday"
   | "Saturday"
   | "Sunday";
+
 const daysOfWeekInOrder: DayOfWeek[] = [
   "Monday",
   "Tuesday",
@@ -26,7 +29,7 @@ type VendorHours = {
 };
 
 type VendorHoursWithId = {
-  id: string; 
+  vendor_name: string;
   hours: VendorHours;
 };
 
@@ -195,8 +198,22 @@ const isDayToday = (day: DayOfWeek): boolean => {
   return day === todaysDay;
 };
 
+const UndefinedHours: VendorHoursWithId = {
+  vendor_name: "NONE",
+  hours: {
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+// Library Building
 const bibliocafeHours: VendorHoursWithId = {
-  id: "biblio",
+  vendor_name: VENDOR_NAMES.BIBLIO,
   hours: {
     Monday: [{ open: "08:00 AM", close: "8:00 PM" }],
     Tuesday: [{ open: "08:00 AM", close: "8:00 PM" }],
@@ -209,7 +226,7 @@ const bibliocafeHours: VendorHoursWithId = {
 };
 
 const macsHours: VendorHoursWithId = {
-  id: "macs",
+  vendor_name: VENDOR_NAMES.MACS,
   hours: {
     Monday: [{ open: "08:00 AM", close: "3:00 PM" }],
     Tuesday: [{ open: "08:00 AM", close: "3:00 PM" }],
@@ -221,8 +238,9 @@ const macsHours: VendorHoursWithId = {
   }
 };
 
+// Mystic Market Building
 const generalStoreHours: VendorHoursWithId = {
-  id: "generalStore",
+  vendor_name: VENDOR_NAMES.GENERAL_STORE,
   hours: {
     Monday: [{ open: "08:00 AM", close: "5:00 PM" }],
     Tuesday: [{ open: "08:00 AM", close: "5:00 PM" }],
@@ -235,7 +253,7 @@ const generalStoreHours: VendorHoursWithId = {
 };
 
 const boardWalkCafe: VendorHoursWithId = {
-  id: "boardwalkCafe",
+  vendor_name: VENDOR_NAMES.BROADWALK_CAFE,
   hours: {
     Monday: [{ open: "08:00 AM", close: "5:00 PM" }],
     Tuesday: [{ open: "08:00 AM", close: "5:00 PM" }],
@@ -248,7 +266,7 @@ const boardWalkCafe: VendorHoursWithId = {
 };
 
 const boosterJuice: VendorHoursWithId = {
-  id: "boosterJuice",
+  vendor_name: VENDOR_NAMES.BOOSTER,
   hours: {
     Monday: [{ open: "10:00 AM", close: "2:00 PM" }],
     Tuesday: [{ open: "10:00 AM", close: "2:00 PM" }],
@@ -260,26 +278,78 @@ const boosterJuice: VendorHoursWithId = {
   },
 };
 
-const chopBox: VendorHoursWithId = {
-  id: "mystic_common_hours",
-  hours: {
-    Monday: [{ open: "11:00 AM", close: "3:00 PM" }],
-    Tuesday: [{ open: "11:00 AM", close: "3:00 PM" }],
-    Wednesday: [{ open: "11:00 AM", close: "3:00 PM" }],
-    Thursday: [{ open: "11:00 AM", close: "3:00 PM" }],
-    Friday: [{ open: "11:00 AM", close: "3:00 PM" }],
-    Saturday: [],
-    Sunday: [],
-  },
+const mystic_common_hours: VendorHours = {
+  Monday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Tuesday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Wednesday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Thursday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Friday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Saturday: [],
+  Sunday: [],
 };
 
-const vendorHoursExamples: VendorHoursWithId[] = [bibliocafeHours, macsHours, generalStoreHours, boardWalkCafe, boosterJuice, chopBox];
+const chopBox: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.CHOPBOX,
+  hours: mystic_common_hours,
+};
+
+const flaminChicken: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.FLAMINCHICKEN,
+  hours: mystic_common_hours,
+};
+
+const fresco: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.FRESCO,
+  hours: mystic_common_hours,
+};
+
+const pickle_and_spice: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.PICKLE_SPICE,
+  hours: mystic_common_hours,
+};
+
+const tofinos: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.TOFINOS,
+  hours: mystic_common_hours,
+};
+
+const treks: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.TREKS,
+  hours: mystic_common_hours,
+};
+
+const vendorHoursExamples: VendorHoursWithId[] = [
+  bibliocafeHours,
+  macsHours,
+  generalStoreHours,
+  boardWalkCafe,
+  boosterJuice,
+  chopBox,
+  flaminChicken,
+  fresco,
+  pickle_and_spice,
+  tofinos,
+  treks,
+];
+
+const STATIC_GetVendorHoursFor = (vendorName: string): VendorHours => {
+  const vendorHours = vendorHoursExamples.find(
+    (vendor) => vendor.vendor_name === vendorName
+  );
+
+  if (!vendorHours) {
+    console.log (`Vendor ${vendorName}'s hours not found, sending back undefined hours`);
+    return UndefinedHours.hours;
+  }
+
+  return vendorHours.hours;
+
+}
 
 export {
   DayOfWeek,
   VendorHours,
-  vendorHoursExamples,
-  bibliocafeHours,
+  STATIC_GetVendorHoursFor,
   daysOfWeekInOrder,
   isVendorCurrentlyOpen,
   getVendorHoursForDayString,

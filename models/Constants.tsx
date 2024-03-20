@@ -27,8 +27,12 @@ const VENDOR_NAMES = {
     TREKS: "Treks",
     CHOPBOX: "Chopbox",
     FRESCO: "Fresco Taco Bar",
-
-
+    GENERAL_STORE: "General Store",
+    BROADWALK_CAFE: "Boardwalk Cafe",
+    BOOSTER: "Booster Juice",
+    FLAMINCHICKEN: "Flamin' Chicken",
+    PICKLE_SPICE: "Pickle and Spice",
+    TOFINOS: "Tofino's",
 };
 
 export { BUILDING_CODES, VENDOR_NAMES};
