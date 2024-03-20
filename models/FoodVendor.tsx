@@ -124,6 +124,8 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "mac")!,
   },
 
+  // Mystic Market Vendors
+
   chopbox: {
     name: "Chopbox",
     description:
@@ -154,8 +156,23 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "fresco")!,
   },
 
+  treks: {
+    name: "treks",
+    description:
+      "Soups, salad bar, flatbread sandwiches",
+    image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
+    location: {
+      latitude: 48.46480437387054, 
+      longitude: -123.31174779073204,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    },
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "mystic_common_hours")!.hours,
+    menu: menuExample.find((menu) => menu.id === "treks")!,
+  },
+
   gradhouse: {
-    name: "GradHouse",
+    name: "gradhouse",
     description:
       "Home on campus for UVIC graduate students",
     image: "https://gss.uvic.ca/wp-content/uploads/2020/01/Orientation-Social-Image.jpg",
@@ -169,23 +186,8 @@ const foodVendorExamples = {
     menu: menuExample.find((menu) => menu.id === "gradhouse")!,
   },
 
-  treks: {
-    name: "Treks",
-    description:
-      "Soups, salad bar, flatbread sandwiches",
-    image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
-    location: {
-      latitude: 48.46480437387054, 
-      longitude: -123.31174779073204,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
-    },
-    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
-    menu: menuExample.find((menu) => menu.id === "treks")!,
-  },
-
   biblio: {
-    name: "BiblioCafe",
+    name: "biblio",
     description:
     "A great place to enjoy coffee, and grab a quick bite to eat on campus",
     image: "https://live.staticflickr.com/3106/2899508226_65cfd6a0db_b.jpg",
@@ -195,7 +197,7 @@ const foodVendorExamples = {
       latitudeDelta: 0.001,
       longitudeDelta: 0.001,
     },
-    hours: bibliocafeHours,
+    hours: vendorHoursExamples.find((vendor) => vendor.id === "biblio")!.hours,
     menu: menuExample.find((menu) => menu.id === "biblio")!,
   },
 

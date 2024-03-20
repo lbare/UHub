@@ -5,6 +5,7 @@ enum MenuItemTag {
   GlutenFree = "Gluten Free",
   GlutenFreeOption = "Gluten Free Option",
   DairyFree = "Dairy Free",
+  DairyFreeOption = "Dairy Free Option",
 }
 
 type MenuItemSize = {
@@ -32,6 +33,7 @@ type MenuItem = {
 type MenuSection = {
   name: string;
   sides?: MenuItemSide[];
+  tags?: MenuItemTag[];
   description?: string;
   items: MenuItem[];
 };
@@ -963,7 +965,7 @@ const MacMenu: Menu = {
   ],
 };
 
-//Mystic Market Vendors 
+// Mystic Market Building 
 
 const ChopBoxMenu: Menu = {
   id: "chopbox",
@@ -1171,73 +1173,61 @@ const TreksMenu: Menu = {
   id: "treks",
   sections: [
     {
-      name: "Daily Selections",
+      name: "Sandwich",
+      items:[
+        {
+          name: "Build Your Own Sandwich",
+          price: 9.99,
+          description: "Choose your base, spread, cheese, protein, and add-ons to build your perfect sandwich.",
+          sides: [
+            {name: "Base", price: 0, description: "Wrap: Whole Wheat, Plain, Tomato, Spinach, Herb & Garlic. Bread: Whole Wheat, Multigrain, Sourdough, Marble Rye"},
+            {name: "Spreads", price: 0, description: "Vegan Cheddar, Regular Cheddar, Smoked Cheddar, Havarti, Swiss"},
+            {name: "Cheese", price: 0, description: "Regular Mustard, Dijon, Mayo, Chipotle Mayo, Horseradish Mayo, Roast Garlic & Chive Mayo, Sweet Onion Dressing"},
+            {name: "Protein", price: 0, description: "Spicy Black Beans, Hummus, Pesto Chickpeas, Pesto Chicken Salad, Smoked Pepper Salmon Salad, Egg Salad, Tuna Salad, Cajun Chicken, Black Forest Ham, Buffalo Chicken, Roast Beef"},
+            {name: "Gluten Friendly Wrap", price: 2.00},
+            {name: "Avocado", price: 3.00},
+            {name: "Bacon", price: 1.50}
+          ]
+        }
+      ],
+      tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption, MenuItemTag.GlutenFreeOption]
+    },
+    {
+      name: "Other",
       items: [
         {
-          name: "Grilled Panini",
-          price: 5.50,
-          description: "",
-        },
-        {
-          name: "Salad Bar",
-          price: 5.50,
-          description: "",
+          name: "Grilled Cheese",
+          price: 5.00,
+          tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption]
         },
         {
           name: "Soup",
-          price: 4.40,
-          description: "",
-        },
-      ],
-    },
-    {
-      name: "Combos",
-      items: [
-        {
-          name: "Soup + Small Salad",
-          price: 7.50,
-          description: "",
+          price: 4.99,
+          description: "Ask your server for today's selection.",
+          tags: []
         },
         {
-          name: "Soup + Large Salad",
-          price: 11.50,
-          description: "",
+          name: "Add Soup",
+          price: 4.79,
+          tags: []
         },
         {
-          name: "Panini + Soup",
-          price: 10.50,
-          description: "",
+          name: "Add Fountain Drink 24oz",
+          price: 2.29,
+          tags: []
         },
         {
-          name: "Panini + Small Salad",
-          price: 10.50,
-          description: "",
+          name: "Add Coffee/Tea 12oz",
+          price: 2.29,
+          tags: []
         }
-      ],
-    },
-    {
-      name: "Add to Any Meal",
-      items: [
-        {
-          name: "Fountain Drink 22oz",
-          price: 1.75,
-          description: "",
-        },
-        {
-          name: "Coffee/Tea 12oz",
-          price: 1.75,
-          description: "",
-        },
-        {
-          name: "Fountain Drink 22oz",
-          price: 2.59,
-          description: "",
-        }
-      ],
-    },
-  ],
-}
+      ]
+    }
 
+  ]
+}; 
+
+// GradHouse Building
 const GradHouseMenu: Menu = {
   id: "gradhouse",
   sections: [
@@ -1335,11 +1325,13 @@ const GradHouseMenu: Menu = {
   ],
 }
 
+// Library Building 
 const biblioCafe: Menu = {
   id: "biblio",
   sections: [
     {
       name: "Hot Beverages",
+      description: "All Flavouring Syrups are $0.70, Soy Subtitute / Soy Sub for Coffee $0.80",
       items: [
         {
           name: "Drip Coffee",
