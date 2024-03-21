@@ -106,13 +106,6 @@ const foodVendorExamples: FoodVendor[] = [
     longitude: -123.3072344
   }),
 
-  // SHAWARMA: "Shawarma",
-  //   STIRFRY: "Stir Fry",
-  //   DELI_COVE: "Deli",
-  //   SOUP_SALAD_COVE: "Soup & Salad Bar",
-  //   PIZZA_COVE: "Pizza",
-  //   GRILL_COVE: "Grill",
-
   CreateVendor({
     vendor_name: VENDOR_NAMES.SHAWARMA,
     building_code: BUILDING_CODES.COVE,

@@ -236,6 +236,18 @@ const EntreeMenu: Menu = {
   ],
 };
 
+const ShawarmaMenu: Menu = noMenu;
+
+const StirFryMenu: Menu = noMenu;
+
+const DeliCoveMenu: Menu = noMenu;
+
+const SoupSaladCoveMenu: Menu = noMenu;
+
+const PizzaCoveMenu: Menu = noMenu;
+
+const GrillCoveMenu: Menu = noMenu;
+
 // Student Union Building
 const felicitasMenu: Menu = {
   vendor_name: VENDOR_NAMES.FELICITAS,
@@ -2199,10 +2211,16 @@ const biblioCafe: Menu = {
 const menuExample = [
 
   greensMenuExample,
-  starbucksMenu,
   EntreeMenu,
+  ShawarmaMenu,
+  StirFryMenu,
+  DeliCoveMenu,
+  SoupSaladCoveMenu,
+  PizzaCoveMenu,
+  GrillCoveMenu,
+
+  starbucksMenu,
   uniclubMenuExample,
-  FrescoMenu,
   GradHouseMenu,
   MacMenu,
 
@@ -2212,6 +2230,7 @@ const menuExample = [
   HealthFBMenu,
   MunchieBarMenu,
 
+  FrescoMenu,
   ChopBoxMenu,
   TreksMenu,
   FlaminChickenMenu,
