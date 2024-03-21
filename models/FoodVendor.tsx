@@ -102,7 +102,7 @@ const foodVendorExamples: FoodVendor[] = [
     description: "Plant Based Eats Made to Order",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
+    latitude: 48.46419,
     longitude: -123.3072344
   }),
 
@@ -112,8 +112,8 @@ const foodVendorExamples: FoodVendor[] = [
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
-    longitude: -123.3072344
+    latitude: 48.46424,
+    longitude: -123.307045,
   }),
 
   CreateVendor({
@@ -122,8 +122,8 @@ const foodVendorExamples: FoodVendor[] = [
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
-    longitude: -123.3072344
+      latitude: 48.464297,
+      longitude: -123.30734,
   }),
 
   CreateVendor({
@@ -132,8 +132,8 @@ const foodVendorExamples: FoodVendor[] = [
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
-    longitude: -123.3072344
+    latitude: 48.464299,
+    longitude: -123.30727,
   }),
 
   CreateVendor({
@@ -142,8 +142,8 @@ const foodVendorExamples: FoodVendor[] = [
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
-    longitude: -123.3072344
+    latitude: 48.4642395,
+    longitude: -123.3071744
   }),
 
   CreateVendor({
@@ -152,8 +152,8 @@ const foodVendorExamples: FoodVendor[] = [
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
-    longitude: -123.3072344
+      latitude: 48.4643025,
+    longitude: -123.30721087753773,
   }),
 
   CreateVendor({
@@ -162,8 +162,8 @@ const foodVendorExamples: FoodVendor[] = [
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642125,
-    longitude: -123.3072344
+    latitude: 48.464288542529324,
+    longitude: -123.30705262720585
   }),
 
   // Mystic Market Building 
@@ -324,8 +324,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Pizza, sushi, bagels, muffins, breakfast sandwiches and coffee.",
     image: "https://uvss.ca/wp-content/uploads/2021/06/SUBBrands_BT600px.png",
-    latitude: 48.46485803452279,
-    longitude: -123.30817796788351
+    latitude: 48.464741845175446,
+    longitude: -123.30815870314835,
   }),
 
   
