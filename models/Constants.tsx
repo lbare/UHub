@@ -10,12 +10,13 @@ const BUILDING_CODES = {
 };
 
 const VENDOR_NAMES = {
-    BIBLIO: "Biblio",
+    BEAN_THERE_CAFE: "Bean There Cafe",
     HEALTH_FB: "Health Food Bar",
     FELICITAS: "Felicitas",
     GRILL: "The Grill",
     MUNCHIE: "Munchie Bar",
 
+    BIBLIO: "Biblio",
     GRADHOUSE: "Gradhouse",
     STARBUCKS: "Starbucks",
     UNICLUB: "University Club of Victoria",

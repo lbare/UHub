@@ -147,6 +147,56 @@ const foodVendorExamples: FoodVendor[] = [
   }),
 
   CreateVendor({
+    vendor_name: VENDOR_NAMES.PICKLE_SPICE,
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
+    description:
+      "Indian cuisine",
+    image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
+    latitude: 48.46483425099296,
+    longitude: -123.3116956137913
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.TOFINOS,
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
+    description:
+      "Fish and Chips",
+    image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
+    latitude: 48.46483425099296,
+    longitude: -123.3116956137913
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.BOOSTER,
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
+    description:
+      "Smoothies",
+    image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
+    latitude: 48.46483425099296,
+    longitude: -123.3116956137913
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.BROADWALK_CAFE,
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
+    description:
+      "Coffee and Pastries",
+    image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
+    latitude: 48.46483425099296,
+    longitude: -123.3116956137913
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.GENERAL_STORE,
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
+    description:
+      "Convenience store",
+    image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
+    latitude: 48.46483425099296,
+    longitude: -123.3116956137913
+  }),
+
+  CreateVendor({
     vendor_name: VENDOR_NAMES.GRADHOUSE,
     building_code: BUILDING_CODES.GRADUATE_BUILDING,
     description:
@@ -166,6 +216,7 @@ const foodVendorExamples: FoodVendor[] = [
     longitude: -123.30989988311102
   }),
 
+  // SUB Building
   CreateVendor({
     vendor_name: VENDOR_NAMES.HEALTH_FB,
     building_code: BUILDING_CODES.SUB,
@@ -205,6 +256,18 @@ const foodVendorExamples: FoodVendor[] = [
     latitude: 48.46555743717081,
     longitude: -123.30808186056898
   }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.BEAN_THERE_CAFE,
+    building_code: BUILDING_CODES.SUB,
+    description:
+      "Bean There Cafe is a student-run cafe in the SUB, serving up delicious coffee, tea, and snacks.",
+    image: "https://uvss.ca/wp-content/uploads/2021/06/SUBBrands_BT600px.png",
+    latitude: 48.46485803452279,
+    longitude: -123.30817796788351
+  }),
+
+  
 ]
 
 export { FoodVendor, VendorHours, foodVendorExamples, getNextFoodVendorInBuilding, getPreviousFoodVendorInBuilding };

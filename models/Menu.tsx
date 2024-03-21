@@ -61,7 +61,8 @@ const noMenu: Menu = {
   ],
 };
 
-//Menu Example from Greens in Cove from Feburary 13th 2024
+// Cove Building
+// Menu Example from Greens in Cove from Feburary 13th 2024
 const greensMenuExample: Menu = {
   vendor_name: VENDOR_NAMES.GREENS,
   sections: [
@@ -169,7 +170,74 @@ const greensMenuExample: Menu = {
   ],
 };
 
-const felicitasMenuExample: Menu = {
+const EntreeMenu: Menu = {
+  vendor_name: VENDOR_NAMES.ENTREE,
+  sections: [
+    {
+      name: "Main",
+      items: [
+        {
+          name: "Meal",
+          price: 12.0,
+          description: "1 entree, 2 sides",
+        },
+        {
+          name: "Carvery Meal",
+          price: 14.0,
+          description: "1 Carvery, 2 sides",
+        },
+      ],
+    },
+    {
+      name: "Lunch (11am-2pm)",
+      items: [
+        {
+          name: "Beef & Broccoli",
+          price: 12.0,
+          description: "Entrée with beef and broccoli.",
+        },
+        {
+          name: "Vegetable Medley",
+          price: 0,
+          description: "Side of mixed vegetables.",
+        },
+        {
+          name: "Brown Rice",
+          price: 0,
+          description: "Side of brown rice.",
+        },
+      ],
+    },
+    {
+      name: "Dinner (5pm-7:30pm)",
+      items: [
+        {
+          name: "Teriyaki Pork",
+          price: 7.0,
+          description: "Entrée with teriyaki pork.",
+        },
+        {
+          name: "Chop Suey",
+          price: 3.0,
+          description: "Side of chop suey.",
+        },
+        {
+          name: "Rice & Quinoa Pilaf",
+          price: 3.0,
+          description: "Side of rice and quinoa pilaf.",
+        },
+        {
+          name: "Carvery (changes daily)",
+          price: 14.0,
+          description: "Carvery meal with a daily selection.",
+        },
+      ],
+    },
+  ],
+};
+
+// Student Union Building
+const felicitasMenu: Menu = {
   vendor_name: VENDOR_NAMES.FELICITAS,
   sections: [
     {
@@ -452,7 +520,7 @@ const felicitasMenuExample: Menu = {
   ],
 };
 
-const theGrillMenuExample: Menu = {
+const theGrillMenu: Menu = {
   vendor_name: VENDOR_NAMES.GRILL,
   sections: [
     {
@@ -644,152 +712,410 @@ const theGrillMenuExample: Menu = {
   ],
 };
 
-const starbucksMenu: Menu = {
-  vendor_name: VENDOR_NAMES.STARBUCKS,
-  sections: [
-    {
-      name: "Coffee",
-      items: [
-        {
-          name: "Caffè Americano",
-          price: 2.95,
-          description:
-            "Espresso shots topped with hot water create a light layer of crema culminating in this wonderfully rich cup with depth and nuance.",
-        },
-        {
-          name: "Caffè Latte",
-          price: 3.65,
-          description:
-            "Rich, full-bodied espresso with bittersweet milk and a hint of sweetness.",
-        },
-        {
-          name: "Cappuccino",
-          price: 3.45,
-          description:
-            "Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.",
-        },
-      ],
-    },
-    {
-      name: "Tea",
-      items: [
-        {
-          name: "Teavana® Shaken Iced Tea",
-          price: 2.75,
-          description:
-            "A smooth, delightful blend of water, ice, Teavana® tea and flavors of your choice, each served over ice.",
-        },
-        {
-          name: "Chai Latte",
-          price: 4.25,
-          description:
-            "Black tea infused with cinnamon, clove, and other warming spices are combined with steamed milk and topped with foam for the perfect balance of sweet and spicy.",
-        },
-      ],
-    },
-    {
-      name: "Bakery",
-      items: [
-        {
-          name: "Blueberry Muffin",
-          price: 2.95,
-          description:
-            "Blueberry muffin with a soft, moist center, and a hint of lemon.",
-        },
-        {
-          name: "Classic Coffee Cake",
-          price: 3.25,
-          description:
-            "A traditional coffee cake with a crumbly cinnamon streusel topping.",
-        },
-      ],
-    },
-    {
-      name: "Sandwiches & Wraps",
-      items: [
-        {
-          name: "Turkey & Swiss Sandwich",
-          price: 6.95,
-          description:
-            "Slow-roasted turkey, Swiss cheese, and crisp lettuce on a hearty wheat bread.",
-        },
-        {
-          name: "Mozzarella & Tomato Panini",
-          price: 7.25,
-          description:
-            "Fresh mozzarella, sliced tomatoes, and basil pesto on ciabatta bread.",
-        },
-      ],
-    },
-    // Additional sections can be added here such as "Salads", "Smoothies", etc.
-  ],
-};
+const BeanThereMenu: Menu = noMenu;
 
-const EntreeMenu: Menu = {
-  vendor_name: VENDOR_NAMES.ENTREE,
+const HealthFBMenu: Menu = {
+  vendor_name : VENDOR_NAMES.HEALTH_FB,
   sections: [
     {
-      name: "Main",
+      name: "Deli Sandwich & Melts",
       items: [
-        {
-          name: "Meal",
-          price: 12.0,
-          description: "1 entree, 2 sides",
-        },
-        {
-          name: "Carvery Meal",
-          price: 14.0,
-          description: "1 Carvery, 2 sides",
-        },
+        { name: "Smoked Chicken", price: 6.75 },
+        { name: "Chicken & Gouda", price: 8.50 },
+        { name: "Black Forest Ham", price: 6.75 },
+        { name: "Ham & Provolone", price: 8.50 },
+        { name: "Beef & Cheddar", price: 8.75 },
+        { name: "Cranberry Chicken Salad", price: 7.50 },
+        { name: "Roast Beef", price: 7.25 },
+        { name: "Turkey", price: 7.50 },
+        { name: "Turkey & Swiss", price: 8.75 },
+        { name: "Tuna Salad", price: 7.50 },
+        { name: "Hummus & Veg", price: 6.50 },
+        { name: "Egg Salad", price: 6.75 },
+        { name: "Cheese & Veg", price: 6.75 },
+        { name: "Toasted Tuna Melt", price: 8.75, description: "Ciabatta bun or whole wheat bread topped with tuna salad and Cheddar cheese." },
+        { name: "HFB Cheese Steak", price: 8.75, description: "Ciabatta Bun with basil mayo topped with roast beef, roasted veg, onion, and Swiss cheese." },
+        { name: "Pita Melt", price: 8.50, description: "Black Forest ham, Provolone cheese, spinach, mayonnaise and Dijon mustard toasted in a Greek Pita." },
+        { name: "Chicken Salad Melt", price: 8.75, description: "Ciabatta bun topped with cranberry chicken salad and Gouda cheese." },
+        { name: "Loaded Bagel", price: 5.25, description: "Bagel with cream cheese, tomato and cucumber." },
+        { name: "Breakfast Bagel", price: 5.25, description: "Bagel with egg salad, Cheddar cheese and bacon or ham." }
       ],
+      sides: [
+        { name: "Add Cheese", price: 2.25 },
+        { name: "Extra Protein", price: 2.75 },
+        { name: "Add Side Salad", price: 2.75, description: "Salad, Veggie Chili, Daal, or Falafel & Tzatziki" }
+      ]
     },
     {
-      name: "Lunch (11am-2pm)",
+      name: "Favourites",
       items: [
         {
-          name: "Beef & Broccoli",
-          price: 12.0,
-          description: "Entrée with beef and broccoli.",
+          name: "Mexi Chicken Wrap",
+          price: 8.75,
+          description: "Seasoned chicken with lettuce, tomato, black olives, jalapenos, cheese, salsa and sour cream wrapped in a whole wheat tortilla."
         },
         {
-          name: "Vegetable Medley",
-          price: 0,
-          description: "Side of mixed vegetables.",
+          name: "Black Bean Wrap",
+          price: 8.25,
+          description: "Seasoned black beans and rice with lettuce, tomato, black olives, jalapenos, cheese, salsa and sour cream wrapped in a whole wheat tortilla."
         },
         {
-          name: "Brown Rice",
-          price: 0,
-          description: "Side of brown rice.",
+          name: "Chicken or Falafel Caesar Wrap",
+          price: 8.25,
+          description: "Seasoned chicken or falafel with caesar salad and parmesan cheese wrapped in a whole wheat tortilla."
         },
+        {
+          name: "Spicy Chicken Peanut Wrap",
+          price: 8.75,
+          description: "Chicken tossed in a mild peanut sauce then wrapped in a whole wheat tortilla with garlic brown rice, lettuce, cucumber, and carrot."
+        },
+        {
+          name: "Santa Fe Chicken Wrap",
+          price: 8.50,
+          description: "Seasoned chicken wrapped in a whole wheat tortilla with lettuce, onion, tomato, peppers, and Ranch dressing."
+        },
+        {
+          name: "Teriyaki Chicken Wrap",
+          price: 8.75,
+          description: "Chicken tossed in teriyaki sauce then wrapped in a whole wheat tortilla with garlic brown rice, lettuce, cucumber, and carrot."
+        },
+        {
+          name: "BLT Sandwich",
+          price: 8.50,
+          description: "Bacon, lettuce, tomato and guacamole on a ciabatta bun."
+        },
+        {
+          name: "Chicken & Swiss Sandwich",
+          price: 8.25,
+          description: "Ciabatta bun with smoked chicken, Swiss cheese, roasted red pepper, spinach and basil mayo."
+        },
+        {
+          name: "Turkey & Bacon Sandwich",
+          price: 8.75,
+          description: "Sliced turkey and bacon with lettuce, tomato and pesto mayo on a ciabatta bun."
+        },
+        {
+          name: "HFB Falafel Pita",
+          price: 8.25,
+          description: "Greek style pita wrapped around our own house made Falafel, lettuce, cucumber, carrot, and tzatziki."
+        },
+        {
+          name: "Falafel Plate",
+          price: 9.50,
+          description: "Homemade falafel, Greek salad, hummus, tzatziki, tahini and pita."
+        }
       ],
+      sides: [
+        { name: "Add Side Salad", price: 2.75, description: "Salad, Veggie Chili, Daal, Falafel & Tzatziki" }
+      ]
     },
     {
-      name: "Dinner (5pm-7:30pm)",
+      name: "House Salads",
       items: [
         {
-          name: "Teriyaki Pork",
-          price: 7.0,
-          description: "Entrée with teriyaki pork.",
+          name: "Chicken Taco",
+          price: 8.75,
+          description: "Mixed greens tossed in a sundried tomato vinaigrette and topped with chicken, cheese, salsa, sour cream, olives, tomato and tortilla chips."
         },
         {
-          name: "Chop Suey",
-          price: 3.0,
-          description: "Side of chop suey.",
+          name: "Chicken or Falafel Caesar",
+          price: 8.50,
+          description: "Our own Caesar salad with seasoned chicken or falafel, Parmesan cheese and croutons."
         },
         {
-          name: "Rice & Quinoa Pilaf",
-          price: 3.0,
-          description: "Side of rice and quinoa pilaf.",
+          name: "Roasted Seasonal Veg",
+          price: 8.25,
+          description: "Mixed greens tossed with a Balsamic vinaigrette topped with roasted vegetables, fresh carrot, cucumber and pumpkin seeds."
         },
         {
-          name: "Carvery (changes daily)",
-          price: 14.0,
-          description: "Carvery meal with a daily selection.",
+          name: "Greek",
+          price: 8.25,
+          description: "Mixed greens topped with a lemon vinaigrette, cucumber, tomato, onion, Feta cheese and black olives."
         },
-      ],
+        {
+          name: "Caesar Salad - Small",
+          price: 4.75
+        },
+        {
+          name: "Tossed Mixed Greens Salad - Small",
+          price: 4.75
+        }
+      ]
     },
-  ],
-};
+    {
+      name: "Hot Specials",
+      items: [
+        {
+          name: "Daal with Rice & Chutney",
+          price: 7.50,
+          description: "Red lentils and yellow split peas with garlic, ginger and Indian spices. Served on fragrant rice with mango tamarind chutney."
+        },
+        {
+          name: "Thai Peanut Chicken Rice Bowl",
+          price: 8.50,
+          description: "Chicken tossed in a Thai style peanut sauce served on garlic infused brown rice and garnished with a carrot and cucumber salad."
+        },
+        {
+          name: "Tofu Rice Bowl",
+          price: 8.50,
+          description: "Hoisin sauce marinated tofu served on garlic infused brown rice and garnished with pickled vegetables and edamame."
+        },
+        {
+          name: "Vegetarian Chili",
+          price: 6.50,
+          description: "Our own vegan chili served with corn tortilla chips, cheese and sour cream."
+        }
+      ]
+    },
+    {
+      name: "Fresh Fruit Juice",
+      items: [
+        {
+          name: "Ginger Zinger",
+          price: 6.50,
+          description: "Orange, pineapple juice, ginger."
+        },
+        {
+          name: "Pain Remover",
+          price: 6.50,
+          description: "Lemon, orange, pear, apple."
+        },
+        {
+          name: "Immune Juice",
+          price: 6.50,
+          description: "Beet, carrot, apple, ginger."
+        },
+        {
+          name: "Liquid Lunch",
+          price: 6.50,
+          description: "Pear, apple, lemon, ginger."
+        },
+        {
+          name: "Orchard Blend",
+          price: 6.50,
+          description: "Orange, apple."
+        },
+        {
+          name: "Under the Weather",
+          price: 6.50,
+          description: "Carrot, apple, lemon, ginger."
+        },
+        {
+          name: "HFB Energy Tonic",
+          price: 6.75,
+          description: "Pineapple juice, apple, cucumber, lemon, ginger, GREENS+."
+        },
+        {
+          name: "Sub Juice",
+          price: 6.75,
+          description: "Carrot, apple, beet, tomato, GREENS+."
+        },
+        {
+          name: "Apple Juice",
+          price: 4.75,
+          sizes: [{ name: "12oz", price: 4.75 }]
+        },
+        {
+          name: "Carrot Juice",
+          price: 4.75,
+          sizes: [{ name: "12oz", price: 4.75 }]
+        },
+        {
+          name: "Orange Juice",
+          price: 5.25,
+          sizes: [{ name: "12oz", price: 5.25 }]
+        }
+      ]
+    },
+    {
+      name: "Frozen Yogurt",
+      items: [
+        {
+          name: "Strawberry",
+          price: 4.75,
+          sizes: [{ name: "8oz", price: 4.75 }]
+        },
+        {
+          name: "Blueberry",
+          price: 4.75,
+          sizes: [{ name: "8oz", price: 4.75 }]
+        },
+        {
+          name: "Raspberry",
+          price: 4.75,
+          sizes: [{ name: "8oz", price: 4.75 }]
+        },
+        {
+          name: "Blackberry",
+          price: 4.75,
+          sizes: [{ name: "8oz", price: 4.75 }]
+        }
+      ]
+    },
+    {
+      name: "Yogurt Smoothies",
+      items: [
+        {
+          name: "Berry All The Way",
+          price: 5.25,
+          description: "Raspberry, strawberry, blackberry, blueberry.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Carrot Cake",
+          price: 5.25,
+          description: "Carrot, cinnamon, pineapple juice, coconut, orange juice.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Strawberry Pina Colada",
+          price: 5.25,
+          description: "Strawberry, pineapple juice, banana, coconut.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "High Five",
+          price: 5.25,
+          description: "Peach, mango, orange juice, pineapple juice, banana.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Mango Sub",
+          price: 5.25,
+          description: "Mango, strawberry, peach, banana.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Matcha Cranberry",
+          price: 5.25,
+          description: "Green tea powder, cranberry.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Monkey Madness",
+          price: 5.25,
+          description: "Peanut butter, banana, chocolate.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Passion Fruit",
+          price: 5.25,
+          description: "Passion fruit, strawberry, peach, banana, fresh orange juice.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Pink Panther",
+          price: 5.25,
+          description: "Beet, cranberry, raspberry, banana.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Strawberry Twist",
+          price: 5.25,
+          description: "Strawberry nectar, strawberry, banana.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        },
+        {
+          name: "Zig Zag",
+          price: 5.25,
+          description: "Raspberry, strawberry, banana.",
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 6.50 }
+          ]
+        }
+      ],
+      description: "Your choice: Greek yogurt, sweetened yogurt, soy, almond or oat milk."
+    },
+    {
+      name: "Puree Smoothies",
+      items: [
+        {
+          name: "Mango Tropics",
+          price: 4.25,
+          description: "Mango, pineapple, banana.",
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 5.25 }
+          ]
+        },
+        {
+          name: "Pineapple Paradise",
+          price: 4.25,
+          description: "Pineapple, banana, coconut.",
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 5.25 }
+          ]
+        },
+        {
+          name: "Tropical Sunshine",
+          price: 4.25,
+          description: "Pineapple, banana, guava, passion fruit.",
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 5.25 }
+          ]
+        },
+        {
+          name: "Strawberry",
+          price: 4.25,
+          description: "Strawberry puree.",
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 5.25 }
+          ]
+        },
+        {
+          name: "Peach Pear Apricot",
+          price: 4.25,
+          description: "Peach, pear, apricot.",
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 5.25 }
+          ]
+        }
+      ]
+    }
+
+  ]
+  
+}
+
+const MunchieBarMenu: Menu = noMenu;
+
+// Bookstore Building
+const starbucksMenu: Menu = noMenu;
 
 const uniclubMenuExample: Menu = {
   vendor_name: VENDOR_NAMES.UNICLUB,
@@ -902,86 +1228,8 @@ const uniclubMenuExample: Menu = {
   ],
 };
 
-const MacMenu: Menu = {
-  vendor_name: VENDOR_NAMES.MACS,
-  sections: [
-    {
-      name: "Coffee",
-      items: [
-        {
-          name: "Caffè Americano",
-          price: 2.95,
-          description:
-            "Espresso shots topped with hot water create a light layer of crema culminating in this wonderfully rich cup with depth and nuance.",
-        },
-        {
-          name: "Caffè Latte",
-          price: 3.65,
-          description:
-            "Rich, full-bodied espresso with bittersweet milk and a hint of sweetness.",
-        },
-        {
-          name: "Cappuccino",
-          price: 3.45,
-          description:
-            "Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.",
-        },
-      ],
-    },
-    {
-      name: "Tea",
-      items: [
-        {
-          name: "Teavana® Shaken Iced Tea",
-          price: 2.75,
-          description:
-            "A smooth, delightful blend of water, ice, Teavana® tea and flavors of your choice, each served over ice.",
-        },
-        {
-          name: "Chai Latte",
-          price: 4.25,
-          description:
-            "Black tea infused with cinnamon, clove, and other warming spices are combined with steamed milk and topped with foam for the perfect balance of sweet and spicy.",
-        },
-      ],
-    },
-    {
-      name: "Bakery",
-      items: [
-        {
-          name: "Blueberry Muffin",
-          price: 2.95,
-          description:
-            "Blueberry muffin with a soft, moist center, and a hint of lemon.",
-        },
-        {
-          name: "Classic Coffee Cake",
-          price: 3.25,
-          description:
-            "A traditional coffee cake with a crumbly cinnamon streusel topping.",
-        },
-      ],
-    },
-    {
-      name: "Sandwiches & Wraps",
-      items: [
-        {
-          name: "Turkey & Swiss Sandwich",
-          price: 6.95,
-          description:
-            "Slow-roasted turkey, Swiss cheese, and crisp lettuce on a hearty wheat bread.",
-        },
-        {
-          name: "Mozzarella & Tomato Panini",
-          price: 7.25,
-          description:
-            "Fresh mozzarella, sliced tomatoes, and basil pesto on ciabatta bread.",
-        },
-      ],
-    },
-    // Additional sections can be added here such as "Salads", "Smoothies", etc.
-  ],
-};
+// MacLauren Building
+const MacMenu: Menu = noMenu;
 
 // Mystic Market Building 
 const ChopBoxMenu: Menu = {
@@ -1314,6 +1562,168 @@ const FlaminChickenMenu: Menu = {
   ]
 };
 
+const GeneralStoreMenu: Menu = noMenu;
+
+const BoardwalkCafeMenu: Menu = noMenu;
+
+const BoosterMenu: Menu = noMenu;
+
+const PickleSpiceMenu: Menu = {
+  vendor_name: VENDOR_NAMES.PICKLE_SPICE,
+  sections: [
+    {
+      name: "Combos",
+      items: [
+        {
+          name: "Combo 1",
+          price: 12.00,
+          description: "One main served with basmati rice & spiced mixed vegetables",
+          tags: []
+        },
+        {
+          name: "Combo 2",
+          price: 15.00,
+          description: "Two mains served with basmati rice & spiced mixed vegetables"
+        },
+        {
+          name: "Rice & Dahl",
+          price: 7.00,
+          description: "Red lentil dahl served with basmati rice",
+          tags: [MenuItemTag.Vegan]
+        }
+      ]
+    },
+    {
+      name: "Mains",
+      description: "All mains are served with basmati rice & spiced mixed vegetables",
+      items: [
+        {
+          name: "Butter Chicken",
+          price: 12.00,
+          tags: [MenuItemTag.Spicy] 
+        },
+        {
+          name: "Chicken Vindaloo",
+          price: 12.00,
+          tags: [MenuItemTag.Spicy] 
+        },
+        {
+          name: "Chana Masala",
+          price: 12.00,
+          tags: [MenuItemTag.Spicy, MenuItemTag.Vegan]
+        },
+        {
+          name: "Goan Fish Curry",
+          price: 12.00,
+          tags: [MenuItemTag.Spicy] 
+        },
+        {
+          name: "Paneer Tikka",
+          price: 12.00,
+          tags: [MenuItemTag.Spicy] 
+        },
+        {
+          name: "Red Lentil Dahl",
+          price: 12.00,
+          tags: [MenuItemTag.Vegan]
+        }
+      ]
+    },
+    {
+      name: "Poutine",
+      items: [
+        {
+          name: "Poutine with Butter Chicken",
+          price: 9.95,
+          tags: [MenuItemTag.Spicy] 
+        },
+        {
+          name: "Poutine with Chicken Vindaloo",
+          price: 9.95,
+          tags: [MenuItemTag.Spicy] 
+        }
+      ]
+    },
+    {
+      name: "Sides",
+      items: [
+        {
+          name: "Pakoras",
+          price: 9.95,
+          description: "with mango chutney"
+        },
+        {
+          name: "Mini Samosas",
+          price: 7.00,
+          description: "with mango chutney"
+        },
+        {
+          name: "Garlic Naan",
+          price: 8.00
+        },
+        {
+          name: "Raita",
+          price: 2.50
+        },
+        {
+          name: "Chutney",
+          price: 1.50,
+          description: "cilantro mint or mango"
+        }
+      ],
+      sides: [
+        {
+          name: "Add Fountain Drink/Coffee",
+          price: 2.29
+        }
+      ]
+    }
+  ]
+};
+
+const TofinosMenu: Menu = {
+  vendor_name: VENDOR_NAMES.TOFINOS,
+  sections: [
+    {
+      name: "Pasta",
+      items: [
+        {
+          name: "Daily Pasta",
+          price: 9.99,
+          description: "Includes breadstick",
+        }
+      ]
+    },
+    {
+      name: "Pizza",
+      description: "Local fresh options rotate daily",
+      items: [
+        {
+          name: "1x Slice",
+          price: 5.00,
+        },
+        {
+          name: "2x Slices",
+          price: 9.00,
+        }
+      ],
+      sides: [
+        {
+          name: "Add Bread Stick",
+          price: 1.99
+        },
+        {
+          name: "Add Fountain Drink 24oz",
+          price: 2.29
+        },
+        {
+          name: "Add Coffee/Tea 12oz",
+          price: 2.29
+        }
+      ]
+    }
+  ]
+};
 
 // GradHouse Building
 const GradHouseMenu: Menu = {
@@ -1657,18 +2067,30 @@ const biblioCafe: Menu = {
 };
 
 const menuExample = [
+
   greensMenuExample,
-  felicitasMenuExample,
-  theGrillMenuExample,
   starbucksMenu,
   EntreeMenu,
   uniclubMenuExample,
-  ChopBoxMenu,
   FrescoMenu,
   GradHouseMenu,
   MacMenu,
+
+  felicitasMenu,
+  theGrillMenu,
+  BeanThereMenu,
+  HealthFBMenu,
+  MunchieBarMenu,
+
+  ChopBoxMenu,
   TreksMenu,
   FlaminChickenMenu,
+  GeneralStoreMenu,
+  BoardwalkCafeMenu,
+  BoosterMenu,
+  PickleSpiceMenu,
+  TofinosMenu,
+
   biblioCafe,
 ];
 
