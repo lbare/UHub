@@ -331,6 +331,73 @@ const treks: VendorHoursWithId = {
   hours: mystic_common_hours,
 };
 
+const beanThereCafe: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.BEAN_THERE_CAFE,
+  hours: {
+    Monday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Tuesday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Wednesday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Thursday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Friday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const felicitas: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.FELICITAS,
+  hours: {
+    Monday: [{ open: "11:30 AM", close: "11:00 PM" }],
+    Tuesday: [{ open: "11:30 AM", close: "11:00 PM" }],
+    Wednesday: [{ open: "11:30 AM", close: "11:00 PM" }],
+    Thursday: [{ open: "11:30 AM", close: "12:00 AM" }],
+    Friday: [{ open: "11:30 AM", close: "12:00 AM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const theGrill: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.GRILL,
+  hours: {
+    Monday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Tuesday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Wednesday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Thursday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Friday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const munchieBar: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.MUNCHIE,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Friday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Saturday: [{ open: "02:30 PM", close: "7:30 PM" }],
+    Sunday: [{ open: "02:30 PM", close: "7:30 PM" }],
+  },
+};
+
+const healthFoodBar: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.HEALTH_FB,
+  hours: {
+    Monday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Tuesday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Wednesday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Thursday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Friday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+
+
 const vendorHoursExamples: VendorHoursWithId[] = [
   bibliocafeHours,
   macsHours,
