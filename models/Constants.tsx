@@ -30,7 +30,7 @@ const VENDOR_NAMES = {
     GENERAL_STORE: "General Store",
     BROADWALK_CAFE: "Boardwalk Cafe",
     BOOSTER: "Booster Juice",
-    FLAMINCHICKEN: "Flamin' Chicken",
+    FLAMINCHICKEN: "Flamin' Good Chicken",
     PICKLE_SPICE: "Pickle and Spice",
     TOFINOS: "Tofino's",
 };

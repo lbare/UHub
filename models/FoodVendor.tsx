@@ -105,6 +105,7 @@ const foodVendorExamples: FoodVendor[] = [
     longitude: -123.3072344
   }),
 
+  // Mystic Market Building 
   CreateVendor({
     vendor_name: VENDOR_NAMES.CHOPBOX,
     building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
@@ -133,6 +134,16 @@ const foodVendorExamples: FoodVendor[] = [
     image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
     latitude: 48.46480437387054,
     longitude: -123.31174779073204
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.FLAMINCHICKEN,
+    building_code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
+    description:
+      "",
+    image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
+    latitude: 48.46483425099296,
+    longitude: -123.3116956137913
   }),
 
   CreateVendor({

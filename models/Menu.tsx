@@ -50,7 +50,13 @@ const noMenu: Menu = {
   sections: [
     {
       name: "No Menu Available",
-      items: [],
+      items: [
+        {
+          name: "No Menu Available",
+          price: 0,
+          description: "We are working on getting the menu for this vendor. Thank you for your patience.",
+        },
+      ],
     },
   ],
 };
@@ -978,7 +984,6 @@ const MacMenu: Menu = {
 };
 
 // Mystic Market Building 
-
 const ChopBoxMenu: Menu = {
   vendor_name: VENDOR_NAMES.CHOPBOX,
   sections: [
@@ -1238,6 +1243,77 @@ const TreksMenu: Menu = {
 
   ]
 };
+
+const FlaminChickenMenu: Menu = {
+  vendor_name: VENDOR_NAMES.FLAMINCHICKEN,
+  sections: [
+    {
+      name: "Main",
+      sides: [
+        { 
+          name: "Add Cheese (cheddar/blue)",
+          price: 1.50
+        },
+        { 
+          name: "Add Gravy",
+          price: 3.95 
+        },
+        { 
+          name: "Add Chipotle Dip", 
+          price: 2.00 
+        },
+        {
+          name: "Waffle Fries",
+          price: 4.00
+        },
+        {
+          name: "Pickle Slaw",
+          price: 3.00
+        },
+        {
+          name: "Sub GF Bun",
+          price: 2.00
+        },
+        {
+          name: "Add Fountain Drink",
+          price: 2.29
+        },
+        {
+          name: "Add Coffee",
+          price: 2.29
+        }
+      ],
+      items: [
+        {
+          name: "Hot Chicken Sandwich",
+          price: 9.49,
+          description: "Chicken: Crispy or Grilled or Plant-Based\nSeasoning: Original or Nashville or Frank's or Kansas City BBQ",
+        },
+        {
+          name: "Chicken Corn Dog",
+          price: 7.00,
+          description: "Served with Sriracha Honey Mustard Sauce",
+          tags: []
+        },
+        {
+          name: "Chicken Strips",
+          price: 9.95,
+          description: "Chicken: Crispy or Plant-Based\nSeasoning: Original or Nashville or Frank's or Kansas City BBQ"
+        },
+        {
+          name: "Waffle Fry Poutine",
+          price: 9.95
+        },
+        {
+          name: "Mini Chicken Wrap",
+          price: 5.00,
+          description: "*Limited Time Offer"
+        }
+      ]
+    }
+  ]
+};
+
 
 // GradHouse Building
 const GradHouseMenu: Menu = {
@@ -1592,6 +1668,7 @@ const menuExample = [
   GradHouseMenu,
   MacMenu,
   TreksMenu,
+  FlaminChickenMenu,
   biblioCafe,
 ];
 
@@ -1602,7 +1679,7 @@ const STATIC_GetMenuForVendor = (vendorName: string): Menu => {
     return menu;
   }
 
-  console.log(`No menu found for vendor: ${vendorName}, returning samle menu.`);
+  console.log(`No menu found for vendor: ${vendorName}, returning sample menu.`);
   return noMenu;
 
 }

@@ -161,8 +161,21 @@ const isVendorCurrentlyOpen = (vendorHours: VendorHours): boolean => {
   return isVendorOpenHelper(vendorHours, currentDay, currentTime);
 };
 
+const isVendorHoursEvenThere = (vendorHours: VendorHours): boolean => {
+  for (const day in vendorHours) {
+    if (vendorHours[day as DayOfWeek].length > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const vendorNextOpenOrCloseTimeString = (vendorHours: VendorHours): string => {
   var returnString = "Closed Today";
+
+  if (!isVendorHoursEvenThere(vendorHours)) {
+    return "No hours info available.";
+  }
 
   const isOpen = isVendorCurrentlyOpen(vendorHours);
 
