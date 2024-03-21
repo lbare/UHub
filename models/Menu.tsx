@@ -712,7 +712,137 @@ const theGrillMenu: Menu = {
   ],
 };
 
-const BeanThereMenu: Menu = noMenu;
+const BeanThereMenu: Menu = {
+  vendor_name: VENDOR_NAMES.BEAN_THERE_CAFE,
+  sections: [
+    {
+      name: "Coffee",
+      items: [
+        {
+          name: "Brewed Coffee",
+          price: 2.00,
+          sizes: [
+            { name: "12oz", price: 2.00 },
+            { name: "16oz", price: 2.50 }
+          ]
+        },
+        {
+          name: "Espresso",
+          price: 2.25,
+          sizes: [
+            { name: "Single", price: 2.25 },
+            { name: "Double", price: 2.75 }
+          ]
+        },
+        {
+          name: "Latte",
+          price: 3.75,
+          sizes: [
+            { name: "Single", price: 3.75 },
+            { name: "Double", price: 4.75 }
+          ]
+        },
+        {
+          name: "Cappuccino",
+          price: 3.75,
+          sizes: [
+            { name: "Single", price: 3.75 },
+            { name: "Double", price: 4.50 }
+          ]
+        },
+        {
+          name: "Americano",
+          price: 3.00,
+          sizes: [
+            { name: "Single", price: 3.00 },
+            { name: "Double", price: 3.50 }
+          ]
+        },
+        {
+          name: "Mocha",
+          price: 4.50,
+          sizes: [
+            { name: "Single", price: 4.50 },
+            { name: "Double", price: 5.00 }
+          ]
+        },
+        {
+          name: "Hot Chocolate",
+          price: 3.75,
+          sizes: [
+            { name: "Single", price: 3.75 },
+            { name: "Double", price: 4.25 }
+          ]
+        },
+      ],
+      sides: [
+        {
+          name: "Soy or Oat Milk",
+          price: 0.75
+        },
+        {
+          name: "Flavour Shot",
+          price: 0.50
+        },
+        {
+          name: "Extra Espresso Shot",
+          price: 0.75
+        },
+        {
+          name: "Coffee Card",
+          price: 7.50,
+          description: "Good for 5 coffees"
+        }
+      ]
+    },
+    {
+      name: "Iced Drinks",
+      items: [
+        {
+          name: "Iced Mocha",
+          price: 5.00
+        },
+        {
+          name: "Iced Latte",
+          price: 4.75
+        },
+        {
+          name: "Iced Americano",
+          price: 3.50
+        }
+      ]
+    },
+    {
+      name: "Tea and Others",
+      items: [
+        {
+          name: "Tea",
+          price: 2.00
+        },
+        {
+          name: "Steamed Milk",
+          price: 3.50,
+          sizes: [{ name: "12oz", price: 3.50 }]
+        },
+        {
+          name: "Chai Latte",
+          price: 4.75,
+          sizes: [{ name: "16oz", price: 4.75 }]
+        },
+        {
+          name: "London Fog",
+          price: 4.75,
+          sizes: [{ name: "16oz", price: 4.75 }]
+        },
+        {
+          name: "Matcha Latte",
+          price: 4.75,
+          sizes: [{ name: "16oz", price: 4.75 }]
+        }
+      ]
+    }
+  ]
+};
 
 const HealthFBMenu: Menu = {
   vendor_name : VENDOR_NAMES.HEALTH_FB,
@@ -2101,7 +2231,7 @@ const STATIC_GetMenuForVendor = (vendorName: string): Menu => {
     return menu;
   }
 
-  console.log(`No menu found for vendor: ${vendorName}, returning sample menu.`);
+  console.warn(`NO MENU FOR: ${vendorName}`);
   return noMenu;
 
 }
