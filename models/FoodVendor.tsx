@@ -16,16 +16,8 @@ type FoodVendor = {
 
 const getNextFoodVendorInBuilding = (vendor: FoodVendor, building: Building) => {
   const vendorsInBuilding = building.vendors;
-
-  // for (let i = 0; i < vendorsInBuilding.length; i++) {
-  //   if (vendorsInBuilding[i].name === vendor.name) {
-  //     console.log(vendorsInBuilding[(i + 1) % vendorsInBuilding.length]);
-  //   }
-  // }
   const index = vendorsInBuilding.findIndex((v) => v.name === vendor.name);
-  console.log("Index: ", index);
-
-  return vendorsInBuilding[(index + 1 + vendorsInBuilding.length) % vendorsInBuilding.length];
+  return vendorsInBuilding[(index + 1) % vendorsInBuilding.length];
 }
 
 const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building: Building) => {
@@ -103,7 +95,7 @@ const foodVendorExamples: FoodVendor[] = [
     latitude: 48.46419,
     longitude: -123.3072344
   }),
-  
+
   CreateVendor({
     vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
     building_code: BUILDING_CODES.COVE,
