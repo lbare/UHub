@@ -222,7 +222,7 @@ const foodVendorExamples: FoodVendor[] = [
     building_code: BUILDING_CODES.SUB,
     description:
       "House made items, rice bowls, wraps, sandwiches, fresh juice, smoothies, vegan & gluten free options.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRKKkBVJcCXP2XZv9CI8BxYdsHkgSFIDaSLw&usqp=CAU",
+    image: "https://uvss.ca/wp-content/uploads/2021/06/SUBBrands_HFB600px.png",
     latitude: 48.46501468824788,
     longitude: -123.30821467799807
   }),
@@ -231,9 +231,9 @@ const foodVendorExamples: FoodVendor[] = [
     vendor_name: VENDOR_NAMES.FELICITAS,
     building_code: BUILDING_CODES.SUB,
     description:
-      "Tasty & affordable pub food. Diverse selection of local drink options. Fast & friendly service. Events.",
+      "All your pub food favourites and a wide selection of beer.",
     image:
-      "https://www.felicitas.ca/wp-content/uploads/2024/01/FELS_BOTB_Digicaster_1.2_web.jpg",
+      "https://uvss.ca/wp-content/uploads/2021/06/SUBBrands_FEL600px.png",
     latitude: 48.46460219027596,
     longitude: -123.30794900242859
   }),
@@ -241,7 +241,7 @@ const foodVendorExamples: FoodVendor[] = [
   CreateVendor({
     vendor_name: VENDOR_NAMES.GRILL,
     building_code: BUILDING_CODES.SUB,
-    description: "Serving up delicious grilled delights with a twist!",
+    description: "Dahls, curries, burgers, chicken strips, Tex-Mex items & more - vegan & gluten free options. Also open for breakfast.",
     image: "https://uvss.ca/wp-content/uploads/2022/11/GrillLogoRed.png",
     latitude: 48.46485803452279,
     longitude: -123.30817796788351
@@ -252,7 +252,7 @@ const foodVendorExamples: FoodVendor[] = [
     building_code: BUILDING_CODES.SUB,
     description:
       "Handmade espresso beverages, quality baking with vegan, organic and gluten free options. Delicious Italian-style sandwiches.",
-    image: "https://events.uvic.ca/live/image/gid/19/width/1260/crop/1/6793_Cinecenta.jpg",
+    image: "https://uvss.ca/wp-content/uploads/2021/06/SUBBrands_MUN600px.png",
     latitude: 48.46555743717081,
     longitude: -123.30808186056898
   }),
@@ -261,7 +261,7 @@ const foodVendorExamples: FoodVendor[] = [
     vendor_name: VENDOR_NAMES.BEAN_THERE_CAFE,
     building_code: BUILDING_CODES.SUB,
     description:
-      "Bean There Cafe is a student-run cafe in the SUB, serving up delicious coffee, tea, and snacks.",
+      "Pizza, sushi, bagels, muffins, breakfast sandwiches and coffee.",
     image: "https://uvss.ca/wp-content/uploads/2021/06/SUBBrands_BT600px.png",
     latitude: 48.46485803452279,
     longitude: -123.30817796788351

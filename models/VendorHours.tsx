@@ -350,8 +350,8 @@ const felicitas: VendorHoursWithId = {
     Monday: [{ open: "11:30 AM", close: "11:00 PM" }],
     Tuesday: [{ open: "11:30 AM", close: "11:00 PM" }],
     Wednesday: [{ open: "11:30 AM", close: "11:00 PM" }],
-    Thursday: [{ open: "11:30 AM", close: "12:00 AM" }],
-    Friday: [{ open: "11:30 AM", close: "12:00 AM" }],
+    Thursday: [{ open: "11:30 AM", close: "11:59 PM" }],
+    Friday: [{ open: "11:30 AM", close: "11:59 PM" }],
     Saturday: [],
     Sunday: [],
   },
@@ -410,6 +410,11 @@ const vendorHoursExamples: VendorHoursWithId[] = [
   pickle_and_spice,
   tofinos,
   treks,
+  beanThereCafe,
+  felicitas,
+  theGrill,
+  munchieBar,
+  healthFoodBar,
 ];
 
 const STATIC_GetVendorHoursFor = (vendorName: string): VendorHours => {
