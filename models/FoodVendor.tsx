@@ -16,8 +16,16 @@ type FoodVendor = {
 
 const getNextFoodVendorInBuilding = (vendor: FoodVendor, building: Building) => {
   const vendorsInBuilding = building.vendors;
+
+  // for (let i = 0; i < vendorsInBuilding.length; i++) {
+  //   if (vendorsInBuilding[i].name === vendor.name) {
+  //     console.log(vendorsInBuilding[(i + 1) % vendorsInBuilding.length]);
+  //   }
+  // }
   const index = vendorsInBuilding.findIndex((v) => v.name === vendor.name);
-  return vendorsInBuilding[(index + 1) % vendorsInBuilding.length];
+  console.log("Index: ", index);
+
+  return vendorsInBuilding[(index + 1 + vendorsInBuilding.length) % vendorsInBuilding.length];
 }
 
 const getPreviousFoodVendorInBuilding = (vendor: FoodVendor, building: Building) => {
@@ -87,16 +95,6 @@ const foodVendorExamples: FoodVendor[] = [
 
   // The Cove
   CreateVendor({
-    vendor_name: VENDOR_NAMES.ENTREE,
-    building_code: BUILDING_CODES.COVE,
-    description: "",
-    image:
-      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.464306646410556,
-    longitude: -123.30712176290265
-  }),
-
-  CreateVendor({
     vendor_name: VENDOR_NAMES.GREENS,
     building_code: BUILDING_CODES.COVE,
     description: "Plant Based Eats Made to Order",
@@ -104,6 +102,16 @@ const foodVendorExamples: FoodVendor[] = [
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
     latitude: 48.46419,
     longitude: -123.3072344
+  }),
+  
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642395,
+    longitude: -123.3071744
   }),
 
   CreateVendor({
@@ -117,33 +125,23 @@ const foodVendorExamples: FoodVendor[] = [
   }),
 
   CreateVendor({
-    vendor_name: VENDOR_NAMES.STIRFRY,
+    vendor_name: VENDOR_NAMES.GRILL_COVE,
     building_code: BUILDING_CODES.COVE,
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-      latitude: 48.464297,
-      longitude: -123.30734,
+    latitude: 48.464288542529324,
+    longitude: -123.30705262720585
   }),
 
   CreateVendor({
-    vendor_name: VENDOR_NAMES.DELI_COVE,
+    vendor_name: VENDOR_NAMES.ENTREE,
     building_code: BUILDING_CODES.COVE,
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.464299,
-    longitude: -123.30727,
-  }),
-
-  CreateVendor({
-    vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
-    building_code: BUILDING_CODES.COVE,
-    description: "",
-    image:
-      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.4642395,
-    longitude: -123.3071744
+    latitude: 48.464306646410556,
+    longitude: -123.30712176290265
   }),
 
   CreateVendor({
@@ -157,13 +155,23 @@ const foodVendorExamples: FoodVendor[] = [
   }),
 
   CreateVendor({
-    vendor_name: VENDOR_NAMES.GRILL_COVE,
+    vendor_name: VENDOR_NAMES.DELI_COVE,
     building_code: BUILDING_CODES.COVE,
     description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
-    latitude: 48.464288542529324,
-    longitude: -123.30705262720585
+    latitude: 48.464299,
+    longitude: -123.30727,
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.STIRFRY,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+      latitude: 48.464297,
+      longitude: -123.30734,
   }),
 
   // Mystic Market Building 
