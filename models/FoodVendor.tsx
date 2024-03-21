@@ -85,6 +85,7 @@ const foodVendorExamples: FoodVendor[] = [
     longitude: -123.31336220834122
   }),
 
+  // The Cove
   CreateVendor({
     vendor_name: VENDOR_NAMES.ENTREE,
     building_code: BUILDING_CODES.COVE,
@@ -99,6 +100,73 @@ const foodVendorExamples: FoodVendor[] = [
     vendor_name: VENDOR_NAMES.GREENS,
     building_code: BUILDING_CODES.COVE,
     description: "Plant Based Eats Made to Order",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642125,
+    longitude: -123.3072344
+  }),
+
+  // SHAWARMA: "Shawarma",
+  //   STIRFRY: "Stir Fry",
+  //   DELI_COVE: "Deli",
+  //   SOUP_SALAD_COVE: "Soup & Salad Bar",
+  //   PIZZA_COVE: "Pizza",
+  //   GRILL_COVE: "Grill",
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.SHAWARMA,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642125,
+    longitude: -123.3072344
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.STIRFRY,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642125,
+    longitude: -123.3072344
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.DELI_COVE,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642125,
+    longitude: -123.3072344
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642125,
+    longitude: -123.3072344
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.PIZZA_COVE,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
+    image:
+      "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
+    latitude: 48.4642125,
+    longitude: -123.3072344
+  }),
+
+  CreateVendor({
+    vendor_name: VENDOR_NAMES.GRILL_COVE,
+    building_code: BUILDING_CODES.COVE,
+    description: "",
     image:
       "https://www.uvic.ca/news-management/stories/2022/cove-dining-hall/photos/outside-cove.jpg",
     latitude: 48.4642125,

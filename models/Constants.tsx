@@ -24,6 +24,12 @@ const VENDOR_NAMES = {
 
     ENTREE: "Entree",
     GREENS: "Greens",
+    SHAWARMA: "Shawarma",
+    STIRFRY: "Stir Fry",
+    DELI_COVE: "Deli",
+    SOUP_SALAD_COVE: "Soup & Salad Bar",
+    PIZZA_COVE: "Pizza",
+    GRILL_COVE: "Grill",
 
     TREKS: "Treks",
     CHOPBOX: "Chopbox",
