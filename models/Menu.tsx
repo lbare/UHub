@@ -1254,7 +1254,238 @@ const HealthFBMenu: Menu = {
 
 }
 
-const MunchieBarMenu: Menu = noMenu;
+const MunchieBarMenu: Menu = {
+  vendor_name: VENDOR_NAMES.MUNCHIE,
+  sections: [
+    {
+      name: "Espresso",
+      items: [
+        {
+          name: "Espresso",
+          price: 2.35
+        },
+        {
+          name: "Americano",
+          price: 2.35,
+          sizes: [
+            { name: "Single", price: 2.35 },
+            { name: "Double", price: 4.10 }
+          ]
+        },
+        {
+          name: "Latte",
+          price: 4.35,
+          sizes: [
+            { name: "Single", price: 4.35 },
+            { name: "Double", price: 4.85 }
+          ]
+        },
+        {
+          name: "Cappuccino",
+          price: 4.35,
+          sizes: [
+            { name: "Single", price: 4.35 },
+            { name: "Double", price: 4.85 }
+          ]
+        },
+        {
+          name: "Mocha",
+          price: 4.85,
+          sizes: [
+            { name: "Single", price: 4.85 },
+            { name: "Double", price: 5.35 }
+          ]
+        },
+        {
+          name: "Hot Chocolate",
+          price: 3.85,
+          sizes: [
+            { name: "Single", price: 3.85 },
+            { name: "Double", price: 4.35 }
+          ]
+        },
+        {
+          name: "London Fog",
+          price: 4.35,
+          sizes: [
+            { name: "Single", price: 4.35 },
+            { name: "Double", price: 4.85 }
+          ]
+        }
+      ],
+      sides: [
+        {
+          name: "Extra Espresso Shot",
+          price: 1.00
+        },
+        {
+          name: "Shot of Cream",
+          price: 0.50
+        },
+        {
+          name: "Almond, Soy, Coconut, Oat Milk",
+          price: 0.90,
+          description: "Non-dairy milk alternatives"
+        }
+      ]
+    },
+    {
+      name: "Munchie",
+      items: [
+        {
+          name: "Damn Fine Popcorn",
+          price: 5.99,
+          sizes: [
+            { name: "Small", price: 5.00 },
+            { name: "Medium", price: 5.25 },
+            { name: "Large", price: 5.50 }
+          ]
+        },
+        {
+          name: "Movie Combo",
+          price: 9.00,
+          description: "Includes m. popcorn, m. pop, and a candy bar."
+        },
+        {
+          name: "Soda Pop",
+          price: 2.50,
+          sizes: [
+            { name: "Small", price: 2.50 },
+            { name: "Medium", price: 2.75 },
+            { name: "Large", price: 3.00 }
+          ]
+        },
+        {
+          name: "Coffee",
+          price: 2.35,
+          sizes: [
+            { name: "12oz", price: 2.35 },
+            { name: "16oz", price: 2.70 }
+          ]
+        },
+        {
+          name: "Tea",
+          price: 2.25,
+        },
+        {
+          name: "Juice",
+          price: 3.00,
+          sizes: [
+            { name: "12oz", price: 3.00 },
+            { name: "16oz", price: 3.25 },
+          ]
+        }
+      ]
+    },
+    {
+      name: "Cookies",
+      items: [
+        {
+          name: "Berry Ginger Cookie",
+          price: 4.25,
+          description: "Sugar and Egg Free. Spelt flour, spelt bran oats, blueberries, apple juice, canola oil, maple syrup, baking power, baking soda, salt and ginger."
+        },
+        {
+          name: "Zucchini Chocolate Chip Cookie",
+          price: 4.25,
+          description: "Spelt flour, spelt bran, apple juice, canola oil, zucchini, chocolate evaporated cane sugar, eggs, vanilla, cinnamon salt and baking powder."
+        },
+        {
+          name: "Chocolate Chip Cookie",
+          price: 2.75
+        },
+        {
+          name: "Oatmeal Raisin Cookie",
+          price: 2.75
+        },
+        {
+          name: "Peanut Butter Cookie",
+          price: 2.75
+        },
+        {
+          name: "Peach Cranberry Cornmeal Cookie",
+          price: 3.25
+        },
+        {
+          name: "Lemon Raspberry Cookie",
+          price: 3.25
+        },
+        {
+          name: "Chocolate Banana Pecan Cookie",
+          price: 3.25
+        },
+        {
+          name: "Wild Blueberry Cookie",
+          price: 3.25
+        },
+        {
+          name: "Pumpkin Spelt Cookie",
+          price: 3.25
+        }
+      ]
+    },
+    {
+      name: "Baked Goods",
+      items: [
+        {
+          name: "Energy Balls",
+          description: "Peanut Butter",
+          price: 2.60
+        },
+        {
+          name: "Quinoa Cupcake",
+          price: 3.50
+        },
+        {
+          name: "Scone Lemon Ginger",
+          price: 3.00
+        },
+        {
+          name: "Spinach Feta",
+          price: 3.50
+        },
+        {
+          name: "Cheese Croissant",
+          price: 3.50
+        },
+        {
+          name: "Plain Crouissant",
+          price: 3.25
+        },
+        {
+          name: "Raspberry Cream Cheese Croissant",
+          price: 3.50
+        },
+        {
+          name: "Chocolate Almond Croissant",
+          price: 3.50
+        },
+        {
+          name: "Pain Au Chocolat",
+          price: 3.50
+        },
+        {
+          name: "Chicken Sandwich",
+          price: 8.00
+        },
+        {
+          name: "Almond Mayo and Avacado",
+          price: 8.00,
+          tags: [MenuItemTag.Vegan]
+        },
+        {
+          name: "Ham Sandwich",
+          price: 8.00
+        },
+        {
+          name: "capicola Sandwich",
+          price: 8.00
+        }
+      ]
+    }
+  ]
+};
+
 
 // Bookstore Building
 const starbucksMenu: Menu = noMenu;
