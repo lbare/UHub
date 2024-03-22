@@ -1944,7 +1944,6 @@ const BoardwalkCafeMenu: Menu = {
   ]
 };
 
-
 const BoosterMenu: Menu = noMenu;
 
 const PickleSpiceMenu: Menu = {

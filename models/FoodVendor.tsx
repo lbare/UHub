@@ -173,8 +173,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Asian inspired noodles",
     image: "https://www.currentmillwork.com/wp-content/uploads/2021/01/UVIC-Food-Service-Gallery-10.jpg",
-    latitude: 48.464842271379375,
-    longitude: -123.31178290713422
+    latitude: 48.46543324062987,
+    longitude: -123.31178605556488,
   }),
 
   CreateVendor({
@@ -183,8 +183,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Tacos ",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.465392112867924,
+    longitude: -123.31165093928576,
   }),
 
   CreateVendor({
@@ -193,8 +193,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Soups, salad bar, flatbread sandwiches",
     image: "https://images.squarespace-cdn.com/content/v1/5dfc50e0a548615174b0c1e6/1585847093300-RVHUNOOHKRS2N378EIR0/DSCN0064.JPG",
-    latitude: 48.46480437387054,
-    longitude: -123.31174779073204
+    latitude: 48.46529473997975,
+    longitude: -123.31165228039025,
   }),
 
   CreateVendor({
@@ -203,8 +203,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.46538544349798,
+    longitude: -123.31186082214116,
   }),
 
   CreateVendor({
@@ -213,8 +213,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Indian cuisine",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.465316081998616,
+    longitude: -123.31189401447773,
   }),
 
   CreateVendor({
@@ -223,8 +223,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Fish and Chips",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.465234493190515,
+    longitude: -123.31187825649977,
   }),
 
   CreateVendor({
@@ -233,8 +233,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Smoothies",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.46507620608253,
+    longitude: -123.3116851374507,
   }),
 
   CreateVendor({
@@ -243,8 +243,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Coffee and Pastries",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.46519914541006,
+    longitude: -123.31158690154552
   }),
 
   CreateVendor({
@@ -253,8 +253,8 @@ const foodVendorExamples: FoodVendor[] = [
     description:
       "Convenience store",
     image: "https://www.uvic.ca/services/food/assets/images/mystic-outside.jpg",
-    latitude: 48.46483425099296,
-    longitude: -123.3116956137913
+    latitude: 48.465123558878666,
+    longitude: -123.31187725067139
   }),
 
   CreateVendor({
