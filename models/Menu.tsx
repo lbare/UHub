@@ -267,36 +267,38 @@ const StirFryMenu: Menu = {
             }
           ]
         }
+      ],
+      sides: [
+        {
+          name: "Extra Protein",
+          price: 4.99
+        },
+        {
+          name: "Extra Noodles or Rice",
+          price: 3.99
+        },
+        {
+          name: "Extra Sauce",
+          price: 1.99
+        }
       ]
     },
     {
       name: "STIR FRY",
       items: [
-          {
-              name: "Veggie Spring Rolls (2)",
-              price: 5.00,
-              description: "Served with plum sauce",
-              tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
-            },
-            {
-              name: "Pork Gyoza (5)",
-              price: 7.00
-            },
-            {
-              name: "Extra Protein",
-              price: 4.99
-            },
-            {
-              name: "Extra Noodles or Rice",
-              price: 3.99
-            },
-            {
-              name: "Extra Sauce",
-              price: 1.99
-          }
-        ]
-      }
-    ]
+        {
+          name: "Veggie Spring Rolls (2)",
+          price: 5.00,
+          description: "Served with plum sauce",
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Pork Gyoza (5)",
+          price: 7.00
+        },
+      ]
+    }
+  ]
 };
 
 
