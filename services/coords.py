@@ -1,6 +1,14 @@
 import xml.etree.ElementTree as ET
+from shapely.geometry import Polygon
+from shapely.geometry import mapping
+from shapely.ops import transform
+import json
 
-def extract_coordinates_from_kml(kml_file_path):
+# Function to scale the geometry - used for buffering without distortion
+def scale(geom, xfact, yfact, origin='center'):
+    return transform(lambda x, y, z=None: (x * xfact, y * yfact), geom)
+
+def extract_coordinates_from_kml(kml_file_path, rounding_buffer=0.00002):
     # Parse the KML file
     tree = ET.parse(kml_file_path)
     root = tree.getroot()
@@ -8,28 +16,24 @@ def extract_coordinates_from_kml(kml_file_path):
     # KML namespace
     kml_ns = '{http://www.opengis.net/kml/2.2}'
 
-    # Initialize an empty list to hold placemark data
     placemark_data = []
-
-    # Iterate over all Placemark elements in the document
     for placemark in root.iter(f'{kml_ns}Placemark'):
-        # Try to find a Polygon within the Placemark element
-        polygon = placemark.find(f'.//{kml_ns}Polygon')
+        polygon = placemark.find(f'.//{kml_ns}Polygon//{kml_ns}coordinates')
         if polygon is not None:
-            # If a Polygon is found, try to get the
-            name_element = placemark.find(f'{kml_ns}name')
-            name = name_element.text if name_element is not None else "Unnamed"
+            name = placemark.find(f'{kml_ns}name').text if placemark.find(f'{kml_ns}name') is not None else "Unnamed"
+            coords = polygon.text.strip().split()
+            coords_tuples = [(float(c.split(',')[1]), float(c.split(',')[0])) for c in coords]
+            
+            # Create a Shapely polygon
+            shapely_polygon = Polygon(coords_tuples)
 
-            # Now find the coordinates element within the Polygon
-            coordinates_element = polygon.find(f'.//{kml_ns}coordinates')
-            if coordinates_element is not None:
-                # Clean the coordinates string and split into tuples of (lat, lon)
-                coord_strings = coordinates_element.text.strip().split()
-                coord_tuples = [
-                    (float(coord.split(',')[1]), float(coord.split(',')[0]))  # Reverse the lat and lon
-                    for coord in coord_strings
-                ]
-                placemark_data.append((name, coord_tuples))
+            # Buffer the polygon to round the corners, without significant scale change
+            buffered_polygon = shapely_polygon.buffer(rounding_buffer, resolution=16)
+
+            # Convert the buffered polygon back to coordinate tuples
+            rounded_coords = list(buffered_polygon.exterior.coords)
+            
+            placemark_data.append((name, rounded_coords))
 
     return placemark_data
 
@@ -63,7 +67,6 @@ with open('buildingPolygons.js', 'w') as file:
             file.write(",\n")  # Add a comma between placemark objects
     
     # End of the placemarks array
-    file.write("];\n\nexport default placemarksData;")
+    file.write("];\n\nexport default buildingPolygons;")
 
 
-print("Coordinates and names have been extracted to building_coordinates.txt")
