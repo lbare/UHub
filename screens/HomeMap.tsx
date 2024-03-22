@@ -94,14 +94,31 @@ const HomeMap: React.FC = () => {
 
   const onZoomChange = (newRegion: Coordinates) => {
     const newZoomLevel = calculateZoomLevel(newRegion.latitudeDelta);
-    console.log("Zoom Level: ", newZoomLevel);
-
     setZoomLevel(newZoomLevel);
   };
 
   const onZoomChangeComplete = (newRegion: Coordinates, isGesture: Details) => {
     if (isGesture) {
       isGesture && setUserLastRegion(newRegion);
+    }
+  };
+
+  const zoomToBuilding = (building: string) => {
+    console.log("Zooming to building: ", building);
+
+    const buildingData = buildings.find((b) => b.code === building);
+    console.log("Building Data: ", buildingData);
+
+    if (buildingData) {
+      const newRegion = {
+        latitude: buildingData.location.latitude,
+        longitude: buildingData.location.longitude,
+        latitudeDelta: region.latitudeDelta / 8,
+        longitudeDelta: region.longitudeDelta / 8,
+      };
+      if (_mapView.current) {
+        _mapView.current.animateToRegion(newRegion, 200);
+      }
     }
   };
 
@@ -385,6 +402,7 @@ const HomeMap: React.FC = () => {
                     <Polygon
                       key={index}
                       tappable={true}
+                      onPress={() => zoomToBuilding(building.name)}
                       coordinates={building.coordinates.map((coord) => ({
                         latitude: coord.latitude,
                         longitude: coord.longitude,
@@ -402,6 +420,7 @@ const HomeMap: React.FC = () => {
                     <Polygon
                       key={index}
                       tappable={true}
+                      onPress={() => zoomToBuilding(building.name)}
                       coordinates={building.coordinates.map((coord) => ({
                         latitude: coord.latitude,
                         longitude: coord.longitude,
