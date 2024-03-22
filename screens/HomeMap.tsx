@@ -7,7 +7,12 @@ import {
   Text,
   Image,
 } from "react-native";
-import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, {
+  Details,
+  LatLng,
+  PROVIDER_GOOGLE,
+  Polygon,
+} from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -19,6 +24,7 @@ import { SearchBar } from "../components/SearchBar";
 import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
 import TagFilterButton from "../components/TagFilterButton";
+import buildingPolygons from "../services/buildingPolygons";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -81,6 +87,8 @@ const HomeMap: React.FC = () => {
     const zoomLevel = Math.round(
       Math.log(maxLatitude / latitudeDelta) / Math.LN2
     );
+    console.log(zoomLevel, zoomLevel - 12);
+
     return zoomLevel;
   };
 
@@ -367,6 +375,23 @@ const HomeMap: React.FC = () => {
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
         >
+          {buildingPolygons &&
+            buildingPolygons.map(
+              (building, index) =>
+                building && (
+                  <Polygon
+                    key={index}
+                    tappable={true}
+                    coordinates={building.coordinates.map((coord) => ({
+                      latitude: coord.latitude,
+                      longitude: coord.longitude,
+                    }))}
+                    strokeColor="#EB6931"
+                    strokeWidth={zoomLevel - 12}
+                    fillColor="rgba(235, 105, 49, 0.2)"
+                  />
+                )
+            )}
           {buildings &&
             buildings.map((building) =>
               building.vendors.map((vendor, index) => (
