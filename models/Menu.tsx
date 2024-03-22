@@ -238,15 +238,328 @@ const EntreeMenu: Menu = {
 
 const ShawarmaMenu: Menu = noMenu;
 
-const StirFryMenu: Menu = noMenu;
+const StirFryMenu: Menu = {
+  vendor_name: VENDOR_NAMES.STIRFRY,
+  sections: [
+    {
+      name: "STIR FRY",
+      items: [
+        {
+          name: "Stir Fry",
+          price: 12.00,
+          description: "Choose your Sauce, Noodle & Protein",
+          tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption, MenuItemTag.GlutenFreeOption],
+          sides: [
+            {
+              name: "Choose a Sauce",
+              price: 0,
+              description: "Tamarind Pad Thai, Mongolian Black Bean, Green Thai Curry, Red Thai Curry, Panang Curry"
+            },
+            {
+              name: "Choose Noodles or Rice",
+              price: 0,
+              description: "Brown Rice, Rice Noodles, Shanghai Noodles"
+            },
+            {
+              name: "Choose a Protein",
+              price: 0,
+              description: "Marinated Tofu, Stir Fried Chicken, Marinated Grilled Pork, Shrimp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: "STIR FRY",
+      items: [
+          {
+              name: "Veggie Spring Rolls (2)",
+              price: 5.00,
+              description: "Served with plum sauce",
+              tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+            },
+            {
+              name: "Pork Gyoza (5)",
+              price: 7.00
+            },
+            {
+              name: "Extra Protein",
+              price: 4.99
+            },
+            {
+              name: "Extra Noodles or Rice",
+              price: 3.99
+            },
+            {
+              name: "Extra Sauce",
+              price: 1.99
+          }
+        ]
+      }
+    ]
+  };
 
-const DeliCoveMenu: Menu = noMenu;
 
-const SoupSaladCoveMenu: Menu = noMenu;
+const DeliCoveMenu: Menu = {
+  vendor_name: VENDOR_NAMES.DELI_COVE,
+  sections: [
+    {
+      name: "Sandwich",
+      items: [
+        {
+          name: "Build Your Own Sandwich",
+          price: 9.99,
+          description: "Choose your base, spread, cheese, protein, and add-ons to build your perfect sandwich.",
+          sides: [
+            { name: "Base", price: 0, description: "Bread: Whole Wheat, Multigrain, Sourdough, Marble Rye. Wrap: Whole Wheat, Plain, Tomato, Spinach. Other: Flatbread, Bannock, Everything Bagel" },
+            { name: "Spreads", price: 0, description: "Regular Mustard, Dijon, Mayo, Roast Garlic & Chive Mayo, Chipotle Mayo, Horseradish Mayo, Sweet Onion Dressing" },
+            { name: "Cheese", price: 0, description: "Vegan Cheddar, Regular Cheddar, Smoked Cheddar, Havarti, Swiss" },
+            { name: "Protein", price: 0, description: "Spicy Black Beans, Hummus, Pesto Chickpeas, Smoked Pepper Salmon Salad, Egg Salad, Tuna Salad, Pesto Chicken Salad, Chipotle Pepper Salad, Chicken, Black Forest Ham, Roast Beef, Turkey, Buffalo Chicken" },
+            { name: "Extras", price: 5.0, description: "Bison Bannock Taco" }
+          ],
+          tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption, MenuItemTag.GlutenFreeOption]
+        }
+      ]
+    },
+    {
+      name: "Extras",
+      items: [
+        {
+          name: "Gluten Friendly Bread",
+          price: 2.00,
+          tags: [MenuItemTag.GlutenFree]
+        },
+        {
+          name: "Avocado",
+          price: 3.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Bacon",
+          price: 1.50
+        },
+        {
+          name: "Kettle Chips",
+          price: 4.99,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        }
+      ]
+    }
+  ]
+};
 
-const PizzaCoveMenu: Menu = noMenu;
 
-const GrillCoveMenu: Menu = noMenu;
+const SoupSaladCoveMenu: Menu = {
+  vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
+  sections: [
+    {
+      name: "Soup",
+      items: [
+        {
+          name: "Vegan Chili",
+          price: 4.99,
+          tags: [MenuItemTag.Vegan],
+          description: "Includes 2 packs of crackers",
+        },
+        {
+          name: "Salmon Chowder",
+          price: 4.99,
+          description: "Includes 2 packs of crackers",
+        },
+        {
+          name: "Ginger Beef-Pepper",
+          price: 4.99,
+          description: "Includes 2 packs of crackers",
+        },
+      ]
+    },
+    // {
+    //   name: "Salad",
+    //   items: [
+    //     {
+    //       name: "Marinara Pasta",
+    //       price: 7.00,
+    //       description: "Pasta served 11am-2pm & 5pm-7:30pm"
+    //     },
+    //     {
+    //       name: "Alfredo Pasta",
+    //       price: 7.00,
+    //       description: "Pasta served 11am-2pm & 5pm-7:30pm"
+    //     }
+    //   ]
+    // }
+  ]
+};
+
+
+const PizzaCoveMenu: Menu = {
+  vendor_name: VENDOR_NAMES.PIZZA_COVE,
+  sections: [
+    {
+      name: "Pizza",
+      items: [
+        {
+          name: "Spinach and Artichoke",
+          price: 5.00,
+          tags: [MenuItemTag.VeganOption],
+          description: "Enjoy a slice of our daily pizza selection.",
+          sizes: [
+            { name: "1x Slice", price: 5.00 },
+            { name: "2x Slices", price: 9.00 }
+          ],
+        },
+        {
+          name: "Chicken Pesto",
+          price: 5.00,
+          description: "Enjoy a slice of our daily pizza selection.",
+          sizes: [
+            { name: "1x Slice", price: 5.00 },
+            { name: "2x Slices", price: 9.00 }
+          ],
+        },
+        {
+          name: "Gluten Free Vegan Pizza",
+          price: 5.00,
+          tags: [MenuItemTag.VeganOption, MenuItemTag.GlutenFreeOption],
+          description: "Enjoy a slice of our daily pizza selection.",
+          sizes: [
+            { name: "1x Slice", price: 5.00 },
+            { name: "2x Slices", price: 9.00 }
+          ],
+        }
+      ]
+    },
+    {
+      name: "Pasta",
+      items: [
+        {
+          name: "Marinara Pasta",
+          price: 7.00,
+          description: "Pasta served 11am-2pm & 5pm-7:30pm"
+        },
+        {
+          name: "Alfredo Pasta",
+          price: 7.00,
+          description: "Pasta served 11am-2pm & 5pm-7:30pm"
+        }
+      ]
+    }
+  ]
+};
+
+
+
+const GrillCoveMenu: Menu = {
+  vendor_name: VENDOR_NAMES.GRILL_COVE,
+  sections: [
+    {
+      name: "BURGERS & MORE",
+      items: [
+        {
+          name: "Quinoa Burger",
+          price: 8.95,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
+        },
+        {
+          name: "Grilled Cheese",
+          price: 5.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFreeOption],
+        },
+        {
+          name: "Grilled Ham & Cheese",
+          price: 7.75,
+          tags: [MenuItemTag.DairyFreeOption],
+        },
+        {
+          name: "Grilled Chicken Burger",
+          price: 8.95,
+          tags: [MenuItemTag.DairyFree],
+        },
+        {
+          name: "50/50 Burger",
+          price: 8.95,
+          tags: [MenuItemTag.DairyFree],
+        },
+        {
+          name: "Beef Hot Dog",
+          price: 5.00,
+        },
+        {
+          name: "Pulled Pork Sandwich",
+          price: 9.95,
+        },
+        {
+          name: "Chicken Strips",
+          price: 9.95,
+          tags: [MenuItemTag.DairyFree],
+        },
+        {
+          name: "Chicken Caesar Wrap",
+          price: 10.95,
+        },
+        {
+          name: "Chicken Caesar Salad",
+          price: 12.95,
+        },
+        {
+          name: "Poutine",
+          price: 9.95,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
+        },
+      ],
+    },
+    {
+      name: "ADD ONS",
+      items: [
+        {
+          name: "French Fries",
+          price: 3.25,
+          description: "Fried in same deep fryer as gluten items",
+          tags: [MenuItemTag.Vegan, MenuItemTag.GlutenFree, MenuItemTag.DairyFree],
+          sizes: [
+            { name: "Side", price: 3.25 },
+            { name: "Full", price: 6.95 }
+          ],
+        },
+        {
+          name: "Onion Rings",
+          price: 6.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
+          sizes: [
+            { name: "Side", price: 6.00 },
+            { name: "Full", price: 8.95 }
+          ],
+        },
+        {
+          name: "Add Avocado",
+          price: 3.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
+        },
+        {
+          name: "Add Cheese",
+          price: 1.50,
+          description: "Choice of cheddar or vegan",
+          tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption],
+        },
+        {
+          name: "Add Gravy",
+          price: 3.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
+        },
+        {
+          name: "Add Bacon",
+          price: 1.50,
+        },
+        {
+          name: "Add Chicken",
+          price: 7.50,
+        },
+      ],
+    },
+  ],
+};
+
+
 
 // Student Union Building
 const felicitasMenu: Menu = {
