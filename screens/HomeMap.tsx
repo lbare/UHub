@@ -25,6 +25,7 @@ import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
 import TagFilterButton from "../components/TagFilterButton";
 import buildingPolygons from "../services/buildingPolygons";
+import buildingPolygonsSimple from "../services/buildingPolygonsSimple";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -87,13 +88,14 @@ const HomeMap: React.FC = () => {
     const zoomLevel = Math.round(
       Math.log(maxLatitude / latitudeDelta) / Math.LN2
     );
-    console.log(zoomLevel, zoomLevel - 12);
 
     return zoomLevel;
   };
 
   const onZoomChange = (newRegion: Coordinates) => {
     const newZoomLevel = calculateZoomLevel(newRegion.latitudeDelta);
+    console.log("Zoom Level: ", newZoomLevel);
+
     setZoomLevel(newZoomLevel);
   };
 
@@ -375,24 +377,43 @@ const HomeMap: React.FC = () => {
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
         >
-          {buildingPolygons &&
-            buildingPolygons.map(
-              (building, index) =>
-                building && (
-                  <Polygon
-                    key={index}
-                    tappable={true}
-                    coordinates={building.coordinates.map((coord) => ({
-                      latitude: coord.latitude,
-                      longitude: coord.longitude,
-                    }))}
-                    strokeColor="#EB6931"
-                    strokeWidth={zoomLevel - 12}
-                    fillColor="rgba(235, 105, 49, 0.2)"
-                  />
-                )
-            )}
-          {buildings &&
+          {zoomLevel < 15
+            ? buildingPolygonsSimple &&
+              buildingPolygonsSimple.map(
+                (building, index) =>
+                  building && (
+                    <Polygon
+                      key={index}
+                      tappable={true}
+                      coordinates={building.coordinates.map((coord) => ({
+                        latitude: coord.latitude,
+                        longitude: coord.longitude,
+                      }))}
+                      strokeColor="#EB6931"
+                      strokeWidth={Math.max(zoomLevel - 12, 2)}
+                      fillColor={zoomLevel < 15 ? "#EB6931AA" : "#EB69312E"}
+                    />
+                  )
+              )
+            : buildingPolygons &&
+              buildingPolygons.map(
+                (building, index) =>
+                  building && (
+                    <Polygon
+                      key={index}
+                      tappable={true}
+                      coordinates={building.coordinates.map((coord) => ({
+                        latitude: coord.latitude,
+                        longitude: coord.longitude,
+                      }))}
+                      strokeColor="#EB6931"
+                      strokeWidth={zoomLevel - 12}
+                      fillColor={zoomLevel < 15 ? "#EB6931AA" : "#EB69312E"}
+                    />
+                  )
+              )}
+          {zoomLevel > 14 &&
+            buildings &&
             buildings.map((building) =>
               building.vendors.map((vendor, index) => (
                 <React.Fragment key={index}>
