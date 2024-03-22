@@ -857,7 +857,7 @@ const BeanThereMenu: Menu = {
 };
 
 const HealthFBMenu: Menu = {
-  vendor_name : VENDOR_NAMES.HEALTH_FB,
+  vendor_name: VENDOR_NAMES.HEALTH_FB,
   sections: [
     {
       name: "Deli Sandwich & Melts",
@@ -1251,7 +1251,7 @@ const HealthFBMenu: Menu = {
     }
 
   ]
-  
+
 }
 
 const MunchieBarMenu: Menu = noMenu;
@@ -1640,17 +1640,17 @@ const FlaminChickenMenu: Menu = {
     {
       name: "Main",
       sides: [
-        { 
+        {
           name: "Add Cheese (cheddar/blue)",
           price: 1.50
         },
-        { 
+        {
           name: "Add Gravy",
-          price: 3.95 
+          price: 3.95
         },
-        { 
-          name: "Add Chipotle Dip", 
-          price: 2.00 
+        {
+          name: "Add Chipotle Dip",
+          price: 2.00
         },
         {
           name: "Waffle Fries",
@@ -1706,7 +1706,244 @@ const FlaminChickenMenu: Menu = {
 
 const GeneralStoreMenu: Menu = noMenu;
 
-const BoardwalkCafeMenu: Menu = noMenu;
+const BoardwalkCafeMenu: Menu = {
+  vendor_name: VENDOR_NAMES.BROADWALK_CAFE,
+  sections: [
+    {
+      name: "Espresso",
+      items: [
+        {
+          name: "Americano",
+          price: 3.65,
+          sizes: [
+            { name: "12oz", price: 3.65 },
+            { name: "16oz", price: 4.25 },
+            { name: "20oz", price: 4.65 }
+          ]
+        },
+        {
+          name: "Latte",
+          price: 4.45,
+          sizes: [
+            { name: "12oz", price: 4.45 },
+            { name: "16oz", price: 4.95 },
+            { name: "20oz", price: 5.45 }
+          ]
+        },
+        {
+          name: "Cappuccino",
+          price: 4.45,
+          sizes: [
+            { name: "12oz", price: 4.45 },
+            { name: "16oz", price: 4.85 },
+            { name: "20oz", price: 5.45 }
+          ]
+        },
+        {
+          name: "Mocha",
+          price: 4.85,
+          sizes: [
+            { name: "12oz", price: 4.85 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.85 }
+          ]
+        },
+        {
+          name: "Vanilla Latte",
+          price: 5.25,
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 5.75 },
+            { name: "20oz", price: 6.25 }
+          ]
+        },
+        {
+          name: "Caramel Macchiato",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "White Chocolate Macchiato",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "Espresso",
+          price: 2.95, // Price for a single shot
+          sizes: [
+            { name: "Single", price: 2.95 },
+            { name: "Double", price: 3.25 }
+          ]
+        }
+      ],
+      sides: [
+        {
+          name: "Substitute Non-Dairy Milk",
+          price: 0.80,
+          description: "Choices: Soy, Oat"
+        },
+        {
+          name: "Extra Espresso Shot",
+          price: 1.00
+        },
+        {
+          name: "Add Flavour Syrup",
+          price: 0.70
+        },
+        {
+          name: "Add Non-Daity Milk",
+          price: 0.80
+        }
+      ]
+    },
+    {
+      name: "Favourites",
+      items: [
+        {
+          name: "Steamed Milk (+ Flavour)",
+          price: 3.25,
+          sizes: [
+            { name: "12oz", price: 3.25 },
+            { name: "16oz", price: 3.36 },
+            { name: "20oz", price: 3.75 }
+          ]
+        },
+        {
+          name: "Hot Chocolate",
+          price: 4.25,
+          sizes: [
+            { name: "12oz", price: 4.25 },
+            { name: "16oz", price: 4.45 },
+            { name: "20oz", price: 4.65 }
+          ]
+        },
+        {
+          name: "London Fog",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "Chai Latte",
+          price: 4.95,
+          sizes: [
+            { name: "12oz", price: 4.95 },
+            { name: "16oz", price: 5.45 },
+            { name: "20oz", price: 5.75 }
+          ]
+        },
+        {
+          name: "Matcha Latte",
+          price: 5.25,
+          sizes: [
+            { name: "12oz", price: 5.25 },
+            { name: "16oz", price: 5.75 },
+            { name: "20oz", price: 6.25 }
+          ]
+        },
+      ],
+      sides: [
+        {
+          name: "Substitute Non-Dairy Milk",
+          price: 0.80,
+          description: "Choices: Soy, Oat"
+        },
+        {
+          name: "Extra Espresso Shot",
+          price: 1.00
+        },
+        {
+          name: "Add Flavour Syrup",
+          price: 0.70
+        },
+        {
+          name: "Add Non-Daity Milk",
+          price: 0.80
+        }
+      ]
+    },
+    {
+      name: "Coffee + Tea",
+      items: [
+        {
+          name: "Brewed Coffee",
+          description: "25c off when you bring your own mug.",
+          price: 2.65,
+          sizes: [
+            { name: "12oz", price: 2.65 },
+            { name: "16oz", price: 2.95 },
+            { name: "20oz", price: 3.25 }
+          ]
+        },
+        {
+          name: "Tea",
+          price: 2.65,
+          description: "25c off when you bring your own mug.",
+          sizes: [
+            { name: "12oz", price: 2.65 },
+            { name: "16oz", price: 2.95 },
+            { name: "20oz", price: 3.25 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Iced Drinks",
+      items: [
+        {
+          name: "Iced Coffee",
+          price: 4.95,
+          description: "16oz iced coffee with two shots of espresso and milk poured over ice."
+        }
+      ]
+    },
+    {
+      name: "Fresh Baked",
+      items: [
+        {
+          name: "Cookies",
+          price: 2.50,
+          description: "2.50 / 3.75 price varies by size"
+        },
+        {
+          name: "Muffins",
+          price: 3.75
+        },
+        {
+          name: "Loaves",
+          price: 3.95
+        },
+        {
+          name: "Bars",
+          price: 4.49
+        },
+        {
+          name: "Carrot Cake",
+          price: 6.49
+        }
+      ],
+      sides: [
+        {
+          name: "Gluten-Friendly Options",
+          price: 0,
+          description: "Price Varies Please ask. Muffins, Cookies, Squares, Bars - While we strive to ensure our gluten friendly ('GF') foods are safe for your consumption, please note that we are not a gluten-free facility."
+        }
+      ]
+    }
+  ]
+};
+
 
 const BoosterMenu: Menu = noMenu;
 
@@ -1742,12 +1979,12 @@ const PickleSpiceMenu: Menu = {
         {
           name: "Butter Chicken",
           price: 12.00,
-          tags: [MenuItemTag.Spicy] 
+          tags: [MenuItemTag.Spicy]
         },
         {
           name: "Chicken Vindaloo",
           price: 12.00,
-          tags: [MenuItemTag.Spicy] 
+          tags: [MenuItemTag.Spicy]
         },
         {
           name: "Chana Masala",
@@ -1757,12 +1994,12 @@ const PickleSpiceMenu: Menu = {
         {
           name: "Goan Fish Curry",
           price: 12.00,
-          tags: [MenuItemTag.Spicy] 
+          tags: [MenuItemTag.Spicy]
         },
         {
           name: "Paneer Tikka",
           price: 12.00,
-          tags: [MenuItemTag.Spicy] 
+          tags: [MenuItemTag.Spicy]
         },
         {
           name: "Red Lentil Dahl",
@@ -1777,12 +2014,12 @@ const PickleSpiceMenu: Menu = {
         {
           name: "Poutine with Butter Chicken",
           price: 9.95,
-          tags: [MenuItemTag.Spicy] 
+          tags: [MenuItemTag.Spicy]
         },
         {
           name: "Poutine with Chicken Vindaloo",
           price: 9.95,
-          tags: [MenuItemTag.Spicy] 
+          tags: [MenuItemTag.Spicy]
         }
       ]
     },
