@@ -297,7 +297,7 @@ const StirFryMenu: Menu = {
         ]
       }
     ]
-  };
+};
 
 
 const DeliCoveMenu: Menu = {
@@ -348,7 +348,6 @@ const DeliCoveMenu: Menu = {
   ]
 };
 
-
 const SoupSaladCoveMenu: Menu = {
   vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
   sections: [
@@ -390,7 +389,6 @@ const SoupSaladCoveMenu: Menu = {
     // }
   ]
 };
-
 
 const PizzaCoveMenu: Menu = {
   vendor_name: VENDOR_NAMES.PIZZA_COVE,
@@ -446,8 +444,6 @@ const PizzaCoveMenu: Menu = {
     }
   ]
 };
-
-
 
 const GrillCoveMenu: Menu = {
   vendor_name: VENDOR_NAMES.GRILL_COVE,
@@ -507,6 +503,38 @@ const GrillCoveMenu: Menu = {
           tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
         },
       ],
+      sides: [
+        {
+          name: "Fries",
+          price: 3.00
+        },
+        {
+          name: "Onion Rings",
+          price: 6.00
+        },
+        {
+          name: "Add Avocado",
+          price: 3.00
+        },
+        {
+          name: "Add Cheese",
+          price: 1.50,
+          description: "Choice of cheddar or vegan"
+        },
+        {
+          name: "Add Gravy",
+          price: 3.00
+        },
+        {
+          name: "Add Bacon",
+          price: 1.50,
+        },
+        {
+          name: "Add Chicken",
+          price: 7.50,
+        },
+
+      ]
     },
     {
       name: "ADD ONS",
@@ -529,36 +557,11 @@ const GrillCoveMenu: Menu = {
             { name: "Side", price: 6.00 },
             { name: "Full", price: 8.95 }
           ],
-        },
-        {
-          name: "Add Avocado",
-          price: 3.00,
-          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
-        },
-        {
-          name: "Add Cheese",
-          price: 1.50,
-          description: "Choice of cheddar or vegan",
-          tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption],
-        },
-        {
-          name: "Add Gravy",
-          price: 3.00,
-          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree],
-        },
-        {
-          name: "Add Bacon",
-          price: 1.50,
-        },
-        {
-          name: "Add Chicken",
-          price: 7.50,
-        },
+        }
       ],
     },
   ],
 };
-
 
 
 // Student Union Building
