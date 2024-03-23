@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script type="text/javascript">
+      function handleDownload(platform) {
+        if (platform === "ios") {
+          window.open("https://testflight.apple.com/join/V59ISKq6", "_blank");
+        } else if (platform === "android") {
+          window.open(
+            "https://github.com/lbare/UHub/releases/download/v2.1.0/UHub-Android-v2-1-0_a82a8113.apk",
+            "_blank"
+          );
+        }
+      }
+    </script>
     <title>UHub - Product Page</title>
     <link href="./css/main.css" type="text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,18 +49,19 @@
             sharing your feedback!
           </p>
           <br />
-          <button
-            onclick="window.open('https://testflight.apple.com/join/V59ISKq6', '_blank')"
-            style="margin-right: 10px"
-          >
+          <button onclick="handleDownload('ios')" style="margin-right: 10px">
             Download for ios
           </button>
-          <button
-            onclick="window.open('https://github.com/lbare/UHub/releases/download/v2.1.0/UHub-Android-v2-1-0_a82a8113.apk', '_blank')"
-          >
+          <button onclick="handleDownload('android')">
             Download .apk for Android
           </button>
           <br />
+          <noscript>
+            <b>
+              Please enable JavaScript for the app download buttons to work.
+            </b>
+            <br />
+          </noscript>
           &#x27A4;
           <a href="./instructions.html" target="_blank" style="color: #333"
             >Click here for installation instructions.</a
