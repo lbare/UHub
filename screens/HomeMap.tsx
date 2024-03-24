@@ -62,7 +62,7 @@ const HomeMap: React.FC = () => {
 
   useEffect(() => {
     onSearchChange();
-  }, [searchInput]);
+  }, [searchInput, buildingFilters]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -70,6 +70,7 @@ const HomeMap: React.FC = () => {
   }, []);
 
   const onSearchChange = () => {
+    menuSearch.setBuildingFilters(buildingFilters);
     if (searchInput !== "") {
       const results = menuSearch.searchAllMenuItems(searchInput);
       setSearchResults(results);
@@ -471,7 +472,10 @@ const HomeMap: React.FC = () => {
             </View>
             <BuildingFilterDropdown
               selectedItems={buildingFilters}
-              onUpdate={(newList: any) => setBuildingFilters(newList)}
+              onUpdate={(newList: any) => {
+                console.log("onUpdate: ", newList);
+                setBuildingFilters(newList);
+              }}
             />
             <View>
               {/* TODO: This View block is for debugging only and should be removed later */}
