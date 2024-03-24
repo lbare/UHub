@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   Image,
+  Pressable,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
@@ -50,6 +51,7 @@ const HomeMap: React.FC = () => {
     new Map()
   );
   const [buildingFilters, setBuildingFilters] = useState<any[]>([]);
+  const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
@@ -62,7 +64,7 @@ const HomeMap: React.FC = () => {
 
   useEffect(() => {
     onSearchChange();
-  }, [searchInput, buildingFilters]);
+  }, [searchInput, buildingFilters, openVendorsFilter]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -72,7 +74,10 @@ const HomeMap: React.FC = () => {
   const onSearchChange = () => {
     menuSearch.setBuildingFilters(buildingFilters);
     if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(searchInput);
+      const results = menuSearch.searchAllMenuItems(
+        searchInput,
+        openVendorsFilter
+      );
       setSearchResults(results);
     } else {
       setSearchResults(new Map());
@@ -470,6 +475,25 @@ const HomeMap: React.FC = () => {
                 onUpdate={onSearchChange}
               />
             </View>
+            <Pressable
+              // Open Now filter button
+              onPress={() => {
+                setOpenVendorsFilter(!openVendorsFilter);
+              }}
+              style={{
+                backgroundColor: openVendorsFilter ? "#EB6931FF" : "#00000000",
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderColor: "#EDEDED",
+                borderWidth: 2,
+                borderRadius: 30,
+                alignSelf: "flex-start",
+              }}
+            >
+              <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+                Open Now
+              </Text>
+            </Pressable>
             <BuildingFilterDropdown
               selectedItems={buildingFilters}
               onUpdate={(newList: any) => {

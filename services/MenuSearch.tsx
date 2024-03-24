@@ -3,6 +3,7 @@ import { Building } from "../models/Building";
 import { menuExample, Menu, MenuItem, MenuItemTag } from "../models/Menu";
 import DataFetcher from "./DataFetcher";
 import { FoodVendor } from "../models/FoodVendor";
+import { isVendorCurrentlyOpen } from "../models/VendorHours";
 
 class MenuSearch {
   fuse_obj: any = undefined;
@@ -85,13 +86,16 @@ class MenuSearch {
   };
 
   public searchAllMenuItems = (
-    searchString: string
+    searchString: string,
+    openVendors: boolean = false
   ): Map<MenuItem, FoodVendor> => {
     if (this.fuse_obj === undefined) return new Map<MenuItem, FoodVendor>();
 
+    // Search for menu items matching searchString
     let searchResults = this.fuse_obj.search(searchString);
     let fuseSearchResults = searchResults as FuseResult<MenuItem>[];
 
+    // Filter found results by Menu Item tags
     let filteredByTag = fuseSearchResults.filter((fuseResultMenuItem) => {
       let item = fuseResultMenuItem.item;
       for (let i = 0; i < this.curTagFilters.length; i++) {
@@ -102,6 +106,7 @@ class MenuSearch {
       return true;
     });
 
+    // Map vendors to remaining food item results
     const mapItemVendor = new Map<MenuItem, FoodVendor>();
     filteredByTag.forEach((fuseResultMenuItem) => {
       const item = fuseResultMenuItem.item;
@@ -115,6 +120,7 @@ class MenuSearch {
 
     console.log("curVendorFilters: ", this.curVendorFilters);
 
+    // Filter remaining results by Vendor filters
     const mapItemVendorFiltered =
       this.curVendorFilters.length <= 0
         ? mapItemVendor
@@ -124,7 +130,17 @@ class MenuSearch {
             })
           );
 
-    return mapItemVendorFiltered;
+    // Filter remaining results by open vendors
+    const mapItemVendorCurrentlyOpen = openVendors
+      ? new Map<MenuItem, FoodVendor>(
+          [...mapItemVendorFiltered].filter(([_, vendor]) => {
+            return isVendorCurrentlyOpen(vendor.hours);
+          })
+        )
+      : mapItemVendorFiltered;
+
+    // return final filtered results
+    return mapItemVendorCurrentlyOpen;
   };
 }
 
