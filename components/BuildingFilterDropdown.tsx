@@ -1,4 +1,4 @@
-import { Text, Pressable, View } from "react-native";
+import { Text, Pressable, View, ViewStyle } from "react-native";
 import { MenuItemTag } from "../models/Menu";
 import MenuSearch from "../services/MenuSearch";
 import { Building, buildingExamples } from "../models/Building";
@@ -9,6 +9,7 @@ import SectionedMultiSelect from "react-native-sectioned-multi-select";
 interface BuildingFilterDropdownProps {
   selectedItems: any[];
   // text: string;
+  style?: ViewStyle;
   // tag: MenuItemTag;
   // menuSearchObject: MenuSearch;
   onUpdate: (newList: any) => void;
@@ -18,6 +19,7 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
   // text,
   // tag,
   // menuSearchObject,
+  style,
   onUpdate,
   selectedItems,
 }) => {
@@ -90,9 +92,8 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
           backgroundColor: "#EDEDED",
           paddingHorizontal: 10,
           paddingVertical: 5,
-          marginHorizontal: 20,
-          marginTop: 5,
           borderRadius: 10,
+          ...style,
         },
         selectToggleText: {
           color: "#000000",

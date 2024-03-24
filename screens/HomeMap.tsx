@@ -419,7 +419,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 243,
+              height: 235,
               borderRadius: 20,
             }}
           >
@@ -475,32 +475,49 @@ const HomeMap: React.FC = () => {
                 onUpdate={onSearchChange}
               />
             </View>
-            <Pressable
-              // Open Now filter button
-              onPress={() => {
-                setOpenVendorsFilter(!openVendorsFilter);
-              }}
+            <View
               style={{
-                backgroundColor: openVendorsFilter ? "#EB6931FF" : "#00000000",
-                paddingHorizontal: 10,
-                paddingVertical: 5,
-                borderColor: "#EDEDED",
-                borderWidth: 2,
-                borderRadius: 30,
-                alignSelf: "flex-start",
+                flexDirection: "row",
+                margin: 15,
+                marginTop: 0,
               }}
             >
-              <Text style={{ color: "#EDEDED", textAlign: "center" }}>
-                Open Now
-              </Text>
-            </Pressable>
-            <BuildingFilterDropdown
-              selectedItems={buildingFilters}
-              onUpdate={(newList: any) => {
-                console.log("onUpdate: ", newList);
-                setBuildingFilters(newList);
-              }}
-            />
+              <Pressable
+                // Open Now filter button
+                onPress={() => {
+                  setOpenVendorsFilter(!openVendorsFilter);
+                }}
+                style={{
+                  backgroundColor: openVendorsFilter
+                    ? "#0a912eff"
+                    : "#00000000",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  borderColor: "#EDEDED",
+                  borderWidth: 2,
+                  borderRadius: 30,
+                  alignSelf: "flex-start",
+                }}
+              >
+                <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+                  Open Now
+                </Text>
+              </Pressable>
+              <View
+                style={{
+                  flex: 1,
+                }}
+              >
+                <BuildingFilterDropdown
+                  style={{ marginLeft: 10 }}
+                  selectedItems={buildingFilters}
+                  onUpdate={(newList: any) => {
+                    console.log("onUpdate: ", newList);
+                    setBuildingFilters(newList);
+                  }}
+                />
+              </View>
+            </View>
           </View>
         )}
         <ScrollView
