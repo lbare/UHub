@@ -1,6 +1,6 @@
 import Fuse, { FuseResult } from "fuse.js";
 import { Building } from "../models/Building";
-import { menuExample, Menu, MenuItem, MenuItemTag } from "../models/Menu";
+import { MenuItem, MenuItemTag } from "../models/Menu";
 import DataFetcher from "./DataFetcher";
 import { FoodVendor } from "../models/FoodVendor";
 import { isVendorCurrentlyOpen } from "../models/VendorHours";

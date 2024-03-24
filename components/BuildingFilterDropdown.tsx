@@ -1,61 +1,42 @@
-import { Text, Pressable, View, ViewStyle } from "react-native";
-import { MenuItemTag } from "../models/Menu";
-import MenuSearch from "../services/MenuSearch";
+import { Text, View, ViewStyle } from "react-native";
 import { Building, buildingExamples } from "../models/Building";
-import React, { Component } from "react";
+import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 
 interface BuildingFilterDropdownProps {
   selectedItems: any[];
-  // text: string;
   style?: ViewStyle;
-  // tag: MenuItemTag;
-  // menuSearchObject: MenuSearch;
   onUpdate: (newList: any) => void;
 }
 
 const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
-  // text,
-  // tag,
-  // menuSearchObject,
   style,
   onUpdate,
   selectedItems,
 }) => {
-  // const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
-
-  const createBuildingList = (buildings: Building[], startingId: number) => {
+  // Creates the list of buildings in the format required by the dropdown component
+  const createBuildingList = (buildings: Building[]) => {
     let buildingList: any[] = [];
-    let curId: number = startingId;
 
     buildings.forEach((building: Building) => {
       buildingList.push({
         name: building.name,
         id: building.code,
       });
-      curId++;
     });
 
     return buildingList;
   };
 
+  // the list of buildings in the format required by the dropdown component
   const items = [
     {
       name: "All Buildings",
       id: "ALL",
-      // these are the children or 'sub items'
-      children: createBuildingList(buildingExamples, 1),
+      children: createBuildingList(buildingExamples),
     },
-    // {
-    //   // next parent item
-    //  ...
-    // },
   ];
-
-  // const onSelectedItemsChange = (selectedItems: any) => {
-  //   this.setState({ selectedItems });
-  // };
 
   return (
     <SectionedMultiSelect
@@ -68,7 +49,6 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
       showDropDowns={false}
       onSelectedItemsChange={onUpdate}
       selectedItems={selectedItems}
-      // selectChildren={true}
       highlightChildren={true}
       showRemoveAll={false}
       showChips={false}
