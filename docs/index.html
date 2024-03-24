@@ -22,12 +22,14 @@
             event_category: "download",
             event_label: "ios",
           });
+          gtag("event", "ios_download", {});
           window.open("https://testflight.apple.com/join/V59ISKq6", "_blank");
         } else if (platform === "android") {
           gtag("event", "app_download", {
             event_category: "download",
             event_label: "android",
           });
+          gtag("event", "android_download", {});
           window.open(
             "https://github.com/lbare/UHub/releases/download/v2.1.0/UHub-Android-v2-1-0_a82a8113.apk",
             "_blank"
