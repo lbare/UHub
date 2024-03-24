@@ -413,7 +413,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 400, // TODO: set back to 195 + what's required to fit building filters
+              height: 280, // TODO: set back to 195 + what's required to fit building filters
               borderRadius: 20,
             }}
           >
@@ -484,9 +484,10 @@ const HomeMap: React.FC = () => {
                   marginTop: 10,
                 }}
               >
-                {buildingFilters.length <= 0
-                  ? "Empty List"
-                  : buildingFilters.toString()}
+                {"Debug: " +
+                  (buildingFilters.length <= 0
+                    ? "Empty List"
+                    : buildingFilters.toString())}
               </Text>
             </View>
           </View>
@@ -495,8 +496,8 @@ const HomeMap: React.FC = () => {
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
-            // backgroundColor: "#1D1D1D", // TODO: Revert to this
-            backgroundColor: "#0055FF",
+            backgroundColor: "#1D1D1D", // TODO: Revert to this
+            // backgroundColor: "#0055FF",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
           }}
