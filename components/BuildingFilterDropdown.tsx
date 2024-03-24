@@ -70,6 +70,34 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
       highlightChildren={true}
       showRemoveAll={false}
       showChips={false}
+      colors={{
+        primary: "#EB6931",
+        text: "#e5e5e5",
+        subText: "#a3a3a3",
+        itemBackground: "#00000000",
+        subItemBackground: "#00000000",
+      }}
+      styles={{
+        container: {
+          backgroundColor: "#1D1D1D",
+        },
+        searchBar: {
+          backgroundColor: "#EDEDED",
+          margin: 10,
+          borderRadius: 20,
+        },
+        selectToggle: {
+          backgroundColor: "#EDEDED",
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+          marginHorizontal: 20,
+          marginTop: 5,
+          borderRadius: 10,
+        },
+        selectToggleText: {
+          color: "#000000",
+        },
+      }}
       headerComponent={
         <View>
           <Text
@@ -78,6 +106,8 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
               fontWeight: "bold",
               textAlign: "center",
               padding: 10,
+              marginTop: 10,
+              color: "#e5e5e5",
             }}
           >
             Building Filters
