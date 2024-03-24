@@ -114,6 +114,20 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
           </Text>
         </View>
       }
+      noResultsComponent={
+        <View>
+          <Text
+            style={{
+              fontSize: 14,
+              textAlign: "center",
+              paddingVertical: 30,
+              color: "#e5e5e5",
+            }}
+          >
+            No buildings containing food vendors found
+          </Text>
+        </View>
+      }
     />
   );
 };

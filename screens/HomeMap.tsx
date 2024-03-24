@@ -414,7 +414,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 280, // TODO: set back to 195 + what's required to fit building filters
+              height: 243,
               borderRadius: 20,
             }}
           >
@@ -477,31 +477,13 @@ const HomeMap: React.FC = () => {
                 setBuildingFilters(newList);
               }}
             />
-            <View>
-              {/* TODO: This View block is for debugging only and should be removed later */}
-              <Text
-                style={{
-                  color: "#FFFFFF",
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  marginLeft: 20,
-                  marginTop: 10,
-                }}
-              >
-                {"Debug: " +
-                  (buildingFilters.length <= 0
-                    ? "Empty List"
-                    : buildingFilters.toString())}
-              </Text>
-            </View>
           </View>
         )}
         <ScrollView
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
-            backgroundColor: "#1D1D1D", // TODO: Revert to this
-            // backgroundColor: "#0055FF",
+            backgroundColor: "#1D1D1D",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
           }}
