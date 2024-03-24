@@ -19,6 +19,7 @@ import { SearchBar } from "../components/SearchBar";
 import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
 import TagFilterButton from "../components/TagFilterButton";
+import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -48,6 +49,7 @@ const HomeMap: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Map<MenuItem, FoodVendor>>(
     new Map()
   );
+  const [buildingFilters, setBuildingFilters] = useState<any[]>([]);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
@@ -411,7 +413,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 195,
+              height: 400, // TODO: set back to 195 + what's required to fit building filters
               borderRadius: 20,
             }}
           >
@@ -467,13 +469,34 @@ const HomeMap: React.FC = () => {
                 onUpdate={onSearchChange}
               />
             </View>
+            <BuildingFilterDropdown
+              selectedItems={buildingFilters}
+              onUpdate={(newList: any) => setBuildingFilters(newList)}
+            />
+            <View>
+              {/* TODO: This View block is for debugging only and should be removed later */}
+              <Text
+                style={{
+                  color: "#FFFFFF",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  marginLeft: 20,
+                  marginTop: 10,
+                }}
+              >
+                {buildingFilters.length <= 0
+                  ? "Empty List"
+                  : buildingFilters.toString()}
+              </Text>
+            </View>
           </View>
         )}
         <ScrollView
           contentContainerStyle={{
             alignItems: "flex-start",
             width: "100%",
-            backgroundColor: "#1D1D1D",
+            // backgroundColor: "#1D1D1D", // TODO: Revert to this
+            backgroundColor: "#0055FF",
             borderRadius: 20,
             height: searchResults.size === 0 ? "100%" : undefined,
           }}
