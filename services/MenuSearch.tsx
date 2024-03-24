@@ -59,12 +59,10 @@ class MenuSearch {
 
   public setBuildingFilters = (buildingFilters: string[]) => {
     this.curBuildingFilters = buildingFilters;
-    console.log("before curBuildingFilters: ", buildingFilters);
     this.createVendoFilterFromBuildingFilter();
   };
 
   private createVendoFilterFromBuildingFilter = () => {
-    console.log("curBuildingFilters: ", this.curBuildingFilters);
     // rebuilding vendor list, reset existing filters
     this.curVendorFilters = [];
 
@@ -115,10 +113,6 @@ class MenuSearch {
         mapItemVendor.set(item, foodVendor);
       }
     });
-
-    console.log("Filtered by tag: ", mapItemVendor);
-
-    console.log("curVendorFilters: ", this.curVendorFilters);
 
     // Filter remaining results by Vendor filters
     const mapItemVendorFiltered =

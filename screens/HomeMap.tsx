@@ -512,7 +512,6 @@ const HomeMap: React.FC = () => {
                   style={{ marginLeft: 10 }}
                   selectedItems={buildingFilters}
                   onUpdate={(newList: any) => {
-                    console.log("onUpdate: ", newList);
                     setBuildingFilters(newList);
                   }}
                 />
