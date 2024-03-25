@@ -17,7 +17,7 @@ export default function App() {
   useEffect(() => {
     const prepare = async () => {
       try {
-        const buildingsColRef = collection(db, "Building");
+        const buildingsColRef = collection(db, "Building:V2");
         const querySnapshot = await getDocs(buildingsColRef);
         await loadAssets();
 
