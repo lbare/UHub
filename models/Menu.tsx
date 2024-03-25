@@ -8,6 +8,7 @@ enum MenuItemTag {
   GlutenFreeOption = "Gluten Free Option",
   DairyFree = "Dairy Free",
   DairyFreeOption = "Dairy Free Option",
+  Halal = "Halal",
 }
 
 type MenuItemSize = {
@@ -236,7 +237,98 @@ const EntreeMenu: Menu = {
   ],
 };
 
-const ShawarmaMenu: Menu = noMenu;
+const ShawarmaMenu: Menu = {
+  vendor_name: VENDOR_NAMES.SHAWARMA,
+  sections: [
+    {
+      name: "Wraps",
+      items: [
+        {
+          name: "Mushroom Shawarma",
+          price: 10.95,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFreeOption]
+        },
+        {
+          name: "Falafel Shawarma ",
+          price: 10.95,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFreeOption]
+        },
+        {
+          name: "Chicken Shawarma",
+          price: 10.95,
+          tags: [MenuItemTag.Halal]
+        },
+        {
+          name: "Beef Gyro",
+          price: 10.95,
+          tags: [MenuItemTag.Halal]
+        }
+      ]
+    },
+    {
+      name: "Bowls",
+      items: [
+        {
+          name: "Mushroom Shawarma Bowl",
+          price: 12.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.GlutenFree, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Falafel",
+          price: 12.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Chicken Shawarma",
+          price: 12.00,
+          tags: [MenuItemTag.Halal, MenuItemTag.DairyFree, MenuItemTag.Halal]
+        }
+      ]
+    },
+    {
+      name: "Salads",
+      items: [
+        {
+          name: "Falafel Salad",
+          price: 12.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Chicken Shawarma Salad",
+          price: 12.00,
+          tags: [MenuItemTag.Halal, MenuItemTag.DairyFree, MenuItemTag.Halal]
+        }
+      ]
+    },
+    {
+      name: "Sides",
+      items: [
+        {
+          name: "Hummus",
+          price: 2.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.GlutenFree, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Pita",
+          price: 2.00,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        },
+        {
+          name: "Falafel",
+          price: 4.95,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree]
+        },
+        {
+          name: "French Fries",
+          price: 3.25,
+          tags: [MenuItemTag.Vegan, MenuItemTag.DairyFree, MenuItemTag.GlutenFree],
+          description: "Fried in same deep fryer as gluten items"
+        }
+      ]
+    }
+  ]
+};
+
 
 const StirFryMenu: Menu = {
   vendor_name: VENDOR_NAMES.STIRFRY,
@@ -301,7 +393,6 @@ const StirFryMenu: Menu = {
   ]
 };
 
-
 const DeliCoveMenu: Menu = {
   vendor_name: VENDOR_NAMES.DELI_COVE,
   sections: [
@@ -357,21 +448,11 @@ const SoupSaladCoveMenu: Menu = {
       name: "Soup",
       items: [
         {
-          name: "Vegan Chili",
+          name: "Daily Soup",
           price: 4.99,
-          tags: [MenuItemTag.Vegan],
+          tags: [MenuItemTag.VeganOption, MenuItemTag.DairyFreeOption],
           description: "Includes 2 packs of crackers",
-        },
-        {
-          name: "Salmon Chowder",
-          price: 4.99,
-          description: "Includes 2 packs of crackers",
-        },
-        {
-          name: "Ginger Beef-Pepper",
-          price: 4.99,
-          description: "Includes 2 packs of crackers",
-        },
+        }
       ]
     },
     // {
