@@ -509,6 +509,7 @@ const HomeMap: React.FC = () => {
                 }}
               >
                 <BuildingFilterDropdown
+                  buildings={buildings}
                   style={{ marginLeft: 10 }}
                   selectedItems={buildingFilters}
                   onUpdate={(newList: any) => {

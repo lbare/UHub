@@ -1,22 +1,24 @@
 import { Text, View, ViewStyle } from "react-native";
-import { Building, buildingExamples } from "../models/Building";
+import { Building } from "../models/Building";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 
 interface BuildingFilterDropdownProps {
+  buildings: Building[];
   selectedItems: any[];
   style?: ViewStyle;
   onUpdate: (newList: any) => void;
 }
 
 const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
+  buildings,
   style,
   onUpdate,
   selectedItems,
 }) => {
   // Creates the list of buildings in the format required by the dropdown component
-  const createBuildingList = (buildings: Building[]) => {
+  const createBuildingList = () => {
     let buildingList: any[] = [];
 
     buildings.forEach((building: Building) => {
@@ -34,7 +36,7 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
     {
       name: "All Buildings",
       id: "ALL",
-      children: createBuildingList(buildingExamples),
+      children: createBuildingList(),
     },
   ];
 

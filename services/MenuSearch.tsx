@@ -59,10 +59,10 @@ class MenuSearch {
 
   public setBuildingFilters = (buildingFilters: string[]) => {
     this.curBuildingFilters = buildingFilters;
-    this.createVendoFilterFromBuildingFilter();
+    this.createVendorFilterFromBuildingFilter();
   };
 
-  private createVendoFilterFromBuildingFilter = () => {
+  private createVendorFilterFromBuildingFilter = () => {
     // rebuilding vendor list, reset existing filters
     this.curVendorFilters = [];
 
