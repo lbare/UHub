@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>SUB</name>
+	<gx:CascadingStyle kml:id="__managed_style_2C8B3059142F9D5A3617">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>fff5a542</color>
+				<width>3</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_15DA8E00652F9D5A3617">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>fff5a542</color>
+				<width>2</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0EE74210462F9D5A3617">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_15DA8E00652F9D5A3617</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2C8B3059142F9D5A3617</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="025E0E9E982F9D5A1EB2">
+		<name>Felicitas</name>
+		<LookAt>
+			<longitude>-123.3081066701617</longitude>
+			<latitude>48.46476327819894</latitude>
+			<altitude>58.54586865515082</altitude>
+			<heading>359.9402972567186</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>262.949378006997</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0EE74210462F9D5A3617</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3079926418309,48.4644970168661,0 -123.307832640563,48.4645081781144,0 -123.3077411523095,48.46456929492619,0 -123.307759113321,48.46468369987128,0 -123.3081066291169,48.46465921546032,0 -123.3080917950451,48.46456505407277,0 -123.3079926418309,48.4644970168661,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="0FB4BFA01F2FA88A1AE3">
+		<name>Bean There Cafe</name>
+		<LookAt>
+			<longitude>-123.3082113358861</longitude>
+			<latitude>48.46499549725092</latitude>
+			<altitude>58.43915934136054</altitude>
+			<heading>359.9402955393443</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>209.2892721196404</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0EE74210462F9D5A3617</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3081282438582,48.46476887498014,0 -123.3081345249221,48.46480751762132,0 -123.3082544459744,48.46479816308707,0 -123.3082476019076,48.46476168640108,0 -123.3081282438582,48.46476887498014,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="05D7608E732FA88A97BF">
+		<name>The Grill</name>
+		<LookAt>
+			<longitude>-123.308211335865</longitude>
+			<latitude>48.46499549719517</latitude>
+			<altitude>58.43915934277518</altitude>
+			<heading>359.9402955393443</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>209.2892721196404</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0EE74210462F9D5A3617</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3081263205512,48.46481960409386,0 -123.308141886681,48.46491105431616,0 -123.3082236037502,48.46490497087588,0 -123.3082070457488,48.46481256512275,0 -123.3081263205512,48.46481960409386,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="0382939B702FA88B28FC">
+		<name>Health Food Bar</name>
+		<LookAt>
+			<longitude>-123.3082113358439</longitude>
+			<latitude>48.46499549713941</latitude>
+			<altitude>58.43915934136054</altitude>
+			<heading>359.9402955393443</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>209.2892721196404</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0EE74210462F9D5A3617</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3082449528616,48.46503246573024,0 -123.3082290956552,48.46493389294182,0 -123.3081447886186,48.46493941761226,0 -123.3081549691853,48.46504101027748,0 -123.3082449528616,48.46503246573024,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="0F3EBD1A922FA88DC304">
+		<name>Muchie&apos;s</name>
+		<LookAt>
+			<longitude>-123.3083540623527</longitude>
+			<latitude>48.46564086052776</latitude>
+			<altitude>58.51241130383594</altitude>
+			<heading>359.9402912937908</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>200.8880876797048</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0EE74210462F9D5A3617</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3082196275516,48.46561625624248,0 -123.3083378724265,48.46552075090127,0 -123.3082022686034,48.46545113050791,0 -123.3080874696394,48.46554928307094,0 -123.3082196275516,48.46561625624248,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>

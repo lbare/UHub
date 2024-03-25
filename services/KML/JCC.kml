@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>JCC</name>
+	<gx:CascadingStyle kml:id="__managed_style_24EB2A58E52FA8A3E728">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>fff5a542</color>
+				<width>3</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_1712C372872FA8A3E728">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>fff5a542</color>
+				<width>2</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0E8931B93F2FA8A3E728">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1712C372872FA8A3E728</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_24EB2A58E52FA8A3E728</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="0184C9424E2FA8A3DB19">
+		<name>Chopbox</name>
+		<LookAt>
+			<longitude>-123.3121881776399</longitude>
+			<latitude>48.46493626496388</latitude>
+			<altitude>57.38885305511593</altitude>
+			<heading>359.9402798645665</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>99.54323485193527</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3121298109347,48.46495184101369,0 -123.3121184194422,48.4648888155603,0 -123.3120586031605,48.46489354747774,0 -123.3120702016327,48.46495623300548,0 -123.3121298109347,48.46495184101369,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="033F6F26182FA8A83043">
+		<name>Flamin&apos; Good Chicken</name>
+		<LookAt>
+			<longitude>-123.3120555991512</longitude>
+			<latitude>48.46490213705827</latitude>
+			<altitude>57.72186769080345</altitude>
+			<heading>359.9402768857884</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>118.5089892672477</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3121050395657,48.46482340763117,0 -123.3120478216319,48.46482852943085,0 -123.3120586773385,48.46488846099024,0 -123.3121160449272,48.46488436208912,0 -123.3121050395657,48.46482340763117,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="04505C6C632FA8AB0AD6">
+		<name>Boardwalk Cafe</name>
+		<LookAt>
+			<longitude>-123.3120275758268</longitude>
+			<latitude>48.46508234434015</latitude>
+			<altitude>57.28432777454852</altitude>
+			<heading>359.9402738646466</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>157.8991919023792</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3118266795432,48.46502318529298,0 -123.3118204731618,48.46498697745838,0 -123.3117087903258,48.46499540218495,0 -123.3117146693702,48.46503156486585,0 -123.3118266795432,48.46502318529298,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="0DF445B9642FA8AC1151">
+		<name>Booster Juice</name>
+		<LookAt>
+			<longitude>-123.3118733524202</longitude>
+			<latitude>48.46502729733596</latitude>
+			<altitude>57.64844663540499</altitude>
+			<heading>359.9402720411258</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>90.92334079004105</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3118167219448,48.46496945277368,0 -123.3118118029241,48.46493747721573,0 -123.3117009617783,48.46494595482162,0 -123.3117059902346,48.46497799439782,0 -123.3118167219448,48.46496945277368,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="0A0EC2B3312FA8AE81CF">
+		<name>Tofino&apos;s</name>
+		<LookAt>
+			<longitude>-123.3119519475894</longitude>
+			<latitude>48.46490577721519</latitude>
+			<altitude>57.96548012818571</altitude>
+			<heading>0.1162012875877424</heading>
+			<tilt>0.1247474032941864</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>142.283886951318</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.311924624744,48.46482137575089,0 -123.3117914723304,48.46483032515875,0 -123.311797833923,48.46486089693065,0 -123.3118728747613,48.46488766311755,0 -123.311929214252,48.46484818466465,0 -123.311924624744,48.46482137575089,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="09268D62332FA8AFB61E">
+		<name>General Store</name>
+		<LookAt>
+			<longitude>-123.3119519476105</longitude>
+			<latitude>48.46490577720125</latitude>
+			<altitude>57.96548012818571</altitude>
+			<heading>0.1162012811436998</heading>
+			<tilt>0.1247474032883431</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>142.283886951318</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3117682604266,48.46478801155142,0 -123.3116679008819,48.46479686927031,0 -123.3116726001678,48.4648170020909,0 -123.3117838843662,48.46485984903303,0 -123.3117682604266,48.46478801155142,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="007772D1A32FA8B34F44">
+		<name>Pickle and Spice</name>
+		<LookAt>
+			<longitude>-123.3120667516061</longitude>
+			<latitude>48.46491591182696</latitude>
+			<altitude>57.67215113470724</altitude>
+			<heading>0.1162012794151132</heading>
+			<tilt>0.1247467954196158</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>111.7586641081107</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3119383244377,48.46484643424559,0 -123.312041897511,48.46482605159935,0 -123.3120401176247,48.4648052176602,0 -123.3119318437301,48.46481382716262,0 -123.3119383244377,48.46484643424559,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="03DD0F511A2FA8B63040">
+		<name>Freco Taco Bar</name>
+		<LookAt>
+			<longitude>-123.3120418502599</longitude>
+			<latitude>48.46499315266774</latitude>
+			<altitude>57.49124734045821</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>54.20822714021598</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3120798831979,48.4650065187453,0 -123.3120763744725,48.46497495151375,0 -123.3119925513786,48.46498000666154,0 -123.3119969321081,48.46501085000838,0 -123.3120798831979,48.4650065187453,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark id="03AF9F47A02FA8B6DF5E">
+		<name>Treks</name>
+		<LookAt>
+			<longitude>-123.3120418502599</longitude>
+			<latitude>48.46499315266427</latitude>
+			<altitude>57.49124734045821</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30</gx:fovy>
+			<range>54.20822714021598</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8931B93F2FA8A3E728</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-123.3119883132339,48.4650106177649,0 -123.3119839216817,48.46497993284027,0 -123.311897960102,48.46498540287921,0 -123.3119022844553,48.46501548515759,0 -123.3119883132339,48.4650106177649,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
