@@ -1,4 +1,5 @@
 import { FoodVendor, foodVendorExamples } from "./FoodVendor";
+import { BUILDING_CODES } from "./Constants";
 import Coordinates from "./Coordinates";
 
 type Building = {
@@ -12,7 +13,7 @@ type Building = {
 
 const coveBuildingExample: Building = {
   name: "The Cove",
-  code: "COVE",
+  code: BUILDING_CODES.COVE,
   description:
     "Dining facility featuring a 700 person seating capacity across two levels with an open concept and food court",
   image: "https://www.uvic.ca/services/food/assets/images/cove-stairs",
@@ -22,12 +23,12 @@ const coveBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.entree, foodVendorExamples.greens],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.COVE),
 };
 
 const subBuildingExample: Building = {
   name: "Student Union Building",
-  code: "SUB",
+  code: BUILDING_CODES.SUB,
   description:
     "The Student Union Building (SUB) is the social hub of campus, providing a variety of services and amenities for students, faculty, staff and visitors.",
   image:
@@ -38,17 +39,12 @@ const subBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [
-    foodVendorExamples.felicitas,
-    foodVendorExamples.thegrill,
-    foodVendorExamples.munchie,
-    foodVendorExamples.hfb,
-  ],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.SUB),
 };
 
 const bookStoreBuildingExample: Building = {
   name: "University of Victoria Bookstore",
-  code: "BOOK",
+  code: BUILDING_CODES.BOOKSTORE,
   description:
     "The University of Victoria Bookstore is a not-for-profit corporation that serves the campus community. We are owned and operated by the University of Victoria Students' Society.",
   image:
@@ -59,12 +55,12 @@ const bookStoreBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.starbucks, foodVendorExamples.uniClub],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.BOOKSTORE),
 };
 
 const macBuildingExample: Building = {
   name: "MacLaurin",
-  code: "MAC",
+  code: BUILDING_CODES.MACLAUREN,
   description:
     "Mac's in the MacLaurin Building is the best place on campus to get a custom-made sandwich or wrap.",
   image:
@@ -75,12 +71,12 @@ const macBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.mac],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.MACLAUREN),
 };
 
 const MysticBuildingExample: Building = {
   name: "Jamie Cassels Center",
-  code: "JCC",
+  code: BUILDING_CODES.JAMIE_CASSELS_CENTER,
   description:
     "Jamie Cassels Centre (JCC) contains academic and administrative offices.",
   image:
@@ -91,16 +87,12 @@ const MysticBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [
-    foodVendorExamples.chopbox,
-    foodVendorExamples.fresco,
-    foodVendorExamples.treks,
-  ],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.JAMIE_CASSELS_CENTER),
 };
 
 const GradBuildingExample: Building = {
   name: "Halpern Centre for Graduate Students",
-  code: "GSC",
+  code: BUILDING_CODES.GRADUATE_BUILDING,
   description: "Home on campus for UVIC graduate students",
   image:
     "https://gss.uvic.ca/wp-content/uploads/2020/01/Orientation-Social-Image.jpg",
@@ -110,12 +102,12 @@ const GradBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.gradhouse],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.GRADUATE_BUILDING),
 };
 
 const LibBuildingExample: Building = {
   name: "McPherson Library",
-  code: "MCL",
+  code: BUILDING_CODES.MCPHERSON_LIBRARY,
   description:
     "The centre includes an enhanced learning commons, a media commons, an international commons, collaborative learning classrooms, the Bibliocafe and educational support services.",
   image:
@@ -126,7 +118,7 @@ const LibBuildingExample: Building = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   },
-  vendors: [foodVendorExamples.biblio],
+  vendors: foodVendorExamples.filter((vendor) => vendor.building_code === BUILDING_CODES.MCPHERSON_LIBRARY),
 };
 
 const buildingExamples: Building[] = [

@@ -13,7 +13,7 @@ class DataFetcher {
 
   fetch_count: number = 0;
 
-  constructor(collectionName: string = "Building") {
+  constructor(collectionName: string = "Building:V2") {
     this.collectionName = collectionName;
   }
 
@@ -44,7 +44,7 @@ class DataFetcher {
 
 export const addBuildingsToFirebase = async () => {
   try {
-    const buildingsRef = collection(db, "Building");
+    const buildingsRef = collection(db, "Building:V2");
     for (const building of buildingExamples) {
       await addDoc(buildingsRef, building);
     }
