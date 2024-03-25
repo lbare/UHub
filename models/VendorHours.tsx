@@ -1,3 +1,5 @@
+import { VENDOR_NAMES } from "./Constants";
+
 type DayOfWeek =
   | "Monday"
   | "Tuesday"
@@ -6,6 +8,7 @@ type DayOfWeek =
   | "Friday"
   | "Saturday"
   | "Sunday";
+
 const daysOfWeekInOrder: DayOfWeek[] = [
   "Monday",
   "Tuesday",
@@ -23,6 +26,11 @@ type TimeRange = {
 
 type VendorHours = {
   [key in DayOfWeek]: TimeRange[];
+};
+
+type VendorHoursWithId = {
+  vendor_name: string;
+  hours: VendorHours;
 };
 
 const formatTimeRange = (timeRange: TimeRange): string => {
@@ -153,8 +161,21 @@ const isVendorCurrentlyOpen = (vendorHours: VendorHours): boolean => {
   return isVendorOpenHelper(vendorHours, currentDay, currentTime);
 };
 
+const isVendorHoursEvenThere = (vendorHours: VendorHours): boolean => {
+  for (const day in vendorHours) {
+    if (vendorHours[day as DayOfWeek].length > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const vendorNextOpenOrCloseTimeString = (vendorHours: VendorHours): string => {
   var returnString = "Closed Today";
+
+  if (!isVendorHoursEvenThere(vendorHours)) {
+    return "No hours info available.";
+  }
 
   const isOpen = isVendorCurrentlyOpen(vendorHours);
 
@@ -190,26 +211,384 @@ const isDayToday = (day: DayOfWeek): boolean => {
   return day === todaysDay;
 };
 
-const vendorHoursExample: VendorHours = {
-  Monday: [{ open: "09:00 AM", close: "12:00 PM" }],
-  Tuesday: [
-    { open: "09:00 AM", close: "12:00 PM" },
-    { open: "01:00 PM", close: "06:00 PM" },
-  ],
-  Wednesday: [
-    { open: "09:00 AM", close: "12:00 PM" },
-    { open: "01:00 PM", close: "06:00 PM" },
-  ],
-  Thursday: [{ open: "09:00 AM", close: "06:00 PM" }],
-  Friday: [{ open: "09:00 AM", close: "08:00 PM" }],
-  Saturday: [{ open: "10:00 AM", close: "08:00 PM" }],
+const UndefinedHours: VendorHoursWithId = {
+  vendor_name: "NONE",
+  hours: {
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+// Library Building
+const bibliocafeHours: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.BIBLIO,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "8:00 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "8:00 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "8:00 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "8:00 PM" }],
+    Friday: [{ open: "08:00 AM", close: "4:00 PM" }],
+    Saturday: [{ open: "10:00 AM", close: "04:00 PM" }],
+    Sunday: [{ open: "10:00 AM", close: "04:00 PM" }],
+  },
+};
+
+const macsHours: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.MACS,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Friday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  }
+};
+
+// Mystic Market Building
+const generalStoreHours: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.GENERAL_STORE,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Friday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const boardWalkCafe: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.BROADWALK_CAFE,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "5:00 PM" }],
+    Friday: [{ open: "08:00 AM", close: "3:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const boosterJuice: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.BOOSTER,
+  hours: {
+    Monday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Tuesday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Wednesday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Thursday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Friday: [{ open: "10:00 AM", close: "2:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const mystic_common_hours: VendorHours = {
+  Monday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Tuesday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Wednesday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Thursday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Friday: [{ open: "11:00 AM", close: "3:00 PM" }],
+  Saturday: [],
   Sunday: [],
 };
+
+const chopBox: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.CHOPBOX,
+  hours: mystic_common_hours,
+};
+
+const flaminChicken: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.FLAMINCHICKEN,
+  hours: mystic_common_hours,
+};
+
+const fresco: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.FRESCO,
+  hours: mystic_common_hours,
+};
+
+const pickle_and_spice: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.PICKLE_SPICE,
+  hours: mystic_common_hours,
+};
+
+const tofinos: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.TOFINOS,
+  hours: mystic_common_hours,
+};
+
+const treks: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.TREKS,
+  hours: mystic_common_hours,
+};
+
+const beanThereCafe: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.BEAN_THERE_CAFE,
+  hours: {
+    Monday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Tuesday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Wednesday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Thursday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Friday: [{ open: "07:00 AM", close: "5:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const felicitas: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.FELICITAS,
+  hours: {
+    Monday: [{ open: "11:30 AM", close: "11:00 PM" }],
+    Tuesday: [{ open: "11:30 AM", close: "11:00 PM" }],
+    Wednesday: [{ open: "11:30 AM", close: "11:00 PM" }],
+    Thursday: [{ open: "11:30 AM", close: "11:59 PM" }],
+    Friday: [{ open: "11:30 AM", close: "11:59 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const theGrill: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.GRILL,
+  hours: {
+    Monday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Tuesday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Wednesday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Thursday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Friday: [{ open: "08:30 AM", close: "4:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const munchieBar: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.MUNCHIE,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Friday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Saturday: [{ open: "02:30 PM", close: "7:30 PM" }],
+    Sunday: [{ open: "02:30 PM", close: "7:30 PM" }],
+  },
+};
+
+const healthFoodBar: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.HEALTH_FB,
+  hours: {
+    Monday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Tuesday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Wednesday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Thursday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Friday: [{ open: "10:00 AM", close: "4:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const gradhouse: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.GRADHOUSE,
+  hours: {
+    Monday: [{ open: "11:30 AM", close: "2:00 PM" }],
+    Tuesday: [{ open: "11:30 AM", close: "8:00 PM" }],
+    Wednesday: [{ open: "11:30 AM", close: "8:00 PM" }],
+    Thursday: [{ open: "11:30 AM", close: "9:00 PM" }],
+    Friday: [{ open: "11:30 AM", close: "9:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const starbucks: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.STARBUCKS,
+  hours: {
+    Monday: [{ open: "07:30 AM", close: "7:00 PM" }],
+    Tuesday: [{ open: "07:30 AM", close: "7:00 PM" }],
+    Wednesday: [{ open: "07:30 AM", close: "7:00 PM" }],
+    Thursday: [{ open: "07:30 AM", close: "7:00 PM" }],
+    Friday: [{ open: "07:30 AM", close: "7:00 PM" }],
+    Saturday: [{ open: "11:00 AM", close: "5:00 PM" }],
+    Sunday: [{ open: "11:00 AM", close: "5:00 PM" }],
+  },
+};
+
+const uniclub: VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.UNICLUB,
+  hours: {
+    Monday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Tuesday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Wednesday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Thursday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Friday: [{ open: "08:00 AM", close: "7:30 PM" }],
+    Saturday: [],
+    Sunday: [],
+  },
+};
+
+const entree : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.ENTREE,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Friday: [{ open: "11:00 AM", close: "2:00 PM" }],
+    Saturday: [{ open: "5:00 PM", close: "7:30 PM" }],
+    Sunday: [{ open: "5:00 PM", close: "7:30 PM" }],
+  }
+};
+
+const greens : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.GREENS,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Friday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Saturday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Sunday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+  }
+};
+
+const shawarma : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.SHAWARMA,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Friday: [{ open: "11:00 AM", close: "2:00 PM" }],
+    Saturday: [],
+    Sunday: [],
+  }
+};
+
+const stirFry : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.STIRFRY,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Friday: [{ open: "11:00 AM", close: "2:00 PM" }, { open: "5:00 PM", close: "7:30 PM" }],
+    Saturday: [],
+    Sunday: [],
+  }
+};
+
+const deliCove : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.DELI_COVE,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "8:30 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "8:30 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "8:30 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "8:30 PM" }],
+    Friday: [{ open: "11:00 AM", close: "8:30 PM" }],
+    Saturday: [{ open: "11:00 AM", close: "8:30 PM" }],
+    Sunday: [{ open: "11:00 AM", close: "8:30 PM" }],
+  }
+};
+
+const soupSaladCove : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.SOUP_SALAD_COVE,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "7:30 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "7:30 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "7:30 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "7:30 PM" }],
+    Friday: [{ open: "11:00 AM", close: "7:30 PM" }],
+    Saturday: [{ open: "11:00 AM", close: "7:30 PM" }],
+    Sunday: [{ open: "11:00 AM", close: "7:30 PM" }],
+  }
+};
+
+const pizzaCove : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.PIZZA_COVE,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "9:00 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "9:00 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "9:00 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "9:00 PM" }],
+    Friday: [{ open: "11:00 AM", close: "9:00 PM" }],
+    Saturday: [{ open: "11:00 AM", close: "9:00 PM" }],
+    Sunday: [{ open: "11:00 AM", close: "9:00 PM" }],
+  }
+};
+
+const grillCove : VendorHoursWithId = {
+  vendor_name: VENDOR_NAMES.GRILL_COVE,
+  hours: {
+    Monday: [{ open: "11:00 AM", close: "10:00 PM" }],
+    Tuesday: [{ open: "11:00 AM", close: "10:00 PM" }],
+    Wednesday: [{ open: "11:00 AM", close: "10:00 PM" }],
+    Thursday: [{ open: "11:00 AM", close: "10:00 PM" }],
+    Friday: [{ open: "11:00 AM", close: "10:00 PM" }],
+    Saturday: [{ open: "11:00 AM", close: "10:00 PM" }],
+    Sunday: [{ open: "11:00 AM", close: "10:00 PM" }],
+  }
+};
+
+const vendorHoursExamples: VendorHoursWithId[] = [
+  bibliocafeHours,
+  macsHours,
+  generalStoreHours,
+  boardWalkCafe,
+  boosterJuice,
+  chopBox,
+  flaminChicken,
+  fresco,
+  pickle_and_spice,
+  tofinos,
+  treks,
+  beanThereCafe,
+  felicitas,
+  theGrill,
+  munchieBar,
+  healthFoodBar,
+  gradhouse,
+  starbucks,
+  uniclub,
+
+  entree,
+  greens,
+  shawarma,
+  stirFry,
+  deliCove,
+  soupSaladCove,
+  pizzaCove,
+  grillCove,
+
+];
+
+const STATIC_GetVendorHoursFor = (vendorName: string): VendorHours => {
+  const vendorHours = vendorHoursExamples.find(
+    (vendor) => vendor.vendor_name === vendorName
+  );
+
+  if (!vendorHours) {
+    console.warn(`NO HOURS FOR: ${vendorName}`);
+    return UndefinedHours.hours;
+  }
+
+  return vendorHours.hours;
+
+}
 
 export {
   DayOfWeek,
   VendorHours,
-  vendorHoursExample,
+  STATIC_GetVendorHoursFor,
   daysOfWeekInOrder,
   isVendorCurrentlyOpen,
   getVendorHoursForDayString,
