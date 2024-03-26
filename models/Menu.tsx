@@ -3116,7 +3116,7 @@ const STATIC_GetMenuForVendor = (vendorName: string): Menu => {
     return menu;
   }
 
-  console.warn(`NO MENU FOR: ${vendorName}`);
+  //console.warn(`NO MENU FOR: ${vendorName}`);
   return noMenu;
 
 }

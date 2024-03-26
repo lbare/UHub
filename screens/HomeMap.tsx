@@ -29,8 +29,6 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
-const menuSearch = new MenuSearch();
-
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
   const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
@@ -55,6 +53,8 @@ const HomeMap: React.FC = () => {
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
+
+  const menuSearch = new MenuSearch(buildings);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
