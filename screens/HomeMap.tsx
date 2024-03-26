@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   Image,
+  Pressable,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
@@ -19,6 +20,7 @@ import { SearchBar } from "../components/SearchBar";
 import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
 import TagFilterButton from "../components/TagFilterButton";
+import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -48,6 +50,8 @@ const HomeMap: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Map<MenuItem, FoodVendor>>(
     new Map()
   );
+  const [buildingFilters, setBuildingFilters] = useState<any[]>([]);
+  const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
@@ -60,7 +64,7 @@ const HomeMap: React.FC = () => {
 
   useEffect(() => {
     onSearchChange();
-  }, [searchInput]);
+  }, [searchInput, buildingFilters, openVendorsFilter]);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -68,8 +72,12 @@ const HomeMap: React.FC = () => {
   }, []);
 
   const onSearchChange = () => {
+    menuSearch.setBuildingFilters(buildingFilters);
     if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(searchInput);
+      const results = menuSearch.searchAllMenuItems(
+        searchInput,
+        openVendorsFilter
+      );
       setSearchResults(results);
     } else {
       setSearchResults(new Map());
@@ -411,7 +419,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 195,
+              height: 235,
               borderRadius: 20,
             }}
           >
@@ -466,6 +474,49 @@ const HomeMap: React.FC = () => {
                 menuSearchObject={menuSearch}
                 onUpdate={onSearchChange}
               />
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                margin: 15,
+                marginTop: 0,
+              }}
+            >
+              <Pressable
+                // Open Now filter button
+                onPress={() => {
+                  setOpenVendorsFilter(!openVendorsFilter);
+                }}
+                style={{
+                  backgroundColor: openVendorsFilter
+                    ? "#0a912eff"
+                    : "#00000000",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  borderColor: "#EDEDED",
+                  borderWidth: 2,
+                  borderRadius: 30,
+                  alignSelf: "flex-start",
+                }}
+              >
+                <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+                  Open Now
+                </Text>
+              </Pressable>
+              <View
+                style={{
+                  flex: 1,
+                }}
+              >
+                <BuildingFilterDropdown
+                  buildings={buildings}
+                  style={{ marginLeft: 10 }}
+                  selectedItems={buildingFilters}
+                  onUpdate={(newList: any) => {
+                    setBuildingFilters(newList);
+                  }}
+                />
+              </View>
             </View>
           </View>
         )}
