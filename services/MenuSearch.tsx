@@ -19,14 +19,12 @@ class MenuSearch {
   curBuildingFilters: string[] = [];
   curVendorFilters: string[] = [];
 
-  constructor() {
-    this.dataFetcher.getAllBuildings((buildings) => {
-      this.allBuildings = buildings;
-      this.getAllMenuItems();
+  constructor(buildings: Building[]) {
+    this.allBuildings = buildings;
+    this.getAllMenuItems();
 
-      this.fuse_obj = new Fuse(this.allMenuItem, {
-        keys: ["name"],
-      });
+    this.fuse_obj = new Fuse(this.allMenuItem, {
+      keys: ["name"],
     });
   }
 
