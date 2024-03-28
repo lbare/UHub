@@ -5,7 +5,7 @@
   "scripts": {
     "start": "yarn && expo start",
     "clean": "yarn && expo start -c",
-    "android": "expo start --android",
+    "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest -u"
