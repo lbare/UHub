@@ -8,7 +8,12 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import MapView, { Details, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, {
+  Details,
+  LatLng,
+  PROVIDER_GOOGLE,
+  Polygon,
+} from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -20,6 +25,8 @@ import { SearchBar } from "../components/SearchBar";
 import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
 import TagFilterButton from "../components/TagFilterButton";
+import buildingPolygons from "../services/buildingPolygons";
+import buildingPolygonsSimple from "../services/buildingPolygonsSimple";
 import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
 
 const UVicRegion: Coordinates = {
@@ -89,6 +96,7 @@ const HomeMap: React.FC = () => {
     const zoomLevel = Math.round(
       Math.log(maxLatitude / latitudeDelta) / Math.LN2
     );
+
     return zoomLevel;
   };
 
@@ -100,6 +108,25 @@ const HomeMap: React.FC = () => {
   const onZoomChangeComplete = (newRegion: Coordinates, isGesture: Details) => {
     if (isGesture) {
       isGesture && setUserLastRegion(newRegion);
+    }
+  };
+
+  const zoomToBuilding = (building: string) => {
+    console.log("Zooming to building: ", building);
+
+    const buildingData = buildings.find((b) => b.code === building);
+    console.log("Building Data: ", buildingData);
+
+    if (buildingData) {
+      const newRegion = {
+        latitude: buildingData.location.latitude,
+        longitude: buildingData.location.longitude,
+        latitudeDelta: region.latitudeDelta / 8,
+        longitudeDelta: region.longitudeDelta / 8,
+      };
+      if (_mapView.current) {
+        _mapView.current.animateToRegion(newRegion, 200);
+      }
     }
   };
 
@@ -375,7 +402,45 @@ const HomeMap: React.FC = () => {
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
         >
-          {buildings &&
+          {zoomLevel < 15
+            ? buildingPolygonsSimple &&
+              buildingPolygonsSimple.map(
+                (building, index) =>
+                  building && (
+                    <Polygon
+                      key={index}
+                      tappable={true}
+                      onPress={() => zoomToBuilding(building.name)}
+                      coordinates={building.coordinates.map((coord) => ({
+                        latitude: coord.latitude,
+                        longitude: coord.longitude,
+                      }))}
+                      strokeColor="#EB6931"
+                      strokeWidth={Math.max(zoomLevel - 12, 2)}
+                      fillColor={zoomLevel < 15 ? "#EB6931AA" : "#EB69312E"}
+                    />
+                  )
+              )
+            : buildingPolygons &&
+              buildingPolygons.map(
+                (building, index) =>
+                  building && (
+                    <Polygon
+                      key={index}
+                      tappable={true}
+                      onPress={() => zoomToBuilding(building.name)}
+                      coordinates={building.coordinates.map((coord) => ({
+                        latitude: coord.latitude,
+                        longitude: coord.longitude,
+                      }))}
+                      strokeColor="#EB6931"
+                      strokeWidth={zoomLevel - 12}
+                      fillColor={zoomLevel < 15 ? "#EB6931AA" : "#EB69312E"}
+                    />
+                  )
+              )}
+          {zoomLevel > 14 &&
+            buildings &&
             buildings.map((building) =>
               building.vendors.map((vendor, index) => (
                 <React.Fragment key={index}>
