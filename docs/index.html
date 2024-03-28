@@ -1,6 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-43QMH638JS"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-43QMH638JS");
+    </script>
+    <script type="text/javascript">
+      function handleDownload(platform) {
+        if (platform === "ios") {
+          gtag("event", "app_download", {
+            event_category: "download",
+            event_label: "ios",
+          });
+          gtag("event", "ios_download", {});
+          window.open("https://testflight.apple.com/join/V59ISKq6", "_blank");
+        } else if (platform === "android") {
+          gtag("event", "app_download", {
+            event_category: "download",
+            event_label: "android",
+          });
+          gtag("event", "android_download", {});
+          window.open(
+            "https://github.com/lbare/UHub/releases/download/v2.2.0/UHub-Android-v2-2-0_f8cf295f.apk",
+            "_blank"
+          );
+        }
+      }
+    </script>
     <title>UHub - Product Page</title>
     <link href="./css/main.css" type="text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,18 +73,19 @@
             sharing your feedback!
           </p>
           <br />
-          <button
-            onclick="window.open('https://testflight.apple.com/join/V59ISKq6', '_blank')"
-            style="margin-right: 10px"
-          >
+          <button onclick="handleDownload('ios')" style="margin-right: 10px">
             Download for ios
           </button>
-          <button
-            onclick="window.open('https://github.com/lbare/UHub/releases/download/v2.1.0/UHub-Android-v2-1-0_a82a8113.apk', '_blank')"
-          >
+          <button onclick="handleDownload('android')">
             Download .apk for Android
           </button>
           <br />
+          <noscript>
+            <b>
+              Please enable JavaScript for the app download buttons to work.
+            </b>
+            <br />
+          </noscript>
           &#x27A4;
           <a href="./instructions.html" target="_blank" style="color: #333"
             >Click here for installation instructions.</a
@@ -92,7 +129,7 @@
         alt="UHub Screenshot 1"
       />
       <img
-        src="./assets/screenshots/uhub_screenshot_v2-1_2.jpg"
+        src="./assets/screenshots/uhub_screenshot_v2-2_2.jpg"
         alt="UHub Screenshot 2"
       />
       <img
@@ -112,12 +149,15 @@
       <li>Browse detailed menus of food outlets</li>
       <li>Search the menu of all food outlets simultaneously</li>
       <li>See dietary restriction information</li>
+      <li>Filter results by dietary restrictions, buildings, and more</li>
       <li>View hours of operation</li>
     </ul>
     <p><u>Coming soon:</u></p>
     <ul>
-      <li>Filter results by dietary restrictions, buildings, and more</li>
+      <li>Crowd-sourced menu of the day</li>
       <li>View currently available study spaces on campus</li>
+      <li>Microwave locations</li>
+      <li>And more!</li>
     </ul>
     <h2>About the Team</h2>
     <p>
@@ -138,6 +178,11 @@
       Wiki:
       <a href="https://github.com/lbare/UHub/wiki" target="_blank"
         >https://github.com/lbare/UHub/wiki</a
+      >
+      <br />
+      Instagram:
+      <a href="https://www.instagram.com/uviccovemenu/" target="_blank"
+        >https://www.instagram.com/uviccovemenu</a
       >
     </p>
   </body>

@@ -38,13 +38,13 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
         backgroundColor: isToggled ? "#EB6931FF" : "#00000000",
         paddingHorizontal: 10,
         paddingVertical: 5,
-        borderColor: "#FFFFFF",
+        borderColor: "#EDEDED",
         borderWidth: 2,
         borderRadius: 30,
         alignSelf: "flex-start",
       }}
     >
-      <Text style={{ color: "#FFFFFF", textAlign: "center" }}>
+      <Text style={{ color: "#EDEDED", textAlign: "center" }}>
         {text ?? "Tag Button"}
       </Text>
     </Pressable>

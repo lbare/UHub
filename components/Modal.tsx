@@ -167,7 +167,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   className="w-8 h-8 pr-3 rounded-full justify-center items-center"
                   onPress={() => {
                     if (!openedModalFromSearch) {
-                      const previousVendor = getNextFoodVendorInBuilding(
+                      const previousVendor = getPreviousFoodVendorInBuilding(
                         vendor,
                         building
                       );
