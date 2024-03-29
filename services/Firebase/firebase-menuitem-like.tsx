@@ -7,8 +7,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
-
+import FirebaseAuthManager from "./firebase-auth";
 class FirebaseMenuItemFavouriteService {
+
   public static shared: FirebaseMenuItemFavouriteService =
     new FirebaseMenuItemFavouriteService();
 
@@ -21,8 +22,9 @@ class FirebaseMenuItemFavouriteService {
   >();
 
   private lastFetched: Date = new Date();
+  private authManager = new FirebaseAuthManager();
 
-  constructor() {
+  private constructor() {
     this.getAllItemsAndLikes().then((data) => {
       this.allItemsAndLikes = data;
       this.lastFetched = new Date();
@@ -37,6 +39,9 @@ class FirebaseMenuItemFavouriteService {
       this.allItemsAndLikes = new Map<String, Set<String>>(
         Object.entries(data)
       );
+
+      console.log("All items and likes fetched:", this.allItemsAndLikes);
+
       return this.allItemsAndLikes;
     } else {
       return new Map<String, Set<String>>();
@@ -51,6 +56,7 @@ class FirebaseMenuItemFavouriteService {
     if (minutes > whenOlderThanMinutes) {
       await this.getAllItemsAndLikes().then((data) => {
         this.allItemsAndLikes = data;
+        this.lastFetched = new Date();
       });
     }
   }
@@ -60,7 +66,14 @@ class FirebaseMenuItemFavouriteService {
     return this.allItemsAndLikes.get(itemId)?.size || 0;
   }
 
-  public async addLikeToItem(itemId: string, userId: string) {
+  public async addLikeToItem(itemId: string) {
+
+    const userId = this.authManager.getCurrentUserUID();
+
+    if (!userId) {
+      return Promise.reject(new Error("No user signed in"));
+    }
+
     const item = this.allItemsAndLikes.get(itemId);
 
     if (item) {
@@ -72,9 +85,18 @@ class FirebaseMenuItemFavouriteService {
     await updateDoc(this.docRef, {
       [itemId]: arrayUnion(userId),
     });
+
+    return this.getTotalLikesForItem(itemId);
   }
 
-  public async removeLikeFromItem(itemId: string, userId: string) {
+  public async removeLikeFromItem(itemId: string) {
+
+    const userId = this.authManager.getCurrentUserUID();
+
+    if (!userId) {
+      return Promise.reject(new Error("No user signed in"));
+    }
+
     const item = this.allItemsAndLikes.get(itemId);
 
     if (item) {
@@ -88,6 +110,20 @@ class FirebaseMenuItemFavouriteService {
     await updateDoc(this.docRef, {
       [itemId]: arrayRemove(userId),
     });
+
+    return this.getTotalLikesForItem(itemId);
+  }
+
+  public async doesUserLikeItem(itemId: string) {
+
+    const userId = this.authManager.getCurrentUserUID();
+
+    if (!userId) {
+      return Promise.reject(new Error("No user signed in"));
+    }
+
+    await this.updateAllItemsAndLikes(5);
+    return this.allItemsAndLikes.get(itemId)?.has(userId) || false;
   }
 }
 
