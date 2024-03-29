@@ -510,78 +510,104 @@ const HomeMap: React.FC = () => {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around",
-                margin: 10,
+                // width: `${100 - (100 - 83.33) / 2}%`, // use this to have tag scroll to right edge of screen
+                width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
+                marginLeft: `${(100 - 83.33) / 2}%`,
                 marginTop: 15,
+                marginBottom: 10,
               }}
             >
-              <TagFilterButton
-                text="Vegan"
-                tag={MenuItemTag.Vegan}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-              <TagFilterButton
-                text="Dairy Free"
-                tag={MenuItemTag.DairyFree}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-              <TagFilterButton
-                text="Gluten Free"
-                tag={MenuItemTag.GlutenFree}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-              <TagFilterButton
-                text="GF Option"
-                tag={MenuItemTag.GlutenFreeOption}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
+              <View
+                style={{
+                  borderRightWidth: 1,
+                  borderColor: "#EDEDED",
+                  marginRight: 10,
+                }}
+              >
+                <Pressable
+                  // Open Now filter button
+                  onPress={() => {
+                    setOpenVendorsFilter(!openVendorsFilter);
+                  }}
+                  style={{
+                    backgroundColor: openVendorsFilter
+                      ? "#0a912eff"
+                      : "#00000000",
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    marginRight: 10,
+                    borderColor: "#EDEDED",
+                    borderWidth: 1,
+                    borderRadius: 30,
+                    alignSelf: "flex-start",
+                  }}
+                >
+                  <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+                    Open Now
+                  </Text>
+                </Pressable>
+              </View>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
+                <TagFilterButton
+                  text="Vegan"
+                  tag={MenuItemTag.Vegan}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Vegan Option"
+                  tag={MenuItemTag.VeganOption}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Dairy Free"
+                  tag={MenuItemTag.DairyFree}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="DF Option"
+                  tag={MenuItemTag.DairyFreeOption}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Gluten Free"
+                  tag={MenuItemTag.GlutenFree}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="GF Option"
+                  tag={MenuItemTag.GlutenFreeOption}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Halal"
+                  tag={MenuItemTag.Halal}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+              </ScrollView>
             </View>
             <View
               style={{
-                flexDirection: "row",
-                margin: 15,
-                marginTop: 0,
+                width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
+                marginLeft: `${(100 - 83.33) / 2}%`,
               }}
             >
-              <Pressable
-                // Open Now filter button
-                onPress={() => {
-                  setOpenVendorsFilter(!openVendorsFilter);
+              <BuildingFilterDropdown
+                buildings={buildings}
+                selectedItems={buildingFilters}
+                onUpdate={(newList: any) => {
+                  setBuildingFilters(newList);
                 }}
-                style={{
-                  backgroundColor: openVendorsFilter
-                    ? "#0a912eff"
-                    : "#00000000",
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderColor: "#EDEDED",
-                  borderWidth: 1,
-                  borderRadius: 30,
-                  alignSelf: "flex-start",
-                }}
-              >
-                <Text style={{ color: "#EDEDED", textAlign: "center" }}>
-                  Open Now
-                </Text>
-              </Pressable>
-              <View
-                style={{
-                  flex: 1,
-                }}
-              >
-                <BuildingFilterDropdown
-                  buildings={buildings}
-                  style={{ marginLeft: 10 }}
-                  selectedItems={buildingFilters}
-                  onUpdate={(newList: any) => {
-                    setBuildingFilters(newList);
-                  }}
-                />
-              </View>
+              />
             </View>
           </View>
         )}

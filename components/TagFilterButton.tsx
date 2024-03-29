@@ -38,6 +38,7 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
         backgroundColor: isToggled ? "#EB6931FF" : "#00000000",
         paddingHorizontal: 10,
         paddingVertical: 5,
+        marginRight: 10,
         borderColor: "#EDEDED",
         borderWidth: 1,
         borderRadius: 30,
