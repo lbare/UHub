@@ -75,7 +75,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       section.items.map((item) => item.name)
     );
 
-    const likesPromises = allItems.map(
+    const totalLikes = allItems.map(
       (name) =>
         [name, menuItemLikeService.getTotalLikesForItem(name).toString()] as [
           string,
@@ -83,20 +83,16 @@ const CustomModal: React.FC<CustomModalProps> = ({
         ]
     );
 
-    const userLikesPromises = allItems.map(
+    const userLikesBools = allItems.map(
       (name) =>
         [name, menuItemLikeService.doesUserLikeItem(name)] as [string, boolean]
     );
+    
+    const likesCountMap = new Map<string, string>(totalLikes);
+    setItemLikesCount(likesCountMap);
+    const userLikesMap = new Map<string, boolean>(userLikesBools);
+    setDoesUserLikeItem(userLikesMap);
 
-    Promise.all(likesPromises).then((results) => {
-      const likesCountMap = new Map<string, string>(results);
-      setItemLikesCount(likesCountMap);
-    });
-
-    Promise.all(userLikesPromises).then((results) => {
-      const userLikesMap = new Map<string, boolean>(results);
-      setDoesUserLikeItem(userLikesMap);
-    });
   }, [vendor]);
 
   const toggleLikesForItem = (item: string) => {
