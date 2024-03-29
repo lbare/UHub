@@ -15,13 +15,13 @@ class FirebaseMenuItemFavouriteService {
   dataCollection = collection(db, "MenuItemFavourite");
   docRef = doc(this.dataCollection, "MenuItemFavourite");
 
-  private allItemsAndLikes: Map<String, Set<String>> = new Map<
+  private allItemsAndLikes: Map<String, Array<String>> = new Map<
     string,
-    Set<String>
+    Array<String>
   >();
 
   private lastFetched: Date = new Date();
-  private authManager = new FirebaseAuthManager();
+  private authManager = new FirebaseAuthManager(true);
 
   private constructor() {
     this.getAllItemsAndLikes().then((data) => {
@@ -35,7 +35,7 @@ class FirebaseMenuItemFavouriteService {
 
     if (docSnap.exists()) {
       const data = docSnap.data();
-      this.allItemsAndLikes = new Map<String, Set<String>>(
+      this.allItemsAndLikes = new Map<String, Array<String>>(
         Object.entries(data)
       );
 
@@ -43,7 +43,7 @@ class FirebaseMenuItemFavouriteService {
 
       return this.allItemsAndLikes;
     } else {
-      return new Map<String, Set<String>>();
+      return new Map<String, Array<String>>();
     }
   }
 
@@ -60,24 +60,27 @@ class FirebaseMenuItemFavouriteService {
     }
   }
 
-  public async getTotalLikesForItem(itemId: string) {
-    await this.updateAllItemsAndLikes(5);
-    return this.allItemsAndLikes.get(itemId)?.size || 0;
+  public getTotalLikesForItem(itemId: string) {
+    const itemLikes = this.allItemsAndLikes.get(itemId);
+    if (!itemLikes) {
+      return 0
+    }
+    return itemLikes.length;
   }
 
   public addLikeToItem(itemId: string) {
     const userId = this.authManager.getCurrentUserUID();
 
     if (!userId) {
-      return Promise.reject(new Error("No user signed in"));
+      return new Error("No user signed in");
     }
 
     const item = this.allItemsAndLikes.get(itemId);
 
     if (item) {
-      this.allItemsAndLikes.get(itemId)!.add(userId);
+      this.allItemsAndLikes.get(itemId)?.push(userId);
     } else {
-      this.allItemsAndLikes.set(itemId, new Set<string>([userId]));
+      this.allItemsAndLikes.set(itemId, [userId]);
     }
 
     updateDoc(this.docRef, {
@@ -91,13 +94,14 @@ class FirebaseMenuItemFavouriteService {
     const userId = this.authManager.getCurrentUserUID();
 
     if (!userId) {
-      return Promise.reject(new Error("No user signed in"));
+      return new Error("No user signed in");
     }
 
     const item = this.allItemsAndLikes.get(itemId);
 
     if (item) {
-      this.allItemsAndLikes.get(itemId)!.delete(userId);
+      const arrayWithoutUser = this.allItemsAndLikes.get(itemId)!.filter((value) => value !== userId)
+      this.allItemsAndLikes.set(itemId, arrayWithoutUser) ;
     } else {
       console.warn(
         "Tried to remove like from item that doesn't exist in the database."
@@ -111,13 +115,12 @@ class FirebaseMenuItemFavouriteService {
     return this.getTotalLikesForItem(itemId);
   }
 
-  public async doesUserLikeItem(itemId: string) {
+  public doesUserLikeItem(itemId: string) {
     const userId = this.authManager.getCurrentUserUID();
     if (!userId) {
-      return Promise.reject(new Error("No user signed in"));
+      return false
     }
-    await this.updateAllItemsAndLikes(5);
-    return this.allItemsAndLikes.get(itemId)?.has(userId) || false;
+    return this.allItemsAndLikes.get(itemId)?.includes(userId) || false;
   }
 }
 
