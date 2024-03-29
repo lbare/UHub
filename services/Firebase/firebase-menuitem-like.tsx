@@ -66,7 +66,7 @@ class FirebaseMenuItemFavouriteService {
     return this.allItemsAndLikes.get(itemId)?.size || 0;
   }
 
-  public async addLikeToItem(itemId: string) {
+  public addLikeToItem(itemId: string) {
 
     const userId = this.authManager.getCurrentUserUID();
 
@@ -82,14 +82,14 @@ class FirebaseMenuItemFavouriteService {
       this.allItemsAndLikes.set(itemId, new Set<string>([userId]));
     }
 
-    await updateDoc(this.docRef, {
+    updateDoc(this.docRef, {
       [itemId]: arrayUnion(userId),
     });
 
     return this.getTotalLikesForItem(itemId);
   }
 
-  public async removeLikeFromItem(itemId: string) {
+  public removeLikeFromItem(itemId: string) {
 
     const userId = this.authManager.getCurrentUserUID();
 
@@ -107,7 +107,7 @@ class FirebaseMenuItemFavouriteService {
       );
     }
 
-    await updateDoc(this.docRef, {
+    updateDoc(this.docRef, {
       [itemId]: arrayRemove(userId),
     });
 
