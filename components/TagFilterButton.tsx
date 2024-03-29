@@ -39,7 +39,7 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderColor: "#EDEDED",
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 30,
         alignSelf: "flex-start",
       }}

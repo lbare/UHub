@@ -76,7 +76,7 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
           paddingHorizontal: 10,
           paddingVertical: 5,
           borderRadius: 10,
-          borderWidth: 2,
+          borderWidth: 1,
           borderColor: "#EDEDED",
           ...style,
         },
