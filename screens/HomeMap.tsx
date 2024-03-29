@@ -557,43 +557,25 @@ const HomeMap: React.FC = () => {
               >
                 <TagFilterButton
                   text="Vegan"
-                  tag={MenuItemTag.Vegan}
-                  menuSearchObject={menuSearch}
-                  onUpdate={onSearchChange}
-                />
-                <TagFilterButton
-                  text="Vegan Option"
-                  tag={MenuItemTag.VeganOption}
+                  tags={[MenuItemTag.Vegan, MenuItemTag.VeganOption]}
                   menuSearchObject={menuSearch}
                   onUpdate={onSearchChange}
                 />
                 <TagFilterButton
                   text="Dairy Free"
-                  tag={MenuItemTag.DairyFree}
-                  menuSearchObject={menuSearch}
-                  onUpdate={onSearchChange}
-                />
-                <TagFilterButton
-                  text="DF Option"
-                  tag={MenuItemTag.DairyFreeOption}
+                  tags={[MenuItemTag.DairyFree, MenuItemTag.DairyFreeOption]}
                   menuSearchObject={menuSearch}
                   onUpdate={onSearchChange}
                 />
                 <TagFilterButton
                   text="Gluten Free"
-                  tag={MenuItemTag.GlutenFree}
-                  menuSearchObject={menuSearch}
-                  onUpdate={onSearchChange}
-                />
-                <TagFilterButton
-                  text="GF Option"
-                  tag={MenuItemTag.GlutenFreeOption}
+                  tags={[MenuItemTag.GlutenFree, MenuItemTag.GlutenFreeOption]}
                   menuSearchObject={menuSearch}
                   onUpdate={onSearchChange}
                 />
                 <TagFilterButton
                   text="Halal"
-                  tag={MenuItemTag.Halal}
+                  tags={[MenuItemTag.Halal]}
                   menuSearchObject={menuSearch}
                   onUpdate={onSearchChange}
                 />

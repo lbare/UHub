@@ -4,27 +4,37 @@ import MenuSearch from "../services/MenuSearch";
 import React from "react";
 interface TagFilterButtonProps {
   text: string;
-  tag: MenuItemTag;
+  tags: MenuItemTag[];
   menuSearchObject: MenuSearch;
   onUpdate: () => void;
 }
 
 const TagFilterButton: React.FC<TagFilterButtonProps> = ({
   text,
-  tag,
+  tags,
   menuSearchObject,
   onUpdate,
 }) => {
-  const [isToggled, setToggle] = React.useState(
-    menuSearchObject.curTagFilters.includes(tag)
-  );
+  const checkIfToggled = (): boolean => {
+    for (let i = 0; i < menuSearchObject.curTagFilters.length; i++) {
+      if (
+        tags.length === menuSearchObject.curTagFilters[i].length &&
+        tags.every((el) => menuSearchObject.curTagFilters[i].includes(el))
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const [isToggled, setToggle] = React.useState(checkIfToggled());
 
   const handlePress = () => {
     setToggle(!isToggled);
     if (isToggled) {
-      menuSearchObject.removeTagFilter(tag);
+      menuSearchObject.removeTagFilter(tags);
     } else {
-      menuSearchObject.addTagFilter(tag);
+      menuSearchObject.addTagFilter(tags);
     }
     // Calls the parent's search function to redo search
     // with the existing query and new filters
