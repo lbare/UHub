@@ -9,6 +9,7 @@ import { BuildingContext } from "./contexts/BuildingContext";
 import { db } from "./services/firebase";
 import loadAssets from "./hooks/loadAssets";
 import { Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [buildings, setBuildings] = useState<Building[]>([]);
@@ -17,25 +18,36 @@ export default function App() {
   useEffect(() => {
     const prepare = async () => {
       try {
-        const buildingsColRef = collection(db, "Building:V2");
-        const querySnapshot = await getDocs(buildingsColRef);
         await loadAssets();
 
-        const buildingsArray: Building[] = [];
+        // First try to load cached data
+        const cachedData = await AsyncStorage.getItem("buildings");
+        if (cachedData) {
+          setBuildings(JSON.parse(cachedData));
+          console.log("Buildings fetched from cache:", JSON.parse(cachedData));
+        } else {
+          // Data not in cache, fetch from Firebase
+          const buildingsColRef = collection(db, "Building:V2");
+          const querySnapshot = await getDocs(buildingsColRef);
 
-        querySnapshot.forEach((doc) => {
-          const buildingData = doc.data() as Building;
-          buildingsArray.push(buildingData);
-        });
+          const buildingsArray: Building[] = [];
 
-        setBuildings(buildingsArray);
-        console.log("Buildings fetched:", buildingsArray);
+          querySnapshot.forEach((doc) => {
+            const buildingData = doc.data() as Building;
+            buildingsArray.push(buildingData);
+          });
+
+          setBuildings(buildingsArray);
+          await AsyncStorage.setItem(
+            "buildings",
+            JSON.stringify(buildingsArray)
+          );
+          console.log("Buildings fetched and cached:", buildingsArray);
+        }
       } catch (error) {
         console.error("Error fetching buildings:", error);
       } finally {
-        setTimeout(() => {
-          setIsReady(true);
-        }, 2000);
+        setIsReady(true);
       }
     };
 
