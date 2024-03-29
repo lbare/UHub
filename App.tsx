@@ -15,43 +15,49 @@ export default function App() {
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [isReady, setIsReady] = useState(false);
 
-  useEffect(() => {
-    const prepare = async () => {
-      try {
-        await loadAssets();
+  const fetchData = async () => {
+    try {
+      await loadAssets();
+      const cache = await AsyncStorage.getItem("buildings_cache");
+      const now = new Date();
 
-        // First try to load cached data
-        const cachedData = await AsyncStorage.getItem("buildings");
-        if (cachedData) {
-          setBuildings(JSON.parse(cachedData));
-          console.log("Buildings fetched from cache:", JSON.parse(cachedData));
+      if (cache) {
+        const { data, timestamp } = JSON.parse(cache);
+        const cacheAge = now.getTime() - timestamp;
+
+        if (cacheAge < 86400000) {
+          // 24 hours in milliseconds
+          setBuildings(data);
+          console.log("Using cached data");
         } else {
-          // Data not in cache, fetch from Firebase
-          const buildingsColRef = collection(db, "Building:V2");
-          const querySnapshot = await getDocs(buildingsColRef);
-
-          const buildingsArray: Building[] = [];
-
-          querySnapshot.forEach((doc) => {
-            const buildingData = doc.data() as Building;
-            buildingsArray.push(buildingData);
-          });
-
-          setBuildings(buildingsArray);
-          await AsyncStorage.setItem(
-            "buildings",
-            JSON.stringify(buildingsArray)
-          );
-          console.log("Buildings fetched and cached:", buildingsArray);
+          await updateDataFromFirebase();
         }
-      } catch (error) {
-        console.error("Error fetching buildings:", error);
-      } finally {
-        setIsReady(true);
+      } else {
+        await updateDataFromFirebase();
       }
-    };
+    } catch (error) {
+      console.error("Error fetching buildings:", error);
+    } finally {
+      setIsReady(true);
+    }
+  };
 
-    prepare();
+  const updateDataFromFirebase = async () => {
+    const querySnapshot = await getDocs(collection(db, "Building:V2"));
+    const buildingsArray = querySnapshot.docs.map(
+      (doc) => doc.data() as Building
+    );
+
+    setBuildings(buildingsArray);
+    await AsyncStorage.setItem(
+      "buildings_cache",
+      JSON.stringify({ data: buildingsArray, timestamp: new Date().getTime() })
+    );
+    console.log("Using new data");
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   if (!isReady) {
