@@ -17,7 +17,6 @@ class FirebaseAuthManager {
         callbackOnAuthStateChanged(user);
       })
     }
-    
   }
 
   private getCurrentAuth() {

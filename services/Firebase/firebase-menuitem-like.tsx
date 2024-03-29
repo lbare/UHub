@@ -9,7 +9,6 @@ import {
 import { db } from "../firebase";
 import FirebaseAuthManager from "./firebase-auth";
 class FirebaseMenuItemFavouriteService {
-
   public static shared: FirebaseMenuItemFavouriteService =
     new FirebaseMenuItemFavouriteService();
 
@@ -67,7 +66,6 @@ class FirebaseMenuItemFavouriteService {
   }
 
   public addLikeToItem(itemId: string) {
-
     const userId = this.authManager.getCurrentUserUID();
 
     if (!userId) {
@@ -90,7 +88,6 @@ class FirebaseMenuItemFavouriteService {
   }
 
   public removeLikeFromItem(itemId: string) {
-
     const userId = this.authManager.getCurrentUserUID();
 
     if (!userId) {
@@ -115,16 +112,13 @@ class FirebaseMenuItemFavouriteService {
   }
 
   public async doesUserLikeItem(itemId: string) {
-
     const userId = this.authManager.getCurrentUserUID();
-
     if (!userId) {
       return Promise.reject(new Error("No user signed in"));
     }
-
     await this.updateAllItemsAndLikes(5);
     return this.allItemsAndLikes.get(itemId)?.has(userId) || false;
   }
 }
 
-export default FirebaseMenuItemFavouriteService;
+export default FirebaseMenuItemFavouriteService.shared;
