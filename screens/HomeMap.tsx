@@ -28,6 +28,7 @@ import TagFilterButton from "../components/TagFilterButton";
 import buildingPolygons from "../services/buildingPolygons";
 import buildingPolygonsSimple from "../services/buildingPolygonsSimple";
 import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
+import { Building } from "../models/Building";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -35,6 +36,8 @@ const UVicRegion: Coordinates = {
   longitude: -123.3121273188308,
   longitudeDelta: 0.01,
 };
+
+let menuSearch: MenuSearch;
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
@@ -49,7 +52,9 @@ const HomeMap: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [openedModalFromSearch, setOpenedModalFromSearch] =
     useState<boolean>(false);
-  const buildings = useContext(BuildingContext);
+  const [buildings, setBuildings] = useState<Building[]>(
+    useContext(BuildingContext)
+  );
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Map<MenuItem, FoodVendor>>(
@@ -61,7 +66,11 @@ const HomeMap: React.FC = () => {
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
 
-  const menuSearch = new MenuSearch(buildings);
+  useEffect(() => {
+    // dataFetcher.getAllBuildings(setBuildings);
+    menuSearch = new MenuSearch(buildings); // useEffect only creates once on first render
+    onZoomChange(UVicRegion);
+  }, []);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -72,11 +81,6 @@ const HomeMap: React.FC = () => {
   useEffect(() => {
     onSearchChange();
   }, [searchInput, buildingFilters, openVendorsFilter]);
-
-  useEffect(() => {
-    // dataFetcher.getAllBuildings(setBuildings);
-    onZoomChange(UVicRegion);
-  }, []);
 
   const onSearchChange = () => {
     menuSearch.setBuildingFilters(buildingFilters);
