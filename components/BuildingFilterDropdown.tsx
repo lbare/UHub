@@ -60,6 +60,7 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
         subText: "#a3a3a3",
         itemBackground: "#00000000",
         subItemBackground: "#00000000",
+        selectToggleTextColor: "#EDEDED",
       }}
       styles={{
         container: {
@@ -71,14 +72,13 @@ const BuildingFilterDropdown: React.FC<BuildingFilterDropdownProps> = ({
           borderRadius: 20,
         },
         selectToggle: {
-          backgroundColor: "#EDEDED",
+          backgroundColor: "#00000000",
           paddingHorizontal: 10,
           paddingVertical: 5,
           borderRadius: 10,
+          borderWidth: 1,
+          borderColor: "#EDEDED",
           ...style,
-        },
-        selectToggleText: {
-          color: "#000000",
         },
       }}
       headerComponent={
