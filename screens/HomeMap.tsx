@@ -521,13 +521,7 @@ const HomeMap: React.FC = () => {
                 marginBottom: 10,
               }}
             >
-              <View
-                style={{
-                  borderRightWidth: 1,
-                  borderColor: "#EDEDED",
-                  marginRight: 10,
-                }}
-              >
+              <View>
                 <Pressable
                   // Open Now filter button
                   onPress={() => {
@@ -535,22 +529,29 @@ const HomeMap: React.FC = () => {
                   }}
                   style={{
                     backgroundColor: openVendorsFilter
-                      ? "#0a912eff"
+                      ? "#154058"
                       : "#00000000",
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 12,
                     paddingVertical: 5,
-                    marginRight: 10,
-                    borderColor: "#EDEDED",
+                    borderColor: openVendorsFilter ? "#154058" : "#EDEDED6E",
                     borderWidth: 1,
                     borderRadius: 30,
                     alignSelf: "flex-start",
                   }}
                 >
-                  <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+                  <Text
+                    style={{
+                      color: "#EDEDED",
+                      textAlign: "center",
+                      fontSize: 16,
+                    }}
+                  >
                     Open Now
                   </Text>
                 </Pressable>
               </View>
+              <View className="mx-2 w-0.5 h-full bg-neutral-500" />
+
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
