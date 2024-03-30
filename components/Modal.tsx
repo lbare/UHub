@@ -14,7 +14,12 @@ import {
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
 
-import { CaretLeft, CaretRight, MagnifyingGlass } from "phosphor-react-native";
+import {
+  CaretLeft,
+  CaretRight,
+  MagnifyingGlass,
+  Heart,
+} from "phosphor-react-native";
 import { Building } from "../models/Building";
 import {
   DayOfWeek,
@@ -24,6 +29,8 @@ import {
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
 } from "../models/VendorHours";
+
+import menuItemLikeService from "../services/Firebase/firebase-menuitem-like";
 
 interface CustomModalProps {
   modalVisible: boolean;
@@ -52,12 +59,57 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [showExpandedHours, setShowExpandedHours] = useState(false);
+  const [itemLikesCount, setItemLikesCount] = useState<Map<string, string>>(
+    new Map()
+  );
+  const [doesUserLikeItem, setDoesUserLikeItem] = useState<
+    Map<string, boolean>
+  >(new Map());
 
   useEffect(() => {
-    if (vendor && vendor.menu.sections.length > 0) {
-      setSelectedSection(vendor.menu.sections[0].name);
-    }
+    if (!vendor || vendor.menu.sections.length === 0) return;
+
+    setSelectedSection(vendor.menu.sections[0].name);
+
+    const allItems = vendor.menu.sections.flatMap((section) =>
+      section.items.map((item) => item.name)
+    );
+
+    const totalLikes = allItems.map(
+      (name) =>
+        [name, menuItemLikeService.getTotalLikesForItem(name).toString()] as [
+          string,
+          string
+        ]
+    );
+
+    const userLikesBools = allItems.map(
+      (name) =>
+        [name, menuItemLikeService.doesUserLikeItem(name)] as [string, boolean]
+    );
+    
+    const likesCountMap = new Map<string, string>(totalLikes);
+    setItemLikesCount(likesCountMap);
+    const userLikesMap = new Map<string, boolean>(userLikesBools);
+    setDoesUserLikeItem(userLikesMap);
+
   }, [vendor]);
+
+  const toggleLikesForItem = (item: string) => {
+    if (doesUserLikeItem.get(item)) {
+      const newLikesCount = menuItemLikeService.removeLikeFromItem(item);
+      setItemLikesCount(itemLikesCount.set(item, newLikesCount.toString()));
+      setDoesUserLikeItem(
+        new Map<string, boolean>(doesUserLikeItem.set(item, false))
+      );
+    } else {
+      const newLikesCount = menuItemLikeService.addLikeToItem(item);
+      setItemLikesCount(itemLikesCount.set(item, newLikesCount.toString()));
+      setDoesUserLikeItem(
+        new Map<string, boolean>(doesUserLikeItem.set(item, true))
+      );
+    }
+  };
 
   return (
     <Modal
@@ -249,38 +301,56 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 if (section.name === selectedSection) {
                   return (
                     <React.Fragment key={index}>
-                      <View className="mb-6 w-full px-4">
+                      <View className="mb-6 w-full">
                         {section.items.map((item, itemIndex) => (
                           <View className="flex flex-row" key={itemIndex}>
                             <View
-                              className="flex-1"
+                              className="flex-initial w-full px-4"
                               style={{
                                 backgroundColor:
                                   itemIndex % 2 == 0 ? "#282828" : "#1D1D1D",
-                                marginLeft: -15,
-                                paddingLeft: 15,
-                                marginRight: -15,
-                                paddingRight: 15,
                                 paddingBottom: 8,
                                 paddingVertical: 8,
                               }}
                             >
-                              <Text className="text-base font-medium text-neutral-200">
-                                {item.name}
-                              </Text>
-                              {item.description && (
-                                <Text className="text-sm mt-1 text-neutral-400">
-                                  {item.description}
-                                </Text>
-                              )}
-                              {item.tags && item.tags.length > 0 && (
-                                <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
-                                  {item.tags.join(", ")}
-                                </Text>
-                              )}
-                              <Text className="text-md mt-1 font-semibold text-neutral-200">
-                                ${item.price.toFixed(2)}
-                              </Text>
+                              <View className="flex-row justify-between items-center">
+                                <View className="flex-initial">
+                                  <Text className="text-base font-medium text-neutral-200">
+                                    {item.name}
+                                  </Text>
+                                  {item.description && (
+                                    <Text className="text-sm mt-1 text-neutral-400">
+                                      {item.description}
+                                    </Text>
+                                  )}
+                                  {item.tags && item.tags.length > 0 && (
+                                    <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
+                                      {item.tags.join(", ")}
+                                    </Text>
+                                  )}
+                                  <Text className="text-md mt-1 font-semibold text-neutral-200">
+                                    ${item.price.toFixed(2)}
+                                  </Text>
+                                </View>
+                                <TouchableOpacity
+                                  onPress={() => toggleLikesForItem(item.name)}
+                                >
+                                  <View className="w-14 h-12 justify-center items-center flex-none">
+                                    <Heart
+                                      size={20}
+                                      color="#EB6931"
+                                      weight={
+                                        doesUserLikeItem.get(item.name)
+                                          ? "fill"
+                                          : "regular"
+                                      }
+                                    />
+                                    <Text className="text-xs text-neutral-300 mt-2">
+                                      {itemLikesCount.get(item.name) || "-1"}
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
+                              </View>
                             </View>
                           </View>
                         ))}
