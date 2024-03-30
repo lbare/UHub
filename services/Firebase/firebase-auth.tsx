@@ -11,15 +11,22 @@ import {
 
 class FirebaseAuthManager {
 
-  private mocked: boolean;
+  // private mocked: boolean;
 
-  constructor(mocked: boolean = false, callbackOnAuthStateChanged?: (user: User | null) => void) {
+  // constructor(mocked: boolean = false, callbackOnAuthStateChanged?: (user: User | null) => void) {
+  //   if (callbackOnAuthStateChanged) {
+  //     onAuthStateChanged(this.getCurrentAuth(), (user) => {
+  //       callbackOnAuthStateChanged(user);
+  //     })
+  //   }
+  //   this.mocked = mocked;
+  // }
+  constructor(callbackOnAuthStateChanged?: (user: User | null) => void) {
     if (callbackOnAuthStateChanged) {
       onAuthStateChanged(this.getCurrentAuth(), (user) => {
         callbackOnAuthStateChanged(user);
-      })
+      });
     }
-    this.mocked = mocked;
   }
 
   private getCurrentAuth() {
@@ -38,9 +45,9 @@ class FirebaseAuthManager {
 
   public getCurrentUserUID(): string | null {
     
-    if (this.mocked) {
-      return "rahul@uvic.ca";
-    }
+    // if (this.mocked) {
+    //   return "rahul@uvic.ca";
+    // }
 
     try {
       return this.getCurrentUser().uid;

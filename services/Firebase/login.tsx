@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, Modal } from 'react-native';
+import { View,TouchableOpacity, Text, TextInput, Button, StyleSheet, Alert, Modal,Image } from 'react-native';
 import FirebaseAuthManager from './firebase-auth'; 
 
 type LoginPageProps = {
@@ -7,7 +7,6 @@ type LoginPageProps = {
   setModalVisible: (visible: boolean) => void;
 };
 
-// Use props in your component
 const LoginPage: React.FC<LoginPageProps> = ({ modalVisible, setModalVisible }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +18,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ modalVisible, setModalVisible }) 
     try {
       await authManager.signIn(email, password);
       Alert.alert("Success", "You are now signed in.");
-      setModalVisible(false); // Close modal upon successful sign-in
+      setModalVisible(false); 
     } catch (error) {
       console.error(error);
       setErrorMessage("Failed to sign in. Please check your credentials.");
@@ -30,7 +29,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ modalVisible, setModalVisible }) 
     try {
       await authManager.signUp(email, password);
       Alert.alert("Success", "Account created. You are now signed in.");
-      setModalVisible(false); // Close modal upon successful sign-up
+      setModalVisible(false); 
     } catch (error) {
       console.error(error);
       setErrorMessage("Failed to sign up. Please make sure your email is a valid UVic email.");
@@ -41,8 +40,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ modalVisible, setModalVisible }) 
     <Modal
       visible={modalVisible}
       animationType="slide"
-      onRequestClose={() => setModalVisible(false)} // Allows closing the modal with the Android back button
+      onRequestClose={() => setModalVisible(false)} 
     >
+        <View style={styles.container}>
+        <Image
+          source={require('../../assets/logo.png')} 
+          style={styles.logo}
+        />
+
+      </View>
       <View style={styles.container}>
         <TextInput
           placeholder="Email"
@@ -60,30 +66,68 @@ const LoginPage: React.FC<LoginPageProps> = ({ modalVisible, setModalVisible }) 
           secureTextEntry
         />
         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
-        <Button title="Sign In" onPress={handleSignIn} />
-        <Button title="Sign Up" onPress={handleSignUp} />
+        <TouchableOpacity onPress={handleSignIn} style={styles.signInButton}>
+        <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 20,
-  },
-});
+    signInButton: {
+        backgroundColor: '#4CAF50', 
+        width: '100%',
+        padding: 10,
+        alignItems: 'center',
+        borderRadius: 5,
+        marginBottom: 10, 
+      },
+      signUpButton: {
+        backgroundColor: '#2196F3', 
+        width: '100%',
+        padding: 10,
+        alignItems: 'center',
+        borderRadius: 5,
+        marginTop: 10, 
+      },
+      buttonText: {
+        color: '#ffffff', 
+        fontWeight: 'bold',
+      },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center', 
+      padding: 20,
+      backgroundColor: '#408CA8', 
+    },
+    logo: {
+        height: 100, 
+        width: 100,
+        marginBottom: -220, 
+    },
+    input: {
+      height: 50, 
+      borderColor: '#007bff', 
+      borderWidth: 1,
+      marginBottom: 20,
+      marginTop: 0,
+      paddingHorizontal: 10,
+      borderRadius: 5, 
+      width: '100%', 
+      backgroundColor: '#ffffff', 
+    },
+    error: {
+      color: '#dc3545',
+      marginBottom: 20,
+      width: '100%', 
+      textAlign: 'center',
+    },
+  });
 
 export default LoginPage;
