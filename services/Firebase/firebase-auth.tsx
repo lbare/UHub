@@ -19,6 +19,7 @@ class FirebaseAuthManager {
     }
   }
 
+
   private getCurrentAuth() {
     return getAuth();
   }

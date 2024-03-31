@@ -102,21 +102,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   }, [vendor]);
 
-  // const toggleLikesForItem = (item: string) => {
-  //   if (doesUserLikeItem.get(item)) {
-  //     const newLikesCount = menuItemLikeService.removeLikeFromItem(item);
-  //     setItemLikesCount(itemLikesCount.set(item, newLikesCount.toString()));
-  //     setDoesUserLikeItem(
-  //       new Map<string, boolean>(doesUserLikeItem.set(item, false))
-  //     );
-  //   } else {
-  //     const newLikesCount = menuItemLikeService.addLikeToItem(item);
-  //     setItemLikesCount(itemLikesCount.set(item, newLikesCount.toString()));
-  //     setDoesUserLikeItem(
-  //       new Map<string, boolean>(doesUserLikeItem.set(item, true))
-  //     );
-  //   }
-  // };
   const toggleLikesForItem = (item: string): void => {
     if (!authManager.getCurrentUserUID()) {
       setIsLoginModalVisible(true); // Show login modal if not logged in

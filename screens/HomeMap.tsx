@@ -47,12 +47,14 @@ interface UserPopupProps {
   isVisible: boolean;
   email: string | null;
   onLogout: () => void;
+  onSignIn: () => void;
   onClose: () => void;
 }
 const UserPopup: React.FC<UserPopupProps> = ({
   isVisible,
   email,
   onLogout,
+  onSignIn,
   onClose,
 }) => (
   <Modal visible={isVisible} transparent={true} animationType="slide">
@@ -69,7 +71,15 @@ const UserPopup: React.FC<UserPopupProps> = ({
             </Pressable>
           </>
         ) : (
-          <Text style={styles.modalText}>Not logged in</Text>
+          <>
+            <Text style={styles.modalText}>Not logged in</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={onSignIn} 
+            >
+              <Text style={styles.textStyle}>Sign In</Text>
+            </Pressable>
+          </>
         )}
         <Pressable
           style={[styles.button, styles.buttonClose]}
@@ -110,6 +120,7 @@ const HomeMap: React.FC = () => {
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState<boolean>(false);
 
   const authManager = new FirebaseAuthManager((user) => {
     if (user) {
@@ -127,8 +138,11 @@ const HomeMap: React.FC = () => {
       console.error('Logout failed:', error);
     });
   };
-
-
+  const handleSignIn = (): void => {
+    console.log('Navigate to Sign In screen or open Sign In modal');
+    // Implement navigation or modal opening logic here
+    setIsLoginModalVisible(true); 
+  };
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -526,7 +540,6 @@ const HomeMap: React.FC = () => {
             )}
         </MapView>
 
-          {/* CODE starts FOR LOGOUT*/}
           <View style={{ position: 'absolute', bottom: 25, left: 10 }}>
             <TouchableOpacity onPress={() => setPopupVisible(true)}>
               <MaterialCommunityIcons name="account-circle" size={40} color="#154058" />
@@ -537,9 +550,9 @@ const HomeMap: React.FC = () => {
             isVisible={popupVisible}
             email={userEmail}
             onLogout={handleLogout}
+            onSignIn={handleSignIn} 
             onClose={() => setPopupVisible(false)}
           />
-        {/* CODE ENDS FOR LOGOUT*/}
         <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -723,6 +736,14 @@ const HomeMap: React.FC = () => {
           )}
         </ScrollView>
       </View>
+      {
+        isLoginModalVisible && (
+          <LoginPage
+            modalVisible={isLoginModalVisible}
+            setModalVisible={setIsLoginModalVisible}
+          />
+        )
+      }
       {!(searchOpen || modalVisible) && (
         <TouchableOpacity
           activeOpacity={1}
@@ -787,17 +808,16 @@ const HomeMap: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  // Existing styles...
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 20,
   },
   modalView: {
     margin: 20,
     backgroundColor: "white",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
@@ -810,8 +830,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
+    margin: 2,
     elevation: 2,
   },
   buttonClose: {
