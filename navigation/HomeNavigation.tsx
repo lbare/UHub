@@ -21,8 +21,8 @@ const HomeNavigation: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        animationEnabled: true, // Enable animation
-        animationTypeForReplace: "push", // Set the animation type
+        animationEnabled: true, 
+        animationTypeForReplace: "push",
       }}
     >
       <Stack.Screen

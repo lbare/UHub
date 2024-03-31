@@ -14,8 +14,8 @@ import {
   getNextFoodVendorInBuilding,
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
-import LoginPage from "../services/Firebase/login"
-import FirebaseAuthManager from "../services/Firebase/firebase-auth"
+import LoginPage from "../screens/Login";
+import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import {
   CaretLeft,
   CaretRight,
@@ -31,9 +31,10 @@ import {
   isVendorCurrentlyOpen,
   vendorNextOpenOrCloseTimeString,
 } from "../models/VendorHours";
-
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "../navigation/HomeNavigation";
 import menuItemLikeService from "../services/Firebase/firebase-menuitem-like";
-
 
 interface CustomModalProps {
   modalVisible: boolean;
@@ -45,6 +46,8 @@ interface CustomModalProps {
   openedModalFromSearch: boolean;
 }
 
+type ModalNavigationProp = StackNavigationProp<StackParamList>;
+
 const CustomModal: React.FC<CustomModalProps> = ({
   modalVisible,
   setModalVisible,
@@ -54,6 +57,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   building,
   openedModalFromSearch,
 }) => {
+  const navigation = useNavigation<ModalNavigationProp>();
   const authManager = new FirebaseAuthManager();
 
   const hideModal = (exit: boolean) => {
@@ -63,8 +67,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
   };
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState<boolean>(false);
-  
+  const [isLoginModalVisible, setIsLoginModalVisible] =
+    useState<boolean>(false);
+
   const [showExpandedHours, setShowExpandedHours] = useState(false);
   const [itemLikesCount, setItemLikesCount] = useState<Map<string, string>>(
     new Map()
@@ -94,17 +99,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
       (name) =>
         [name, menuItemLikeService.doesUserLikeItem(name)] as [string, boolean]
     );
-    
+
     const likesCountMap = new Map<string, string>(totalLikes);
     setItemLikesCount(likesCountMap);
     const userLikesMap = new Map<string, boolean>(userLikesBools);
     setDoesUserLikeItem(userLikesMap);
-
   }, [vendor]);
 
   const toggleLikesForItem = (item: string): void => {
     if (!authManager.getCurrentUserUID()) {
-      setIsLoginModalVisible(true); // Show login modal if not logged in
+      setModalVisible(false);
+      navigation.push("Login");
     } else {
       if (doesUserLikeItem.get(item)) {
         const newLikesCount = menuItemLikeService.removeLikeFromItem(item);
@@ -121,8 +126,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
       }
     }
   };
-  
-
 
   return (
     <>
@@ -207,7 +210,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
                             : "text-red-400 opacity-70"
                         }`}
                       >
-                        {isVendorCurrentlyOpen(vendor.hours) ? "Open" : "Closed"}
+                        {isVendorCurrentlyOpen(vendor.hours)
+                          ? "Open"
+                          : "Closed"}
                       </Text>
                       <TouchableOpacity
                         onPress={() => setShowExpandedHours(!showExpandedHours)}
@@ -347,7 +352,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                     </Text>
                                   </View>
                                   <TouchableOpacity
-                                    onPress={() => toggleLikesForItem(item.name)}
+                                    onPress={() =>
+                                      toggleLikesForItem(item.name)
+                                    }
                                   >
                                     <View className="w-14 h-12 justify-center items-center flex-none">
                                       <Heart
@@ -412,13 +419,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </View>
         )}
       </Modal>
-      {isLoginModalVisible && (
-        <LoginPage
-          modalVisible={isLoginModalVisible}
-          setModalVisible={setIsLoginModalVisible}
-        />
-      )}
-   </>
+    </>
   );
 };
 
