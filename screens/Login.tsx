@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import { useNavigation } from "@react-navigation/native";
+import BackgroundImage from "../components/BackgroundImage";
 
 type LoginProps = {
   modalVisible: boolean;
@@ -22,6 +23,8 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const navigation = useNavigation();
   const authManager = new FirebaseAuthManager();
@@ -51,34 +54,76 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     }
   };
 
+  useEffect(() => {
+    setErrorMessage("");
+  }, [email, password]);
+
   return (
-    <View className="flex w-full h-full">
-      <View style={styles.container}>
-        <Image source={require("../assets/logo.png")} style={styles.logo} />
-      </View>
-      <View style={styles.container}>
+    <View className="flex w-full h-full justify-end">
+      <BackgroundImage source={require("../assets/splash-login.png")} />
+      <View className="flex justify-center items-center px-10 h-3/4">
         <TextInput
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
-          style={styles.input}
           keyboardType="email-address"
           autoCapitalize="none"
+          className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
+            errorMessage
+              ? "border-orange"
+              : passwordFocused || password !== ""
+              ? "border-blue"
+              : "border-neutral-400"
+          }`}
+          style={{
+            fontSize: 16,
+            color: "#154058",
+            fontWeight: "bold",
+          }}
+          onBlur={() => setEmailFocused(false)}
+          onFocus={() => setEmailFocused(true)}
         />
         <TextInput
           placeholder="Password"
           value={password}
           onChangeText={setPassword}
-          style={styles.input}
+          className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
+            errorMessage
+              ? "border-orange"
+              : passwordFocused || password !== ""
+              ? "border-blue"
+              : "border-neutral-400"
+          }`}
+          style={{
+            fontSize: 16,
+            color: "#154058",
+            fontWeight: "bold",
+          }}
           secureTextEntry
+          onBlur={() => setPasswordFocused(false)}
+          onFocus={() => setPasswordFocused(true)}
         />
-        {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
-        <TouchableOpacity onPress={handleSignIn} style={styles.signInButton}>
-          <Text style={styles.buttonText}>Sign In</Text>
+
+        <View className="flex h-10 justify-center items-center mb-4 bg-white">
+          {errorMessage ? (
+            <Text className="text-center font-bold text-orange">
+              {errorMessage}
+            </Text>
+          ) : null}
+        </View>
+
+        <TouchableOpacity
+          onPress={handleSignIn}
+          className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
+        >
+          <Text className="text-white font-bold text-base">Sign In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+        <TouchableOpacity
+          onPress={handleSignUp}
+          className="w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
+        >
+          <Text className="text-white font-bold text-base">Sign Up</Text>
         </TouchableOpacity>
       </View>
     </View>
