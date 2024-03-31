@@ -16,6 +16,9 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
   onUpdate,
 }) => {
   const checkIfToggled = (): boolean => {
+    if (!menuSearchObject) {
+      return false;
+    }
     for (let i = 0; i < menuSearchObject.curTagFilters.length; i++) {
       if (
         tags.length === menuSearchObject.curTagFilters[i].length &&
@@ -46,16 +49,22 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
       onPress={handlePress}
       style={{
         backgroundColor: isToggled ? "#EB6931FF" : "#00000000",
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         paddingVertical: 5,
         marginRight: 10,
-        borderColor: "#EDEDED",
+        borderColor: isToggled ? "#EB6931FF" : "#EDEDED6E",
         borderWidth: 1,
         borderRadius: 30,
         alignSelf: "flex-start",
       }}
     >
-      <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+      <Text
+        style={{
+          color: "#EDEDED",
+          textAlign: "center",
+          fontSize: 16,
+        }}
+      >
         {text ?? "Tag Button"}
       </Text>
     </Pressable>

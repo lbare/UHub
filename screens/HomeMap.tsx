@@ -62,15 +62,28 @@ const HomeMap: React.FC = () => {
   );
   const [buildingFilters, setBuildingFilters] = useState<any[]>([]);
   const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
+  const [buildingFiltersOpen, setBuildingFiltersOpen] =
+    useState<boolean>(false);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
+  const buildingFilterRef = useRef(null);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
     menuSearch = new MenuSearch(buildings); // useEffect only creates once on first render
     onZoomChange(UVicRegion);
   }, []);
+
+  useEffect(() => {
+    if (buildingFiltersOpen) {
+      (buildingFilterRef.current as any)?.openDropdown();
+      console.log("Opening dropdown");
+    } else {
+      (buildingFilterRef.current as any)?.closeDropdown();
+      console.log("Closing dropdown");
+    }
+  }, [buildingFiltersOpen]);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -509,6 +522,9 @@ const HomeMap: React.FC = () => {
               selected={searchOpen}
               setSelected={setSearchOpen}
               setSearchInput={setSearchInput}
+              buildingFiltersOpen={buildingFiltersOpen}
+              setBuildingFiltersOpen={setBuildingFiltersOpen}
+              buildingFilters={buildingFilters}
               onBlur={() => setSearchOpen(false)}
             />
             <View
@@ -521,13 +537,7 @@ const HomeMap: React.FC = () => {
                 marginBottom: 10,
               }}
             >
-              <View
-                style={{
-                  borderRightWidth: 1,
-                  borderColor: "#EDEDED",
-                  marginRight: 10,
-                }}
-              >
+              <View>
                 <Pressable
                   // Open Now filter button
                   onPress={() => {
@@ -535,22 +545,29 @@ const HomeMap: React.FC = () => {
                   }}
                   style={{
                     backgroundColor: openVendorsFilter
-                      ? "#0a912eff"
+                      ? "#154058"
                       : "#00000000",
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 12,
                     paddingVertical: 5,
-                    marginRight: 10,
-                    borderColor: "#EDEDED",
+                    borderColor: openVendorsFilter ? "#154058" : "#EDEDED6E",
                     borderWidth: 1,
                     borderRadius: 30,
                     alignSelf: "flex-start",
                   }}
                 >
-                  <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+                  <Text
+                    style={{
+                      color: "#EDEDED",
+                      textAlign: "center",
+                      fontSize: 16,
+                    }}
+                  >
                     Open Now
                   </Text>
                 </Pressable>
               </View>
+              <View className="mx-2 w-0.5 h-full bg-neutral-500" />
+
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -581,20 +598,24 @@ const HomeMap: React.FC = () => {
                 />
               </ScrollView>
             </View>
-            <View
-              style={{
-                width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
-                marginLeft: `${(100 - 83.33) / 2}%`,
-              }}
-            >
-              <BuildingFilterDropdown
-                buildings={buildings}
-                selectedItems={buildingFilters}
-                onUpdate={(newList: any) => {
-                  setBuildingFilters(newList);
+            {buildingFiltersOpen && (
+              <View
+                style={{
+                  width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
+                  marginLeft: `${(100 - 83.33) / 2}%`,
                 }}
-              />
-            </View>
+              >
+                <BuildingFilterDropdown
+                  ref={buildingFilterRef}
+                  buildings={buildings}
+                  selectedItems={buildingFilters}
+                  setBuildingFiltersOpen={setBuildingFiltersOpen}
+                  onUpdate={(newList: any) => {
+                    setBuildingFilters(newList);
+                  }}
+                />
+              </View>
+            )}
           </View>
         )}
         <ScrollView
