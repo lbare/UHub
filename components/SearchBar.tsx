@@ -1,5 +1,5 @@
-import React, { forwardRef } from "react";
-import { TextInput, View, TouchableOpacity } from "react-native";
+import React, { forwardRef, useEffect } from "react";
+import { TextInput, View, TouchableOpacity, Text } from "react-native";
 import { CaretLeft, Funnel } from "phosphor-react-native";
 
 interface SearchBarProps {
@@ -31,15 +31,19 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
     },
     ref
   ) => {
+    useEffect(() => {
+      console.log(buildingFilters);
+    }, [buildingFilters]);
+
     return (
       <View
         className="flex w-full items-center justify-center mt-16"
         style={shadowStyle}
       >
         <View
-          className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl"
+          className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl items-center"
           style={{
-            backgroundColor: "#EDEDED",
+            backgroundColor: "#E5E5E5",
           }}
         >
           <TouchableOpacity
@@ -62,21 +66,42 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
             returnKeyType="search"
           />
           <TouchableOpacity
-            className="h-full w-16 justify-center items-center"
+            className="h-12 w-12 justify-center items-center"
             onPress={() => {
               if (setBuildingFiltersOpen) {
                 setBuildingFiltersOpen(!buildingFiltersOpen);
               }
             }}
           >
-            {buildingFilters && buildingFilters.length > 0 ? (
-              <Funnel size={24} color="#282828" weight="fill" />
-            ) : (
-              <Funnel size={24} color="#282828" weight="bold" />
-            )}
+            {buildingFilters &&
+              (buildingFilters.length === 0 ? (
+                <>
+                  <Funnel size={32} color="#282828" weight="bold" />
+                </>
+              ) : buildingFilters.includes("ALL") ? (
+                <>
+                  <Funnel size={32} color="#282828" weight="fill" />
+                </>
+              ) : (
+                <>
+                  <View className="absolute z-50 top-0 right-0 flex w-5 h-5 justify-center items-center bg-neutral-200 rounded-full">
+                    <View
+                      className="flex w-4 h-4 justify-center items-center rounded-full"
+                      style={{ backgroundColor: "#EB6931" }}
+                    >
+                      <Text className="text-neutral-200 font-bold text-center">
+                        {buildingFilters.length}
+                      </Text>
+                    </View>
+                  </View>
+                  <Funnel size={32} color="#282828" weight="fill" />
+                </>
+              ))}
           </TouchableOpacity>
         </View>
       </View>
     );
   }
 );
+
+// buildingFilters.includes("ALL") &&

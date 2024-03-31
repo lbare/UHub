@@ -40,6 +40,7 @@ const BuildingFilterDropdown = forwardRef(
       return buildings.map((building: Building) => ({
         name: building.name,
         id: building.code,
+        isSubItem: true,
       }));
     };
 
@@ -48,15 +49,24 @@ const BuildingFilterDropdown = forwardRef(
       {
         name: "Select All Buildings",
         id: "ALL",
+        isSubItem: false,
         children: createBuildingList(),
       },
     ];
+
+    const customIconRenderer = (item: { isSubItem: any }) => {
+      const iconName = item.isSubItem ? "check-box" : "check-box-outline-blank";
+      const color = item.isSubItem ? "#EB6931" : "#EDEDED";
+      return <MaterialIcons name={iconName} size={20} color={color} />;
+    };
 
     return (
       <SectionedMultiSelect
         ref={multiSelectRef}
         items={items}
-        IconRenderer={MaterialIcons as unknown as React.ReactNode}
+        IconRenderer={
+          <>{(item: { isSubItem: any }) => customIconRenderer(item)}</>
+        }
         uniqueKey="id"
         subKey="children"
         selectText="Add building filters"
@@ -103,6 +113,7 @@ const BuildingFilterDropdown = forwardRef(
             margin: 10,
             borderRadius: 20,
           },
+
           item: {
             borderWidth: 1,
             borderColor: "#EDEDED2A",
