@@ -551,17 +551,18 @@ const HomeMap: React.FC = () => {
               ))
             )}
         </MapView>
-
-        <View style={{ position: "absolute", bottom: 25, left: 10 }}>
-          <TouchableOpacity onPress={() => setPopupVisible(true)}>
-            <MaterialCommunityIcons
-              name="account-circle"
-              size={40}
-              color="#154058"
-            />
-          </TouchableOpacity>
-        </View>
-
+        <TouchableOpacity
+          className="absolute bottom-10 right-5"
+          onPress={() => setPopupVisible(true)}
+        >
+          <Image
+            source={require("../assets/logo.png")}
+            style={{
+              width: 45,
+              height: 45,
+            }}
+          />
+        </TouchableOpacity>
         <UserPopup
           isVisible={popupVisible}
           email={userEmail}
