@@ -62,20 +62,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
     onModalHide(!exit);
   };
 
-  //temporary code to handle logout
-  //WILL NEED TO BE CHANGED 
-  const handleLogout = () => {
-    const uid = authManager.getCurrentUserUID();
-    if (uid) {
-      authManager.signOut().then(() => {
-        Alert.alert('Logged out successfully');
-      }).catch((error) => {
-        console.error('Logout failed:', error);
-      });
-    }
-  };
-
-
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState<boolean>(false);
   
@@ -228,24 +214,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
                         </Text>
                       </View>
                     )}
-                    {/*TEMPORARY CODE STARTS FOR LOGOUT*/}
-                    <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                    <TouchableOpacity
-                      onPress={handleLogout}
-                      disabled={!authManager.getCurrentUserUID()}
-                      style={{
-                        opacity: authManager.getCurrentUserUID() ? 1 : 0.5,
-                        backgroundColor: '#ededed',
-                        borderRadius: 5,
-                        padding: 8,
-                      }}
-                    >
-                      <Text style={{ color: '#154058', fontWeight: 'bold' }}>
-                        {authManager.getCurrentUserUID() ? 'Log Out' : 'Not Logged In'}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                      {/*TEMPORARY CODE ENDS FOR LOGOUT*/}
                     <View className={`flex flex-row items-center`}>
                       <Text
                         className={`text-base font-semibold ${

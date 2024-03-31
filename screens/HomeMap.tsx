@@ -5,9 +5,16 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
+  Alert,
   Image,
   Pressable,
+  Modal,
+  StyleSheet,
 } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import LoginPage from "../services/Firebase/login"
+import FirebaseAuthManager from "../services/Firebase/firebase-auth"
 import MapView, {
   Details,
   LatLng,
@@ -36,6 +43,44 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
+interface UserPopupProps {
+  isVisible: boolean;
+  email: string | null;
+  onLogout: () => void;
+  onClose: () => void;
+}
+const UserPopup: React.FC<UserPopupProps> = ({
+  isVisible,
+  email,
+  onLogout,
+  onClose,
+}) => (
+  <Modal visible={isVisible} transparent={true} animationType="slide">
+    <View style={styles.centeredView}>
+      <View style={styles.modalView}>
+        {email ? (
+          <>
+            <Text style={styles.modalText}>Logged in as {email}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={onLogout}
+            >
+              <Text style={styles.textStyle}>Log Out</Text>
+            </Pressable>
+          </>
+        ) : (
+          <Text style={styles.modalText}>Not logged in</Text>
+        )}
+        <Pressable
+          style={[styles.button, styles.buttonClose]}
+          onPress={onClose}
+        >
+          <Text style={styles.textStyle}>Close</Text>
+        </Pressable>
+      </View>
+    </View>
+  </Modal>
+);
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
   const [userLastRegion, setUserLastRegion] = useState<Coordinates>(UVicRegion);
@@ -62,6 +107,28 @@ const HomeMap: React.FC = () => {
   const _mapView = React.createRef<MapView>();
 
   const menuSearch = new MenuSearch(buildings);
+
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+
+  const authManager = new FirebaseAuthManager((user) => {
+    if (user) {
+      setUserEmail(user.email); 
+    } else {
+      setUserEmail(null);
+    }
+  });
+
+  const handleLogout = () => {
+    authManager.signOut().then(() => {
+      Alert.alert('Logged out successfully');
+      setPopupVisible(false); 
+    }).catch((error) => {
+      console.error('Logout failed:', error);
+    });
+  };
+
+
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -458,6 +525,21 @@ const HomeMap: React.FC = () => {
               ))
             )}
         </MapView>
+
+          {/* CODE starts FOR LOGOUT*/}
+          <View style={{ position: 'absolute', bottom: 25, left: 10 }}>
+            <TouchableOpacity onPress={() => setPopupVisible(true)}>
+              <MaterialCommunityIcons name="account-circle" size={40} color="#154058" />
+            </TouchableOpacity>
+          </View>
+
+          <UserPopup
+            isVisible={popupVisible}
+            email={userEmail}
+            onLogout={handleLogout}
+            onClose={() => setPopupVisible(false)}
+          />
+        {/* CODE ENDS FOR LOGOUT*/}
         <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -474,9 +556,9 @@ const HomeMap: React.FC = () => {
           top: 0,
           left: 0,
           right: 0,
-          zIndex: searchOpen ? 2 : -1, // Control layering based on searchOpen
-          opacity: searchOpen ? 1 : 0, // Control visibility based on searchOpen
-          height: searchOpen ? "100%" : 0, // Prevents interaction when not visiblesd
+          zIndex: searchOpen ? 2 : -1, 
+          opacity: searchOpen ? 1 : 0, 
+          height: searchOpen ? "100%" : 0, 
           backgroundColor: "#1D1D1D",
         }}
       >
@@ -704,4 +786,45 @@ const HomeMap: React.FC = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  // Existing styles...
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+});
 export default HomeMap;
