@@ -62,15 +62,28 @@ const HomeMap: React.FC = () => {
   );
   const [buildingFilters, setBuildingFilters] = useState<any[]>([]);
   const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
+  const [buildingFiltersOpen, setBuildingFiltersOpen] =
+    useState<boolean>(false);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
+  const buildingFilterRef = useRef(null);
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
     menuSearch = new MenuSearch(buildings); // useEffect only creates once on first render
     onZoomChange(UVicRegion);
   }, []);
+
+  useEffect(() => {
+    if (buildingFiltersOpen) {
+      (buildingFilterRef.current as any)?.openDropdown();
+      console.log("Opening dropdown");
+    } else {
+      (buildingFilterRef.current as any)?.closeDropdown();
+      console.log("Closing dropdown");
+    }
+  }, [buildingFiltersOpen]);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -509,6 +522,9 @@ const HomeMap: React.FC = () => {
               selected={searchOpen}
               setSelected={setSearchOpen}
               setSearchInput={setSearchInput}
+              buildingFiltersOpen={buildingFiltersOpen}
+              setBuildingFiltersOpen={setBuildingFiltersOpen}
+              buildingFilters={buildingFilters}
               onBlur={() => setSearchOpen(false)}
             />
             <View
@@ -582,20 +598,24 @@ const HomeMap: React.FC = () => {
                 />
               </ScrollView>
             </View>
-            <View
-              style={{
-                width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
-                marginLeft: `${(100 - 83.33) / 2}%`,
-              }}
-            >
-              <BuildingFilterDropdown
-                buildings={buildings}
-                selectedItems={buildingFilters}
-                onUpdate={(newList: any) => {
-                  setBuildingFilters(newList);
+            {buildingFiltersOpen && (
+              <View
+                style={{
+                  width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
+                  marginLeft: `${(100 - 83.33) / 2}%`,
                 }}
-              />
-            </View>
+              >
+                <BuildingFilterDropdown
+                  ref={buildingFilterRef}
+                  buildings={buildings}
+                  selectedItems={buildingFilters}
+                  setBuildingFiltersOpen={setBuildingFiltersOpen}
+                  onUpdate={(newList: any) => {
+                    setBuildingFilters(newList);
+                  }}
+                />
+              </View>
+            )}
           </View>
         )}
         <ScrollView

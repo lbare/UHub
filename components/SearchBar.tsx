@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { TextInput, View, TouchableOpacity } from "react-native";
-import { X, CaretLeft } from "phosphor-react-native";
+import { CaretLeft, Funnel } from "phosphor-react-native";
 
 interface SearchBarProps {
   searchInput: string;
@@ -10,6 +10,9 @@ interface SearchBarProps {
   selected?: boolean;
   setSelected: (selected: boolean) => void;
   clearResults?: () => void;
+  buildingFiltersOpen?: boolean;
+  setBuildingFiltersOpen?: (open: boolean) => void;
+  buildingFilters?: any[];
 }
 
 export const SearchBar = forwardRef<TextInput, SearchBarProps>(
@@ -22,6 +25,9 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
       selected,
       setSelected,
       clearResults,
+      buildingFiltersOpen,
+      setBuildingFiltersOpen,
+      buildingFilters,
     },
     ref
   ) => {
@@ -44,29 +50,31 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
               if (clearResults) clearResults();
             }}
           >
-            <CaretLeft size={24} color="#154058" weight="bold" />
+            <CaretLeft size={24} color="#282828" weight="bold" />
           </TouchableOpacity>
           <TextInput
             ref={ref}
             className="h-full w-3/5 justify-center items-center font-bold text-2xl pb-1"
-            style={{ color: "#154058" }}
+            style={{ color: "#282828" }}
             value={searchInput}
             onChangeText={(text) => setSearchInput(text)}
             onFocus={() => setSelected(true)}
             returnKeyType="search"
           />
-          {searchInput !== "" ? (
-            <TouchableOpacity
-              className="h-full w-16 justify-center items-center"
-              onPress={() => {
-                setSearchInput("");
-              }}
-            >
-              <X size={24} color="#154058" weight="bold" />
-            </TouchableOpacity>
-          ) : (
-            <View className="h-full w-16" />
-          )}
+          <TouchableOpacity
+            className="h-full w-16 justify-center items-center"
+            onPress={() => {
+              if (setBuildingFiltersOpen) {
+                setBuildingFiltersOpen(!buildingFiltersOpen);
+              }
+            }}
+          >
+            {buildingFilters && buildingFilters.length > 0 ? (
+              <Funnel size={24} color="#282828" weight="fill" />
+            ) : (
+              <Funnel size={24} color="#282828" weight="bold" />
+            )}
+          </TouchableOpacity>
         </View>
       </View>
     );
