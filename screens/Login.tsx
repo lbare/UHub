@@ -23,7 +23,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorType, setErrorType] = useState<
-    "email" | "password" | "both" | null
+    "email" | "password" | "both" | "firebase" | null
   >(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
@@ -49,6 +49,14 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     }
   }, [email, password]);
 
+  useEffect(() => {
+    if (errorType === "firebase") {
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 2000);
+    }
+  }, [errorType]);
+
   const handleSignIn = async () => {
     try {
       await authManager.signIn(email, password);
@@ -57,7 +65,10 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
       navigation.goBack();
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to sign in. Please check your credentials.");
+      setError(
+        "firebase",
+        "Failed to sign in. Please check your email and password."
+      );
     }
   };
 
@@ -68,14 +79,12 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
       navigation.goBack();
     } catch (error) {
       console.error(error);
-      setErrorMessage(
-        "Failed to sign up. Please make sure your email is a valid UVic email."
-      );
+      setError("firebase", "Failed to sign up. Please try again.");
     }
   };
 
   const setError = (
-    field: "email" | "password" | "both" | null,
+    field: "email" | "password" | "both" | "firebase" | null,
     message: string
   ) => {
     setErrorType(field);
@@ -98,7 +107,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           keyboardType="email-address"
           autoCapitalize="none"
           className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
-            errorType === "email" || errorType === "both"
+            errorType === "email" ||
+            errorType === "both" ||
+            errorType === "firebase"
               ? "border-orange"
               : passwordFocused || password !== ""
               ? "border-blue"
@@ -112,7 +123,10 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           onBlur={() => {
             setEmailFocused(false);
           }}
-          onFocus={() => setEmailFocused(true)}
+          onFocus={() => {
+            setEmailFocused(true);
+            if (errorType === "firebase") setError(null, "");
+          }}
         />
         <TextInput
           placeholder="Password"
@@ -121,7 +135,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             setPassword(text);
           }}
           className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
-            errorType === "password" || errorType === "both"
+            errorType === "password" ||
+            errorType === "both" ||
+            errorType === "firebase"
               ? "border-orange"
               : passwordFocused || password !== ""
               ? "border-blue"
@@ -136,15 +152,20 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           onBlur={() => {
             setPasswordFocused(false);
           }}
-          onFocus={() => setPasswordFocused(true)}
+          onFocus={() => {
+            setPasswordFocused(true);
+            if (errorType === "firebase") setError(null, "");
+          }}
         />
 
-        <View className="flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white">
-          {errorMessage ? (
-            <Text className="text-center font-bold text-orange">
-              {errorMessage}
-            </Text>
-          ) : null}
+        <View
+          className={`flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white ${
+            !errorMessage && "opacity-0"
+          }`}
+        >
+          <Text className="text-center font-bold text-orange">
+            {errorMessage}
+          </Text>
         </View>
 
         <TouchableOpacity
