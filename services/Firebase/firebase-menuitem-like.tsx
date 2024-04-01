@@ -21,7 +21,7 @@ class FirebaseMenuItemFavouriteService {
   >();
 
   private lastFetched: Date = new Date();
-  private authManager = new FirebaseAuthManager(true);
+  private authManager = new FirebaseAuthManager();
 
   private constructor() {
     this.getAllItemsAndLikes().then((data) => {
