@@ -22,13 +22,32 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorType, setErrorType] = useState<"email" | "password" | null>(null);
+  const [errorType, setErrorType] = useState<
+    "email" | "password" | "both" | null
+  >(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
 
   const navigation = useNavigation();
   const authManager = new FirebaseAuthManager();
+
+  useEffect(() => {
+    if (
+      email !== "" &&
+      !validateEmail() &&
+      password.length > 0 &&
+      !validatePassword()
+    ) {
+      setError("both", "Email must be a valid UVic email");
+    } else if (email !== "" && !validateEmail()) {
+      setError("email", "Email must be a valid UVic email");
+    } else if (password.length > 0 && !validatePassword()) {
+      setError("password", "Password must be at least 6 characters");
+    } else {
+      setError(null, "");
+    }
+  }, [email, password]);
 
   const handleSignIn = async () => {
     try {
@@ -55,23 +74,16 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     }
   };
 
-  const checkEmail = () => {
-    if (!email.endsWith("@uvic.ca")) {
-      setErrorType("email");
-      setErrorMessage("Email must be a valid UVic email");
-      return false;
-    }
-    return true;
+  const setError = (
+    field: "email" | "password" | "both" | null,
+    message: string
+  ) => {
+    setErrorType(field);
+    setErrorMessage(message);
   };
 
-  const checkPassword = () => {
-    if (password.length < 6) {
-      setErrorType("password");
-      setErrorMessage("Password must be at least 6 characters");
-      return false;
-    }
-    return true;
-  };
+  const validateEmail = () => email.endsWith("@uvic.ca");
+  const validatePassword = () => password.length >= 6;
 
   return (
     <View className="flex w-full h-full justify-end">
@@ -80,11 +92,13 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+          }}
           keyboardType="email-address"
           autoCapitalize="none"
           className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
-            errorType === "email"
+            errorType === "email" || errorType === "both"
               ? "border-orange"
               : passwordFocused || password !== ""
               ? "border-blue"
@@ -97,16 +111,17 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           }}
           onBlur={() => {
             setEmailFocused(false);
-            checkEmail();
           }}
           onFocus={() => setEmailFocused(true)}
         />
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => {
+            setPassword(text);
+          }}
           className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
-            errorType === "password"
+            errorType === "password" || errorType === "both"
               ? "border-orange"
               : passwordFocused || password !== ""
               ? "border-blue"
@@ -120,12 +135,11 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           secureTextEntry
           onBlur={() => {
             setPasswordFocused(false);
-            checkPassword();
           }}
           onFocus={() => setPasswordFocused(true)}
         />
 
-        <View className="flex h-10 justify-center items-center mb-4 bg-white">
+        <View className="flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white">
           {errorMessage ? (
             <Text className="text-center font-bold text-orange">
               {errorMessage}
@@ -134,25 +148,17 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
         </View>
 
         <TouchableOpacity
-          onPress={() => {
-            if (checkEmail() && checkPassword()) {
-              handleSignIn();
-            }
-          }}
+          onPress={() => handleSignIn()}
+          disabled={errorType !== null}
           className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
         >
           <Text className="text-white font-bold text-base">Sign In</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => {
-            if (checkEmail() && checkPassword()) {
-              handleSignIn();
-            }
-          }}
-          className={
-            "w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
-          }
+          onPress={() => handleSignUp()}
+          disabled={errorType !== null}
+          className="w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
         >
           <Text className="text-white font-bold text-base">Sign Up</Text>
         </TouchableOpacity>
