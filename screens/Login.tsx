@@ -22,6 +22,7 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorType, setErrorType] = useState<"email" | "password" | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -54,9 +55,23 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     }
   };
 
-  useEffect(() => {
-    setErrorMessage("");
-  }, [email, password]);
+  const checkEmail = () => {
+    if (!email.endsWith("@uvic.ca")) {
+      setErrorType("email");
+      setErrorMessage("Email must be a valid UVic email");
+      return false;
+    }
+    return true;
+  };
+
+  const checkPassword = () => {
+    if (password.length < 6) {
+      setErrorType("password");
+      setErrorMessage("Password must be at least 6 characters");
+      return false;
+    }
+    return true;
+  };
 
   return (
     <View className="flex w-full h-full justify-end">
@@ -69,7 +84,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           keyboardType="email-address"
           autoCapitalize="none"
           className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
-            errorMessage
+            errorType === "email"
               ? "border-orange"
               : passwordFocused || password !== ""
               ? "border-blue"
@@ -80,7 +95,10 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             color: "#154058",
             fontWeight: "bold",
           }}
-          onBlur={() => setEmailFocused(false)}
+          onBlur={() => {
+            setEmailFocused(false);
+            checkEmail();
+          }}
           onFocus={() => setEmailFocused(true)}
         />
         <TextInput
@@ -88,7 +106,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
           value={password}
           onChangeText={setPassword}
           className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
-            errorMessage
+            errorType === "password"
               ? "border-orange"
               : passwordFocused || password !== ""
               ? "border-blue"
@@ -100,7 +118,10 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             fontWeight: "bold",
           }}
           secureTextEntry
-          onBlur={() => setPasswordFocused(false)}
+          onBlur={() => {
+            setPasswordFocused(false);
+            checkPassword();
+          }}
           onFocus={() => setPasswordFocused(true)}
         />
 
@@ -113,15 +134,25 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
         </View>
 
         <TouchableOpacity
-          onPress={handleSignIn}
+          onPress={() => {
+            if (checkEmail() && checkPassword()) {
+              handleSignIn();
+            }
+          }}
           className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
         >
           <Text className="text-white font-bold text-base">Sign In</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={handleSignUp}
-          className="w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
+          onPress={() => {
+            if (checkEmail() && checkPassword()) {
+              handleSignIn();
+            }
+          }}
+          className={
+            "w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
+          }
         >
           <Text className="text-white font-bold text-base">Sign Up</Text>
         </TouchableOpacity>
