@@ -10,7 +10,6 @@ import {
 } from "firebase/auth";
 
 class FirebaseAuthManager {
-
   constructor(callbackOnAuthStateChanged?: (user: User | null) => void) {
     if (callbackOnAuthStateChanged) {
       onAuthStateChanged(this.getCurrentAuth(), (user) => {
@@ -18,7 +17,6 @@ class FirebaseAuthManager {
       });
     }
   }
-
 
   private getCurrentAuth() {
     return getAuth();
@@ -35,7 +33,6 @@ class FirebaseAuthManager {
   }
 
   public getCurrentUserUID(): string | null {
-
     try {
       return this.getCurrentUser().uid;
     } catch (error) {
@@ -43,22 +40,15 @@ class FirebaseAuthManager {
     }
   }
 
-  public signUp(
-    email: string,
-    password: string
-  ) {
-
-    if (!email.endsWith("@uvic.ca")) {
-      return Promise.reject(new Error("Email must be a valid UVic email"));
-    }
-
-    return createUserWithEmailAndPassword(this.getCurrentAuth(), email, password)
+  public signUp(email: string, password: string) {
+    return createUserWithEmailAndPassword(
+      this.getCurrentAuth(),
+      email,
+      password
+    );
   }
 
-  public signIn(
-    email: string,
-    password: string
-  ) {
+  public signIn(email: string, password: string) {
     return signInWithEmailAndPassword(this.getCurrentAuth(), email, password);
   }
 
