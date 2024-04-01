@@ -8,17 +8,10 @@ import {
   Alert,
   Image,
   Pressable,
-  Modal,
-  StyleSheet,
 } from "react-native";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
-import MapView, {
-  Details,
-  LatLng,
-  PROVIDER_GOOGLE,
-  Polygon,
-} from "react-native-maps";
+import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -36,6 +29,8 @@ import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
+import { UserPopup } from "../components/UserPopup";
+import { mapStyles } from "../services/mapStyles";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -43,55 +38,6 @@ const UVicRegion: Coordinates = {
   longitude: -123.3121273188308,
   longitudeDelta: 0.01,
 };
-
-interface UserPopupProps {
-  isVisible: boolean;
-  email: string | null;
-  onLogout: () => void;
-  onSignIn: () => void;
-  onClose: () => void;
-}
-const UserPopup: React.FC<UserPopupProps> = ({
-  isVisible,
-  email,
-  onLogout,
-  onSignIn,
-  onClose,
-}) => (
-  <Modal visible={isVisible} transparent={true} animationType="slide">
-    <View className="flex-1 justify-center items-center">
-      <View className="bg-white rounded-lg shadow-lg p-4 w-3/4 h-1/3 justify-center items-center">
-        {email ? (
-          <>
-            <Text style={styles.modalText}>Logged in as {email}</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={onLogout}
-            >
-              <Text style={styles.textStyle}>Log Out</Text>
-            </Pressable>
-          </>
-        ) : (
-          <>
-            <Text style={styles.modalText}>Not logged in</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={onSignIn}
-            >
-              <Text style={styles.textStyle}>Sign In</Text>
-            </Pressable>
-          </>
-        )}
-        <Pressable
-          style={[styles.button, styles.buttonClose]}
-          onPress={onClose}
-        >
-          <Text style={styles.textStyle}>Close</Text>
-        </Pressable>
-      </View>
-    </View>
-  </Modal>
-);
 
 type HomeMapNavigationProp = StackNavigationProp<StackParamList, "HomeMap">;
 
@@ -274,193 +220,6 @@ const HomeMap: React.FC = () => {
     setSelectedLocation(null);
     setSelectedVendor(null);
   };
-
-  var mapStyles = [
-    {
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      featureType: "administrative",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.country",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#9e9e9e",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.land_parcel",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.locality",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#bdbdbd",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#181818",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#1b1b1b",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#2c2c2c",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#8a8a8a",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#373737",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#3c3c3c",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway.controlled_access",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#4e4e4e",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#000000",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#3d3d3d",
-        },
-      ],
-    },
-  ];
 
   return (
     <View className="flex-1">
@@ -820,45 +579,4 @@ const HomeMap: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 10,
-    padding: 10,
-    margin: 2,
-    elevation: 2,
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-});
 export default HomeMap;
