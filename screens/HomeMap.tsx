@@ -11,8 +11,6 @@ import {
   Modal,
   StyleSheet,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import MapView, {
@@ -61,8 +59,8 @@ const UserPopup: React.FC<UserPopupProps> = ({
   onClose,
 }) => (
   <Modal visible={isVisible} transparent={true} animationType="slide">
-    <View style={styles.centeredView}>
-      <View style={styles.modalView}>
+    <View className="flex-1 justify-center items-center">
+      <View className="bg-white rounded-lg shadow-lg p-4 w-3/4 h-1/3 justify-center items-center">
         {email ? (
           <>
             <Text style={styles.modalText}>Logged in as {email}</Text>
@@ -552,7 +550,7 @@ const HomeMap: React.FC = () => {
             )}
         </MapView>
         <TouchableOpacity
-          className="absolute bottom-10 right-5"
+          className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
           onPress={() => setPopupVisible(true)}
         >
           <Image
