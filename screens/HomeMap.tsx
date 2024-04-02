@@ -189,7 +189,7 @@ const HomeMap: React.FC = () => {
     setSelectedVendor(vendor);
     setUserLastRegionBeforeTap(userLastRegion);
 
-    const adjustedlatitude = vendor.location.latitude - 0.00083;
+    const adjustedlatitude = vendor.location.latitude - 0.00091;
     const newRegion = {
       latitude: adjustedlatitude,
       longitude: vendor.location.longitude,
@@ -344,15 +344,19 @@ const HomeMap: React.FC = () => {
           onSignIn={handleSignIn}
           onClose={() => setPopupVisible(false)}
         />
-        <CustomModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          changeVendor={onMarkerPress}
-          onModalHide={onModalHide}
-          openedModalFromSearch={openedModalFromSearch}
-          vendor={selectedVendor!}
-          building={buildings.find((b) => b.vendors.includes(selectedVendor!))!}
-        />
+        {selectedVendor && (
+          <CustomModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            changeVendor={onMarkerPress}
+            onModalHide={onModalHide}
+            openedModalFromSearch={openedModalFromSearch}
+            vendor={selectedVendor!}
+            building={
+              buildings.find((b) => b.vendors.includes(selectedVendor!))!
+            }
+          />
+        )}
       </View>
       <View
         style={{
