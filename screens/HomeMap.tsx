@@ -5,13 +5,15 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
-  Alert,
   Image,
   Pressable,
 } from "react-native";
-import Login from "./Login";
-import FirebaseAuthManager from "../services/Firebase/firebase-auth";
-import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
+import MapView, {
+  Details,
+  LatLng,
+  PROVIDER_GOOGLE,
+  Polygon,
+} from "react-native-maps";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -26,11 +28,7 @@ import TagFilterButton from "../components/TagFilterButton";
 import buildingPolygons from "../services/buildingPolygons";
 import buildingPolygonsSimple from "../services/buildingPolygonsSimple";
 import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { StackParamList } from "../navigation/HomeNavigation";
-import { UserPopup } from "../components/UserPopup";
-import { mapStyles } from "../services/mapStyles";
+import { Building } from "../models/Building";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -39,7 +37,7 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
-type HomeMapNavigationProp = StackNavigationProp<StackParamList, "HomeMap">;
+let menuSearch: MenuSearch;
 
 const HomeMap: React.FC = () => {
   const [region, setRegion] = useState<Coordinates>(UVicRegion);
@@ -54,7 +52,9 @@ const HomeMap: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [openedModalFromSearch, setOpenedModalFromSearch] =
     useState<boolean>(false);
-  const buildings = useContext(BuildingContext);
+  const [buildings, setBuildings] = useState<Building[]>(
+    useContext(BuildingContext)
+  );
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Map<MenuItem, FoodVendor>>(
@@ -62,43 +62,28 @@ const HomeMap: React.FC = () => {
   );
   const [buildingFilters, setBuildingFilters] = useState<any[]>([]);
   const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
+  const [buildingFiltersOpen, setBuildingFiltersOpen] =
+    useState<boolean>(false);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
+  const buildingFilterRef = useRef(null);
 
-  const menuSearch = new MenuSearch(buildings);
+  useEffect(() => {
+    // dataFetcher.getAllBuildings(setBuildings);
+    menuSearch = new MenuSearch(buildings); // useEffect only creates once on first render
+    onZoomChange(UVicRegion);
+  }, []);
 
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [popupVisible, setPopupVisible] = useState<boolean>(false);
-  const [isLoginModalVisible, setIsLoginModalVisible] =
-    useState<boolean>(false);
-
-  const navigation = useNavigation<HomeMapNavigationProp>();
-
-  const authManager = new FirebaseAuthManager((user) => {
-    if (user) {
-      setUserEmail(user.email);
+  useEffect(() => {
+    if (buildingFiltersOpen) {
+      (buildingFilterRef.current as any)?.openDropdown();
+      console.log("Opening dropdown");
     } else {
-      setUserEmail(null);
+      (buildingFilterRef.current as any)?.closeDropdown();
+      console.log("Closing dropdown");
     }
-  });
-
-  const handleLogout = () => {
-    authManager
-      .signOut()
-      .then(() => {
-        Alert.alert("Logged out successfully");
-        setPopupVisible(false);
-      })
-      .catch((error) => {
-        console.error("Logout failed:", error);
-      });
-  };
-  const handleSignIn = (): void => {
-    setPopupVisible(false);
-    navigation.navigate("Login");
-    console.log("Navigate to Sign In screen or open Sign In modal");
-  };
+  }, [buildingFiltersOpen]);
 
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
@@ -109,11 +94,6 @@ const HomeMap: React.FC = () => {
   useEffect(() => {
     onSearchChange();
   }, [searchInput, buildingFilters, openVendorsFilter]);
-
-  useEffect(() => {
-    // dataFetcher.getAllBuildings(setBuildings);
-    onZoomChange(UVicRegion);
-  }, []);
 
   const onSearchChange = () => {
     menuSearch.setBuildingFilters(buildingFilters);
@@ -221,6 +201,193 @@ const HomeMap: React.FC = () => {
     setSelectedVendor(null);
   };
 
+  var mapStyles = [
+    {
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      featureType: "administrative",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#9e9e9e",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.land_parcel",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.locality",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#bdbdbd",
+        },
+      ],
+    },
+    {
+      featureType: "poi",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#181818",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#616161",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#1b1b1b",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          color: "#2c2c2c",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#8a8a8a",
+        },
+      ],
+    },
+    {
+      featureType: "road.arterial",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#373737",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#3c3c3c",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway.controlled_access",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#4e4e4e",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#616161",
+        },
+      ],
+    },
+    {
+      featureType: "transit",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#000000",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#3d3d3d",
+        },
+      ],
+    },
+  ];
+
   return (
     <View className="flex-1">
       <View
@@ -308,25 +475,6 @@ const HomeMap: React.FC = () => {
               ))
             )}
         </MapView>
-        <TouchableOpacity
-          className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
-          onPress={() => setPopupVisible(true)}
-        >
-          <Image
-            source={require("../assets/logo.png")}
-            style={{
-              width: 45,
-              height: 45,
-            }}
-          />
-        </TouchableOpacity>
-        <UserPopup
-          isVisible={popupVisible}
-          email={userEmail}
-          onLogout={handleLogout}
-          onSignIn={handleSignIn}
-          onClose={() => setPopupVisible(false)}
-        />
         <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -343,9 +491,9 @@ const HomeMap: React.FC = () => {
           top: 0,
           left: 0,
           right: 0,
-          zIndex: searchOpen ? 2 : -1,
-          opacity: searchOpen ? 1 : 0,
-          height: searchOpen ? "100%" : 0,
+          zIndex: searchOpen ? 2 : -1, // Control layering based on searchOpen
+          opacity: searchOpen ? 1 : 0, // Control visibility based on searchOpen
+          height: searchOpen ? "100%" : 0, // Prevents interaction when not visiblesd
           backgroundColor: "#1D1D1D",
         }}
       >
@@ -374,84 +522,100 @@ const HomeMap: React.FC = () => {
               selected={searchOpen}
               setSelected={setSearchOpen}
               setSearchInput={setSearchInput}
+              buildingFiltersOpen={buildingFiltersOpen}
+              setBuildingFiltersOpen={setBuildingFiltersOpen}
+              buildingFilters={buildingFilters}
               onBlur={() => setSearchOpen(false)}
             />
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around",
-                margin: 10,
+                // width: `${100 - (100 - 83.33) / 2}%`, // use this to have tag scroll to right edge of screen
+                width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
+                marginLeft: `${(100 - 83.33) / 2}%`,
                 marginTop: 15,
+                marginBottom: 10,
               }}
             >
-              <TagFilterButton
-                text="Vegan"
-                tag={MenuItemTag.Vegan}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-              <TagFilterButton
-                text="Dairy Free"
-                tag={MenuItemTag.DairyFree}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-              <TagFilterButton
-                text="Gluten Free"
-                tag={MenuItemTag.GlutenFree}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-              <TagFilterButton
-                text="GF Option"
-                tag={MenuItemTag.GlutenFreeOption}
-                menuSearchObject={menuSearch}
-                onUpdate={onSearchChange}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                margin: 15,
-                marginTop: 0,
-              }}
-            >
-              <Pressable
-                // Open Now filter button
-                onPress={() => {
-                  setOpenVendorsFilter(!openVendorsFilter);
-                }}
-                style={{
-                  backgroundColor: openVendorsFilter
-                    ? "#0a912eff"
-                    : "#00000000",
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderColor: "#EDEDED",
-                  borderWidth: 2,
-                  borderRadius: 30,
-                  alignSelf: "flex-start",
-                }}
+              <View>
+                <Pressable
+                  // Open Now filter button
+                  onPress={() => {
+                    setOpenVendorsFilter(!openVendorsFilter);
+                  }}
+                  style={{
+                    backgroundColor: openVendorsFilter
+                      ? "#154058"
+                      : "#00000000",
+                    paddingHorizontal: 12,
+                    paddingVertical: 5,
+                    borderColor: openVendorsFilter ? "#154058" : "#EDEDED6E",
+                    borderWidth: 1,
+                    borderRadius: 30,
+                    alignSelf: "flex-start",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#EDEDED",
+                      textAlign: "center",
+                      fontSize: 16,
+                    }}
+                  >
+                    Open Now
+                  </Text>
+                </Pressable>
+              </View>
+              <View className="mx-2 w-0.5 h-full bg-neutral-500" />
+
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
               >
-                <Text style={{ color: "#EDEDED", textAlign: "center" }}>
-                  Open Now
-                </Text>
-              </Pressable>
+                <TagFilterButton
+                  text="Vegan"
+                  tags={[MenuItemTag.Vegan, MenuItemTag.VeganOption]}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Dairy Free"
+                  tags={[MenuItemTag.DairyFree, MenuItemTag.DairyFreeOption]}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Gluten Free"
+                  tags={[MenuItemTag.GlutenFree, MenuItemTag.GlutenFreeOption]}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+                <TagFilterButton
+                  text="Halal"
+                  tags={[MenuItemTag.Halal]}
+                  menuSearchObject={menuSearch}
+                  onUpdate={onSearchChange}
+                />
+              </ScrollView>
+            </View>
+            {buildingFiltersOpen && (
               <View
                 style={{
-                  flex: 1,
+                  width: "83.33%", // 83.33% is the width set in the searchbar component. set to match
+                  marginLeft: `${(100 - 83.33) / 2}%`,
                 }}
               >
                 <BuildingFilterDropdown
+                  ref={buildingFilterRef}
                   buildings={buildings}
-                  style={{ marginLeft: 10 }}
                   selectedItems={buildingFilters}
+                  setBuildingFiltersOpen={setBuildingFiltersOpen}
                   onUpdate={(newList: any) => {
                     setBuildingFilters(newList);
                   }}
                 />
               </View>
-            </View>
+            )}
           </View>
         )}
         <ScrollView
@@ -510,12 +674,6 @@ const HomeMap: React.FC = () => {
           )}
         </ScrollView>
       </View>
-      {isLoginModalVisible && (
-        <Login
-          modalVisible={isLoginModalVisible}
-          setModalVisible={setIsLoginModalVisible}
-        />
-      )}
       {!(searchOpen || modalVisible) && (
         <TouchableOpacity
           activeOpacity={1}
