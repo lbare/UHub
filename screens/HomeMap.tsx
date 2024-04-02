@@ -7,13 +7,11 @@ import {
   Text,
   Image,
   Pressable,
+  Alert,
 } from "react-native";
-import MapView, {
-  Details,
-  LatLng,
-  PROVIDER_GOOGLE,
-  Polygon,
-} from "react-native-maps";
+import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
+import Login from "./Login";
+import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
 import CustomModal from "../components/Modal";
 import { FoodVendor } from "../models/FoodVendor";
@@ -29,6 +27,11 @@ import buildingPolygons from "../services/buildingPolygons";
 import buildingPolygonsSimple from "../services/buildingPolygonsSimple";
 import BuildingFilterDropdown from "../components/BuildingFilterDropdown";
 import { Building } from "../models/Building";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "../navigation/HomeNavigation";
+import { UserPopup } from "../components/UserPopup";
+import { mapStyles } from "../services/mapStyles";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -37,6 +40,7 @@ const UVicRegion: Coordinates = {
   longitudeDelta: 0.01,
 };
 
+type HomeMapNavigationProp = StackNavigationProp<StackParamList, "HomeMap">;
 let menuSearch: MenuSearch;
 
 const HomeMap: React.FC = () => {
@@ -68,6 +72,39 @@ const HomeMap: React.FC = () => {
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
   const buildingFilterRef = useRef(null);
+
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] =
+    useState<boolean>(false);
+
+  const navigation = useNavigation<HomeMapNavigationProp>();
+
+  const authManager = new FirebaseAuthManager((user) => {
+    if (user) {
+      setUserEmail(user.email);
+    } else {
+      setUserEmail(null);
+    }
+  });
+
+  const handleLogout = () => {
+    authManager
+      .signOut()
+      .then(() => {
+        Alert.alert("Logged out successfully");
+        setPopupVisible(false);
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  };
+
+  const handleSignIn = (): void => {
+    setPopupVisible(false);
+    navigation.navigate("Login");
+    console.log("Navigate to Sign In screen or open Sign In modal");
+  };
 
   useEffect(() => {
     // dataFetcher.getAllBuildings(setBuildings);
@@ -201,193 +238,6 @@ const HomeMap: React.FC = () => {
     setSelectedVendor(null);
   };
 
-  var mapStyles = [
-    {
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      featureType: "administrative",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.country",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#9e9e9e",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.land_parcel",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.locality",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#bdbdbd",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#181818",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#1b1b1b",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#2c2c2c",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#8a8a8a",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#373737",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#3c3c3c",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway.controlled_access",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#4e4e4e",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#000000",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#3d3d3d",
-        },
-      ],
-    },
-  ];
-
   return (
     <View className="flex-1">
       <View
@@ -475,6 +325,25 @@ const HomeMap: React.FC = () => {
               ))
             )}
         </MapView>
+        <TouchableOpacity
+          className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
+          onPress={() => setPopupVisible(true)}
+        >
+          <Image
+            source={require("../assets/logo.png")}
+            style={{
+              width: 45,
+              height: 45,
+            }}
+          />
+        </TouchableOpacity>
+        <UserPopup
+          isVisible={popupVisible}
+          email={userEmail}
+          onLogout={handleLogout}
+          onSignIn={handleSignIn}
+          onClose={() => setPopupVisible(false)}
+        />
         <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -501,7 +370,7 @@ const HomeMap: React.FC = () => {
           <View
             style={{
               width: "100%",
-              height: 235,
+              height: "23%",
               borderRadius: 20,
             }}
           >
@@ -567,7 +436,6 @@ const HomeMap: React.FC = () => {
                 </Pressable>
               </View>
               <View className="mx-2 w-0.5 h-full bg-neutral-500" />
-
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -674,6 +542,12 @@ const HomeMap: React.FC = () => {
           )}
         </ScrollView>
       </View>
+      {isLoginModalVisible && (
+        <Login
+          modalVisible={isLoginModalVisible}
+          setModalVisible={setIsLoginModalVisible}
+        />
+      )}
       {!(searchOpen || modalVisible) && (
         <TouchableOpacity
           activeOpacity={1}
