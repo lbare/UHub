@@ -8,8 +8,12 @@ import {
   signOut,
   Auth,
 } from "firebase/auth";
+import DataFetcher from "../DataFetcher";
 
 class FirebaseAuthManager {
+
+  dataFetcher = new DataFetcher();
+  
   constructor(callbackOnAuthStateChanged?: (user: User | null) => void) {
     if (callbackOnAuthStateChanged) {
       onAuthStateChanged(this.getCurrentAuth(), (user) => {
@@ -46,6 +50,25 @@ class FirebaseAuthManager {
       email,
       password
     );
+  }
+
+  public initiatePasswordlessSignIn(email: string) {
+    console.log("Email is: " + email);
+    const url = `https://uhub.rahuln.ca/test?email=${email}`;
+    console.log("URL is: " + url);
+    return fetch(
+      url,
+      {
+        method: "POST",
+        cache: "no-cache",
+      }
+    );
+  }
+
+  public verifyOTP(otp: string) {
+    this.dataFetcher.getOTPforEmail(otp).then((otpFromDB) => {
+      return otp === otpFromDB;
+    });
   }
 
   public signIn(email: string, password: string) {

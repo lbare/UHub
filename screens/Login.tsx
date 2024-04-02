@@ -21,6 +21,9 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [infoMessage, setInfoMessage] = useState("");
+
   const [errorType, setErrorType] = useState<
     "email" | "password" | "both" | "firebase" | null
   >(null);
@@ -43,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     } else if (email !== "" && !validateEmail()) {
       setError("email", "Email must be a valid UVic email");
     } else if (password.length > 0 && !validatePassword()) {
-      setError("password", "Password must be at least 6 characters");
+      setError("password", "OTP must be 6 digit numbers");
     } else {
       setError(null, "");
     }
@@ -59,10 +62,18 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
   const handleSignIn = async () => {
     try {
-      await authManager.signIn(email, password);
-      Alert.alert("Success", "You are now signed in.");
-      setModalVisible(false);
-      navigation.goBack();
+      const response = authManager.initiatePasswordlessSignIn(email);
+      response
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          setOtpSent(true);
+          setInfoMessage("6-digit code has been sent to your email.");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (error) {
       console.error(error);
       setError(
@@ -72,15 +83,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     }
   };
 
-  const handleSignUp = async () => {
-    try {
-      await authManager.signUp(email, password);
-      Alert.alert("Success", "Account created. You are now signed in.");
+  const handleVerifyOTP = async () => {
+      setModalVisible(false);
       navigation.goBack();
-    } catch (error) {
-      console.error(error);
-      setError("firebase", "Failed to sign up. Please try again.");
-    }
   };
 
   const setError = (
@@ -92,12 +97,14 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   };
 
   const validateEmail = () => email.endsWith("@uvic.ca");
-  const validatePassword = () => password.length >= 6;
-
+  const validatePassword = () => {
+    return password.length == 6 &&
+    !isNaN(Number(password));
+  }
   return (
     <ScrollView
       contentContainerStyle={{
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
         flex: 1,
         width: "100%",
         height: "100%",
@@ -107,9 +114,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <>
           <BackgroundImage source={require("../assets/splash-login.png")} />
-          <View className="flex justify-center items-center px-10 h-3/4 mb-6">
+          <View className="flex justify-center items-center mt-96 px-10">
             <TextInput
-              placeholder="Email"
+              placeholder="UVic Email"
               returnKeyType="next"
               value={email}
               onChangeText={(text) => {
@@ -117,7 +124,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
               }}
               keyboardType="email-address"
               autoCapitalize="none"
-              className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
+              className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-3 ${
                 errorType === "email" ||
                 errorType === "both" ||
                 errorType === "firebase"
@@ -130,7 +137,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
                 fontSize: 16,
                 color: "#154058",
                 fontWeight: "bold",
+                opacity: otpSent ? 0.9 : 1,
               }}
+              editable={!otpSent}
               onBlur={() => {
                 if (validateEmail() && passwordRef.current) {
                   (passwordRef.current as any).focus();
@@ -142,37 +151,50 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
                 if (errorType === "firebase") setError(null, "");
               }}
             />
-            <TextInput
-              ref={passwordRef}
-              placeholder="Password"
-              value={password}
-              returnKeyType="done"
-              onChangeText={(text) => {
-                setPassword(text);
-              }}
-              className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
-                errorType === "password" ||
-                errorType === "both" ||
-                errorType === "firebase"
-                  ? "border-orange"
-                  : passwordFocused || password !== ""
-                  ? "border-blue"
-                  : "border-neutral-400"
-              }`}
-              style={{
-                fontSize: 16,
-                color: "#154058",
-                fontWeight: "bold",
-              }}
-              secureTextEntry
-              onBlur={() => {
-                setPasswordFocused(false);
-              }}
-              onFocus={() => {
-                setPasswordFocused(true);
-                if (errorType === "firebase") setError(null, "");
-              }}
-            />
+            {
+              infoMessage !== "" && (
+                <View
+                  className="flex h-4 justify-center items-center px-2 rounded-lg mb-2 bg-white"
+                >
+                  <Text className="text-center text-xs font-bold text-blue">
+                    {infoMessage}
+                  </Text>
+                </View>
+              )
+            }
+            {otpSent && (
+              <TextInput
+                ref={passwordRef}
+                placeholder="Password"
+                value={password}
+                returnKeyType="done"
+                onChangeText={(text) => {
+                  setPassword(text);
+                }}
+                className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
+                  errorType === "password" ||
+                  errorType === "both" ||
+                  errorType === "firebase"
+                    ? "border-orange"
+                    : passwordFocused || password !== ""
+                    ? "border-blue"
+                    : "border-neutral-400"
+                }`}
+                style={{
+                  fontSize: 16,
+                  color: "#154058",
+                  fontWeight: "bold",
+                }}
+                keyboardType = "phone-pad"
+                onBlur={() => {
+                  setPasswordFocused(false);
+                }}
+                onFocus={() => {
+                  setPasswordFocused(true);
+                  if (errorType === "firebase") setError(null, "");
+                }}
+              />
+            )}
 
             <View
               className={`flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white ${
@@ -185,19 +207,11 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             </View>
 
             <TouchableOpacity
-              onPress={() => handleSignIn()}
+              onPress={() => otpSent ? handleVerifyOTP():handleSignIn()}
               disabled={errorType !== null}
               className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
             >
-              <Text className="text-white font-bold text-base">Sign In</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => handleSignUp()}
-              disabled={errorType !== null}
-              className="w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
-            >
-              <Text className="text-white font-bold text-base">Sign Up</Text>
+              <Text className="text-white font-bold text-base"> {otpSent ? "Verify OTP":"Sign In"}</Text>
             </TouchableOpacity>
           </View>
         </>

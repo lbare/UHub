@@ -1,44 +1,27 @@
-import { getDocs, addDoc } from "firebase/firestore";
+import { getDocs, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import { collection } from "firebase/firestore";
 import { Building, buildingExamples } from "../models/Building";
-import { FoodVendor } from "../models/FoodVendor";
 
+type OTP = {
+  createdAt: Date;
+  otp: string;
+};
 class DataFetcher {
-  collectionName: string;
 
-  //Our app is making excessive calls to the database, quick fix to cache the data
-  //need to come up with a better solution for milestone 2
-  buildings_cache: Building[] = [];
+  getOTPforEmail(email: string){
+    const otpCollection = collection(db, "otps");
+    const docRef = doc(otpCollection, email);
 
-  fetch_count: number = 0;
+    getDoc(docRef).then((docSnap) => {
+      if (docSnap.exists()) {
+        const otp = docSnap.data() as OTP;
+      } else {
 
-  constructor(collectionName: string = "Building:V2") {
-    this.collectionName = collectionName;
-  }
+      }
+    });
 
-  getAllBuildings(success: (data: Building[]) => void) {
-    this.fetch_count++;
-    console.log("Fetching buildings: ", this.fetch_count);
-
-    if (this.buildings_cache.length > 0) {
-      success(this.buildings_cache);
-      return;
-    }
-    const dataCollection = collection(db, this.collectionName);
-    getDocs(dataCollection)
-      .then((documents) => {
-        const buildings = documents.docs.map((doc) => doc.data() as Building);
-        this.buildings_cache = buildings;
-        success(buildings);
-      })
-      .catch((error) => {
-        console.error("Error fetching buildings: ", error);
-      });
-  }
-
-  getAllFoodVendorsInBuilding(building: Building): FoodVendor[] {
-    return building.vendors;
+    return Promise.resolve("123456");
   }
 }
 

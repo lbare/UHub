@@ -38,9 +38,6 @@ class FirebaseMenuItemFavouriteService {
       this.allItemsAndLikes = new Map<String, Array<String>>(
         Object.entries(data)
       );
-
-      console.log("All items and likes fetched:", this.allItemsAndLikes);
-
       return this.allItemsAndLikes;
     } else {
       return new Map<String, Array<String>>();
