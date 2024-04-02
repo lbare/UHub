@@ -15,7 +15,7 @@ class MenuSearch {
     FoodVendor
   >();
   allMenuItem: MenuItem[] = [];
-  curTagFilters: MenuItemTag[] = [];
+  curTagFilters: MenuItemTag[][] = [];
   curBuildingFilters: string[] = [];
   curVendorFilters: string[] = [];
 
@@ -43,12 +43,14 @@ class MenuSearch {
     });
   };
 
-  public addTagFilter = (tag: MenuItemTag) => {
-    this.curTagFilters.push(tag);
+  public addTagFilter = (tags: MenuItemTag[]) => {
+    this.curTagFilters.push(tags);
   };
 
-  public removeTagFilter = (tag: MenuItemTag) => {
-    this.curTagFilters = this.curTagFilters.filter((t) => t !== tag);
+  public removeTagFilter = (tags: MenuItemTag[]) => {
+    this.curTagFilters = this.curTagFilters.filter(
+      (t) => !t.every((el) => tags.includes(el))
+    );
   };
 
   public clearTagFilters = () => {
@@ -95,7 +97,7 @@ class MenuSearch {
     let filteredByTag = fuseSearchResults.filter((fuseResultMenuItem) => {
       let item = fuseResultMenuItem.item;
       for (let i = 0; i < this.curTagFilters.length; i++) {
-        if (!item?.tags?.includes(this.curTagFilters[i])) {
+        if (!this.curTagFilters[i].some((el) => item?.tags?.includes(el))) {
           return false;
         }
       }

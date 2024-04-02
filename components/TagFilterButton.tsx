@@ -4,27 +4,40 @@ import MenuSearch from "../services/MenuSearch";
 import React from "react";
 interface TagFilterButtonProps {
   text: string;
-  tag: MenuItemTag;
+  tags: MenuItemTag[];
   menuSearchObject: MenuSearch;
   onUpdate: () => void;
 }
 
 const TagFilterButton: React.FC<TagFilterButtonProps> = ({
   text,
-  tag,
+  tags,
   menuSearchObject,
   onUpdate,
 }) => {
-  const [isToggled, setToggle] = React.useState(
-    menuSearchObject.curTagFilters.includes(tag)
-  );
+  const checkIfToggled = (): boolean => {
+    if (!menuSearchObject) {
+      return false;
+    }
+    for (let i = 0; i < menuSearchObject.curTagFilters.length; i++) {
+      if (
+        tags.length === menuSearchObject.curTagFilters[i].length &&
+        tags.every((el) => menuSearchObject.curTagFilters[i].includes(el))
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const [isToggled, setToggle] = React.useState(checkIfToggled());
 
   const handlePress = () => {
     setToggle(!isToggled);
     if (isToggled) {
-      menuSearchObject.removeTagFilter(tag);
+      menuSearchObject.removeTagFilter(tags);
     } else {
-      menuSearchObject.addTagFilter(tag);
+      menuSearchObject.addTagFilter(tags);
     }
     // Calls the parent's search function to redo search
     // with the existing query and new filters
@@ -36,15 +49,22 @@ const TagFilterButton: React.FC<TagFilterButtonProps> = ({
       onPress={handlePress}
       style={{
         backgroundColor: isToggled ? "#EB6931FF" : "#00000000",
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         paddingVertical: 5,
-        borderColor: "#EDEDED",
-        borderWidth: 2,
+        marginRight: 10,
+        borderColor: isToggled ? "#EB6931FF" : "#EDEDED6E",
+        borderWidth: 1,
         borderRadius: 30,
         alignSelf: "flex-start",
       }}
     >
-      <Text style={{ color: "#EDEDED", textAlign: "center" }}>
+      <Text
+        style={{
+          color: "#EDEDED",
+          textAlign: "center",
+          fontSize: 16,
+        }}
+      >
         {text ?? "Tag Button"}
       </Text>
     </Pressable>

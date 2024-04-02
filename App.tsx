@@ -4,11 +4,12 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeNavigation from "./navigation/HomeNavigation";
 import { Building } from "./models/Building";
-import { getDocs, collection } from "firebase/firestore";
+import { getDoc, getDocs, doc, collection } from "firebase/firestore";
 import { BuildingContext } from "./contexts/BuildingContext";
 import { db } from "./services/firebase";
 import loadAssets from "./hooks/loadAssets";
 import { Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [buildings, setBuildings] = useState<Building[]>([]);
@@ -17,25 +18,51 @@ export default function App() {
   useEffect(() => {
     const prepare = async () => {
       try {
-        const buildingsColRef = collection(db, "Building:V2");
-        const querySnapshot = await getDocs(buildingsColRef);
         await loadAssets();
 
-        const buildingsArray: Building[] = [];
+        // Fetch the last updated timestamp from Firestore
+        const metadataDoc = await getDoc(doc(db, "Metadata", "lastUpdated"));
+        const serverTimestamp = metadataDoc.data()?.timestamp;
+        const serverLastUpdated = serverTimestamp
+          ? serverTimestamp.seconds * 1000 +
+            serverTimestamp.nanoseconds / 1000000
+          : null;
+        console.log("Server last updated:", serverLastUpdated ? new Date(serverLastUpdated).toLocaleString() : "N/A");
 
-        querySnapshot.forEach((doc) => {
-          const buildingData = doc.data() as Building;
-          buildingsArray.push(buildingData);
-        });
+        const localData = await AsyncStorage.getItem("buildings_cache");
+        const localCache = localData ? JSON.parse(localData) : {};
+        const localLastUpdated = localCache.lastUpdated || null;
+        console.log("Local last updated:", localLastUpdated ? new Date(localLastUpdated).toLocaleString() : "N/A");
 
-        setBuildings(buildingsArray);
-        console.log("Buildings fetched:", buildingsArray);
+        // Check if the Firestore data is newer than the local cache
+        if (
+          !localData ||
+          !localLastUpdated ||
+          (serverLastUpdated && serverLastUpdated > localLastUpdated)
+        ) {
+          // Data in Firestore is newer, fetch and cache it
+          const querySnapshot = await getDocs(collection(db, "Building:V2"));
+          const buildingsArray = querySnapshot.docs.map(
+            (doc) => doc.data() as Building
+          );
+          setBuildings(buildingsArray);
+          await AsyncStorage.setItem(
+            "buildings_cache",
+            JSON.stringify({
+              data: buildingsArray,
+              lastUpdated: serverLastUpdated,
+            })
+          );
+          console.log("Buildings updated from Firestore");
+        } else {
+          // Load data from the local cache
+          setBuildings(JSON.parse(localData).data);
+          console.log("Buildings loaded from cache");
+        }
       } catch (error) {
-        console.error("Error fetching buildings:", error);
+        console.error("Error fetching data:", error);
       } finally {
-        setTimeout(() => {
-          setIsReady(true);
-        }, 2000);
+        setIsReady(true);
       }
     };
 
