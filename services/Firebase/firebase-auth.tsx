@@ -37,7 +37,14 @@ class FirebaseAuthManager {
   }
 
   private generatePasswordForEmail(email: string) {
-    return SHA256(email + process.env.OUR_SECRET).toString();
+
+    const secret = process.env.OUR_SECRET;
+
+    if (!secret) {
+      throw new Error("Our secret is not defined in the environment variables.");
+    }
+
+    return SHA256(email + secret).toString();
   }
 
   public getCurrentUserUID(): string | null {
