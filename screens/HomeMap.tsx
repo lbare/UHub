@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -32,6 +33,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import { UserPopup } from "../components/UserPopup";
 import { mapStyles } from "../services/mapStyles";
+import { WelcomePopup } from "../components/WelcomePopup";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -74,7 +76,9 @@ const HomeMap: React.FC = () => {
   const buildingFilterRef = useRef(null);
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [loginPopupVisible, setLoginPopupVisible] = useState<boolean>(false);
+  const [welcomePopupVisible, setWelcomePopupVisible] =
+    useState<boolean>(false);
   const [isLoginModalVisible, setIsLoginModalVisible] =
     useState<boolean>(false);
 
@@ -93,7 +97,7 @@ const HomeMap: React.FC = () => {
       .signOut()
       .then(() => {
         Alert.alert("Logged out successfully");
-        setPopupVisible(false);
+        setLoginPopupVisible(false);
       })
       .catch((error) => {
         console.error("Logout failed:", error);
@@ -101,7 +105,7 @@ const HomeMap: React.FC = () => {
   };
 
   const handleSignIn = (): void => {
-    setPopupVisible(false);
+    setLoginPopupVisible(false);
     navigation.navigate("Login");
     console.log("Navigate to Sign In screen or open Sign In modal");
   };
@@ -326,8 +330,14 @@ const HomeMap: React.FC = () => {
             )}
         </MapView>
         <TouchableOpacity
+          className="absolute w-16 h-16 bottom-10 left-5 border-white border-2 opacity-50 rounded-full justify-center items-center shadow-xl"
+          onPress={() => setWelcomePopupVisible(true)}
+        >
+          <FontAwesome5 name="question" size={30} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity
           className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
-          onPress={() => setPopupVisible(true)}
+          onPress={() => setLoginPopupVisible(true)}
         >
           <Image
             source={require("../assets/logo.png")}
@@ -337,12 +347,16 @@ const HomeMap: React.FC = () => {
             }}
           />
         </TouchableOpacity>
+        <WelcomePopup
+          isVisible={welcomePopupVisible}
+          onClose={() => setWelcomePopupVisible(false)}
+        />
         <UserPopup
-          isVisible={popupVisible}
+          isVisible={loginPopupVisible}
           email={userEmail}
           onLogout={handleLogout}
           onSignIn={handleSignIn}
-          onClose={() => setPopupVisible(false)}
+          onClose={() => setLoginPopupVisible(false)}
         />
         <CustomModal
           modalVisible={modalVisible}
