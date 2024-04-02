@@ -67,7 +67,7 @@ class FirebaseAuthManager {
       if(response.ok) {
         return response.json();
       } else {
-        return Promise.reject("Failed to send OTP to email");
+        return Promise.reject("Our servers seem to be down right now. Please try again later.");
       }
     });
   }
@@ -93,7 +93,11 @@ class FirebaseAuthManager {
     return this.dataFetcher
       .getOTPforEmail(email)
       .then((otpFromDB) => {
-        return otp == otpFromDB;
+        if (otpFromDB == otp) {
+          return true;
+        }else{
+          return Promise.reject("The OTP you entered is incorrect.");
+        }
       })
   }
 

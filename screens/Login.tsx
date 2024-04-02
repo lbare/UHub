@@ -25,7 +25,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [infoMessage, setInfoMessage] = useState("");
 
   const [errorType, setErrorType] = useState<
-    "email" | "password" | "both" | "firebase" | null
+    "email" | "password" | "both" | "server" | "firebase" | null
   >(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
@@ -66,8 +66,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
         .then(() => {
           setOtpSent(true);
           setInfoMessage("6-digit code has been sent to your email.");
+          setError(null, "");
         }).catch((error) => {
-          setError("firebase", "Failed to send OTP to email. Please try again.");
+          setError("server", error);
         });
   };
 
@@ -78,12 +79,12 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
         navigation.goBack();
       }
     }).catch((error) => {
-      setError("firebase", "Failed to verify OTP");
+      setError("server", error);
     });
   };
 
   const setError = (
-    field: "email" | "password" | "both" | "firebase" | null,
+    field: "email" | "password" | "both" | "firebase" | "server" | null,
     message: string
   ) => {
     setErrorType(field);
@@ -197,7 +198,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
             <TouchableOpacity
               onPress={() => (otpSent ? handleVerifyOTP() : handleSignIn())}
-              disabled={errorType !== null}
+              disabled={errorType == "email" || errorType == "password"}
               className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
             >
               <Text className="text-white font-bold text-base">
