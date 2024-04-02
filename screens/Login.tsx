@@ -61,31 +61,25 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   }, [errorType]);
 
   const handleSignIn = async () => {
-    try {
-      const response = authManager.initiatePasswordlessSignIn(email);
+    const response = authManager.initiatePasswordlessSignIn(email);
       response
-        .then((res) => {
-          return res.json();
-        })
-        .then((json) => {
+        .then(() => {
           setOtpSent(true);
           setInfoMessage("6-digit code has been sent to your email.");
-        })
-        .catch((error) => {
-          console.error(error);
+        }).catch((error) => {
+          setError("firebase", "Failed to send OTP to email. Please try again.");
         });
-    } catch (error) {
-      console.error(error);
-      setError(
-        "firebase",
-        "Failed to sign in. Please check your email and password."
-      );
-    }
   };
 
   const handleVerifyOTP = async () => {
-      setModalVisible(false);
-      navigation.goBack();
+    authManager.handleSignInWithOTP(email, password).then((success) => {
+      if (success) {
+        setModalVisible(false);
+        navigation.goBack();
+      }
+    }).catch((error) => {
+      setError("firebase", "Failed to verify OTP");
+    });
   };
 
   const setError = (
@@ -98,9 +92,8 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
   const validateEmail = () => email.endsWith("@uvic.ca");
   const validatePassword = () => {
-    return password.length == 6 &&
-    !isNaN(Number(password));
-  }
+    return password.length == 6 && !isNaN(Number(password));
+  };
   return (
     <ScrollView
       contentContainerStyle={{
@@ -151,17 +144,13 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
                 if (errorType === "firebase") setError(null, "");
               }}
             />
-            {
-              infoMessage !== "" && (
-                <View
-                  className="flex h-4 justify-center items-center px-2 rounded-lg mb-2 bg-white"
-                >
-                  <Text className="text-center text-xs font-bold text-blue">
-                    {infoMessage}
-                  </Text>
-                </View>
-              )
-            }
+            {infoMessage !== "" && (
+              <View className="flex h-4 justify-center items-center px-2 rounded-lg mb-2 bg-white">
+                <Text className="text-center text-xs font-bold text-blue">
+                  {infoMessage}
+                </Text>
+              </View>
+            )}
             {otpSent && (
               <TextInput
                 ref={passwordRef}
@@ -185,7 +174,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
                   color: "#154058",
                   fontWeight: "bold",
                 }}
-                keyboardType = "phone-pad"
+                keyboardType="phone-pad"
                 onBlur={() => {
                   setPasswordFocused(false);
                 }}
@@ -207,11 +196,14 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             </View>
 
             <TouchableOpacity
-              onPress={() => otpSent ? handleVerifyOTP():handleSignIn()}
+              onPress={() => (otpSent ? handleVerifyOTP() : handleSignIn())}
               disabled={errorType !== null}
               className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
             >
-              <Text className="text-white font-bold text-base"> {otpSent ? "Verify OTP":"Sign In"}</Text>
+              <Text className="text-white font-bold text-base">
+                {" "}
+                {otpSent ? "Verify OTP" : "Sign In"}
+              </Text>
             </TouchableOpacity>
           </View>
         </>
