@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Image,
   Modal,
@@ -146,7 +146,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         />
         {vendor && (
           <View
-            className="mt-48 w-full h-full rounded-xl overflow-hidden"
+            className="mt-36 w-full h-full rounded-xl overflow-hidden"
             style={{
               backgroundColor: "#1D1D1D",
               shadowColor: "#000",
@@ -159,10 +159,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
               elevation: 5,
             }}
           >
-            <ScrollView
-              contentContainerStyle={{
+            <View
+              style={{
                 alignItems: "flex-start",
-                paddingVertical: 16,
+                paddingVertical: 8,
               }}
             >
               <Image
@@ -290,37 +290,59 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 )}
                 <View className="border-b border-neutral-300 mt-2" />
 
-                <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
-                  <View className="w-full bg-neutral-500 h-0.5" />
+                <ScrollView
+                  contentContainerStyle={{
+                    flexGrow: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    paddingRight: 8,
+                    marginBottom: 8,
+                  }}
+                  indicatorStyle="white"
+                  pagingEnabled
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  className="border-b-2 border-neutral-500"
+                >
                   {vendor.menu.sections.length > 1 &&
                     vendor.menu.sections.map((section, index) => (
                       <TouchableOpacity
                         key={index}
-                        className={`justify-center items-center mx-2 my-2 h-6 ${
-                          selectedSection && selectedSection === section.name
-                            ? "border-b-2 border-white"
-                            : ""
-                        } `}
+                        className="justify-center items-center my-2 mx-2 h-8"
+                        style={{
+                          borderWidth: 1,
+                          borderRadius: 16,
+                          paddingVertical: 5,
+                          paddingHorizontal: 12,
+                          backgroundColor:
+                            selectedSection === section.name
+                              ? "#EB6931"
+                              : "#1D1D1D",
+                          borderColor:
+                            selectedSection === section.name
+                              ? "#EB6931"
+                              : "#B9B9B925",
+                        }}
                         onPress={() => setSelectedSection(section.name)}
                       >
                         <Text
-                          className={`text-xs font-extrabold ${
+                          className={`text-sm font-bold ${
                             selectedSection && selectedSection === section.name
-                              ? "text-neutral-200 text-base"
-                              : "text-neutral-400 font-semibold"
+                              ? "text-white"
+                              : "text-neutral-400"
                           }`}
                         >
                           {section.name}
                         </Text>
                       </TouchableOpacity>
                     ))}
-                </View>
-
+                </ScrollView>
                 {vendor.menu.sections.map((section, index) => {
                   if (section.name === selectedSection) {
                     return (
                       <React.Fragment key={index}>
-                        <View className="mb-6 w-full">
+                        <ScrollView className="mb-6 w-full">
                           {section.items.map((item, itemIndex) => (
                             <View className="flex flex-row" key={itemIndex}>
                               <View
@@ -375,17 +397,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
                               </View>
                             </View>
                           ))}
-                        </View>
+                        </ScrollView>
                       </React.Fragment>
                     );
                   }
                   return null;
                 })}
                 {/* Extra view below is a Work around for the scroll not going all the way to the bottom */}
-                <View className="h-48"></View>
+                <View className="h-48" />
               </View>
-            </ScrollView>
-
+            </View>
+            <View className="w-full bg-neutral-500 h-0.5" />
             <View className="absolute top-3 right-4">
               <TouchableOpacity
                 className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
