@@ -21,7 +21,7 @@ class FirebaseMenuItemFavouriteService {
   >();
 
   private lastFetched: Date = new Date();
-  private authManager = new FirebaseAuthManager(true);
+  private authManager = new FirebaseAuthManager();
 
   private constructor() {
     this.getAllItemsAndLikes().then((data) => {
@@ -38,9 +38,6 @@ class FirebaseMenuItemFavouriteService {
       this.allItemsAndLikes = new Map<String, Array<String>>(
         Object.entries(data)
       );
-
-      console.log("All items and likes fetched:", this.allItemsAndLikes);
-
       return this.allItemsAndLikes;
     } else {
       return new Map<String, Array<String>>();

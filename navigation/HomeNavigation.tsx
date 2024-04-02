@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeMap from "../screens/HomeMap";
+import Login from "../screens/Login";
 
-const Stack = createStackNavigator();
+export type StackParamList = {
+  HomeMap: undefined;
+  Login: undefined;
+};
+
+const Stack = createStackNavigator<StackParamList>();
+
+const LoginScreenWrapper: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  return (
+    <Login modalVisible={modalVisible} setModalVisible={setModalVisible} />
+  );
+};
 
 const HomeNavigation: React.FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        animationEnabled: true, 
+        animationTypeForReplace: "push",
+      }}
+    >
       <Stack.Screen
         name="HomeMap"
         component={HomeMap}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreenWrapper}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

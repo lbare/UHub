@@ -8,18 +8,18 @@ import {
   signOut,
   Auth,
 } from "firebase/auth";
+import DataFetcher from "../DataFetcher";
 
 class FirebaseAuthManager {
 
-  private mocked: boolean;
-
-  constructor(mocked: boolean = false, callbackOnAuthStateChanged?: (user: User | null) => void) {
+  dataFetcher = new DataFetcher();
+  
+  constructor(callbackOnAuthStateChanged?: (user: User | null) => void) {
     if (callbackOnAuthStateChanged) {
       onAuthStateChanged(this.getCurrentAuth(), (user) => {
         callbackOnAuthStateChanged(user);
-      })
+      });
     }
-    this.mocked = mocked;
   }
 
   private getCurrentAuth() {
@@ -37,11 +37,6 @@ class FirebaseAuthManager {
   }
 
   public getCurrentUserUID(): string | null {
-    
-    if (this.mocked) {
-      return "rahul@uvic.ca";
-    }
-
     try {
       return this.getCurrentUser().uid;
     } catch (error) {
@@ -49,22 +44,34 @@ class FirebaseAuthManager {
     }
   }
 
-  public signUp(
-    email: string,
-    password: string
-  ) {
-
-    if (!email.endsWith("@uvic.ca")) {
-      return Promise.reject(new Error("Email must be a valid UVic email"));
-    }
-
-    return createUserWithEmailAndPassword(this.getCurrentAuth(), email, password)
+  public signUp(email: string, password: string) {
+    return createUserWithEmailAndPassword(
+      this.getCurrentAuth(),
+      email,
+      password
+    );
   }
 
-  public signIn(
-    email: string,
-    password: string
-  ) {
+  public initiatePasswordlessSignIn(email: string) {
+    console.log("Email is: " + email);
+    const url = `https://uhub.rahuln.ca/test?email=${email}`;
+    console.log("URL is: " + url);
+    return fetch(
+      url,
+      {
+        method: "POST",
+        cache: "no-cache",
+      }
+    );
+  }
+
+  public verifyOTP(otp: string) {
+    this.dataFetcher.getOTPforEmail(otp).then((otpFromDB) => {
+      return otp === otpFromDB;
+    });
+  }
+
+  public signIn(email: string, password: string) {
     return signInWithEmailAndPassword(this.getCurrentAuth(), email, password);
   }
 
