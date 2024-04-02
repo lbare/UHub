@@ -349,6 +349,7 @@ const HomeMap: React.FC = () => {
         </TouchableOpacity>
         <WelcomePopup
           isVisible={welcomePopupVisible}
+          pageNum={0}
           onClose={() => setWelcomePopupVisible(false)}
         />
         <UserPopup
