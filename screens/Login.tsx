@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   TouchableOpacity,
   Text,
   TextInput,
-  Button,
-  StyleSheet,
   Alert,
-  Modal,
-  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import { useNavigation } from "@react-navigation/native";
@@ -31,6 +30,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
   const navigation = useNavigation();
   const authManager = new FirebaseAuthManager();
+  const passwordRef = useRef(null);
 
   useEffect(() => {
     if (
@@ -95,149 +95,115 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const validatePassword = () => password.length >= 6;
 
   return (
-    <View className="flex w-full h-full justify-end">
-      <BackgroundImage source={require("../assets/splash-login.png")} />
-      <View className="flex justify-center items-center px-10 h-3/4">
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
-            errorType === "email" ||
-            errorType === "both" ||
-            errorType === "firebase"
-              ? "border-orange"
-              : passwordFocused || password !== ""
-              ? "border-blue"
-              : "border-neutral-400"
-          }`}
-          style={{
-            fontSize: 16,
-            color: "#154058",
-            fontWeight: "bold",
-          }}
-          onBlur={() => {
-            setEmailFocused(false);
-          }}
-          onFocus={() => {
-            setEmailFocused(true);
-            if (errorType === "firebase") setError(null, "");
-          }}
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
-          className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
-            errorType === "password" ||
-            errorType === "both" ||
-            errorType === "firebase"
-              ? "border-orange"
-              : passwordFocused || password !== ""
-              ? "border-blue"
-              : "border-neutral-400"
-          }`}
-          style={{
-            fontSize: 16,
-            color: "#154058",
-            fontWeight: "bold",
-          }}
-          secureTextEntry
-          onBlur={() => {
-            setPasswordFocused(false);
-          }}
-          onFocus={() => {
-            setPasswordFocused(true);
-            if (errorType === "firebase") setError(null, "");
-          }}
-        />
+    <ScrollView
+      contentContainerStyle={{
+        justifyContent: "flex-end",
+        flex: 1,
+        width: "100%",
+        height: "100%",
+      }}
+      scrollEnabled={false}
+    >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <>
+          <BackgroundImage source={require("../assets/splash-login.png")} />
+          <View className="flex justify-center items-center px-10 h-3/4 mb-6">
+            <TextInput
+              placeholder="Email"
+              returnKeyType="next"
+              value={email}
+              onChangeText={(text) => {
+                setEmail(text);
+              }}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-4 ${
+                errorType === "email" ||
+                errorType === "both" ||
+                errorType === "firebase"
+                  ? "border-orange"
+                  : passwordFocused || password !== ""
+                  ? "border-blue"
+                  : "border-neutral-400"
+              }`}
+              style={{
+                fontSize: 16,
+                color: "#154058",
+                fontWeight: "bold",
+              }}
+              onBlur={() => {
+                if (validateEmail() && passwordRef.current) {
+                  (passwordRef.current as any).focus();
+                  setPasswordFocused(true);
+                }
+              }}
+              onFocus={() => {
+                setEmailFocused(true);
+                if (errorType === "firebase") setError(null, "");
+              }}
+            />
+            <TextInput
+              ref={passwordRef}
+              placeholder="Password"
+              value={password}
+              returnKeyType="done"
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
+              className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
+                errorType === "password" ||
+                errorType === "both" ||
+                errorType === "firebase"
+                  ? "border-orange"
+                  : passwordFocused || password !== ""
+                  ? "border-blue"
+                  : "border-neutral-400"
+              }`}
+              style={{
+                fontSize: 16,
+                color: "#154058",
+                fontWeight: "bold",
+              }}
+              secureTextEntry
+              onBlur={() => {
+                setPasswordFocused(false);
+              }}
+              onFocus={() => {
+                setPasswordFocused(true);
+                if (errorType === "firebase") setError(null, "");
+              }}
+            />
 
-        <View
-          className={`flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white ${
-            !errorMessage && "opacity-0"
-          }`}
-        >
-          <Text className="text-center font-bold text-orange">
-            {errorMessage}
-          </Text>
-        </View>
+            <View
+              className={`flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white ${
+                !errorMessage && "opacity-0"
+              }`}
+            >
+              <Text className="text-center font-bold text-orange">
+                {errorMessage}
+              </Text>
+            </View>
 
-        <TouchableOpacity
-          onPress={() => handleSignIn()}
-          disabled={errorType !== null}
-          className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
-        >
-          <Text className="text-white font-bold text-base">Sign In</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handleSignIn()}
+              disabled={errorType !== null}
+              className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
+            >
+              <Text className="text-white font-bold text-base">Sign In</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => handleSignUp()}
-          disabled={errorType !== null}
-          className="w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
-        >
-          <Text className="text-white font-bold text-base">Sign Up</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+            <TouchableOpacity
+              onPress={() => handleSignUp()}
+              disabled={errorType !== null}
+              className="w-full h-12 rounded-full justify-center items-center mb-4 bg-blue"
+            >
+              <Text className="text-white font-bold text-base">Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      </TouchableWithoutFeedback>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  signInButton: {
-    backgroundColor: "#4CAF50",
-    width: "100%",
-    padding: 10,
-    alignItems: "center",
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  signUpButton: {
-    backgroundColor: "#2196F3",
-    width: "100%",
-    padding: 10,
-    alignItems: "center",
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontWeight: "bold",
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#408CA8",
-  },
-  logo: {
-    height: 100,
-    width: 100,
-    marginBottom: -220,
-  },
-  input: {
-    height: 50,
-    borderColor: "#007bff",
-    borderWidth: 1,
-    marginBottom: 20,
-    marginTop: 0,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    width: "100%",
-    backgroundColor: "#ffffff",
-  },
-  error: {
-    color: "#dc3545",
-    marginBottom: 20,
-    width: "100%",
-    textAlign: "center",
-  },
-});
 
 export default Login;
