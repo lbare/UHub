@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,17 +13,29 @@ import {
 } from "react-native";
 import { versionNotes } from "../models/VersionNotes";
 
+export enum WelcomePopupCategories {
+  Hide = -1,
+  Menu = 0,
+  WelcomeTour = 1,
+  Feedback = 8,
+  VersionNotes = 9,
+}
+
 interface WelcomePopupProps {
-  isVisible: boolean;
   pageNum?: number;
   onClose: () => void;
 }
 export const WelcomePopup: React.FC<WelcomePopupProps> = ({
-  isVisible,
-  pageNum = 0,
+  pageNum = -1,
   onClose,
 }) => {
-  const [curPageNum, setCurPageNum] = useState<number>(pageNum);
+  const [curPageNum, setCurPageNum] = useState<number>(
+    pageNum < 0 ? 0 : pageNum
+  );
+
+  useEffect(() => {
+    setCurPageNum(pageNum);
+  }, [pageNum]);
 
   const defaultPopupStyle: StyleProp<ViewStyle> = {
     width: "95%",
@@ -442,8 +454,8 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
                     {item.date}
                   </Text>
                   <Text className="text-left text-base mt-2">
-                    {item.notes.map((note) => (
-                      <Text>
+                    {item.notes.map((note, noteIndex) => (
+                      <Text key={noteIndex}>
                         • {note}
                         {"\n"}
                       </Text>
@@ -469,7 +481,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
   ];
 
   return (
-    <Modal visible={isVisible} transparent={true} animationType="slide">
+    <Modal visible={pageNum >= 0} transparent={true} animationType="slide">
       <View className="flex-1 justify-center items-center">
         {curPageNum >= 0 && curPageNum < pages.length ? (
           pages[curPageNum]
