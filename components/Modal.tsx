@@ -325,7 +325,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                           {section.sides && section.sides.length > 0 && (
                             <View className="px-4 py-2" style={{ backgroundColor: "#422828"}}>
                               <Text className="text-md font-bold text-neutral-200 mb-1" >
-                                For each item here, these sides are available:
+                                Sides
                               </Text>
                               {section.sides.map((side, sideIndex) => (
                                 <Text key={sideIndex} className="text-md font-normal text-neutral-300 mb-1">
@@ -363,16 +363,16 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
                                     {/* Show main price only if there are no sizes */}
                                     {(!item.sizes || item.sizes.length === 0)  && (
-                                      <Text className="text-md mt-1 font-semibold text-neutral-200">
+                                      <Text className="text-md mt-1 font-medium text-neutral-200">
                                         ${item.price.toFixed(2)}
                                       </Text>
                                     )}
 
                                     {/* Sizes */}
                                     {item.sizes && item.sizes.length > 0 && (
-                                      <View>
+                                      <View className="mt-1">
                                         {item.sizes.map((size, sizeIndex) => (
-                                          <Text key={sizeIndex} className="text-sm font-semibold text-neutral-300">
+                                          <Text key={sizeIndex} className="text-sm font-medium text-neutral-300">
                                             {size.name}: ${size.price.toFixed(2)}
                                           </Text>
                                         ))}
@@ -381,7 +381,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
                                     {/* Sides */}
                                     {item.sides && item.sides.length > 0 && (
-                                      <View>
+                                      <View className="mt-1">
                                         {item.sides.map((side, sideIndex) => (
                                           <View key={sideIndex} className="mb-1">
                                             <Text className="text-sm font-normal text-neutral-300">
