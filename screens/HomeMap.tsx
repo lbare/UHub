@@ -244,6 +244,7 @@ const HomeMap: React.FC = () => {
       if (_mapView.current) {
         _mapView.current.animateToRegion(newRegion, 200);
       }
+      setSelectedItem(null);
     }
 
     unselectMarker();
@@ -294,6 +295,28 @@ const HomeMap: React.FC = () => {
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
         >
+          {zoomLevel > 14 &&
+            buildings &&
+            buildings.map((building) =>
+              building.vendors.map((vendor, index) => (
+                <React.Fragment key={index}>
+                  <CustomMarker
+                    keyp={index}
+                    name={vendor.name}
+                    coordinate={vendor.location}
+                    isSelected={vendor.name === selectedVendor?.name}
+                    zIndex={1000}
+                    image={require("../assets/marker.png")}
+                    onPressCustom={() => {
+                      console.log("Marker Pressed: ", index);
+
+                      onMarkerPress(vendor);
+                    }}
+                    zoomLevel={zoomLevel}
+                  />
+                </React.Fragment>
+              ))
+            )}
           {zoomLevel < 15
             ? buildingPolygonsSimple &&
               buildingPolygonsSimple.map(
@@ -332,24 +355,6 @@ const HomeMap: React.FC = () => {
                     />
                   )
               )}
-          {zoomLevel > 14 &&
-            buildings &&
-            buildings.map((building) =>
-              building.vendors.map((vendor, index) => (
-                <React.Fragment key={index}>
-                  <CustomMarker
-                    keyp={index}
-                    name={vendor.name}
-                    coordinate={vendor.location}
-                    isSelected={vendor.name === selectedVendor?.name}
-                    zIndex={index}
-                    image={require("../assets/marker.png")}
-                    onPressCustom={() => onMarkerPress(vendor)}
-                    zoomLevel={zoomLevel}
-                  />
-                </React.Fragment>
-              ))
-            )}
         </MapView>
         <TouchableOpacity
           className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
