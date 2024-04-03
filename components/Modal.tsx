@@ -432,14 +432,67 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                       {item.description}
                                     </Text>
                                   )}
+
                                   {item.tags && item.tags.length > 0 && (
                                     <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
                                       {item.tags.join(", ")}
                                     </Text>
                                   )}
-                                  <Text className="text-md mt-1 font-semibold text-neutral-200">
-                                    ${item.price.toFixed(2)}
-                                  </Text>
+
+                                  {/* Show main price only if there are no sizes */}
+
+                                  {(!item.sizes || item.sizes.length === 0) && (
+                                    <Text className="text-md mt-1 font-medium text-neutral-200">
+                                      ${item.price.toFixed(2)}
+                                    </Text>
+                                  )}
+
+                                  {/* Sizes */}
+
+                                  {item.sizes && item.sizes.length > 0 && (
+                                    <View className="mt-1">
+                                      {item.sizes.map((size, sizeIndex) => (
+                                        <Text
+                                          key={sizeIndex}
+                                          className="text-sm font-medium text-neutral-300"
+                                        >
+                                          {size.name}: ${size.price.toFixed(2)}
+                                        </Text>
+                                      ))}
+                                    </View>
+                                  )}
+
+                                  {/* Sides */}
+
+                                  {item.sides && item.sides.length > 0 && (
+                                    <View className="mt-1">
+                                      {item.sides.map((side, sideIndex) => (
+                                        <View key={sideIndex} className="mb-1">
+                                          <Text className="text-sm font-normal text-neutral-300">
+                                            {side.name}
+                                          </Text>
+
+                                          {side.description && (
+                                            <Text className="text-sm font-light text-neutral-400">
+                                              {side.description}
+                                            </Text>
+                                          )}
+
+                                          {side.price > 0 && (
+                                            <Text className="text-sm font-semibold text-neutral-200">
+                                              ${side.price.toFixed(2)}
+                                            </Text>
+                                          )}
+                                        </View>
+                                      ))}
+                                    </View>
+                                  )}
+
+                                  {item.tags && item.tags.length > 0 && (
+                                    <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
+                                      {item.tags.join(", ")}
+                                    </Text>
+                                  )}
                                 </View>
                                 <TouchableOpacity
                                   onPress={() => toggleLikesForItem(item.name)}
