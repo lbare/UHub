@@ -7,6 +7,7 @@ import {
   Image,
   StyleProp,
   ViewStyle,
+  Linking,
 } from "react-native";
 
 interface WelcomePopupProps {
@@ -84,10 +85,8 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           source={require("../assets/full-logo.png")}
           style={{
             maxWidth: "80%",
-            maxHeight: "20%",
+            maxHeight: "25%",
             objectFit: "contain",
-            // borderWidth: 2, // TODO: for testing
-            // borderColor: "black",
           }}
         />
         <View className="w-full">
@@ -99,9 +98,10 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
             campus.
             {"\n"}
             {"\n"}
-            UHub, allows you to find the locations of food outlets on campus and
-            browse their menus. There are also various search options available
-            to find specific food items, dietary restrictions, and more.
+            UHub, allows you to find the locations of amenities on campus and
+            browse the menu of all food outlets. There are also various search
+            options available to find specific food items filtered by dietary
+            restrictions, buildings, and more.
           </Text>
         </View>
       </View>
@@ -349,6 +349,108 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           onPress={nextPage}
         >
           <Text className="text-white font-bold text-center text-lg">Next</Text>
+        </Pressable>
+      </View>
+    </View>,
+
+    /// Page 7 - Welcome tour about the team ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={defaultPopupStyle}
+    >
+      <View className="flex-1 w-full items-center">
+        <Image
+          source={require("../assets/full-logo.png")}
+          style={{
+            maxWidth: "80%",
+            maxHeight: "30%",
+            objectFit: "contain",
+          }}
+        />
+        <View className="w-full px-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            About the Team
+          </Text>
+          <Text className="text-left text-base">
+            We are a team of four UVic students currently in a Software
+            Engineering class on startup programming with the goal of developing
+            an app that brings disjoint campus resources into one centralized
+            and easy to use place. We are using this project to learn about
+            building a new tech startup while also trying to solve some of the
+            common problems we face daily as students on campus.
+          </Text>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={prevPage}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Previous
+          </Text>
+        </Pressable>
+        <Pressable
+          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={nextPage}
+        >
+          <Text className="text-white font-bold text-center text-lg">Next</Text>
+        </Pressable>
+      </View>
+    </View>,
+
+    /// Page 8 - Feedback ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={defaultPopupStyle}
+    >
+      <View className="flex-1 w-full items-center">
+        <Image
+          source={require("../assets/full-logo.png")}
+          style={{
+            maxWidth: "80%",
+            maxHeight: "15%",
+            margin: 10,
+            objectFit: "contain",
+          }}
+        />
+        <View className="w-full px-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            Send us your feedback!
+          </Text>
+          <Text className="text-left text-base">
+            We want to make this app as useful as possible for the campus
+            community. Providing us with your feedback allows us to improve
+            existing features and get an idea of what other features would best
+            serve students.
+            {"\n"}
+            {"\n"}
+            To send feedback later, click on the "?" button on the map, then
+            click "send feeback".
+          </Text>
+          <Pressable
+            className="p-2 h-12 rounded-lg mt-4 justify-center items-center"
+            style={{
+              backgroundColor: "#154058",
+            }}
+            onPress={() => {
+              Linking.openURL("https://forms.gle/f4CxD4CVYF3d4KeE6");
+            }}
+          >
+            <Text className="text-white font-bold text-center text-lg">
+              Send Feedback
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={closePopup}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Close
+          </Text>
         </Pressable>
       </View>
     </View>,
