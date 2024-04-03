@@ -45,15 +45,15 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     }
   }, [email]);
 
-  useEffect(() => {
-    if (infoMessage) {
-      const timer = setTimeout(() => {
-        setInfoMessage("");
-      }, 5000);
+  // useEffect(() => {
+  //   if (infoMessage) {
+  //     const timer = setTimeout(() => {
+  //       setInfoMessage("");
+  //     }, 5000);
 
-      return () => clearTimeout(timer);
-    }
-  }, [infoMessage]);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [infoMessage]);
 
   useEffect(() => {
     if (otpSent) {
@@ -79,7 +79,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
     response
       .then(() => {
         setOtpSent(true);
-        setInfoMessage("6-digit code has been sent to your email.");
+        setInfoMessage("6-digit code has been sent to " + email);
         setLoading(false);
       })
       .catch((error) => {
@@ -200,7 +200,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             }`}
           >
             <Text
-              className={`text-center font-bold ${
+              className={`text-center text-xs font-bold ${
                 errorMessage ? "text-orange" : "text-blue"
               }`}
             >
