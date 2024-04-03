@@ -63,7 +63,6 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
             value={searchInput}
             onChangeText={(text) => setSearchInput(text)}
             onFocus={() => {
-              setSearchInput("");
               setSelected(true);
             }}
             returnKeyType="search"
