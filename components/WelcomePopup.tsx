@@ -46,7 +46,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
 
   const pages = [
     /// Page 0 - Category Menu ///
-    <View className="bg-white rounded-lg shadow-lg p-4 w-3/4 h-1/3 flex-column justify-center items-center">
+    <View className="bg-white rounded-lg shadow-lg p-4 w-3/4 h-2/5 flex-column justify-center items-center">
       <Pressable
         className="bg-orange w-3/4 p-2 h-12 rounded-lg justify-center items-center"
         onPress={() => {
@@ -65,6 +65,16 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
       >
         <Text className="text-white font-bold text-center text-lg">
           Welcome Tour
+        </Text>
+      </Pressable>
+      <Pressable
+        className="bg-orange w-3/4 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+        onPress={() => {
+          gotoPage(pages.length - 1);
+        }}
+      >
+        <Text className="text-white font-bold text-center text-lg">
+          Send Feedback
         </Text>
       </Pressable>
       <Pressable
