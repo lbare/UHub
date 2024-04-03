@@ -68,18 +68,20 @@ const HomeMap: React.FC = () => {
   const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
   const [buildingFiltersOpen, setBuildingFiltersOpen] =
     useState<boolean>(false);
-
-  const searchInputRef = useRef<TextInput>(null);
-  const _mapView = React.createRef<MapView>();
-  const buildingFilterRef = useRef(null);
-
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [isLoginModalVisible, setIsLoginModalVisible] =
     useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
+  const searchInputRef = useRef<TextInput>(null);
+  const _mapView = React.createRef<MapView>();
+  const buildingFilterRef = useRef(null);
+  const debounceTimeoutRef = useRef<number | null>(null);
+
   const navigation = useNavigation<HomeMapNavigationProp>();
+
+  const debounceDelay = 300; // milliseconds
 
   const authManager = new FirebaseAuthManager((user) => {
     if (user) {
@@ -138,17 +140,34 @@ const HomeMap: React.FC = () => {
   //   setSelectedItem(null);
   // }, [selectedVendor]);
 
+  useEffect(() => {
+    onSearchChange();
+
+    // Cleanup function to clear the timeout if the component unmounts
+    return () => {
+      if (debounceTimeoutRef.current !== null) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [searchInput, buildingFilters, openVendorsFilter]);
+
   const onSearchChange = () => {
-    menuSearch.setBuildingFilters(buildingFilters);
-    if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(
-        searchInput,
-        openVendorsFilter
-      );
-      setSearchResults(results);
-    } else {
-      setSearchResults(new Map());
+    if (debounceTimeoutRef.current !== null) {
+      clearTimeout(debounceTimeoutRef.current);
     }
+
+    debounceTimeoutRef.current = window.setTimeout(() => {
+      menuSearch.setBuildingFilters(buildingFilters);
+      if (searchInput !== "") {
+        const results = menuSearch.searchAllMenuItems(
+          searchInput,
+          openVendorsFilter
+        );
+        setSearchResults(results);
+      } else {
+        setSearchResults(new Map());
+      }
+    }, debounceDelay);
   };
 
   const calculateZoomLevel = (latitudeDelta: number) => {
