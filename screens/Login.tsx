@@ -5,15 +5,13 @@ import {
   Text,
   TextInput,
   Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
   ScrollView,
   ActivityIndicator,
 } from "react-native";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundImage from "../components/BackgroundImage";
-import { CaretLeft } from "phosphor-react-native";
+import { CaretLeft, X } from "phosphor-react-native";
 
 type LoginProps = {
   modalVisible: boolean;
@@ -113,6 +111,12 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
   const validateEmail = () => email.endsWith("@uvic.ca");
 
+  const backToEmail = () => {
+    setOtpSent(false);
+    setPassword("");
+    setInfoMessage("");
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -124,14 +128,27 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
       scrollEnabled={false}
       keyboardShouldPersistTaps="handled"
     >
-      <TouchableOpacity
-        className="absolute top-14 left-6 rounded-full z-10 bg-blue h-8 w-8 justify-center items-center"
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <CaretLeft size={24} color="#ededed" weight="bold" />
-      </TouchableOpacity>
+      {otpSent ? (
+        <TouchableOpacity
+          className="absolute top-8 left-0 z-10 h-24 w-24 justify-center items-center"
+          onPress={backToEmail}
+        >
+          <View className="justify-center items-center rounded-full h-8 w-8 bg-blue">
+            <CaretLeft size={24} color="#ededed" weight="bold" />
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          className="absolute top-8 left-0 z-10 h-24 w-24 justify-center items-center"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <View className="justify-center items-center rounded-full h-8 w-8 bg-blue">
+            <X size={24} color="#ededed" weight="bold" />
+          </View>
+        </TouchableOpacity>
+      )}
       <>
         <BackgroundImage source={require("../assets/splash-login.png")} />
         <View className="flex h-80 pb-20 justify-end items-center px-10">
@@ -200,7 +217,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             }`}
           >
             <Text
-              className={`text-center text-xs font-bold ${
+              className={`text-center font-bold ${
                 errorMessage ? "text-orange" : "text-blue"
               }`}
             >
@@ -210,7 +227,9 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
           <TouchableOpacity
             onPress={() => (otpSent ? handleVerifyOTP() : handleSignIn())}
-            disabled={loading || errorType == "email" || (otpSent && password === "")}
+            disabled={
+              loading || errorType == "email" || (otpSent && password === "")
+            }
             className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
           >
             {!loading ? (
