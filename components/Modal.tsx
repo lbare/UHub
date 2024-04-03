@@ -405,6 +405,32 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   if (section.name === selectedSection) {
                     return (
                       <ScrollView key={index}>
+                        {section.description && (
+                          <Text className="text-xs font-normal text-neutral-300 mb-2 px-2">
+                            {section.description}
+                          </Text>
+                        )}
+
+                        {section.sides && section.sides.length > 0 && (
+                          <View
+                            className="px-4 py-2"
+                            style={{ backgroundColor: "#422828" }}
+                          >
+                            <Text className="text-md font-bold text-neutral-200 mb-1">
+                              Sides
+                            </Text>
+
+                            {section.sides.map((side, sideIndex) => (
+                              <Text
+                                key={sideIndex}
+                                className="text-md font-normal text-neutral-300 mb-1"
+                              >
+                                {side.name}: ${side.price.toFixed(2)}{" "}
+                                {side.description && `- ${side.description}`}
+                              </Text>
+                            ))}
+                          </View>
+                        )}
                         {section.items.map((item, itemIndex) => (
                           <View className="flex flex-row" key={itemIndex}>
                             <View
