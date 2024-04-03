@@ -318,6 +318,7 @@ const HomeMap: React.FC = () => {
                 (building, index) =>
                   building && (
                     <Polygon
+                      zIndex={-1}
                       key={index}
                       tappable={true}
                       onPress={() => zoomToBuilding(building.name)}
