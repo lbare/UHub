@@ -79,6 +79,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
       .handleSignInWithOTP(email, password)
       .then((success) => {
         if (success) {
+          Alert.alert("Success", "Successfully logged in as " + email)
           setModalVisible(false);
           navigation.goBack();
         }
@@ -127,7 +128,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
               returnKeyType="next"
               value={email}
               onChangeText={(text) => {
-                setEmail(text);
+                setEmail(text.toLowerCase());
               }}
               keyboardType="email-address"
               autoCapitalize="none"
