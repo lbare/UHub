@@ -8,7 +8,10 @@ import {
   StyleProp,
   ViewStyle,
   Linking,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
+import { versionNotes } from "../models/VersionNotes";
 
 interface WelcomePopupProps {
   isVisible: boolean;
@@ -69,7 +72,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
       <Pressable
         className="bg-orange w-3/4 p-2 h-12 rounded-lg justify-center items-center"
         onPress={() => {
-          gotoPage(1);
+          gotoPage(pages.length - 1);
         }}
       >
         <Text className="text-white font-bold text-center text-lg">
@@ -89,7 +92,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
       <Pressable
         className="bg-orange w-3/4 p-2 h-12 rounded-lg mt-4 justify-center items-center"
         onPress={() => {
-          gotoPage(pages.length - 1);
+          gotoPage(pages.length - 2);
         }}
       >
         <Text className="text-white font-bold text-center text-lg">
@@ -380,6 +383,76 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
               Send Feedback
             </Text>
           </Pressable>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={closePopup}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Close
+          </Text>
+        </Pressable>
+      </View>
+    </View>,
+
+    /// Page 9 - What's New (Version Notes) ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={defaultPopupStyle}
+    >
+      <View className="flex-1 w-full items-center">
+        <Image
+          source={require("../assets/full-logo.png")}
+          style={{
+            maxWidth: "80%",
+            maxHeight: "15%",
+            margin: 10,
+            objectFit: "contain",
+          }}
+        />
+        <View className="w-full px-4">
+          <Text className="text-left text-2xl font-bold mb-4">What's New?</Text>
+          <ScrollView
+            // className="flex-1"
+            style={{
+              // flex: 1,
+              height: "70%",
+            }}
+            contentContainerStyle={{
+              alignItems: "flex-start",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            {versionNotes.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                // style={{
+                //   backgroundColor: index % 2 == 0 ? "#282828" : "#1D1D1D",
+                //   width: "100%",
+                // }}
+              >
+                <View>
+                  <Text className="text-left text-xl font-bold">
+                    Version {item.version}
+                  </Text>
+                  <Text className="text-left text-base text-gray-500 italic">
+                    {item.date}
+                  </Text>
+                  <Text className="text-left text-base mt-2">
+                    {item.notes.map((note) => (
+                      <Text>
+                        • {note}
+                        {"\n"}
+                      </Text>
+                    ))}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
       </View>
       <View className="flex-row justify-items-center mb-4 space-x-7">
