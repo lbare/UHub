@@ -77,6 +77,7 @@ const HomeMap: React.FC = () => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [isLoginModalVisible, setIsLoginModalVisible] =
     useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
   const navigation = useNavigation<HomeMapNavigationProp>();
 
@@ -131,6 +132,11 @@ const HomeMap: React.FC = () => {
   useEffect(() => {
     onSearchChange();
   }, [searchInput, buildingFilters, openVendorsFilter]);
+
+  // useEffect(() => {
+
+  //   setSelectedItem(null);
+  // }, [selectedVendor]);
 
   const onSearchChange = () => {
     menuSearch.setBuildingFilters(buildingFilters);
@@ -346,12 +352,15 @@ const HomeMap: React.FC = () => {
         />
         {selectedVendor && (
           <CustomModal
+            selectedItem={selectedItem}
+            clearSelectedItem={() => setSelectedItem(null)}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             changeVendor={onMarkerPress}
             onModalHide={onModalHide}
             openedModalFromSearch={openedModalFromSearch}
             vendor={selectedVendor!}
+            setVendor={setSelectedVendor}
             building={
               buildings.find((b) => b.vendors.includes(selectedVendor!))!
             }
@@ -512,6 +521,7 @@ const HomeMap: React.FC = () => {
                 onPress={() => {
                   setSearchOpen(false);
                   setOpenedModalFromSearch(true);
+                  setSelectedItem(menuItem);
                   onMarkerPress(foodVendor);
                 }}
               >

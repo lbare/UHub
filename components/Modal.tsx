@@ -7,14 +7,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Alert,
 } from "react-native";
 import {
   FoodVendor,
   getNextFoodVendorInBuilding,
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
-import LoginPage from "../screens/Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import {
   CaretLeft,
@@ -35,6 +33,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import menuItemLikeService from "../services/Firebase/firebase-menuitem-like";
+import { MenuItem } from "../models/Menu";
 
 interface CustomModalProps {
   modalVisible: boolean;
@@ -42,8 +41,11 @@ interface CustomModalProps {
   changeVendor: (vendor: FoodVendor) => void;
   onModalHide: (gotoSearch: boolean) => void;
   vendor: FoodVendor;
+  setVendor: (vendor: FoodVendor) => void;
   building: Building;
   openedModalFromSearch: boolean;
+  selectedItem: MenuItem | null;
+  clearSelectedItem: () => void;
 }
 
 type ModalNavigationProp = StackNavigationProp<StackParamList>;
@@ -54,11 +56,20 @@ const CustomModal: React.FC<CustomModalProps> = ({
   changeVendor,
   onModalHide,
   vendor,
+  setVendor,
   building,
   openedModalFromSearch,
+  selectedItem,
+  clearSelectedItem,
 }) => {
   const navigation = useNavigation<ModalNavigationProp>();
   const authManager = new FirebaseAuthManager();
+  const itemRefs = useRef(new Map());
+  const menuScrollViewRef = useRef<ScrollView>(null);
+  const [selectedItemState, setSelectedItemState] = useState({
+    item: null as MenuItem | null,
+    section: null as string | null,
+  });
 
   const hideModal = (exit: boolean) => {
     setModalVisible(false);
@@ -66,10 +77,61 @@ const CustomModal: React.FC<CustomModalProps> = ({
     onModalHide(!exit);
   };
 
-  const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const [isLoginModalVisible, setIsLoginModalVisible] =
-    useState<boolean>(false);
+  useEffect(() => {
+    // Find the section of the selected item
+    const foundSectionName = vendor.menu.sections.find((section) =>
+      section.items.some((item) => item.name === selectedItem?.name)
+    )?.name;
 
+    if (selectedItem && foundSectionName) {
+      // Set the selected item and section in the state
+      setSelectedItemState({ item: selectedItem, section: foundSectionName });
+    }
+  }, [selectedItem, vendor.menu.sections]);
+
+  useEffect(() => {
+    if (selectedItemState.item && selectedItemState.section) {
+      setSelectedSection(selectedItemState.section);
+    }
+  }, [selectedItemState]);
+
+  useEffect(() => {
+    if (selectedItem) {
+      const foundSectionIndex = vendor.menu.sections.findIndex((section) =>
+        section.items.some((item) => item.name === selectedItem.name)
+      );
+
+      if (foundSectionIndex !== -1) {
+        const selectedSection = vendor.menu.sections[foundSectionIndex];
+        const selectedItemIndex = selectedSection.items.findIndex(
+          (item) => item.name === selectedItem.name
+        );
+
+        if (selectedItemIndex > 0) {
+          // Check if the item is not already the first one
+          const newItems = [...selectedSection.items];
+          const [selectedItemObject] = newItems.splice(selectedItemIndex, 1);
+          newItems.unshift(selectedItemObject);
+
+          const newSections = [...vendor.menu.sections];
+          newSections[foundSectionIndex] = {
+            ...selectedSection,
+            items: newItems,
+          };
+
+          const newVendor = {
+            ...vendor,
+            menu: { ...vendor.menu, sections: newSections },
+          };
+          setVendor(newVendor); // Update the vendor only if necessary
+
+          setSelectedSection(newSections[foundSectionIndex].name);
+        }
+      }
+    }
+  }, [selectedItem, vendor]);
+
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [showExpandedHours, setShowExpandedHours] = useState(false);
   const [itemLikesCount, setItemLikesCount] = useState<Map<string, string>>(
     new Map()
@@ -289,7 +351,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   </View>
                 )}
                 <View className="border-b border-neutral-300 mt-2" />
-
                 <ScrollView
                   contentContainerStyle={{
                     flexGrow: 1,
@@ -338,73 +399,81 @@ const CustomModal: React.FC<CustomModalProps> = ({
                       </TouchableOpacity>
                     ))}
                 </ScrollView>
+
                 {vendor.menu.sections.map((section, index) => {
                   if (section.name === selectedSection) {
                     return (
-                      <React.Fragment key={index}>
-                        <ScrollView className="mb-6 w-full">
-                          {section.items.map((item, itemIndex) => (
-                            <View className="flex flex-row" key={itemIndex}>
-                              <View
-                                className="flex-initial w-full px-4"
-                                style={{
-                                  backgroundColor:
-                                    itemIndex % 2 == 0 ? "#282828" : "#1D1D1D",
-                                  paddingBottom: 8,
-                                  paddingVertical: 8,
-                                }}
-                              >
-                                <View className="flex-row justify-between items-center">
-                                  <View className="flex-initial">
-                                    <Text className="text-base font-medium text-neutral-200">
-                                      {item.name}
+                      <ScrollView
+                        key={index}
+                        ref={menuScrollViewRef}
+                        className="mb-6 w-full"
+                      >
+                        {section.items.map((item, itemIndex) => (
+                          <View
+                            className="flex flex-row bg-white"
+                            key={itemIndex}
+                          >
+                            <View
+                              className={`flex w-full px-4 ${
+                                itemIndex % 2 === 0
+                                  ? "bg-neutral-800"
+                                  : "bg-neutral-900"
+                              } ${
+                                item === selectedItem
+                                  ? "border-4 border-orange"
+                                  : ""
+                              }`}
+                              style={{
+                                paddingBottom: 8,
+                                paddingVertical: 8,
+                              }}
+                            >
+                              <View className="flex-row justify-between items-center">
+                                <View className="flex-initial">
+                                  <Text className="text-base font-medium text-neutral-200">
+                                    {item.name}
+                                  </Text>
+                                  {item.description && (
+                                    <Text className="text-sm mt-1 text-neutral-400">
+                                      {item.description}
                                     </Text>
-                                    {item.description && (
-                                      <Text className="text-sm mt-1 text-neutral-400">
-                                        {item.description}
-                                      </Text>
-                                    )}
-                                    {item.tags && item.tags.length > 0 && (
-                                      <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
-                                        {item.tags.join(", ")}
-                                      </Text>
-                                    )}
-                                    <Text className="text-md mt-1 font-semibold text-neutral-200">
-                                      ${item.price.toFixed(2)}
+                                  )}
+                                  {item.tags && item.tags.length > 0 && (
+                                    <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
+                                      {item.tags.join(", ")}
+                                    </Text>
+                                  )}
+                                  <Text className="text-md mt-1 font-semibold text-neutral-200">
+                                    ${item.price.toFixed(2)}
+                                  </Text>
+                                </View>
+                                <TouchableOpacity
+                                  onPress={() => toggleLikesForItem(item.name)}
+                                >
+                                  <View className="w-14 h-12 justify-center items-center flex-none">
+                                    <Heart
+                                      size={20}
+                                      color="#EB6931"
+                                      weight={
+                                        doesUserLikeItem.get(item.name)
+                                          ? "fill"
+                                          : "regular"
+                                      }
+                                    />
+                                    <Text className="text-xs text-neutral-300 mt-2">
+                                      {itemLikesCount.get(item.name) || "-1"}
                                     </Text>
                                   </View>
-                                  <TouchableOpacity
-                                    onPress={() =>
-                                      toggleLikesForItem(item.name)
-                                    }
-                                  >
-                                    <View className="w-14 h-12 justify-center items-center flex-none">
-                                      <Heart
-                                        size={20}
-                                        color="#EB6931"
-                                        weight={
-                                          doesUserLikeItem.get(item.name)
-                                            ? "fill"
-                                            : "regular"
-                                        }
-                                      />
-                                      <Text className="text-xs text-neutral-300 mt-2">
-                                        {itemLikesCount.get(item.name) || "-1"}
-                                      </Text>
-                                    </View>
-                                  </TouchableOpacity>
-                                </View>
+                                </TouchableOpacity>
                               </View>
                             </View>
-                          ))}
-                        </ScrollView>
-                      </React.Fragment>
+                          </View>
+                        ))}
+                      </ScrollView>
                     );
                   }
                   return null;
                 })}
-                {/* Extra view below is a Work around for the scroll not going all the way to the bottom */}
-                <View className="h-48" />
               </View>
             </View>
             <View className="w-full bg-neutral-500 h-0.5" />
