@@ -12,6 +12,7 @@ import {
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundImage from "../components/BackgroundImage";
+import { CaretLeft } from "phosphor-react-native";
 
 type LoginProps = {
   modalVisible: boolean;
@@ -62,25 +63,29 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
   const handleSignIn = async () => {
     const response = authManager.initiatePasswordlessSignIn(email);
-      response
-        .then(() => {
-          setOtpSent(true);
-          setInfoMessage("6-digit code has been sent to your email.");
-          setError(null, "");
-        }).catch((error) => {
-          setError("server", error);
-        });
+    response
+      .then(() => {
+        setOtpSent(true);
+        setInfoMessage("6-digit code has been sent to your email.");
+        setError(null, "");
+      })
+      .catch((error) => {
+        setError("server", error);
+      });
   };
 
   const handleVerifyOTP = async () => {
-    authManager.handleSignInWithOTP(email, password).then((success) => {
-      if (success) {
-        setModalVisible(false);
-        navigation.goBack();
-      }
-    }).catch((error) => {
-      setError("server", error);
-    });
+    authManager
+      .handleSignInWithOTP(email, password)
+      .then((success) => {
+        if (success) {
+          setModalVisible(false);
+          navigation.goBack();
+        }
+      })
+      .catch((error) => {
+        setError("server", error);
+      });
   };
 
   const setError = (
@@ -105,6 +110,14 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
       }}
       scrollEnabled={false}
     >
+      <TouchableOpacity
+        className="absolute top-14 left-6 rounded-full z-10 bg-blue h-8 w-8 justify-center items-center opacity-80"
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
+        <CaretLeft size={24} color="#ededed" weight="bold" />
+      </TouchableOpacity>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <>
           <BackgroundImage source={require("../assets/splash-login.png")} />
@@ -155,7 +168,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             {otpSent && (
               <TextInput
                 ref={passwordRef}
-                placeholder="Password"
+                placeholder="One Time Password"
                 value={password}
                 returnKeyType="done"
                 onChangeText={(text) => {
@@ -203,7 +216,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
             >
               <Text className="text-white font-bold text-base">
                 {" "}
-                {otpSent ? "Verify OTP" : "Sign In"}
+                {otpSent ? "Verify OTP" : "Send Code"}
               </Text>
             </TouchableOpacity>
           </View>
