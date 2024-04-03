@@ -17,6 +17,10 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     setCurPageNum(curPageNum + 1);
   };
 
+  const prevPage = () => {
+    setCurPageNum(curPageNum - 1 > 0 ? curPageNum - 1 : 0);
+  };
+
   const gotoPage = (num: number) => {
     setCurPageNum(num);
   };
@@ -58,7 +62,13 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     </View>,
 
     /// Page 1 - Welcome tour intro ///
-    <View className="bg-white rounded-lg shadow-lg p-4 w-5/6 h-2/3 items-center">
+    <View
+      className="bg-white rounded-lg shadow-lg p-4 items-center"
+      style={{
+        width: "95%",
+        height: "70%",
+      }}
+    >
       <Image
         source={require("../assets/full-logo.png")}
         style={{
@@ -102,37 +112,43 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     </View>,
 
     /// Page 2 - Welcome tour browse vendors ///
-    <View className="bg-white rounded-lg shadow-lg p-4 w-5/6 h-2/3 items-center">
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={{
+        width: "95%",
+        height: "70%",
+      }}
+    >
       <Image
-        source={require("../assets/full-logo.png")}
+        className="rounded-t-lg"
+        source={require("../assets/tutorial/tutorial_pins.png")}
         style={{
-          maxWidth: "80%",
-          maxHeight: "20%",
-          objectFit: "contain",
-          // borderWidth: 2, // TODO: for testing
-          // borderColor: "black",
+          maxWidth: "100%",
+          height: "38%",
+          objectFit: "cover",
         }}
       />
-      <View className="w-full">
-        <Text className="text-left text-xl font-bold mt-4">
-          Browse Vendors!
+      <View className="w-full p-4">
+        <Text className="text-left text-xl font-bold mb-4">
+          Find food vendors and amenities
         </Text>
-        <Text className="text-left text-base mt-4">
-          You can browse vendors, wow!
+        <Text className="text-left text-base">
+          Various pins on the map indicate the location of food vendors and
+          amenities on campus.
           {"\n"}
           {"\n"}
-          UHub, allows you to find the locations of food outlets on campus and
-          browse their menus. There are also various search options available to
-          find specific food items, dietary restrictions, and more.
+          By clicking on pins, you can get more details about the vendor or
+          amenity, such as their full menu, hours of operation, or special
+          notices.
         </Text>
       </View>
       <View className="flex-row justify-items-center space-x-7">
         <Pressable
           className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={closePopup}
+          onPress={prevPage}
         >
           <Text className="text-orange font-bold text-center text-lg">
-            Close
+            Previous
           </Text>
         </Pressable>
         <Pressable
@@ -151,7 +167,13 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
         {curPageNum >= 0 && curPageNum < pages.length ? (
           pages[curPageNum]
         ) : (
-          <View className="bg-white rounded-lg shadow-lg p-4 w-5/6 h-2/3 justify-center items-center">
+          <View
+            className="bg-white rounded-lg shadow-lg p-4 justify-center items-center"
+            style={{
+              width: "95%",
+              height: "70%",
+            }}
+          >
             <View className="w-full">
               <Text className="text-left text-xl font-bold mt-4">
                 No page to display...
