@@ -210,7 +210,7 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
 
           <TouchableOpacity
             onPress={() => (otpSent ? handleVerifyOTP() : handleSignIn())}
-            disabled={loading || errorType == "email" || password === ""}
+            disabled={loading || errorType == "email" || (otpSent && password === "")}
             className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
           >
             {!loading ? (
