@@ -322,6 +322,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     return (
                       <React.Fragment key={index}>
                         <View className="mb-6 w-full">
+                          {section.sides && section.sides.length > 0 && (
+                            <View className="px-4 py-2" style={{ backgroundColor: "#422828"}}>
+                              <Text className="text-md font-bold text-neutral-200 mb-1" >
+                                For each item here, these sides are available:
+                              </Text>
+                              {section.sides.map((side, sideIndex) => (
+                                <Text key={sideIndex} className="text-md font-normal text-neutral-300 mb-1">
+                                  {side.name}: ${side.price.toFixed(2)} {side.description && `- ${side.description}`}
+                                </Text>
+                              ))}
+                            </View>
+                          )}
                           {section.items.map((item, itemIndex) => (
                             <View className="flex flex-row" key={itemIndex}>
                               <View
@@ -381,7 +393,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                                 {side.description}
                                               </Text>
                                             )}
-
                                             {side.price > 0 && (
                                               <Text className="text-sm font-semibold text-neutral-200">
                                                 ${side.price.toFixed(2)}
@@ -391,9 +402,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                         ))}
                                       </View>
                                     )}
-
-
-
                                   </View>
                                   
                                   <TouchableOpacity
