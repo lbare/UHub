@@ -12,11 +12,57 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
   onClose,
 }) => {
   const [curPageNum, setCurPageNum] = useState<number>(pageNum);
-  const TOTAL_PAGE_COUNT = 1;
+  const TOTAL_PAGE_COUNT = 2;
+
+  const nextPage = () => {
+    setCurPageNum(curPageNum + 1);
+  };
+
+  const gotoPage = (num: number) => {
+    setCurPageNum(num);
+  };
+
+  const closePopup = () => {
+    setCurPageNum(0);
+    onClose();
+  };
+
   return (
     <Modal visible={isVisible} transparent={true} animationType="slide">
       <View className="flex-1 justify-center items-center">
         {curPageNum === 0 && (
+          <View className="bg-white rounded-lg shadow-lg p-4 w-3/4 h-1/3 flex-column justify-center items-center">
+            <Pressable
+              className="bg-orange w-3/4 p-2 h-12 rounded-lg justify-center items-center"
+              onPress={() => {
+                gotoPage(1);
+              }}
+            >
+              <Text className="text-white font-bold text-center text-lg">
+                What's New
+              </Text>
+            </Pressable>
+            <Pressable
+              className="bg-orange w-3/4 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+              onPress={() => {
+                gotoPage(1);
+              }}
+            >
+              <Text className="text-white font-bold text-center text-lg">
+                Welcome Tour
+              </Text>
+            </Pressable>
+            <Pressable
+              className="border-orange border-2 w-3/4 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+              onPress={closePopup}
+            >
+              <Text className="text-orange font-bold text-center text-lg">
+                Close
+              </Text>
+            </Pressable>
+          </View>
+        )}
+        {curPageNum === 1 && (
           <View className="bg-white rounded-lg shadow-lg p-4 w-5/6 h-2/3 items-center">
             <Image
               source={require("../assets/full-logo.png")}
@@ -46,7 +92,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
             <View className="flex-row justify-items-center space-x-7">
               <Pressable
                 className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-                onPress={onClose}
+                onPress={closePopup}
               >
                 <Text className="text-orange font-bold text-center text-lg">
                   Close
@@ -54,9 +100,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
               </Pressable>
               <Pressable
                 className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-                onPress={() => {
-                  setCurPageNum(curPageNum + 1);
-                }}
+                onPress={nextPage}
               >
                 <Text className="text-white font-bold text-center text-lg">
                   Next
@@ -78,10 +122,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
             <View className="flex-row justify-items-center space-x-7">
               <Pressable
                 className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-                onPress={() => {
-                  setCurPageNum(0);
-                  onClose();
-                }}
+                onPress={closePopup}
               >
                 <Text className="text-orange font-bold text-center text-lg">
                   Close
