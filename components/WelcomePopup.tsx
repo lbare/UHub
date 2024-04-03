@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, Modal, Image } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  Modal,
+  Image,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 
 interface WelcomePopupProps {
   isVisible: boolean;
@@ -12,6 +20,11 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
   onClose,
 }) => {
   const [curPageNum, setCurPageNum] = useState<number>(pageNum);
+
+  const defaultPopupStyle: StyleProp<ViewStyle> = {
+    width: "95%",
+    height: "70%",
+  };
 
   const nextPage = () => {
     setCurPageNum(curPageNum + 1);
@@ -64,10 +77,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     /// Page 1 - Welcome tour intro ///
     <View
       className="bg-white rounded-lg shadow-lg p-4 items-center"
-      style={{
-        width: "95%",
-        height: "70%",
-      }}
+      style={defaultPopupStyle}
     >
       <View className="flex-1 items-center">
         <Image
@@ -116,12 +126,9 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     /// Page 2 - Welcome tour find vendors ///
     <View
       className="bg-white rounded-lg shadow-lg items-center"
-      style={{
-        width: "95%",
-        height: "70%",
-      }}
+      style={defaultPopupStyle}
     >
-      <View className="flex-1 items-center">
+      <View className="flex-1">
         <Image
           className="rounded-t-lg"
           source={require("../assets/tutorial/tutorial_pins.png")}
@@ -167,12 +174,9 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     /// Page 3 - Welcome tour browse menu ///
     <View
       className="bg-white rounded-lg shadow-lg items-center"
-      style={{
-        width: "95%",
-        height: "70%",
-      }}
+      style={defaultPopupStyle}
     >
-      <View className="flex-1 items-center">
+      <View className="flex-1">
         <Image
           className="rounded-t-lg"
           source={require("../assets/tutorial/tutorial_menu.png")}
@@ -212,6 +216,142 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
         </Pressable>
       </View>
     </View>,
+
+    /// Page 4 - Welcome tour search ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={defaultPopupStyle}
+    >
+      <View className="flex-1">
+        <Image
+          className="rounded-t-lg"
+          source={require("../assets/tutorial/tutorial_search.png")}
+          style={{
+            maxWidth: "100%",
+            height: "48%",
+            objectFit: "cover",
+          }}
+        />
+        <View className="w-full p-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            Search all food items
+          </Text>
+          <Text className="text-left text-base">
+            Clicking the search bar at the top of the app allows you to quickly
+            search through all food items available on campus.
+            {"\n"}
+            {"\n"}
+            Items can be filtered by dietary restrictions and currently open
+            vendors.
+          </Text>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={prevPage}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Previous
+          </Text>
+        </Pressable>
+        <Pressable
+          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={nextPage}
+        >
+          <Text className="text-white font-bold text-center text-lg">Next</Text>
+        </Pressable>
+      </View>
+    </View>,
+
+    /// Page 5 - Welcome tour building filters 1 ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={defaultPopupStyle}
+    >
+      <View className="flex-1">
+        <Image
+          className="rounded-t-lg"
+          source={require("../assets/tutorial/tutorial_building-filters.png")}
+          style={{
+            maxWidth: "100%",
+            height: "48%",
+            objectFit: "cover",
+          }}
+        />
+        <View className="w-full p-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            Filter results by building
+          </Text>
+          <Text className="text-left text-base">
+            Clicking the filter icon at the right of the search bar allows you
+            filter results by vendors located in a specific building.
+            {"\n"}
+            {"\n"}
+            The icon also displays how many filters are currently active.
+          </Text>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={prevPage}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Previous
+          </Text>
+        </Pressable>
+        <Pressable
+          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={nextPage}
+        >
+          <Text className="text-white font-bold text-center text-lg">Next</Text>
+        </Pressable>
+      </View>
+    </View>,
+
+    /// Page 6 - Welcome tour building filters 2 ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={defaultPopupStyle}
+    >
+      <View className="flex-1">
+        <Image
+          className="rounded-t-lg"
+          source={require("../assets/tutorial/tutorial_building-filters-2.png")}
+          style={{
+            maxWidth: "100%",
+            height: "48%",
+            objectFit: "cover",
+          }}
+        />
+        <View className="w-full p-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            Select filters
+          </Text>
+          <Text className="text-left text-base">
+            Here you can select an assortment of buildings you want to filter
+            by.
+          </Text>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={prevPage}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Previous
+          </Text>
+        </Pressable>
+        <Pressable
+          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={nextPage}
+        >
+          <Text className="text-white font-bold text-center text-lg">Next</Text>
+        </Pressable>
+      </View>
+    </View>,
   ];
 
   return (
@@ -222,10 +362,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
         ) : (
           <View
             className="bg-white rounded-lg shadow-lg p-4 justify-center items-center"
-            style={{
-              width: "95%",
-              height: "70%",
-            }}
+            style={defaultPopupStyle}
           >
             <View className="w-full flex-1">
               <Text className="text-left text-xl font-bold mt-4">
