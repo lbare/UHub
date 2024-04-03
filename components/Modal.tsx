@@ -487,12 +487,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                       ))}
                                     </View>
                                   )}
-
-                                  {item.tags && item.tags.length > 0 && (
-                                    <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
-                                      {item.tags.join(", ")}
-                                    </Text>
-                                  )}
                                 </View>
                                 <TouchableOpacity
                                   onPress={() => toggleLikesForItem(item.name)}
