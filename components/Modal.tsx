@@ -349,7 +349,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     ))}
                   </View>
                 )}
-                <View className="w-full border-t-2 border-neutral-500 py-2 mt-2">
+                <View
+                  className={`w-full border-t-2 border-neutral-500 mt-2 ${
+                    vendor.menu.sections &&
+                    vendor.menu.sections.length > 1 &&
+                    "py-2"
+                  }`}
+                >
                   <ScrollView
                     contentContainerStyle={{
                       flexGrow: 1,
@@ -406,9 +412,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     return (
                       <ScrollView key={index}>
                         {section.description && (
-                          <Text className="text-xs font-normal text-neutral-300 mb-2 px-2">
-                            {section.description}
-                          </Text>
+                          <View className="w-full justify-center items-center">
+                            <Text className="text-xs font-normal text-neutral-300 mb-2 px-2">
+                              {section.description}
+                            </Text>
+                          </View>
                         )}
 
                         {section.sides && section.sides.length > 0 && (
