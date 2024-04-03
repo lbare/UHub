@@ -69,29 +69,31 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
         height: "70%",
       }}
     >
-      <Image
-        source={require("../assets/full-logo.png")}
-        style={{
-          maxWidth: "80%",
-          maxHeight: "20%",
-          objectFit: "contain",
-          // borderWidth: 2, // TODO: for testing
-          // borderColor: "black",
-        }}
-      />
-      <View className="w-full">
-        <Text className="text-left text-xl font-bold mt-4">
-          Welcome to UHub!
-        </Text>
-        <Text className="text-left text-base mt-4">
-          UHub is a centralized platform to discover and explore resources on
-          campus.
-          {"\n"}
-          {"\n"}
-          UHub, allows you to find the locations of food outlets on campus and
-          browse their menus. There are also various search options available to
-          find specific food items, dietary restrictions, and more.
-        </Text>
+      <View className="flex-1 items-center">
+        <Image
+          source={require("../assets/full-logo.png")}
+          style={{
+            maxWidth: "80%",
+            maxHeight: "20%",
+            objectFit: "contain",
+            // borderWidth: 2, // TODO: for testing
+            // borderColor: "black",
+          }}
+        />
+        <View className="w-full">
+          <Text className="text-left text-xl font-bold mt-4">
+            Welcome to UHub!
+          </Text>
+          <Text className="text-left text-base mt-4">
+            UHub is a centralized platform to discover and explore resources on
+            campus.
+            {"\n"}
+            {"\n"}
+            UHub, allows you to find the locations of food outlets on campus and
+            browse their menus. There are also various search options available
+            to find specific food items, dietary restrictions, and more.
+          </Text>
+        </View>
       </View>
       <View className="flex-row justify-items-center space-x-7">
         <Pressable
@@ -111,7 +113,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
       </View>
     </View>,
 
-    /// Page 2 - Welcome tour browse vendors ///
+    /// Page 2 - Welcome tour find vendors ///
     <View
       className="bg-white rounded-lg shadow-lg items-center"
       style={{
@@ -119,30 +121,81 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
         height: "70%",
       }}
     >
-      <Image
-        className="rounded-t-lg"
-        source={require("../assets/tutorial/tutorial_pins.png")}
-        style={{
-          maxWidth: "100%",
-          height: "38%",
-          objectFit: "cover",
-        }}
-      />
-      <View className="w-full p-4">
-        <Text className="text-left text-xl font-bold mb-4">
-          Find food vendors and amenities
-        </Text>
-        <Text className="text-left text-base">
-          Various pins on the map indicate the location of food vendors and
-          amenities on campus.
-          {"\n"}
-          {"\n"}
-          By clicking on pins, you can get more details about the vendor or
-          amenity, such as their full menu, hours of operation, or special
-          notices.
-        </Text>
+      <View className="flex-1 items-center">
+        <Image
+          className="rounded-t-lg"
+          source={require("../assets/tutorial/tutorial_pins.png")}
+          style={{
+            maxWidth: "100%",
+            height: "48%",
+            objectFit: "cover",
+          }}
+        />
+        <View className="w-full p-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            Find food vendors and amenities
+          </Text>
+          <Text className="text-left text-base">
+            Various pins on the map indicate the location of food vendors and
+            amenities on campus.
+            {"\n"}
+            {"\n"}
+            By clicking on pins, you can get more details about the vendor or
+            amenity, such as their full menu, hours of operation, or special
+            notices.
+          </Text>
+        </View>
       </View>
-      <View className="flex-row justify-items-center space-x-7">
+      <View className="flex-row justify-items-center mb-4 space-x-7">
+        <Pressable
+          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={prevPage}
+        >
+          <Text className="text-orange font-bold text-center text-lg">
+            Previous
+          </Text>
+        </Pressable>
+        <Pressable
+          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+          onPress={nextPage}
+        >
+          <Text className="text-white font-bold text-center text-lg">Next</Text>
+        </Pressable>
+      </View>
+    </View>,
+
+    /// Page 3 - Welcome tour browse menu ///
+    <View
+      className="bg-white rounded-lg shadow-lg items-center"
+      style={{
+        width: "95%",
+        height: "70%",
+      }}
+    >
+      <View className="flex-1 items-center">
+        <Image
+          className="rounded-t-lg"
+          source={require("../assets/tutorial/tutorial_menu.png")}
+          style={{
+            maxWidth: "100%",
+            height: "48%",
+            objectFit: "cover",
+          }}
+        />
+        <View className="w-full p-4">
+          <Text className="text-left text-xl font-bold mb-4">
+            Browse vendor food menus
+          </Text>
+          <Text className="text-left text-base">
+            Clicking on a vendor pin will display their full menu.
+            {"\n"}
+            {"\n"}
+            You can also see the vendor's hours of operations and how many
+            people have liked certain items on the menu.
+          </Text>
+        </View>
+      </View>
+      <View className="flex-row justify-items-center mb-4 space-x-7">
         <Pressable
           className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
           onPress={prevPage}
@@ -174,7 +227,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
               height: "70%",
             }}
           >
-            <View className="w-full">
+            <View className="w-full flex-1">
               <Text className="text-left text-xl font-bold mt-4">
                 No page to display...
               </Text>
