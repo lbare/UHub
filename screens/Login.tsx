@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import { useNavigation } from "@react-navigation/native";
@@ -25,119 +26,129 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
   const [otpSent, setOtpSent] = useState(false);
   const [infoMessage, setInfoMessage] = useState("");
 
-  const [errorType, setErrorType] = useState<
-    "email" | "password" | "both" | "server" | "firebase" | null
-  >(null);
+  const [errorType, setErrorType] = useState<"email" | "server" | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [readyToFocus, setReadyToFocus] = useState(false);
 
   const navigation = useNavigation();
   const authManager = new FirebaseAuthManager();
-  const passwordRef = useRef(null);
+  const passwordRef = useRef<TextInput>(null);
 
   useEffect(() => {
-    if (
-      email !== "" &&
-      !validateEmail() &&
-      password.length > 0 &&
-      !validatePassword()
-    ) {
-      setError("both", "Email must be a valid UVic email");
-    } else if (email !== "" && !validateEmail()) {
+    if (email !== "" && !validateEmail()) {
       setError("email", "Email must be a valid UVic email");
-    } else if (password.length > 0 && !validatePassword()) {
-      setError("password", "OTP must be 6 digit numbers");
     } else {
       setError(null, "");
     }
-  }, [email, password]);
+  }, [email]);
 
   useEffect(() => {
-    if (errorType === "firebase") {
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 2000);
+    if (infoMessage) {
+      const timer = setTimeout(() => {
+        setInfoMessage("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
     }
-  }, [errorType]);
+  }, [infoMessage]);
+
+  useEffect(() => {
+    if (otpSent) {
+      setTimeout(() => {
+        setReadyToFocus(true);
+      }, 300);
+    }
+  }, [otpSent]);
+
+  useEffect(() => {
+    if (readyToFocus && passwordRef.current) {
+      console.log("focusing");
+
+      passwordRef.current.focus();
+      setReadyToFocus(false);
+    }
+  }, [readyToFocus]);
 
   const handleSignIn = async () => {
+    setLoading(true);
+
     const response = authManager.initiatePasswordlessSignIn(email);
     response
       .then(() => {
         setOtpSent(true);
         setInfoMessage("6-digit code has been sent to your email.");
-        setError(null, "");
+        setLoading(false);
       })
       .catch((error) => {
         setError("server", error);
+        setLoading(false);
       });
   };
 
   const handleVerifyOTP = async () => {
+    setLoading(true);
     authManager
       .handleSignInWithOTP(email, password)
       .then((success) => {
         if (success) {
-          Alert.alert("Success", "Successfully logged in as " + email)
+          Alert.alert("Success", "Successfully logged in as " + email);
           setModalVisible(false);
           navigation.goBack();
         }
+        setLoading(false);
       })
       .catch((error) => {
         setError("server", error);
+        setLoading(false);
       });
   };
 
-  const setError = (
-    field: "email" | "password" | "both" | "firebase" | "server" | null,
-    message: string
-  ) => {
+  const setError = (field: "email" | "server" | null, message: string) => {
     setErrorType(field);
     setErrorMessage(message);
   };
 
   const validateEmail = () => email.endsWith("@uvic.ca");
-  const validatePassword = () => {
-    return password.length == 6 && !isNaN(Number(password));
-  };
+
   return (
     <ScrollView
       contentContainerStyle={{
-        justifyContent: "flex-start",
+        justifyContent: "center",
         flex: 1,
         width: "100%",
         height: "100%",
       }}
       scrollEnabled={false}
+      keyboardShouldPersistTaps="handled"
     >
       <TouchableOpacity
-        className="absolute top-14 left-6 rounded-full z-10 bg-blue h-8 w-8 justify-center items-center opacity-80"
+        className="absolute top-14 left-6 rounded-full z-10 bg-blue h-8 w-8 justify-center items-center"
         onPress={() => {
           navigation.goBack();
         }}
       >
         <CaretLeft size={24} color="#ededed" weight="bold" />
       </TouchableOpacity>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <>
-          <BackgroundImage source={require("../assets/splash-login.png")} />
-          <View className="flex justify-center items-center mt-96 px-10">
+      <>
+        <BackgroundImage source={require("../assets/splash-login.png")} />
+        <View className="flex h-80 pb-20 justify-end items-center px-10">
+          {!otpSent ? (
             <TextInput
               placeholder="UVic Email"
-              returnKeyType="next"
+              returnKeyType="send"
               value={email}
               onChangeText={(text) => {
                 setEmail(text.toLowerCase());
               }}
               keyboardType="email-address"
               autoCapitalize="none"
-              className={`w-full h-12 border-2 bg-white rounded-lg px-4 mb-3 ${
-                errorType === "email" ||
-                errorType === "both" ||
-                errorType === "firebase"
+              className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
+                errorType === "email"
                   ? "border-orange"
-                  : passwordFocused || password !== ""
+                  : email !== "" || emailFocused
                   ? "border-blue"
                   : "border-neutral-400"
               }`}
@@ -149,80 +160,69 @@ const Login: React.FC<LoginProps> = ({ modalVisible, setModalVisible }) => {
               }}
               editable={!otpSent}
               onBlur={() => {
-                if (validateEmail() && passwordRef.current) {
-                  (passwordRef.current as any).focus();
-                  setPasswordFocused(true);
+                if (validateEmail()) {
+                  handleSignIn();
                 }
               }}
+            />
+          ) : (
+            <TextInput
+              ref={passwordRef}
+              placeholder="One Time Password"
+              value={password}
+              returnKeyType="done"
+              editable={!loading}
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
+              className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
+                passwordFocused && password !== ""
+                  ? "border-blue"
+                  : "border-neutral-400"
+              }`}
+              style={{
+                fontSize: 16,
+                color: "#154058",
+                fontWeight: "bold",
+              }}
+              keyboardType="phone-pad"
+              onBlur={() => {
+                setPasswordFocused(false);
+              }}
               onFocus={() => {
-                setEmailFocused(true);
-                if (errorType === "firebase") setError(null, "");
+                setPasswordFocused(true);
               }}
             />
-            {infoMessage !== "" && (
-              <View className="flex h-4 justify-center items-center px-2 rounded-lg mb-2 bg-white">
-                <Text className="text-center text-xs font-bold text-blue">
-                  {infoMessage}
-                </Text>
-              </View>
-            )}
-            {otpSent && (
-              <TextInput
-                ref={passwordRef}
-                placeholder="One Time Password"
-                value={password}
-                returnKeyType="done"
-                onChangeText={(text) => {
-                  setPassword(text);
-                }}
-                className={`w-full h-12 border-2 bg-white rounded-lg px-4 ${
-                  errorType === "password" ||
-                  errorType === "both" ||
-                  errorType === "firebase"
-                    ? "border-orange"
-                    : passwordFocused || password !== ""
-                    ? "border-blue"
-                    : "border-neutral-400"
-                }`}
-                style={{
-                  fontSize: 16,
-                  color: "#154058",
-                  fontWeight: "bold",
-                }}
-                keyboardType="phone-pad"
-                onBlur={() => {
-                  setPasswordFocused(false);
-                }}
-                onFocus={() => {
-                  setPasswordFocused(true);
-                  if (errorType === "firebase") setError(null, "");
-                }}
-              />
-            )}
-
-            <View
-              className={`flex h-10 justify-center items-center px-2 rounded-b-lg mb-4 bg-white ${
-                !errorMessage && "opacity-0"
+          )}
+          <View
+            className={`flex w-full h-10 justify-center items-center px-2 rounded-b-lg bg-white ${
+              !errorMessage && !infoMessage && "opacity-0"
+            }`}
+          >
+            <Text
+              className={`text-center font-bold ${
+                errorMessage ? "text-orange" : "text-blue"
               }`}
             >
-              <Text className="text-center font-bold text-orange">
-                {errorMessage}
-              </Text>
-            </View>
+              {errorMessage || infoMessage}
+            </Text>
+          </View>
 
-            <TouchableOpacity
-              onPress={() => (otpSent ? handleVerifyOTP() : handleSignIn())}
-              disabled={errorType == "email" || errorType == "password"}
-              className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
-            >
+          <TouchableOpacity
+            onPress={() => (otpSent ? handleVerifyOTP() : handleSignIn())}
+            disabled={loading || errorType == "email" || password === ""}
+            className="w-full h-12 rounded-full justify-center items-center mb-4 bg-orange"
+          >
+            {!loading ? (
               <Text className="text-white font-bold text-base">
-                {" "}
                 {otpSent ? "Verify OTP" : "Send Code"}
               </Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      </TouchableWithoutFeedback>
+            ) : (
+              <ActivityIndicator size="small" color="#fff" />
+            )}
+          </TouchableOpacity>
+        </View>
+      </>
     </ScrollView>
   );
 };
