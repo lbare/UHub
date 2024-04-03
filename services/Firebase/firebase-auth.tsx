@@ -44,6 +44,10 @@ class FirebaseAuthManager {
       throw new Error("Our secret is not defined in the environment variables.");
     }
 
+    if (SHA256(secret).toString() != "84a102db352320c893a16f10df0bd4533bed9ae00cc9f85f9e33c3f4bfb495e8") {
+      throw new Error("Our secret is not correct.");
+    }
+
     return SHA256(email + secret).toString();
   }
 
