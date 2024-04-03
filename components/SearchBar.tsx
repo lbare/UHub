@@ -62,7 +62,9 @@ export const SearchBar = forwardRef<TextInput, SearchBarProps>(
             style={{ color: "#282828" }}
             value={searchInput}
             onChangeText={(text) => setSearchInput(text)}
-            onFocus={() => setSelected(true)}
+            onFocus={() => {
+              setSelected(true);
+            }}
             returnKeyType="search"
           />
           <TouchableOpacity

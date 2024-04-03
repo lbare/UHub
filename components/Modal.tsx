@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Image,
   Modal,
@@ -7,14 +7,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Alert,
 } from "react-native";
 import {
   FoodVendor,
   getNextFoodVendorInBuilding,
   getPreviousFoodVendorInBuilding,
 } from "../models/FoodVendor";
-import LoginPage from "../screens/Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import {
   CaretLeft,
@@ -35,6 +33,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import menuItemLikeService from "../services/Firebase/firebase-menuitem-like";
+import { MenuItem } from "../models/Menu";
 
 interface CustomModalProps {
   modalVisible: boolean;
@@ -42,8 +41,11 @@ interface CustomModalProps {
   changeVendor: (vendor: FoodVendor) => void;
   onModalHide: (gotoSearch: boolean) => void;
   vendor: FoodVendor;
+  setVendor: (vendor: FoodVendor) => void;
   building: Building;
   openedModalFromSearch: boolean;
+  selectedItem: MenuItem | null;
+  clearSelectedItem: () => void;
 }
 
 type ModalNavigationProp = StackNavigationProp<StackParamList>;
@@ -54,11 +56,19 @@ const CustomModal: React.FC<CustomModalProps> = ({
   changeVendor,
   onModalHide,
   vendor,
+  setVendor,
   building,
   openedModalFromSearch,
+  selectedItem,
+  clearSelectedItem,
 }) => {
   const navigation = useNavigation<ModalNavigationProp>();
   const authManager = new FirebaseAuthManager();
+  const itemRefs = useRef(new Map());
+  const [selectedItemState, setSelectedItemState] = useState({
+    item: null as MenuItem | null,
+    section: null as string | null,
+  });
 
   const hideModal = (exit: boolean) => {
     setModalVisible(false);
@@ -66,10 +76,61 @@ const CustomModal: React.FC<CustomModalProps> = ({
     onModalHide(!exit);
   };
 
-  const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const [isLoginModalVisible, setIsLoginModalVisible] =
-    useState<boolean>(false);
+  useEffect(() => {
+    // Find the section of the selected item
+    const foundSectionName = vendor.menu.sections.find((section) =>
+      section.items.some((item) => item.name === selectedItem?.name)
+    )?.name;
 
+    if (selectedItem && foundSectionName) {
+      // Set the selected item and section in the state
+      setSelectedItemState({ item: selectedItem, section: foundSectionName });
+    }
+  }, [selectedItem, vendor.menu.sections]);
+
+  useEffect(() => {
+    if (selectedItemState.item && selectedItemState.section) {
+      setSelectedSection(selectedItemState.section);
+    }
+  }, [selectedItemState]);
+
+  useEffect(() => {
+    if (selectedItem) {
+      const foundSectionIndex = vendor.menu.sections.findIndex((section) =>
+        section.items.some((item) => item.name === selectedItem.name)
+      );
+
+      if (foundSectionIndex !== -1) {
+        const selectedSection = vendor.menu.sections[foundSectionIndex];
+        const selectedItemIndex = selectedSection.items.findIndex(
+          (item) => item.name === selectedItem.name
+        );
+
+        if (selectedItemIndex > 0) {
+          // Check if the item is not already the first one
+          const newItems = [...selectedSection.items];
+          const [selectedItemObject] = newItems.splice(selectedItemIndex, 1);
+          newItems.unshift(selectedItemObject);
+
+          const newSections = [...vendor.menu.sections];
+          newSections[foundSectionIndex] = {
+            ...selectedSection,
+            items: newItems,
+          };
+
+          const newVendor = {
+            ...vendor,
+            menu: { ...vendor.menu, sections: newSections },
+          };
+          setVendor(newVendor); // Update the vendor only if necessary
+
+          setSelectedSection(newSections[foundSectionIndex].name);
+        }
+      }
+    }
+  }, [selectedItem, vendor]);
+
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [showExpandedHours, setShowExpandedHours] = useState(false);
   const [itemLikesCount, setItemLikesCount] = useState<Map<string, string>>(
     new Map()
@@ -146,7 +207,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         />
         {vendor && (
           <View
-            className="mt-48 w-full h-full rounded-xl overflow-hidden"
+            className="mt-36 w-full h-full rounded-xl overflow-hidden"
             style={{
               backgroundColor: "#1D1D1D",
               shadowColor: "#000",
@@ -159,10 +220,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
               elevation: 5,
             }}
           >
-            <ScrollView
-              contentContainerStyle={{
+            <View
+              style={{
                 alignItems: "flex-start",
-                paddingVertical: 16,
+                paddingVertical: 8,
               }}
             >
               <Image
@@ -171,7 +232,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 }}
                 className="-mt-4 w-full h-48 rounded-l"
               />
-              <View className="w-full justify-center items-center">
+              <View className="h-full w-full justify-center items-center">
                 <View className="w-full flex-row justify-between items-center">
                   <TouchableOpacity
                     className="w-8 h-8 pl-3 rounded-full justify-center items-center"
@@ -288,104 +349,213 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     ))}
                   </View>
                 )}
-                <View className="border-b border-neutral-300 mt-2" />
-
-                <View className="flex flex-wrap w-full flex-row justify-evenly items-center mb-2 overflow-auto">
-                  <View className="w-full bg-neutral-500 h-0.5" />
-                  {vendor.menu.sections.length > 1 &&
-                    vendor.menu.sections.map((section, index) => (
-                      <TouchableOpacity
-                        key={index}
-                        className={`justify-center items-center mx-2 my-2 h-6 ${
-                          selectedSection && selectedSection === section.name
-                            ? "border-b-2 border-white"
-                            : ""
-                        } `}
-                        onPress={() => setSelectedSection(section.name)}
-                      >
-                        <Text
-                          className={`text-xs font-extrabold ${
-                            selectedSection && selectedSection === section.name
-                              ? "text-neutral-200 text-base"
-                              : "text-neutral-400 font-semibold"
-                          }`}
+                <View
+                  className={`w-full border-t-2 border-neutral-500 mt-2 ${
+                    vendor.menu.sections &&
+                    vendor.menu.sections.length > 1 &&
+                    "py-2"
+                  }`}
+                >
+                  <ScrollView
+                    contentContainerStyle={{
+                      flexGrow: 1,
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      paddingRight: 8,
+                    }}
+                    style={{
+                      maxHeight: 50,
+                    }}
+                    indicatorStyle="white"
+                    pagingEnabled
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                  >
+                    {vendor.menu.sections.length > 1 &&
+                      vendor.menu.sections.map((section, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          className="justify-center items-center my-2 mx-2 h-8"
+                          style={{
+                            borderWidth: 1,
+                            borderRadius: 16,
+                            paddingVertical: 5,
+                            paddingHorizontal: 12,
+                            backgroundColor:
+                              selectedSection === section.name
+                                ? "#EB6931"
+                                : "#1D1D1D",
+                            borderColor:
+                              selectedSection === section.name
+                                ? "#EB6931"
+                                : "#B9B9B925",
+                          }}
+                          onPress={() => setSelectedSection(section.name)}
                         >
-                          {section.name}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
+                          <Text
+                            className={`text-sm font-bold ${
+                              selectedSection &&
+                              selectedSection === section.name
+                                ? "text-white"
+                                : "text-neutral-400"
+                            }`}
+                          >
+                            {section.name}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                  </ScrollView>
                 </View>
-
                 {vendor.menu.sections.map((section, index) => {
                   if (section.name === selectedSection) {
                     return (
-                      <React.Fragment key={index}>
-                        <View className="mb-6 w-full">
-                          {section.items.map((item, itemIndex) => (
-                            <View className="flex flex-row" key={itemIndex}>
-                              <View
-                                className="flex-initial w-full px-4"
-                                style={{
-                                  backgroundColor:
-                                    itemIndex % 2 == 0 ? "#282828" : "#1D1D1D",
-                                  paddingBottom: 8,
-                                  paddingVertical: 8,
-                                }}
+                      <ScrollView key={index}>
+                        {section.description && (
+                          <View className="w-full justify-center items-center">
+                            <Text className="text-xs font-normal text-neutral-300 mb-2 px-2">
+                              {section.description}
+                            </Text>
+                          </View>
+                        )}
+
+                        {section.sides && section.sides.length > 0 && (
+                          <View
+                            className="px-4 py-2"
+                            style={{ backgroundColor: "#422828" }}
+                          >
+                            <Text className="text-md font-bold text-neutral-200 mb-1">
+                              Sides
+                            </Text>
+
+                            {section.sides.map((side, sideIndex) => (
+                              <Text
+                                key={sideIndex}
+                                className="text-md font-normal text-neutral-300 mb-1"
                               >
-                                <View className="flex-row justify-between items-center">
-                                  <View className="flex-initial">
-                                    <Text className="text-base font-medium text-neutral-200">
-                                      {item.name}
+                                {side.name}: ${side.price.toFixed(2)}{" "}
+                                {side.description && `- ${side.description}`}
+                              </Text>
+                            ))}
+                          </View>
+                        )}
+                        {section.items.map((item, itemIndex) => (
+                          <View className="flex flex-row" key={itemIndex}>
+                            <View
+                              className={`flex w-full px-4 ${
+                                itemIndex % 2 === 0
+                                  ? "bg-neutral-800"
+                                  : "bg-neutral-900"
+                              } ${
+                                item === selectedItem
+                                  ? "border-4 border-orange"
+                                  : ""
+                              }`}
+                              style={{
+                                paddingBottom: 8,
+                                paddingVertical: 8,
+                              }}
+                            >
+                              <View className="flex-row justify-between items-center">
+                                <View className="flex-initial">
+                                  <Text className="text-base font-medium text-neutral-200">
+                                    {item.name}
+                                  </Text>
+                                  {item.description && (
+                                    <Text className="text-sm mt-1 text-neutral-400">
+                                      {item.description}
                                     </Text>
-                                    {item.description && (
-                                      <Text className="text-sm mt-1 text-neutral-400">
-                                        {item.description}
-                                      </Text>
-                                    )}
-                                    {item.tags && item.tags.length > 0 && (
-                                      <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
-                                        {item.tags.join(", ")}
-                                      </Text>
-                                    )}
-                                    <Text className="text-md mt-1 font-semibold text-neutral-200">
+                                  )}
+
+                                  {item.tags && item.tags.length > 0 && (
+                                    <Text className="text-xs mt-1 font-semibold text-neutral-400 mr-2 inline-block">
+                                      {item.tags.join(", ")}
+                                    </Text>
+                                  )}
+
+                                  {/* Show main price only if there are no sizes */}
+
+                                  {(!item.sizes || item.sizes.length === 0) && (
+                                    <Text className="text-md mt-1 font-medium text-neutral-200">
                                       ${item.price.toFixed(2)}
                                     </Text>
-                                  </View>
-                                  <TouchableOpacity
-                                    onPress={() =>
-                                      toggleLikesForItem(item.name)
-                                    }
-                                  >
-                                    <View className="w-14 h-12 justify-center items-center flex-none">
-                                      <Heart
-                                        size={20}
-                                        color="#EB6931"
-                                        weight={
-                                          doesUserLikeItem.get(item.name)
-                                            ? "fill"
-                                            : "regular"
-                                        }
-                                      />
-                                      <Text className="text-xs text-neutral-300 mt-2">
-                                        {itemLikesCount.get(item.name) || "-1"}
-                                      </Text>
+                                  )}
+
+                                  {/* Sizes */}
+
+                                  {item.sizes && item.sizes.length > 0 && (
+                                    <View className="mt-1">
+                                      {item.sizes.map((size, sizeIndex) => (
+                                        <Text
+                                          key={sizeIndex}
+                                          className="text-sm font-medium text-neutral-300"
+                                        >
+                                          {size.name}: ${size.price.toFixed(2)}
+                                        </Text>
+                                      ))}
                                     </View>
-                                  </TouchableOpacity>
+                                  )}
+
+                                  {/* Sides */}
+
+                                  {item.sides && item.sides.length > 0 && (
+                                    <View className="mt-1">
+                                      {item.sides.map((side, sideIndex) => (
+                                        <View key={sideIndex} className="mb-1">
+                                          <Text className="text-sm font-normal text-neutral-300">
+                                            {side.name}
+                                          </Text>
+
+                                          {side.description && (
+                                            <Text className="text-sm font-light text-neutral-400">
+                                              {side.description}
+                                            </Text>
+                                          )}
+
+                                          {side.price > 0 && (
+                                            <Text className="text-sm font-semibold text-neutral-200">
+                                              ${side.price.toFixed(2)}
+                                            </Text>
+                                          )}
+                                        </View>
+                                      ))}
+                                    </View>
+                                  )}
                                 </View>
+                                <TouchableOpacity
+                                  onPress={() => toggleLikesForItem(item.name)}
+                                >
+                                  <View className="w-14 h-12 justify-center items-center flex-none">
+                                    <Heart
+                                      size={20}
+                                      color="#EB6931"
+                                      weight={
+                                        doesUserLikeItem.get(item.name)
+                                          ? "fill"
+                                          : "regular"
+                                      }
+                                    />
+                                    <Text className="text-xs text-neutral-300 mt-2">
+                                      {itemLikesCount.get(item.name) || "-1"}
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
                               </View>
                             </View>
-                          ))}
-                        </View>
-                      </React.Fragment>
+                          </View>
+                        ))}
+                        <View
+                          style={{
+                            height: 500,
+                          }}
+                        />
+                      </ScrollView>
                     );
                   }
                   return null;
                 })}
-                {/* Extra view below is a Work around for the scroll not going all the way to the bottom */}
-                <View className="h-48"></View>
               </View>
-            </ScrollView>
-
+            </View>
             <View className="absolute top-3 right-4">
               <TouchableOpacity
                 className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"

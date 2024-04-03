@@ -68,17 +68,20 @@ const HomeMap: React.FC = () => {
   const [openVendorsFilter, setOpenVendorsFilter] = useState<boolean>(false);
   const [buildingFiltersOpen, setBuildingFiltersOpen] =
     useState<boolean>(false);
-
-  const searchInputRef = useRef<TextInput>(null);
-  const _mapView = React.createRef<MapView>();
-  const buildingFilterRef = useRef(null);
-
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [isLoginModalVisible, setIsLoginModalVisible] =
     useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+
+  const searchInputRef = useRef<TextInput>(null);
+  const _mapView = React.createRef<MapView>();
+  const buildingFilterRef = useRef(null);
+  const debounceTimeoutRef = useRef<number | null>(null);
 
   const navigation = useNavigation<HomeMapNavigationProp>();
+
+  const debounceDelay = 300; // milliseconds
 
   const authManager = new FirebaseAuthManager((user) => {
     if (user) {
@@ -132,17 +135,39 @@ const HomeMap: React.FC = () => {
     onSearchChange();
   }, [searchInput, buildingFilters, openVendorsFilter]);
 
+  // useEffect(() => {
+
+  //   setSelectedItem(null);
+  // }, [selectedVendor]);
+
+  useEffect(() => {
+    onSearchChange();
+
+    // Cleanup function to clear the timeout if the component unmounts
+    return () => {
+      if (debounceTimeoutRef.current !== null) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [searchInput, buildingFilters, openVendorsFilter]);
+
   const onSearchChange = () => {
-    menuSearch.setBuildingFilters(buildingFilters);
-    if (searchInput !== "") {
-      const results = menuSearch.searchAllMenuItems(
-        searchInput,
-        openVendorsFilter
-      );
-      setSearchResults(results);
-    } else {
-      setSearchResults(new Map());
+    if (debounceTimeoutRef.current !== null) {
+      clearTimeout(debounceTimeoutRef.current);
     }
+
+    debounceTimeoutRef.current = window.setTimeout(() => {
+      menuSearch.setBuildingFilters(buildingFilters);
+      if (searchInput !== "") {
+        const results = menuSearch.searchAllMenuItems(
+          searchInput,
+          openVendorsFilter
+        );
+        setSearchResults(results);
+      } else {
+        setSearchResults(new Map());
+      }
+    }, debounceDelay);
   };
 
   const calculateZoomLevel = (latitudeDelta: number) => {
@@ -189,7 +214,7 @@ const HomeMap: React.FC = () => {
     setSelectedVendor(vendor);
     setUserLastRegionBeforeTap(userLastRegion);
 
-    const adjustedlatitude = vendor.location.latitude - 0.00083;
+    const adjustedlatitude = vendor.location.latitude - 0.00091;
     const newRegion = {
       latitude: adjustedlatitude,
       longitude: vendor.location.longitude,
@@ -219,6 +244,7 @@ const HomeMap: React.FC = () => {
       if (_mapView.current) {
         _mapView.current.animateToRegion(newRegion, 200);
       }
+      setSelectedItem(null);
     }
 
     unselectMarker();
@@ -269,6 +295,28 @@ const HomeMap: React.FC = () => {
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
         >
+          {zoomLevel > 14 &&
+            buildings &&
+            buildings.map((building) =>
+              building.vendors.map((vendor, index) => (
+                <React.Fragment key={index}>
+                  <CustomMarker
+                    keyp={index}
+                    name={vendor.name}
+                    coordinate={vendor.location}
+                    isSelected={vendor.name === selectedVendor?.name}
+                    zIndex={1000}
+                    image={require("../assets/marker.png")}
+                    onPressCustom={() => {
+                      console.log("Marker Pressed: ", index);
+
+                      onMarkerPress(vendor);
+                    }}
+                    zoomLevel={zoomLevel}
+                  />
+                </React.Fragment>
+              ))
+            )}
           {zoomLevel < 15
             ? buildingPolygonsSimple &&
               buildingPolygonsSimple.map(
@@ -293,6 +341,7 @@ const HomeMap: React.FC = () => {
                 (building, index) =>
                   building && (
                     <Polygon
+                      zIndex={-1}
                       key={index}
                       tappable={true}
                       onPress={() => zoomToBuilding(building.name)}
@@ -306,24 +355,6 @@ const HomeMap: React.FC = () => {
                     />
                   )
               )}
-          {zoomLevel > 14 &&
-            buildings &&
-            buildings.map((building) =>
-              building.vendors.map((vendor, index) => (
-                <React.Fragment key={index}>
-                  <CustomMarker
-                    keyp={index}
-                    name={vendor.name}
-                    coordinate={vendor.location}
-                    isSelected={vendor.name === selectedVendor?.name}
-                    zIndex={index}
-                    image={require("../assets/marker.png")}
-                    onPressCustom={() => onMarkerPress(vendor)}
-                    zoomLevel={zoomLevel}
-                  />
-                </React.Fragment>
-              ))
-            )}
         </MapView>
         <TouchableOpacity
           className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
@@ -344,15 +375,22 @@ const HomeMap: React.FC = () => {
           onSignIn={handleSignIn}
           onClose={() => setPopupVisible(false)}
         />
-        <CustomModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          changeVendor={onMarkerPress}
-          onModalHide={onModalHide}
-          openedModalFromSearch={openedModalFromSearch}
-          vendor={selectedVendor!}
-          building={buildings.find((b) => b.vendors.includes(selectedVendor!))!}
-        />
+        {selectedVendor && (
+          <CustomModal
+            selectedItem={selectedItem}
+            clearSelectedItem={() => setSelectedItem(null)}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            changeVendor={onMarkerPress}
+            onModalHide={onModalHide}
+            openedModalFromSearch={openedModalFromSearch}
+            vendor={selectedVendor!}
+            setVendor={setSelectedVendor}
+            building={
+              buildings.find((b) => b.vendors.includes(selectedVendor!))!
+            }
+          />
+        )}
       </View>
       <View
         style={{
@@ -508,6 +546,7 @@ const HomeMap: React.FC = () => {
                 onPress={() => {
                   setSearchOpen(false);
                   setOpenedModalFromSearch(true);
+                  setSelectedItem(menuItem);
                   onMarkerPress(foodVendor);
                 }}
               >
