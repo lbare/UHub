@@ -65,7 +65,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
   const navigation = useNavigation<ModalNavigationProp>();
   const authManager = new FirebaseAuthManager();
   const itemRefs = useRef(new Map());
-  const menuScrollViewRef = useRef<ScrollView>(null);
   const [selectedItemState, setSelectedItemState] = useState({
     item: null as MenuItem | null,
     section: null as string | null,
@@ -233,7 +232,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 }}
                 className="-mt-4 w-full h-48 rounded-l"
               />
-              <View className="w-full justify-center items-center">
+              <View className="h-full w-full justify-center items-center">
                 <View className="w-full flex-row justify-between items-center">
                   <TouchableOpacity
                     className="w-8 h-8 pl-3 rounded-full justify-center items-center"
@@ -350,69 +349,64 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     ))}
                   </View>
                 )}
-                <View className="border-b border-neutral-300 mt-2" />
-                <ScrollView
-                  contentContainerStyle={{
-                    flexGrow: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    paddingRight: 8,
-                    marginBottom: 8,
-                  }}
-                  indicatorStyle="white"
-                  pagingEnabled
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  className="border-b-2 border-neutral-500"
-                >
-                  {vendor.menu.sections.length > 1 &&
-                    vendor.menu.sections.map((section, index) => (
-                      <TouchableOpacity
-                        key={index}
-                        className="justify-center items-center my-2 mx-2 h-8"
-                        style={{
-                          borderWidth: 1,
-                          borderRadius: 16,
-                          paddingVertical: 5,
-                          paddingHorizontal: 12,
-                          backgroundColor:
-                            selectedSection === section.name
-                              ? "#EB6931"
-                              : "#1D1D1D",
-                          borderColor:
-                            selectedSection === section.name
-                              ? "#EB6931"
-                              : "#B9B9B925",
-                        }}
-                        onPress={() => setSelectedSection(section.name)}
-                      >
-                        <Text
-                          className={`text-sm font-bold ${
-                            selectedSection && selectedSection === section.name
-                              ? "text-white"
-                              : "text-neutral-400"
-                          }`}
+                <View className="w-full border-t-2 border-neutral-500 py-2 mt-2">
+                  <ScrollView
+                    contentContainerStyle={{
+                      flexGrow: 1,
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      paddingRight: 8,
+                    }}
+                    style={{
+                      maxHeight: 50,
+                    }}
+                    indicatorStyle="white"
+                    pagingEnabled
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                  >
+                    {vendor.menu.sections.length > 1 &&
+                      vendor.menu.sections.map((section, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          className="justify-center items-center my-2 mx-2 h-8"
+                          style={{
+                            borderWidth: 1,
+                            borderRadius: 16,
+                            paddingVertical: 5,
+                            paddingHorizontal: 12,
+                            backgroundColor:
+                              selectedSection === section.name
+                                ? "#EB6931"
+                                : "#1D1D1D",
+                            borderColor:
+                              selectedSection === section.name
+                                ? "#EB6931"
+                                : "#B9B9B925",
+                          }}
+                          onPress={() => setSelectedSection(section.name)}
                         >
-                          {section.name}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                </ScrollView>
-
+                          <Text
+                            className={`text-sm font-bold ${
+                              selectedSection &&
+                              selectedSection === section.name
+                                ? "text-white"
+                                : "text-neutral-400"
+                            }`}
+                          >
+                            {section.name}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                  </ScrollView>
+                </View>
                 {vendor.menu.sections.map((section, index) => {
                   if (section.name === selectedSection) {
                     return (
-                      <ScrollView
-                        key={index}
-                        ref={menuScrollViewRef}
-                        className="mb-6 w-full"
-                      >
+                      <ScrollView key={index}>
                         {section.items.map((item, itemIndex) => (
-                          <View
-                            className="flex flex-row bg-white"
-                            key={itemIndex}
-                          >
+                          <View className="flex flex-row" key={itemIndex}>
                             <View
                               className={`flex w-full px-4 ${
                                 itemIndex % 2 === 0
@@ -469,6 +463,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
                             </View>
                           </View>
                         ))}
+                        <View
+                          style={{
+                            height: 500,
+                          }}
+                        />
                       </ScrollView>
                     );
                   }
@@ -476,7 +475,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 })}
               </View>
             </View>
-            <View className="w-full bg-neutral-500 h-0.5" />
             <View className="absolute top-3 right-4">
               <TouchableOpacity
                 className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
