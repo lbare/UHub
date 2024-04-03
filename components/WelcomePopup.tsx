@@ -44,6 +44,25 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
     onClose();
   };
 
+  const prevNextButtons = (
+    <View className="flex-row justify-items-center mb-4 space-x-7">
+      <Pressable
+        className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+        onPress={prevPage}
+      >
+        <Text className="text-orange font-bold text-center text-lg">
+          Previous
+        </Text>
+      </Pressable>
+      <Pressable
+        className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
+        onPress={nextPage}
+      >
+        <Text className="text-white font-bold text-center text-lg">Next</Text>
+      </Pressable>
+    </View>
+  );
+
   const pages = [
     /// Page 0 - Category Menu ///
     <View className="bg-white rounded-lg shadow-lg p-4 w-3/4 h-2/5 flex-column justify-center items-center">
@@ -163,22 +182,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           </Text>
         </View>
       </View>
-      <View className="flex-row justify-items-center mb-4 space-x-7">
-        <Pressable
-          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={prevPage}
-        >
-          <Text className="text-orange font-bold text-center text-lg">
-            Previous
-          </Text>
-        </Pressable>
-        <Pressable
-          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={nextPage}
-        >
-          <Text className="text-white font-bold text-center text-lg">Next</Text>
-        </Pressable>
-      </View>
+      {prevNextButtons}
     </View>,
 
     /// Page 3 - Welcome tour browse menu ///
@@ -209,22 +213,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           </Text>
         </View>
       </View>
-      <View className="flex-row justify-items-center mb-4 space-x-7">
-        <Pressable
-          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={prevPage}
-        >
-          <Text className="text-orange font-bold text-center text-lg">
-            Previous
-          </Text>
-        </Pressable>
-        <Pressable
-          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={nextPage}
-        >
-          <Text className="text-white font-bold text-center text-lg">Next</Text>
-        </Pressable>
-      </View>
+      {prevNextButtons}
     </View>,
 
     /// Page 4 - Welcome tour search ///
@@ -256,22 +245,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           </Text>
         </View>
       </View>
-      <View className="flex-row justify-items-center mb-4 space-x-7">
-        <Pressable
-          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={prevPage}
-        >
-          <Text className="text-orange font-bold text-center text-lg">
-            Previous
-          </Text>
-        </Pressable>
-        <Pressable
-          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={nextPage}
-        >
-          <Text className="text-white font-bold text-center text-lg">Next</Text>
-        </Pressable>
-      </View>
+      {prevNextButtons}
     </View>,
 
     /// Page 5 - Welcome tour building filters 1 ///
@@ -302,22 +276,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           </Text>
         </View>
       </View>
-      <View className="flex-row justify-items-center mb-4 space-x-7">
-        <Pressable
-          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={prevPage}
-        >
-          <Text className="text-orange font-bold text-center text-lg">
-            Previous
-          </Text>
-        </Pressable>
-        <Pressable
-          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={nextPage}
-        >
-          <Text className="text-white font-bold text-center text-lg">Next</Text>
-        </Pressable>
-      </View>
+      {prevNextButtons}
     </View>,
 
     /// Page 6 - Welcome tour building filters 2 ///
@@ -345,22 +304,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           </Text>
         </View>
       </View>
-      <View className="flex-row justify-items-center mb-4 space-x-7">
-        <Pressable
-          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={prevPage}
-        >
-          <Text className="text-orange font-bold text-center text-lg">
-            Previous
-          </Text>
-        </Pressable>
-        <Pressable
-          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={nextPage}
-        >
-          <Text className="text-white font-bold text-center text-lg">Next</Text>
-        </Pressable>
-      </View>
+      {prevNextButtons}
     </View>,
 
     /// Page 7 - Welcome tour about the team ///
@@ -391,22 +335,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
           </Text>
         </View>
       </View>
-      <View className="flex-row justify-items-center mb-4 space-x-7">
-        <Pressable
-          className="border-orange border-2 w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={prevPage}
-        >
-          <Text className="text-orange font-bold text-center text-lg">
-            Previous
-          </Text>
-        </Pressable>
-        <Pressable
-          className="bg-orange w-1/3 p-2 h-12 rounded-lg mt-4 justify-center items-center"
-          onPress={nextPage}
-        >
-          <Text className="text-white font-bold text-center text-lg">Next</Text>
-        </Pressable>
-      </View>
+      {prevNextButtons}
     </View>,
 
     /// Page 8 - Feedback ///
