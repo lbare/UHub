@@ -1,4 +1,4 @@
-import { getDocs, addDoc, doc, getDoc } from "firebase/firestore";
+import { getDocs, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import { collection } from "firebase/firestore";
 import { Building, buildingExamples } from "../models/Building";
@@ -13,15 +13,29 @@ class DataFetcher {
     const otpCollection = collection(db, "otps");
     const docRef = doc(otpCollection, email);
 
-    getDoc(docRef).then((docSnap) => {
+    return getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {
         const otp = docSnap.data() as OTP;
-      } else {
-
+        return otp.otp;
+      }else{
+        return Promise.reject("No OTP found for email");
       }
     });
+  }
 
-    return Promise.resolve("123456");
+  doesUserExist(email: string){
+    const vuCollection = collection(db, "VerifiedUsers");
+    const docRef = doc(vuCollection, email);
+
+    return getDoc(docRef).then((docSnap) => {
+      return docSnap.exists();
+    });
+  }
+
+  addVerifiedUser(email: string){
+    const vuCollection = collection(db, "VerifiedUsers");
+    const docRef = doc(vuCollection, email);
+    return setDoc(docRef, {});
   }
 }
 
