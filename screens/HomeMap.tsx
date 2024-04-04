@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -32,6 +33,12 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import { UserPopup } from "../components/UserPopup";
 import { mapStyles } from "../services/mapStyles";
+import {
+  WelcomePopup,
+  WelcomePopupCategories,
+} from "../components/WelcomePopup";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { versionNotes } from "../models/VersionNotes";
 
 const UVicRegion: Coordinates = {
   latitude: 48.463440294565316,
@@ -69,7 +76,10 @@ const HomeMap: React.FC = () => {
   const [buildingFiltersOpen, setBuildingFiltersOpen] =
     useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [loginPopupVisible, setLoginPopupVisible] = useState<boolean>(false);
+  const [welcomePopupPage, setWelcomePopupPage] = useState<number>(
+    WelcomePopupCategories.Hide
+  );
   const [isLoginModalVisible, setIsLoginModalVisible] =
     useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
@@ -96,7 +106,7 @@ const HomeMap: React.FC = () => {
       .signOut()
       .then(() => {
         Alert.alert("Logged out successfully");
-        setPopupVisible(false);
+        setLoginPopupVisible(false);
       })
       .catch((error) => {
         console.error("Logout failed:", error);
@@ -104,7 +114,7 @@ const HomeMap: React.FC = () => {
   };
 
   const handleSignIn = (): void => {
-    setPopupVisible(false);
+    setLoginPopupVisible(false);
     navigation.navigate("Login");
     console.log("Navigate to Sign In screen or open Sign In modal");
   };
@@ -113,6 +123,26 @@ const HomeMap: React.FC = () => {
     // dataFetcher.getAllBuildings(setBuildings);
     menuSearch = new MenuSearch(buildings); // useEffect only creates once on first render
     onZoomChange(UVicRegion);
+
+    // Show welcome tour on app first launch
+    AsyncStorage.getItem("is_first_launch").then((value) => {
+      if (value !== "true") {
+        AsyncStorage.setItem("is_first_launch", "true");
+        setWelcomePopupPage(WelcomePopupCategories.WelcomeTour);
+        console.log("Show welcome popup on first launch");
+      } else {
+        // Show version notes on first launch of new version
+        // but only if it's not the very first launch after first install
+        AsyncStorage.getItem("last_version_notes_shown").then((value) => {
+          const latestVersion = versionNotes[0].version;
+          if (value !== latestVersion) {
+            AsyncStorage.setItem("last_version_notes_shown", latestVersion);
+            setWelcomePopupPage(WelcomePopupCategories.VersionNotes);
+            console.log("Show version notes on first launch of new version");
+          }
+        });
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -357,8 +387,16 @@ const HomeMap: React.FC = () => {
               )}
         </MapView>
         <TouchableOpacity
+          className="absolute w-16 h-16 bottom-10 left-5 border-white border-2 opacity-50 rounded-full justify-center items-center shadow-xl"
+          onPress={() => {
+            setWelcomePopupPage(WelcomePopupCategories.Menu);
+          }}
+        >
+          <FontAwesome5 name="question" size={30} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity
           className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
-          onPress={() => setPopupVisible(true)}
+          onPress={() => setLoginPopupVisible(true)}
         >
           <Image
             source={require("../assets/logo.png")}
@@ -368,12 +406,18 @@ const HomeMap: React.FC = () => {
             }}
           />
         </TouchableOpacity>
+        <WelcomePopup
+          pageNum={welcomePopupPage}
+          onClose={() => {
+            setWelcomePopupPage(WelcomePopupCategories.Hide);
+          }}
+        />
         <UserPopup
-          isVisible={popupVisible}
+          isVisible={loginPopupVisible}
           email={userEmail}
           onLogout={handleLogout}
           onSignIn={handleSignIn}
-          onClose={() => setPopupVisible(false)}
+          onClose={() => setLoginPopupVisible(false)}
         />
         {selectedVendor && (
           <CustomModal
