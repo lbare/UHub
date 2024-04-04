@@ -19,33 +19,52 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   showActions,
   toggleActions,
 }) => {
-  const spinValue = useRef(new Animated.Value(0)).current;
-  const radiusValue = useRef(new Animated.Value(0)).current;
   const scaleValue = useRef(new Animated.Value(1)).current;
+  const actionAnimations = actions.map(
+    () => useRef(new Animated.Value(0)).current
+  );
+
+  const toggleActionAnimations = () => {
+    const baseDelay = 40;
+    const duration = 150;
+
+    actionAnimations.forEach((anim, index) => {
+      const delay = showActions
+        ? (actions.length - 1 - index) * baseDelay
+        : index * baseDelay;
+
+      Animated.timing(anim, {
+        toValue: showActions ? 0 : 1,
+        duration: duration,
+        easing: showActions
+          ? Easing.bezier(0.64, 0.06, 0.38, 0.95)
+          : Easing.bezier(0.09, 0.79, 0.24, 0.88),
+        delay: delay,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+
+  const toggleMainAnimation = () => {
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        easing: Easing.bezier(0.64, 0.06, 0.38, 0.95),
+        duration: 75,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 75,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
 
   const spinAnimation = () => {
-    spinValue.setValue(0);
-    Animated.timing(spinValue, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-
-    Animated.spring(scaleValue, {
-      toValue: showActions ? 1 : 1.1,
-      useNativeDriver: true,
-    }).start();
-
+    toggleMainAnimation();
     toggleActions();
-
-    Animated.timing(radiusValue, {
-      toValue: showActions ? 0 : 1,
-      duration: 150,
-      easing: showActions
-        ? Easing.back(1.5)
-        : Easing.bezier(0.25, 0.1, 0.25, 1),
-      useNativeDriver: true,
-    }).start();
+    toggleActionAnimations();
   };
 
   const actionButtons = actions.map((actionItem, index) => {
@@ -60,19 +79,25 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     const animatedStyle = {
       transform: [
         {
-          translateX: radiusValue.interpolate({
+          translateX: actionAnimations[index].interpolate({
             inputRange: [0, 1],
             outputRange: [0, x],
           }),
         },
         {
-          translateY: radiusValue.interpolate({
+          translateY: actionAnimations[index].interpolate({
             inputRange: [0, 1],
             outputRange: [0, y],
           }),
         },
+        // {
+        //   scale: actionAnimations[index].interpolate({
+        //     inputRange: [0, 1],
+        //     outputRange: [0, 1],
+        //   }),
+        // },
       ],
-      opacity: radiusValue.interpolate({
+      opacity: actionAnimations[index].interpolate({
         inputRange: [0, 0.7, 1],
         outputRange: [0, 0.2, 1],
       }),
