@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { View, TouchableOpacity, Animated, Image, Easing } from "react-native";
 
 interface ActionItem {
@@ -61,7 +61,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     ]).start();
   };
 
-  const spinAnimation = () => {
+  const toggleAnimation = () => {
     toggleMainAnimation();
     toggleActions();
     toggleActionAnimations();
@@ -71,7 +71,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     const angles = [270, 225, 180];
     const angle = angles[index];
     const radian = (angle * Math.PI) / 180;
-    const radius = 90;
+    const radius = 110;
 
     const x = Math.cos(radian) * radius;
     const y = Math.sin(radian) * radius;
@@ -117,7 +117,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
       >
         <TouchableOpacity
           onPress={actionItem.action}
-          className="bg-white p-2 rounded-full"
+          className="bg-white p-3 rounded-full"
         >
           {actionItem.icon}
         </TouchableOpacity>
@@ -129,7 +129,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={spinAnimation}
+        onPress={toggleAnimation}
         style={{ zIndex: 15 }}
       >
         <Animated.View
@@ -142,7 +142,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
             ],
           }}
         >
-          <Image source={icon} style={{ width: 55, height: 55 }} />
+          <Image source={icon} style={{ width: 65, height: 65 }} />
         </Animated.View>
       </TouchableOpacity>
       {actionButtons}
