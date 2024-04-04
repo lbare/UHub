@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import DataFetcher from "../DataFetcher";
 const { SHA256 } = require("crypto-js");
+import { OUR_SECRET } from "./secret";
 
 class FirebaseAuthManager {
   dataFetcher = new DataFetcher();
@@ -36,19 +37,19 @@ class FirebaseAuthManager {
     }
   }
 
-  private generatePasswordForEmail(email: string) {
+  private async generatePasswordForEmail(email: string) {
 
-    const secret = process.env.OUR_SECRET;
+    const secret = OUR_SECRET;
 
     if (!secret) {
-      throw new Error("Our secret is not defined in the environment variables.");
+      return Promise.reject("Our secret is not defined in the environment variables.");
     }
 
     if (SHA256(secret).toString() != "84a102db352320c893a16f10df0bd4533bed9ae00cc9f85f9e33c3f4bfb495e8") {
-      throw new Error("Our secret is not correct.");
+      return Promise.reject("Our secret is not correct.");
     }
 
-    return SHA256(email + secret).toString();
+    return Promise.resolve(SHA256(email + secret).toString());
   }
 
   public getCurrentUserUID(): string | null {
@@ -89,9 +90,13 @@ class FirebaseAuthManager {
         return this.dataFetcher.doesUserExist(email).then((exists) => {
           if (!exists) {
             this.dataFetcher.addVerifiedUser(email);
-            return this.signUp(email, this.generatePasswordForEmail(email));
+            return this.generatePasswordForEmail(email).then((password) => {
+              return this.signUp(email, password);
+            });
           } else {
-            return this.signIn(email, this.generatePasswordForEmail(email));
+            return this.generatePasswordForEmail(email).then((password) => {
+              return this.signIn(email, password);
+            });
           }
         });
       } else {
