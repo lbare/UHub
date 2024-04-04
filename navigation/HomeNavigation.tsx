@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeMap from "../screens/HomeMap";
 import Login from "../screens/Login";
+import Upload from "../screens/Upload";
 
 export type StackParamList = {
   HomeMap: undefined;
   Login: undefined;
+  Upload: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -21,7 +23,7 @@ const HomeNavigation: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        animationEnabled: true, 
+        animationEnabled: true,
         animationTypeForReplace: "push",
       }}
     >
@@ -33,6 +35,11 @@ const HomeNavigation: React.FC = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreenWrapper}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Upload"
+        component={Upload}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

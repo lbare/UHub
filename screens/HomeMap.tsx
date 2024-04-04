@@ -23,6 +23,9 @@ import {
   Plus,
   MagnifyingGlass,
   Info,
+  UserCirclePlus,
+  UserCircle,
+  Camera,
 } from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem, MenuItemTag } from "../models/Menu";
@@ -374,15 +377,19 @@ const HomeMap: React.FC = () => {
             icon={require("../assets/logo.png")}
             actions={[
               {
-                icon: <Plus size={32} color="#EB6931" />,
-                action: () => console.log("Add button pressed"),
+                icon: <Camera size={32} weight="fill" color="#154058" />,
+                action: () => navigation.navigate("Upload"),
               },
               {
-                icon: <MagnifyingGlass size={32} color="#EB6931" />,
-                action: () => console.log("Search button pressed"),
+                icon: userEmail ? (
+                  <UserCircle size={42} weight="fill" color="#154058" />
+                ) : (
+                  <UserCirclePlus size={42} weight="fill" color="#154058" />
+                ),
+                action: () => navigation.navigate("Login"),
               },
               {
-                icon: <Info size={32} color="#EB6931" />,
+                icon: <Info size={32} weight="fill" color="#154058" />,
                 action: () => console.log("Info button pressed"),
               },
             ]}
