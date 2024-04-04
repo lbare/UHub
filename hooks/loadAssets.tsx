@@ -8,6 +8,7 @@ const loadAssets = async () => {
       require("../assets/logo.png"),
       require("../assets/full-logo.png"),
       require("../assets/splash-login.png"),
+      require("../assets/bg.png"),
     ]),
   ]);
 };
