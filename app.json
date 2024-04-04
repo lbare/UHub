@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#eeeeee"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.uhub.seng480A.uvic",
@@ -32,7 +30,7 @@
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBJWMWCK9PvYKUaIdIHJ7ybsXFpQlxl8Nc"
-        }  
+        }
       },
       "package": "app.uhub.seng480A.uvic"
     },
@@ -53,6 +51,14 @@
           "ios": {
             "useFrameworks": "static"
           }
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
         }
       ]
     ]
