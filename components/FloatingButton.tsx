@@ -117,7 +117,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
       >
         <TouchableOpacity
           onPress={actionItem.action}
-          className="bg-white p-3 rounded-full"
+          className="bg-white w-14 h-14 rounded-full shadow-md justify-center items-center"
         >
           {actionItem.icon}
         </TouchableOpacity>
@@ -133,7 +133,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
         style={{ zIndex: 15 }}
       >
         <Animated.View
-          className="bg-white rounded-full p-2 shadow-md"
+          className="bg-white rounded-full p-4 shadow-md"
           style={{
             transform: [
               {
@@ -142,7 +142,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
             ],
           }}
         >
-          <Image source={icon} style={{ width: 65, height: 65 }} />
+          <Image source={icon} style={{ width: 55, height: 55 }} />
         </Animated.View>
       </TouchableOpacity>
       {actionButtons}
