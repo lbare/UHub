@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -34,12 +33,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import { UserPopup } from "../components/UserPopup";
 import { mapStyles } from "../services/mapStyles";
-import {
-  WelcomePopup,
-  WelcomePopupCategories,
-} from "../components/WelcomePopup";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { versionNotes } from "../models/VersionNotes";
 import {
   WelcomePopup,
   WelcomePopupCategories,
