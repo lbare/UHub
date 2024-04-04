@@ -424,45 +424,26 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
             objectFit: "contain",
           }}
         />
-        <View className="w-full px-4">
+        <View className="flex-1 w-full px-4">
           <Text className="text-left text-2xl font-bold mb-4">What's New?</Text>
-          <ScrollView
-            // className="flex-1"
-            style={{
-              // flex: 1,
-              height: "70%",
-            }}
-            contentContainerStyle={{
-              alignItems: "flex-start",
-              width: "100%",
-              height: "100%",
-            }}
-          >
+          <ScrollView className="flex-1">
             {versionNotes.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                // style={{
-                //   backgroundColor: index % 2 == 0 ? "#282828" : "#1D1D1D",
-                //   width: "100%",
-                // }}
-              >
-                <View>
-                  <Text className="text-left text-xl font-bold">
-                    Version {item.version}
-                  </Text>
-                  <Text className="text-left text-base text-gray-500 italic">
-                    {item.date}
-                  </Text>
-                  <Text className="text-left text-base mt-2">
-                    {item.notes.map((note, noteIndex) => (
-                      <Text key={noteIndex}>
-                        • {note}
-                        {"\n"}
-                      </Text>
-                    ))}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <View key={index}>
+                <Text className="text-left text-xl font-bold">
+                  Version {item.version}
+                </Text>
+                <Text className="text-left text-base text-gray-500 italic">
+                  {item.date}
+                </Text>
+                <Text className="text-left text-base mt-2">
+                  {item.notes.map((note, noteIndex) => (
+                    <Text key={noteIndex}>
+                      • {note}
+                      {"\n"}
+                    </Text>
+                  ))}
+                </Text>
+              </View>
             ))}
           </ScrollView>
         </View>
