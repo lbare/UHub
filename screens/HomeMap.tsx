@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -21,7 +20,6 @@ import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import {
   ArrowUpRight,
-  Plus,
   MagnifyingGlass,
   Info,
   UserCirclePlus,
@@ -691,25 +689,15 @@ const HomeMap: React.FC = () => {
               <View className="flex w-16 h-full justify-center items-center">
                 <MagnifyingGlass size={24} color="#154058" weight="bold" />
               </View>
-              <View className="h-full w-3/5 justify-center items-start">
+              <View className="h-full w-3/5 justify-center items-center">
                 <Text
-                  className="font-semiBold text-2xl"
+                  className="font-semiBold text-2xl text-center"
                   style={{
                     color: "#154058",
                   }}
                 >
                   Search
                 </Text>
-              </View>
-              <View className="h-full w-16 justify-center items-center">
-                <Image
-                  source={require("../assets/logo.png")}
-                  style={{
-                    width: 45,
-                    height: 45,
-                  }}
-                  resizeMode="center"
-                />
               </View>
             </View>
           </View>
