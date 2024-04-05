@@ -10,6 +10,11 @@ const loadAssets = async () => {
       require("../assets/splash-login.png"),
       require("../assets/bg.png"),
       require("../assets/search-deco.png"),
+      require("../assets/tutorial/tutorial_building-filters-2.png"),
+      require("../assets/tutorial/tutorial_building-filters.png"),
+      require("../assets/tutorial/tutorial_menu.png"),
+      require("../assets/tutorial/tutorial_pins.png"),
+      require("../assets/tutorial/tutorial_search.png"),
     ]),
   ]);
 };
