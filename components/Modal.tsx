@@ -89,7 +89,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const y = event.nativeEvent.contentOffset.y;
-    console.log(y);
     setLastScrollY(y);
   };
 
