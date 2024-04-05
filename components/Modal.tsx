@@ -546,8 +546,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                     <TouchableOpacity
                                       onPress={() =>
                                         toggleLikesForItem(
-                                      buildItemID(item, vendor)
-                                    )
+                                          buildItemID(item, vendor)
+                                        )
                                       }
                                     >
                                       <View className="w-14 h-12 justify-center items-center flex-none">
@@ -556,16 +556,16 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                           color="#EB6931"
                                           weight={
                                             doesUserLikeItem.get(
-                                          buildItemID(item, vendor)
-                                        )
+                                              buildItemID(item, vendor)
+                                            )
                                               ? "fill"
                                               : "regular"
                                           }
                                         />
                                         <Text className="text-xs text-neutral-300 mt-2">
                                           {itemLikesCount.get(
-                                        buildItemID(item, vendor)
-                                      ) || "-1"}
+                                            buildItemID(item, vendor)
+                                          ) || "-1"}
                                         </Text>
                                       </View>
                                     </TouchableOpacity>
