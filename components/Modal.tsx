@@ -19,6 +19,8 @@ import {
   CaretRight,
   MagnifyingGlass,
   Heart,
+  Camera,
+  X,
 } from "phosphor-react-native";
 import { Building } from "../models/Building";
 import {
@@ -564,12 +566,19 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   hideModal(true);
                 }}
               >
-                <Feather
-                  name="x"
-                  size={20}
-                  color="#154058"
-                  className="opacity-100"
-                />
+                <X size={22} color="#171717" weight="bold" />
+              </TouchableOpacity>
+            </View>
+            <View className="absolute top-36 right-4">
+              <TouchableOpacity
+                className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
+                style={{ backgroundColor: "#ededed" }}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.navigate("Upload", { vendor: vendor.name });
+                }}
+              >
+                <Camera size={22} color="#171717" weight="fill" />
               </TouchableOpacity>
             </View>
 

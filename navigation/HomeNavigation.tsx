@@ -7,7 +7,9 @@ import Upload from "../screens/Upload";
 export type StackParamList = {
   HomeMap: undefined;
   Login: undefined;
-  Upload: undefined;
+  Upload: {
+    vendor: string;
+  };
 };
 
 const Stack = createStackNavigator<StackParamList>();

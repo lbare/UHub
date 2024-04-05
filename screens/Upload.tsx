@@ -19,7 +19,7 @@ import {
   CaretUp,
   Check,
 } from "phosphor-react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import FirebaseUserImageService from "../services/Firebase/firebase-user-image-submittion";
@@ -29,9 +29,12 @@ import { BuildingContext } from "../contexts/BuildingContext";
 import { Building } from "../models/Building";
 
 type HomeMapNavigationProp = StackNavigationProp<StackParamList, "HomeMap">;
+type UploadScreenNavigationProp = StackNavigationProp<StackParamList, "Upload">;
+type UploadScreenRouteProp = RouteProp<StackParamList, "Upload">;
 
 interface UploadProps {
-  vendor?: FoodVendor;
+  navigation: UploadScreenNavigationProp;
+  route: UploadScreenRouteProp;
 }
 
 type DropDownDataType = {
@@ -39,7 +42,7 @@ type DropDownDataType = {
   value: string;
 };
 
-const Upload: React.FC<UploadProps> = ({ vendor }) => {
+const Upload: React.FC<UploadProps> = ({ navigation, route }) => {
   const [photo, setPhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const cameraRef = useRef<Camera>(null);
@@ -48,21 +51,24 @@ const Upload: React.FC<UploadProps> = ({ vendor }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [pickerOpen, setPickerOpen] = useState<boolean>(false);
   const [vendors, setVendors] = useState<DropDownDataType[]>([]);
-  const [selectedVendor, setSelectedVendor] = useState<string>("");
+  const [selectedVendor, setSelectedVendor] = useState<string>(
+    route.params?.vendor
+  );
 
-  const navigation = useNavigation<HomeMapNavigationProp>();
   const firebaseService = new FirebaseUserImageService();
   const [buildings, setBuildings] = useState<Building[]>(
     useContext(BuildingContext)
   );
 
   useEffect(() => {
-    if (!permission?.granted) {
-      setTimeout(() => {
-        navigation.navigate("HomeMap");
-      }, 1000);
-    }
-  }, [permission]);
+    const handlePermission = async () => {
+      if (!permission?.granted) {
+        await requestPermission();
+      }
+    };
+
+    handlePermission();
+  }, []);
 
   useEffect(() => {
     const newVendors = buildings.reduce((acc, building) => {
