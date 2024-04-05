@@ -39,7 +39,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({
 
   const defaultPopupStyle: StyleProp<ViewStyle> = {
     width: "95%",
-    height: "70%",
+    height: "65%",
   };
 
   const nextPage = () => {

@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -21,7 +20,6 @@ import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import {
   ArrowUpRight,
-  Plus,
   MagnifyingGlass,
   Info,
   UserCirclePlus,
@@ -683,7 +681,7 @@ const HomeMap: React.FC = () => {
             }}
           >
             <View
-              className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl items-center justify-start"
+              className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl items-center justify-start overflow-hidden"
               style={{
                 backgroundColor: "#EDEDED",
               }}
@@ -693,7 +691,7 @@ const HomeMap: React.FC = () => {
               </View>
               <View className="h-full w-3/5 justify-center items-start">
                 <Text
-                  className="font-semiBold text-2xl"
+                  className="font-semiBold text-2xl text-center"
                   style={{
                     color: "#154058",
                   }}
@@ -701,14 +699,14 @@ const HomeMap: React.FC = () => {
                   Search
                 </Text>
               </View>
-              <View className="h-full w-16 justify-center items-center">
+              <View className="absolute right-10 h-full w-16 justify-center items-center rounded-2xl">
                 <Image
-                  source={require("../assets/logo.png")}
+                  source={require("../assets/search-deco.png")}
                   style={{
-                    width: 45,
-                    height: 45,
+                    width: 364,
+                    height: "100%",
                   }}
-                  resizeMode="center"
+                  resizeMode="contain"
                 />
               </View>
             </View>
