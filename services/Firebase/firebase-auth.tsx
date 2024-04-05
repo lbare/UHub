@@ -3,14 +3,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   User,
-  UserCredential,
   onAuthStateChanged,
   signOut,
-  Auth,
 } from "firebase/auth";
 import DataFetcher from "../DataFetcher";
-const { SHA256 } = require("crypto-js");
-import { OUR_SECRET } from "./secret";
 
 class FirebaseAuthManager {
   dataFetcher = new DataFetcher();
@@ -37,21 +33,6 @@ class FirebaseAuthManager {
     }
   }
 
-  private async generatePasswordForEmail(email: string) {
-
-    const secret = OUR_SECRET;
-
-    if (!secret) {
-      return Promise.reject("Our secret is not defined in the environment variables.");
-    }
-
-    if (SHA256(secret).toString() != "84a102db352320c893a16f10df0bd4533bed9ae00cc9f85f9e33c3f4bfb495e8") {
-      return Promise.reject("Our secret is not correct.");
-    }
-
-    return Promise.resolve(SHA256(email + secret).toString());
-  }
-
   public getCurrentUserUID(): string | null {
     try {
       return this.getCurrentUser().uid;
@@ -76,45 +57,45 @@ class FirebaseAuthManager {
       method: "POST",
       cache: "no-cache",
     }).then((response) => {
-      if(response.ok) {
+      if (response.ok) {
         return response.json();
       } else {
-        return Promise.reject("Our servers seem to be down right now. Please try again later.");
+        return Promise.reject(
+          "Our servers seem to be down right now. Please try again later."
+        );
       }
     });
   }
 
   public handleSignInWithOTP(email: string, otp: string) {
-    return this.verifyOTP(email, otp).then((success) => {
-      if (success) {
-        return this.dataFetcher.doesUserExist(email).then((exists) => {
-          if (!exists) {
-            this.dataFetcher.addVerifiedUser(email);
-            return this.generatePasswordForEmail(email).then((password) => {
-              return this.signUp(email, password);
-            });
-          } else {
-            return this.generatePasswordForEmail(email).then((password) => {
-              return this.signIn(email, password);
-            });
-          }
-        });
-      } else {
-        return Promise.reject("Failed to verify OTP");
-      }
+    return this.verifyOTP(email, otp).then((password) => {
+      return this.dataFetcher.doesUserExist(email).then((exists) => {
+        if (exists) {
+          return this.signIn(email, password);
+        } else {
+          this.dataFetcher.addVerifiedUser(email);
+          return this.signUp(email, password);
+        }
+      });
     });
   }
 
   public verifyOTP(email: string, otp: string) {
-    return this.dataFetcher
-      .getOTPforEmail(email)
-      .then((otpFromDB) => {
-        if (otpFromDB == otp) {
-          return true;
-        }else{
-          return Promise.reject("The OTP you entered is incorrect.");
-        }
-      })
+    const url = `https://uhub.rahuln.ca/verify?email=${email}&otp=${otp}`;
+    return fetch(url, {
+      method: "POST",
+      cache: "no-cache",
+    }).then((response) => {
+      if (response.ok) {
+        return response.json().then((data) => {
+          return data.password;
+        });
+      } else {
+        return Promise.reject(
+          "Our servers seem to be down right now. Please try again later."
+        );
+      }
+    });
   }
 
   public signIn(email: string, password: string) {
