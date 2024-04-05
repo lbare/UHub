@@ -27,12 +27,20 @@ export default function App() {
           ? serverTimestamp.seconds * 1000 +
             serverTimestamp.nanoseconds / 1000000
           : null;
-        console.log("Server last updated:", serverLastUpdated ? new Date(serverLastUpdated).toLocaleString() : "N/A");
+        console.log(
+          "Server last updated:",
+          serverLastUpdated
+            ? new Date(serverLastUpdated).toLocaleString()
+            : "N/A"
+        );
 
         const localData = await AsyncStorage.getItem("buildings_cache");
         const localCache = localData ? JSON.parse(localData) : {};
         const localLastUpdated = localCache.lastUpdated || null;
-        console.log("Local last updated:", localLastUpdated ? new Date(localLastUpdated).toLocaleString() : "N/A");
+        console.log(
+          "Local last updated:",
+          localLastUpdated ? new Date(localLastUpdated).toLocaleString() : "N/A"
+        );
 
         // Check if the Firestore data is newer than the local cache
         if (
@@ -41,7 +49,7 @@ export default function App() {
           (serverLastUpdated && serverLastUpdated > localLastUpdated)
         ) {
           // Data in Firestore is newer, fetch and cache it
-          const querySnapshot = await getDocs(collection(db, "Building:V2"));
+          const querySnapshot = await getDocs(collection(db, "Building:V3"));
           const buildingsArray = querySnapshot.docs.map(
             (doc) => doc.data() as Building
           );

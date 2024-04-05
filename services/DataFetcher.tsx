@@ -8,8 +8,7 @@ type OTP = {
   otp: string;
 };
 class DataFetcher {
-
-  getOTPforEmail(email: string){
+  getOTPforEmail(email: string) {
     const otpCollection = collection(db, "otps");
     const docRef = doc(otpCollection, email);
 
@@ -17,13 +16,13 @@ class DataFetcher {
       if (docSnap.exists()) {
         const otp = docSnap.data() as OTP;
         return otp.otp;
-      }else{
+      } else {
         return Promise.reject("No OTP found for email");
       }
     });
   }
 
-  doesUserExist(email: string){
+  doesUserExist(email: string) {
     const vuCollection = collection(db, "VerifiedUsers");
     const docRef = doc(vuCollection, email);
 
@@ -32,7 +31,7 @@ class DataFetcher {
     });
   }
 
-  addVerifiedUser(email: string){
+  addVerifiedUser(email: string) {
     const vuCollection = collection(db, "VerifiedUsers");
     const docRef = doc(vuCollection, email);
     return setDoc(docRef, {});
@@ -41,7 +40,7 @@ class DataFetcher {
 
 export const addBuildingsToFirebase = async () => {
   try {
-    const buildingsRef = collection(db, "Building:V2");
+    const buildingsRef = collection(db, "Building:V3");
     for (const building of buildingExamples) {
       await addDoc(buildingsRef, building);
     }
