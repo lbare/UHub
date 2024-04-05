@@ -3,6 +3,8 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   Image,
   Modal,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -82,6 +84,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
     return `${vendor.name}-${menuItem.name}`.toLowerCase().replace(/\s/g, "-");
   };
 
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const y = event.nativeEvent.contentOffset.y;
+    setLastScrollY(y);
+  };
+
   useEffect(() => {
     // Find the section of the selected item
     const foundSectionName = vendor.menu.sections.find((section) =>
@@ -137,10 +147,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
   }, [selectedItem, vendor]);
 
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (scrollViewRef.current && lastScrollY > 160) {
+      scrollViewRef.current.scrollTo({ y: 160, animated: true });
+    }
+  }, [selectedSection]);
+
   const [showExpandedHours, setShowExpandedHours] = useState(false);
   const [itemLikesCount, setItemLikesCount] = useState<Map<string, string>>(
     new Map()
   );
+
   const [doesUserLikeItem, setDoesUserLikeItem] = useState<
     Map<string, boolean>
   >(new Map());
@@ -242,7 +260,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 className="w-full h-48 rounded-l absolute"
               />
               <View className="w-full h-8 bg-transparent"></View>
-              <ScrollView className="w-fullz-10" stickyHeaderIndices={[1]}>
+              <ScrollView
+                ref={scrollViewRef}
+                onScroll={handleScroll}
+                scrollEventThrottle={128}
+                className="w-fullz-10"
+                stickyHeaderIndices={[1]}
+              >
                 <View className="w-full h-40"></View>
                 <View className="bg-neutral-900">
                   <View className="w-full flex-row justify-between items-center">
@@ -585,7 +609,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                           })}
                           <View
                             style={{
-                              height: 500,
+                              height: 200,
                             }}
                           />
                         </View>
@@ -607,7 +631,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 <X size={22} color="#171717" weight="bold" />
               </TouchableOpacity>
             </View>
-            <View className="absolute top-36 right-4">
+            <View className="absolute top-3 right-16">
               <TouchableOpacity
                 className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
                 style={{ backgroundColor: "#ededed" }}
