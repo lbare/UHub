@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -21,7 +20,6 @@ import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import {
   ArrowUpRight,
-  Plus,
   MagnifyingGlass,
   Info,
   UserCirclePlus,
