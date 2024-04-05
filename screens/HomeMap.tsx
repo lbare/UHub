@@ -419,7 +419,9 @@ const HomeMap: React.FC = () => {
                 ) : (
                   <UserCirclePlus size={42} weight="fill" color="#154058" />
                 ),
-                action: () => navigation.navigate("Login"),
+                action: userEmail
+                  ? () => setLoginPopupVisible(true)
+                  : () => navigation.navigate("Login"),
               },
               {
                 icon: <Info size={32} weight="fill" color="#154058" />,
