@@ -699,7 +699,7 @@ const HomeMap: React.FC = () => {
                   Search
                 </Text>
               </View>
-              <View className="absolute right-10 h-full w-16 justify-center items-center rounded-2xl">
+              <View className="absolute right-0 left-0 h-full justify-center items-center rounded-2xl">
                 <Image
                   source={require("../assets/search-deco.png")}
                   style={{
