@@ -681,7 +681,7 @@ const HomeMap: React.FC = () => {
             }}
           >
             <View
-              className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl items-center justify-start"
+              className="flex flex-row w-5/6 h-16 shadow-xl rounded-2xl items-center justify-start overflow-hidden"
               style={{
                 backgroundColor: "#EDEDED",
               }}
@@ -689,7 +689,7 @@ const HomeMap: React.FC = () => {
               <View className="flex w-16 h-full justify-center items-center">
                 <MagnifyingGlass size={24} color="#154058" weight="bold" />
               </View>
-              <View className="h-full w-3/5 justify-center items-center">
+              <View className="h-full w-3/5 justify-center items-start">
                 <Text
                   className="font-semiBold text-2xl text-center"
                   style={{
@@ -698,6 +698,16 @@ const HomeMap: React.FC = () => {
                 >
                   Search
                 </Text>
+              </View>
+              <View className="absolute right-10 h-full w-16 justify-center items-center rounded-2xl">
+                <Image
+                  source={require("../assets/search-deco.png")}
+                  style={{
+                    width: 364,
+                    height: "100%",
+                  }}
+                  resizeMode="contain"
+                />
               </View>
             </View>
           </View>
