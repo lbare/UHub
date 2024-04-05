@@ -19,6 +19,8 @@ import {
   CaretRight,
   MagnifyingGlass,
   Heart,
+  Camera,
+  X,
 } from "phosphor-react-native";
 import { Building } from "../models/Building";
 import {
@@ -74,6 +76,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
     setModalVisible(false);
     setShowExpandedHours(false);
     onModalHide(!exit);
+  };
+
+  const buildItemID = (menuItem: MenuItem, vendor: FoodVendor): string => {
+    return `${vendor.name}-${menuItem.name}`.toLowerCase().replace(/\s/g, "-");
   };
 
   useEffect(() => {
@@ -144,21 +150,21 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
     setSelectedSection(vendor.menu.sections[0].name);
 
-    const allItems = vendor.menu.sections.flatMap((section) =>
-      section.items.map((item) => item.name)
+    const allItemIDs = vendor.menu.sections.flatMap((section) =>
+      section.items.map((item) => buildItemID(item, vendor))
     );
 
-    const totalLikes = allItems.map(
-      (name) =>
-        [name, menuItemLikeService.getTotalLikesForItem(name).toString()] as [
+    const totalLikes = allItemIDs.map(
+      (id) =>
+        [id, menuItemLikeService.getTotalLikesForItem(id).toString()] as [
           string,
           string
         ]
     );
 
-    const userLikesBools = allItems.map(
-      (name) =>
-        [name, menuItemLikeService.doesUserLikeItem(name)] as [string, boolean]
+    const userLikesBools = allItemIDs.map(
+      (id) =>
+        [id, menuItemLikeService.doesUserLikeItem(id)] as [string, boolean]
     );
 
     const likesCountMap = new Map<string, string>(totalLikes);
@@ -167,22 +173,22 @@ const CustomModal: React.FC<CustomModalProps> = ({
     setDoesUserLikeItem(userLikesMap);
   }, [vendor]);
 
-  const toggleLikesForItem = (item: string): void => {
+  const toggleLikesForItem = (itemId: string): void => {
     if (!authManager.getCurrentUserUID()) {
       setModalVisible(false);
       navigation.push("Login");
     } else {
-      if (doesUserLikeItem.get(item)) {
-        const newLikesCount = menuItemLikeService.removeLikeFromItem(item);
-        setItemLikesCount(itemLikesCount.set(item, newLikesCount.toString()));
+      if (doesUserLikeItem.get(itemId)) {
+        const newLikesCount = menuItemLikeService.removeLikeFromItem(itemId);
+        setItemLikesCount(itemLikesCount.set(itemId, newLikesCount.toString()));
         setDoesUserLikeItem(
-          new Map<string, boolean>(doesUserLikeItem.set(item, false))
+          new Map<string, boolean>(doesUserLikeItem.set(itemId, false))
         );
       } else {
-        const newLikesCount = menuItemLikeService.addLikeToItem(item);
-        setItemLikesCount(itemLikesCount.set(item, newLikesCount.toString()));
+        const newLikesCount = menuItemLikeService.addLikeToItem(itemId);
+        setItemLikesCount(itemLikesCount.set(itemId, newLikesCount.toString()));
         setDoesUserLikeItem(
-          new Map<string, boolean>(doesUserLikeItem.set(item, true))
+          new Map<string, boolean>(doesUserLikeItem.set(itemId, true))
         );
       }
     }
@@ -539,7 +545,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                     </View>
                                     <TouchableOpacity
                                       onPress={() =>
-                                        toggleLikesForItem(item.name)
+                                        toggleLikesForItem(
+                                      buildItemID(item, vendor)
+                                    )
                                       }
                                     >
                                       <View className="w-14 h-12 justify-center items-center flex-none">
@@ -547,14 +555,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
                                           size={20}
                                           color="#EB6931"
                                           weight={
-                                            doesUserLikeItem.get(item.name)
+                                            doesUserLikeItem.get(
+                                          buildItemID(item, vendor)
+                                        )
                                               ? "fill"
                                               : "regular"
                                           }
                                         />
                                         <Text className="text-xs text-neutral-300 mt-2">
-                                          {itemLikesCount.get(item.name) ||
-                                            "-1"}
+                                          {itemLikesCount.get(
+                                        buildItemID(item, vendor)
+                                      ) || "-1"}
                                         </Text>
                                       </View>
                                     </TouchableOpacity>
@@ -584,12 +595,19 @@ const CustomModal: React.FC<CustomModalProps> = ({
                   hideModal(true);
                 }}
               >
-                <Feather
-                  name="x"
-                  size={20}
-                  color="#154058"
-                  className="opacity-100"
-                />
+                <X size={22} color="#171717" weight="bold" />
+              </TouchableOpacity>
+            </View>
+            <View className="absolute top-36 right-4">
+              <TouchableOpacity
+                className="flex opacity-100 rounded-full h-8 w-8 justify-center items-center"
+                style={{ backgroundColor: "#ededed" }}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.navigate("Upload", { vendor: vendor.name });
+                }}
+              >
+                <Camera size={22} color="#171717" weight="fill" />
               </TouchableOpacity>
             </View>
 

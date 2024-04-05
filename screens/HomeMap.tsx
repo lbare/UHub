@@ -19,7 +19,15 @@ import { FoodVendor } from "../models/FoodVendor";
 import { BuildingContext } from "../contexts/BuildingContext";
 import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
-import { MagnifyingGlass, ArrowUpRight } from "phosphor-react-native";
+import {
+  ArrowUpRight,
+  Plus,
+  MagnifyingGlass,
+  Info,
+  UserCirclePlus,
+  UserCircle,
+  Camera,
+} from "phosphor-react-native";
 import { SearchBar } from "../components/SearchBar";
 import { MenuItem, MenuItemTag } from "../models/Menu";
 import CustomMarker from "../components/CustomMarker";
@@ -33,6 +41,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../navigation/HomeNavigation";
 import { UserPopup } from "../components/UserPopup";
 import { mapStyles } from "../services/mapStyles";
+import FloatingButton from "../components/FloatingButton";
 import {
   WelcomePopup,
   WelcomePopupCategories,
@@ -83,6 +92,7 @@ const HomeMap: React.FC = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] =
     useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [showActions, setShowActions] = useState(false);
 
   const searchInputRef = useRef<TextInput>(null);
   const _mapView = React.createRef<MapView>();
@@ -100,6 +110,10 @@ const HomeMap: React.FC = () => {
       setUserEmail(null);
     }
   });
+
+  const toggleActions = () => {
+    setShowActions(!showActions);
+  };
 
   const handleLogout = () => {
     authManager
@@ -324,6 +338,7 @@ const HomeMap: React.FC = () => {
           onRegionChange={onZoomChange}
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
+          showsIndoorLevelPicker={false}
         >
           {zoomLevel > 14 &&
             buildings &&
@@ -373,7 +388,7 @@ const HomeMap: React.FC = () => {
                     <Polygon
                       zIndex={-1}
                       key={index}
-                      tappable={true}
+                      tappable={false}
                       onPress={() => zoomToBuilding(building.name)}
                       coordinates={building.coordinates.map((coord) => ({
                         latitude: coord.latitude,
@@ -386,26 +401,36 @@ const HomeMap: React.FC = () => {
                   )
               )}
         </MapView>
-        <TouchableOpacity
-          className="absolute w-16 h-16 bottom-10 left-5 border-white border-2 opacity-50 rounded-full justify-center items-center shadow-xl"
-          onPress={() => {
-            setWelcomePopupPage(WelcomePopupCategories.Menu);
-          }}
-        >
-          <FontAwesome5 name="question" size={30} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="absolute w-16 h-16 bottom-10 right-5 bg-white rounded-full justify-center items-center shadow-xl"
-          onPress={() => setLoginPopupVisible(true)}
-        >
-          <Image
-            source={require("../assets/logo.png")}
-            style={{
-              width: 45,
-              height: 45,
-            }}
+        <View className="absolute right-7 bottom-10">
+          <FloatingButton
+            showActions={showActions}
+            toggleActions={toggleActions}
+            icon={require("../assets/logo.png")}
+            actions={[
+              {
+                icon: <Camera size={32} weight="fill" color="#154058" />,
+                action: () => {
+                  navigation.navigate("Upload", { vendor: "" });
+                },
+              },
+              {
+                icon: userEmail ? (
+                  <UserCircle size={42} weight="fill" color="#154058" />
+                ) : (
+                  <UserCirclePlus size={42} weight="fill" color="#154058" />
+                ),
+                action: userEmail
+                  ? () => setLoginPopupVisible(true)
+                  : () => navigation.navigate("Login"),
+              },
+              {
+                icon: <Info size={32} weight="fill" color="#154058" />,
+                action: () => setWelcomePopupPage(WelcomePopupCategories.Menu),
+              },
+            ]}
           />
-        </TouchableOpacity>
+        </View>
+
         <WelcomePopup
           pageNum={welcomePopupPage}
           onClose={() => {

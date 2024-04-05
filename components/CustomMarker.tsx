@@ -1,6 +1,5 @@
 import { View, Image, Text, ImageSourcePropType } from "react-native";
 import Coordinates from "../models/Coordinates";
-import { FoodVendor } from "../models/FoodVendor";
 import { Callout, Marker } from "react-native-maps";
 import React from "react";
 interface CustomMarkerProps {
@@ -26,11 +25,12 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
   <Marker
     title={name}
     coordinate={coordinate}
-    onPress={() => onPressCustom()}
     flat={false}
     stopPropagation={true}
     key={keyp}
-    zIndex={isSelected ? 1 : 0}
+    onPress={() => onPressCustom()}
+    zIndex={isSelected ? 200 : 100}
+    tappable={true}
   >
     <View className="flex justify-start items-center w-full h-full">
       <Image
