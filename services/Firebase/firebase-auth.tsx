@@ -35,7 +35,7 @@ class FirebaseAuthManager {
 
   public getCurrentUserUID(): string | null {
     try {
-      return this.getCurrentUser().uid;
+      return this.getCurrentUser().email;
     } catch (error) {
       return null;
     }
