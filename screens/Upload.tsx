@@ -57,6 +57,14 @@ const Upload: React.FC<UploadProps> = ({ vendor }) => {
   );
 
   useEffect(() => {
+    if (!permission?.granted) {
+      setTimeout(() => {
+        navigation.navigate("HomeMap");
+      }, 1000);
+    }
+  }, [permission]);
+
+  useEffect(() => {
     const newVendors = buildings.reduce((acc, building) => {
       const buildingVendors = building.vendors.map((vendor) => ({
         label: vendor.name,
