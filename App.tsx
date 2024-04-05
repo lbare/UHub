@@ -8,9 +8,8 @@ import { getDoc, getDocs, doc, collection } from "firebase/firestore";
 import { BuildingContext } from "./contexts/BuildingContext";
 import { db } from "./services/firebase";
 import loadAssets from "./hooks/loadAssets";
-import { TouchableWithoutFeedback, View } from "react-native";
+import { Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import BackgroundImage from "./components/BackgroundImage";
 
 export default function App() {
   const [buildings, setBuildings] = useState<Building[]>([]);
@@ -79,27 +78,25 @@ export default function App() {
     prepare();
   }, []);
 
-  if (!isFinalReady) {
+  if (!isReady)
     return (
-      <View className="flex w-full h-full">
-        <BackgroundImage source={require("./assets/splash.png")} />
-        <TouchableWithoutFeedback
-          className="w-full h-full"
-          onPress={() => {
-            if (isReady) setIsFinalReady(true);
-          }}
-        >
-          <View className="flex w-full h-full justify-center items-center" />
-        </TouchableWithoutFeedback>
-      </View>
+      <Image
+        source={require("./assets/splash.png")}
+        style={{
+          flex: 1,
+          width: "100%",
+          height: "100%",
+          resizeMode: "cover",
+        }}
+      />
     );
-  } else
-    return (
-      <BuildingContext.Provider value={buildings}>
-        <NavigationContainer>
-          <HomeNavigation />
-          <StatusBar style="light" />
-        </NavigationContainer>
-      </BuildingContext.Provider>
-    );
+
+  return (
+    <BuildingContext.Provider value={buildings}>
+      <NavigationContainer>
+        <HomeNavigation />
+        <StatusBar style="light" />
+      </NavigationContainer>
+    </BuildingContext.Provider>
+  );
 }
