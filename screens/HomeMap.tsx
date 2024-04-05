@@ -347,7 +347,7 @@ const HomeMap: React.FC = () => {
                     name={vendor.name}
                     coordinate={vendor.location}
                     isSelected={vendor.name === selectedVendor?.name}
-                    zIndex={1000}
+                    zIndex={10}
                     image={require("../assets/marker.png")}
                     onPressCustom={() => {
                       console.log("Marker Pressed: ", index);
@@ -406,7 +406,9 @@ const HomeMap: React.FC = () => {
             actions={[
               {
                 icon: <Camera size={32} weight="fill" color="#154058" />,
-                action: () => navigation.navigate("Upload"),
+                action: () => {
+                  navigation.navigate("Upload", { vendor: "" });
+                },
               },
               {
                 icon: userEmail ? (
