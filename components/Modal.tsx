@@ -89,6 +89,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const y = event.nativeEvent.contentOffset.y;
+    console.log(y);
     setLastScrollY(y);
   };
 
@@ -150,7 +151,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   useEffect(() => {
     if (scrollViewRef.current && lastScrollY > 160) {
-      scrollViewRef.current.scrollTo({ y: 160, animated: true });
+      scrollViewRef.current.scrollTo({ y: 160, animated: false });
     }
   }, [selectedSection]);
 
@@ -446,7 +447,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
                     </ScrollView>
                   </View>
                 </View>
-                <View style={{ minHeight: 750 }}>
+                <View style={{ minHeight: 780 }}>
                   {vendor.menu.sections.map((section, index) => {
                     if (section.name === selectedSection) {
                       return (
