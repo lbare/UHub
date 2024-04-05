@@ -136,25 +136,27 @@ const HomeMap: React.FC = () => {
     menuSearch = new MenuSearch(buildings); // useEffect only creates once on first render
     onZoomChange(UVicRegion);
 
+    setWelcomePopupPage(WelcomePopupCategories.WelcomeTour);
+
     // Show welcome tour on app first launch
-    AsyncStorage.getItem("is_first_launch").then((value) => {
-      if (value !== "true") {
-        AsyncStorage.setItem("is_first_launch", "true");
-        setWelcomePopupPage(WelcomePopupCategories.WelcomeTour);
-        console.log("Show welcome popup on first launch");
-      } else {
-        // Show version notes on first launch of new version
-        // but only if it's not the very first launch after first install
-        AsyncStorage.getItem("last_version_notes_shown").then((value) => {
-          const latestVersion = versionNotes[0].version;
-          if (value !== latestVersion) {
-            AsyncStorage.setItem("last_version_notes_shown", latestVersion);
-            setWelcomePopupPage(WelcomePopupCategories.VersionNotes);
-            console.log("Show version notes on first launch of new version");
-          }
-        });
-      }
-    });
+    // AsyncStorage.getItem("is_first_launch").then((value) => {
+    //   if (value !== "true") {
+    //     AsyncStorage.setItem("is_first_launch", "true");
+    //     setWelcomePopupPage(WelcomePopupCategories.WelcomeTour);
+    //     console.log("Show welcome popup on first launch");
+    //   } else {
+    //     // Show version notes on first launch of new version
+    //     // but only if it's not the very first launch after first install
+    //     AsyncStorage.getItem("last_version_notes_shown").then((value) => {
+    //       const latestVersion = versionNotes[0].version;
+    //       if (value !== latestVersion) {
+    //         AsyncStorage.setItem("last_version_notes_shown", latestVersion);
+    //         setWelcomePopupPage(WelcomePopupCategories.VersionNotes);
+    //         console.log("Show version notes on first launch of new version");
+    //       }
+    //     });
+    //   }
+    // });
   }, []);
 
   useEffect(() => {

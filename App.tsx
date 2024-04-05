@@ -8,12 +8,14 @@ import { getDoc, getDocs, doc, collection } from "firebase/firestore";
 import { BuildingContext } from "./contexts/BuildingContext";
 import { db } from "./services/firebase";
 import loadAssets from "./hooks/loadAssets";
-import { Image } from "react-native";
+import { TouchableWithoutFeedback, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BackgroundImage from "./components/BackgroundImage";
 
 export default function App() {
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [isReady, setIsReady] = useState(false);
+  const [isFinalReady, setIsFinalReady] = useState(false);
 
   useEffect(() => {
     const prepare = async () => {
@@ -77,17 +79,19 @@ export default function App() {
     prepare();
   }, []);
 
-  if (!isReady) {
+  if (!isFinalReady) {
     return (
-      <Image
-        source={require("./assets/splash.png")}
-        style={{
-          flex: 1,
-          width: "100%",
-          height: "100%",
-          resizeMode: "cover",
-        }}
-      />
+      <View className="flex w-full h-full">
+        <BackgroundImage source={require("./assets/splash.png")} />
+        <TouchableWithoutFeedback
+          className="w-full h-full"
+          onPress={() => {
+            if (isReady) setIsFinalReady(true);
+          }}
+        >
+          <View className="flex w-full h-full justify-center items-center" />
+        </TouchableWithoutFeedback>
+      </View>
     );
   } else
     return (
