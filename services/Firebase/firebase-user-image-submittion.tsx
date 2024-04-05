@@ -1,6 +1,6 @@
 // First, ensure your Firebase config is set up correctly for the modular version
 
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
 
@@ -20,16 +20,18 @@ class FirebaseUserImageService {
     const colRef = collection(db, "UserSubmissions");
     const docRef = doc(colRef, uid);
 
-    await setDoc(docRef, {
-      vendor: vendorName,
-      image: imageName,
-      date: new Date(),
-    });
-
     const response = await fetch(uri);
     const blob = await response.blob();
 
     return await uploadBytes(storageRef, blob).then(async (_) => {
+      const downloadURL = await getDownloadURL(storageRef);
+
+      await setDoc(docRef, {
+        vendor: vendorName,
+        image: imageName,
+        downloadURL: downloadURL,
+        date: new Date(),
+      });
       return true;
     });
   }
