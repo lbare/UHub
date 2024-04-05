@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import MapView, { Details, PROVIDER_GOOGLE, Polygon } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Login from "./Login";
 import FirebaseAuthManager from "../services/Firebase/firebase-auth";
 import Coordinates from "../models/Coordinates";
@@ -20,6 +21,7 @@ import { useContext } from "react";
 import MenuSearch from "../services/MenuSearch";
 import {
   ArrowUpRight,
+  Plus,
   MagnifyingGlass,
   Info,
   UserCirclePlus,
@@ -336,6 +338,7 @@ const HomeMap: React.FC = () => {
           onRegionChange={onZoomChange}
           onRegionChangeComplete={onZoomChangeComplete}
           customMapStyle={mapStyles}
+          showsIndoorLevelPicker={false}
         >
           {zoomLevel > 14 &&
             buildings &&
@@ -347,7 +350,7 @@ const HomeMap: React.FC = () => {
                     name={vendor.name}
                     coordinate={vendor.location}
                     isSelected={vendor.name === selectedVendor?.name}
-                    zIndex={10}
+                    zIndex={1000}
                     image={require("../assets/marker.png")}
                     onPressCustom={() => {
                       console.log("Marker Pressed: ", index);
@@ -385,7 +388,7 @@ const HomeMap: React.FC = () => {
                     <Polygon
                       zIndex={-1}
                       key={index}
-                      tappable={true}
+                      tappable={false}
                       onPress={() => zoomToBuilding(building.name)}
                       coordinates={building.coordinates.map((coord) => ({
                         latitude: coord.latitude,
