@@ -7,6 +7,7 @@ This is the UHub app, built with [Expo](https://expo.dev/). It's a React Native 
 It aims to create a centralized platform for students to discover and explore resources on university campuses.
 
 **Product page**: https://lbare.github.io/UHub/
+
 **Product Overview**: https://youtu.be/gkK6rIjaYvw?si=SQeNlrbTBYUWRqa8
 
 ## Prerequisites
