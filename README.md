@@ -8,7 +8,7 @@ It aims to create a centralized platform for students to discover and explore re
 
 **Product page**: https://lbare.github.io/UHub/
 
-**Product Overview**: https://youtu.be/gkK6rIjaYvw?si=SQeNlrbTBYUWRqa8
+**Product Demo**: https://youtu.be/gkK6rIjaYvw?si=SQeNlrbTBYUWRqa8
 
 ## Prerequisites
 
