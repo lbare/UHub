@@ -10,7 +10,7 @@ Below are links to our overview video showcasing the app's main features and the
 
 **Product page**: https://lbare.github.io/UHub/
 
-**Product Overview Video**: https://youtu.be/gkK6rIjaYvw?si=SQeNlrbTBYUWRqa8
+**Product Demo Video**: https://youtu.be/gkK6rIjaYvw?si=SQeNlrbTBYUWRqa8
 
 ## Development Prerequisites
 
